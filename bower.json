@@ -1,0 +1,22 @@
+{
+  "name": "poeticpraxis.pro",
+  "version": "1.0.0",
+  "authors": [
+    "Max Kuznetsov <secondtonone.secondtonone@gmail.com>"
+  ],
+  "description": "digital art project",
+  "keywords": [
+    "poetic"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
