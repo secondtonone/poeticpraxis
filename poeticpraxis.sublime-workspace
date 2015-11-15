@@ -1,0 +1,1150 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"is",
+				"isUndefined"
+			],
+			[
+				"spl",
+				"split	(clientService.js)"
+			],
+			[
+				"lo",
+				"location"
+			],
+			[
+				"pad",
+				"padding-right"
+			],
+			[
+				"ng-s",
+				"ng-show	AngularJS"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"au",
+				"auto"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"drop",
+				"dropTrip	(clientService.js)"
+			],
+			[
+				"bre",
+				"breakPoints"
+			],
+			[
+				"po",
+				"point"
+			],
+			[
+				"pos",
+				"pos:a	position:absolute"
+			],
+			[
+				"tex",
+				"text-transform"
+			],
+			[
+				"background-c",
+				"background-color"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"rig",
+				"right"
+			],
+			[
+				"bore",
+				"border"
+			],
+			[
+				"bott",
+				"bottom:0	(authorization.less)"
+			],
+			[
+				"top",
+				"top	CSS - top: 0;"
+			],
+			[
+				"block",
+				"inline-block"
+			],
+			[
+				"bor",
+				"border-color"
+			],
+			[
+				"cen",
+				"center"
+			],
+			[
+				"ce",
+				"center"
+			],
+			[
+				"margi",
+				"margin-left"
+			],
+			[
+				"li",
+				"lighter"
+			],
+			[
+				"bro",
+				"border-bottom"
+			],
+			[
+				"margin",
+				"margin"
+			],
+			[
+				"ti",
+				"timeout"
+			],
+			[
+				"stri",
+				"string	(clientService.js)"
+			],
+			[
+				"fun",
+				"function〔keyword〕"
+			],
+			[
+				"inter",
+				"interval	(driverController.js)"
+			],
+			[
+				"has",
+				"hasClass	.hasClass()"
+			],
+			[
+				"ab",
+				"absolute	(client.less)"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"rejec",
+				"rejection"
+			],
+			[
+				"st",
+				"state"
+			],
+			[
+				"At",
+				"AuthorizationService"
+			],
+			[
+				"wai",
+				"waitingTimer"
+			],
+			[
+				"star",
+				"startWaiting"
+			],
+			[
+				"sta",
+				"start"
+			],
+			[
+				"orderE",
+				"orderExecuting	(driverService.js)"
+			],
+			[
+				"Dr",
+				"DriverService"
+			],
+			[
+				"post",
+				"postedOrder"
+			],
+			[
+				"CL",
+				"ClientService"
+			],
+			[
+				"rel",
+				"relative"
+			],
+			[
+				"ba",
+				"backdrop	(main.less)"
+			],
+			[
+				"postion",
+				"position"
+			],
+			[
+				"load",
+				"loadScript	(utilitiesService.js)"
+			],
+			[
+				"type",
+				"typeof〔keyword〕"
+			],
+			[
+				"sp",
+				"split	(cabinetService.js)"
+			],
+			[
+				"payment",
+				"paymentGroupsRef〔variable〕"
+			],
+			[
+				"driverL",
+				"driverLisenceGroupsRef"
+			],
+			[
+				"gender",
+				"genderGroupsRef"
+			],
+			[
+				"param",
+				"params"
+			],
+			[
+				"pla",
+				"placemark"
+			],
+			[
+				"PASS",
+				"PASSENGER_NUMBER"
+			],
+			[
+				"get",
+				"getFilterDtoById	(filterService.js)"
+			],
+			[
+				"Fil",
+				"FilterService"
+			],
+			[
+				"Cl",
+				"ClientService"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"ro",
+				"rootScope"
+			],
+			[
+				"te",
+				"text-align"
+			],
+			[
+				"r",
+				"round〔function〕"
+			],
+			[
+				"border",
+				"border-top"
+			],
+			[
+				"padding",
+				"padding-left"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"box-",
+				"box-sizing"
+			],
+			[
+				"borde",
+				"border-bottom"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"ngre",
+				"ng-repeat	AngularJS"
+			],
+			[
+				"console",
+				"console	console.log()"
+			],
+			[
+				"cur",
+				"cur	CSS - cursor: pointer;"
+			],
+			[
+				"cons",
+				"console	console.log()"
+			],
+			[
+				"backgro",
+				"background-color"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"he",
+				"header	<header>"
+			],
+			[
+				"bs3-ifo",
+				"bs3-panel:info	bs3-panel-info"
+			],
+			[
+				"bs3-col",
+				"bs3-col:4	bs3-col-4"
+			],
+			[
+				"box-s",
+				"box-shadow"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"bo",
+				"bot	CSS - bottom: 0;"
+			],
+			[
+				"nav",
+				"nav	<nav>"
+			],
+			[
+				"bs3-r",
+				"bs3-row-col	bs3-row-col"
+			],
+			[
+				"di",
+				"d:ib	display:inline-block"
+			],
+			[
+				"WI",
+				"width"
+			],
+			[
+				"bs3-ch",
+				"bs3-input:checkbox	bs3-input-checkbox"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"poi",
+				"position"
+			],
+			[
+				"butt",
+				"button	Tag"
+			],
+			[
+				"upp",
+				"uppercase"
+			],
+			[
+				"boxs",
+				"box-sizing"
+			],
+			[
+				"ma",
+				"margin"
+			],
+			[
+				"tr",
+				"translate"
+			],
+			[
+				"unde",
+				"undefined〔keyword〕"
+			],
+			[
+				"contro",
+				"controller"
+			],
+			[
+				"ove",
+				"overflow"
+			],
+			[
+				"ng-re",
+				"ng-repeat	AngularJS"
+			],
+			[
+				"tra",
+				"transform-origin"
+			],
+			[
+				"but",
+				"button"
+			],
+			[
+				"la",
+				"languages"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"cl",
+				"click〔function〕"
+			],
+			[
+				"add",
+				"addClass	.addClass()"
+			],
+			[
+				"cont",
+				"contain"
+			],
+			[
+				"inl",
+				"inline-block"
+			],
+			[
+				"border-r",
+				"border-radius"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"border-bo",
+				"border-box"
+			],
+			[
+				"trans",
+				"transparent"
+			],
+			[
+				"rgb",
+				"rgba()"
+			],
+			[
+				"htt",
+				"$http	AngularJS"
+			],
+			[
+				"timeou",
+				"$timeout	AngularJS"
+			],
+			[
+				"break",
+				"breakpoints〔variable〕"
+			],
+			[
+				"event",
+				"events"
+			],
+			[
+				"co",
+				"compiled"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"fi",
+				"field"
+			],
+			[
+				"plac",
+				"placemarkB〔variable〕"
+			],
+			[
+				"pl",
+				"placemarkB"
+			],
+			[
+				"placemark",
+				"placemarkA"
+			],
+			[
+				"provide",
+				"provider〔variable〕"
+			],
+			[
+				"p",
+				"placemark1"
+			],
+			[
+				"win",
+				"$window	AngularJS"
+			],
+			[
+				"us",
+				"userPlacemark"
+			],
+			[
+				"op",
+				"options"
+			],
+			[
+				"controller",
+				"controller	Angular.js"
+			],
+			[
+				"root",
+				"$rootScope	AngularJS"
+			],
+			[
+				"scop",
+				"$scope	AngularJS"
+			]
+		]
+	},
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 354.0,
+		"last_filter": "package  in",
+		"selected_items":
+		[
+			[
+				"package  in",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"up",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"blo",
+				"DocBlockr: Reparse comment block"
+			],
+			[
+				"do",
+				"DocBlockr: Decorate line comment"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"pac",
+				"Package Control: List Packages"
+			],
+			[
+				"SublimeCo",
+				"SublimeCodeIntel: Enable Live Autocompletion for Current Language"
+			],
+			[
+				"c",
+				"Clipboard Manager: Paste"
+			],
+			[
+				"clip",
+				"Clipboard Manager: Copy"
+			],
+			[
+				"pack",
+				"Package Control: List Packages"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"pa",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: knockoutjs apply bindings"
+			],
+			[
+				"i",
+				"Package Control: Install Package"
+			],
+			[
+				"node",
+				"JSHint: Set `node` Path"
+			],
+			[
+				"s",
+				"Sublimall: Upload"
+			],
+			[
+				"git push ",
+				"Git: Push Current Branch"
+			],
+			[
+				"git",
+				"Git: Status"
+			],
+			[
+				"git com",
+				"Git: Quick Commit"
+			],
+			[
+				"ga",
+				"Git: Add..."
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control:",
+				"Package Control: Add Channel"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"lint",
+				"SublimeLinter: Previous Error"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 575.0
+	},
+	"console":
+	{
+		"height": 334.0,
+		"history":
+		[
+			"which SublimeLinter;",
+			"which SublimeLinter",
+			"hash -r",
+			"set PATH=%PATH%;C:\\php ",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"set PATH=%PATH%;E:\\xampp\\php\\",
+			"set PATH=%PATH%;C:\\php",
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/maks/Documents/Projects/poeticpraxis/poeticpraxis.sublime-project",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/mapService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/registration/registrationController.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/recovery/recoveryController.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/app.lang.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverMobileTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/gulpfile.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverMobileOrderDenied.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/index_dev.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/client/clientController.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less/main.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/providers/logServiceProvider.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/driver/driverController.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientMobileTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/app.config.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/locationService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less/_common.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverWaitingView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverMobileWaitingView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientSearchView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/client/clientService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/timersService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/showMessageService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverOrderView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverMobileOrderView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/utilitiesService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/main/mainMobileHeaderView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less/client.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/index_dev.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/logService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/app.routes.js",
+		"/Users/maks/Library/Application Support/Sublime Text 3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/assets/scripts/driverYaMetrika.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/assets/scripts/taxiYaMetrika.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/.jshintrc",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/main/mainController.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientMobileWaitingView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less/app.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/materialFileUploader.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientMobileFormView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientFormView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/app.module.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverOrdersView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverMobileOrdersView.html",
+		"/Users/maks/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/maks/Library/Application Support/Sublime Text 3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
+		"/Users/maks/Library/Application Support/Sublime Text 3/Packages/JSHint Gutter/.jshintrc",
+		"/Users/maks/Documents/Work/ets/www/ets-web/node_modules/gulp-jshint/node_modules/jshint/dist/jshint.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/geo-object/geoObjectController.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/validationService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientWaitingView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientMobileSearchView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/main/mainHeaderView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverMobileEndTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverEndTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientHistoryView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/driver/driverService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/materialInputBorderedDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/materialInputDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/authorization/authorizationService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/authorization/authorizationController.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/filter/filterController.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less-mobile/main.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/main/mainMapView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/main/mainView.html",
+		"/Users/maks/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientDriverBreakView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/driver/driverOrderDenied.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/orderService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/geoObjectService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/filters/filterBreakpointsFilter.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientBeginTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientMobileEndTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientEndTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientMobileBeginTripView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/geoCodingService.js",
+		"/Users/maks/Library/Application Support/Sublime Text 3/Packages/JSHint Gutter/JSHint.sublime-settings",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientMobileDriverBreakView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less-mobile/cabinet.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less-mobile/authorization.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less/driver.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/client/clientView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/driver/driverView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/styles/styles.css",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/cabinet/cabinetService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/cabinet/cabinetController.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less-mobile/client.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/styles/styles.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less-mobile/driver.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/billingService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/materialSelectDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/bower.json",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/index.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/authorization/authorizationView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less-mobile/company.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/client/clientMobileHistoryView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/focusOnDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/backdropDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/assets/img/white_cross.png",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/filterService.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/stickToBottomDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less/cabinet.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/driver/driverMobileView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/recovery/recoveryView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/registration/registrationView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/cabinet/cabinetView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/cabinet/cabinetMobileView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/cabinet/cabinetTripCriteriaView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/cabinet/cabinetMainInfoView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/cabinet/cabinetAdvancedInfoView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/cabinet/cabinetAutoInfoView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/partials/cabinet/cabinetMenuView.html",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/bower_components/angular-translate/angular-translate.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/client/clientMobileView.html",
+		"/Users/maks/Library/Application Support/Sublime Text 3/Packages/User/Base File.sublime-settings",
+		"/Users/maks/Library/Application Support/Sublime Text 3/Packages/DocBlockr/Base File.sublime-settings",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/infoWindowDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/dev/less/_bootstrap.less",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/materialTaglistDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/advancedParametersDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/animateClickDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/commonSelectDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/infiniteScrollingDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/materialTextareaDirective.js",
+		"/Users/maks/Documents/Work/ets/www/ets-web/gulpfile.js~"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 164.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"debug",
+			"$LogProvider",
+			"$log",
+			"{\n",
+			"console",
+			"this",
+			"scope.map",
+			"$on",
+			"templateOrder",
+			"templateOrder ",
+			"self.tripTimer",
+			"self.tripTimer ",
+			"getGeoObjects",
+			"distanceTrip",
+			"postedOrder",
+			"self.postedOrder",
+			"timerInTrip",
+			"timeInTripMinutes",
+			"beginTrip",
+			"wait",
+			"self.timerInTrip",
+			"getOrderHistory",
+			"self.endTrip",
+			"selectOrder",
+			"getOrders",
+			"backToOrders",
+			"orderDenied",
+			"getOrders",
+			"setOrderPoints",
+			"backToOrders",
+			"driverBreak",
+			"deniedOrder",
+			"{\n",
+			"OrderService",
+			"isOnOrder",
+			"isOnOrder ",
+			"isInTrip",
+			"deniedOrder",
+			"timeInTripSeconds",
+			"timeInTripMinutes",
+			"waitSeconds",
+			"acceptedOrder.waitMinutes",
+			"tripTimer",
+			"timerInTrip",
+			"timeInTripMinutes",
+			"timerInTrip",
+			"timerInTrip ",
+			"durationTrip",
+			"orderId",
+			"durationTrip",
+			"_embedded",
+			"driver.showCloseConfirm",
+			"client",
+			"clientState",
+			"client",
+			"dis",
+			"MINUTES_SHORT",
+			"Path",
+			"Patj",
+			"preloader",
+			"self.tripTimer",
+			"timerInTrip",
+			"typeahead",
+			"datepicker-",
+			"datepicker",
+			"typeahead",
+			"uib-typeahead",
+			"typeahead",
+			"datepicker",
+			"')\n",
+			"self.arriveTime",
+			"self.orderAccepted",
+			"backToOrders",
+			"$rootScope",
+			"getDistance",
+			"getOrders",
+			"setPath",
+			"points",
+			"compile",
+			"http",
+			"tripProcess",
+			"acceptedOrder",
+			"selectedOrder",
+			"order",
+			"getOrders",
+			"arriveTime",
+			"dateObject",
+			"arriveTime",
+			"arriveTime.day",
+			"orderId",
+			"tripProcess",
+			"getDistance",
+			"distanceBeatween",
+			"showingConfrimField",
+			"getOrderHistory",
+			"showRating",
+			"getOrderHistory",
+			"self.order",
+			"self.showOrdersForm",
+			"self.showForm",
+			"dateObject",
+			"self.isOnOrder",
+			"self.tripTimer",
+			"showCloseConfirm",
+			"message",
+			"loading ",
+			"loading",
+			"\">\n",
+			"buttonText",
+			"buttonText ",
+			"blockSendButton",
+			"new Date()",
+			"Date",
+			"tabItems",
+			"client_id",
+			"getDistance",
+			"showOrdersForm",
+			"isOrderClosed",
+			"tripProcess",
+			"self.userInfo",
+			"getGeoObjects",
+			"self.stopTrip",
+			"stopTrip",
+			"tripProcess",
+			"$rootScope",
+			"getGeoObjects",
+			"stopTrip",
+			"self.waitingTimer"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"uib-typeahead",
+			"uib-datepicker",
+			"uib-typeahead",
+			"field_quarter field-mobile",
+			"CarriageOpt",
+			"Lang",
+			"advancedInfo",
+			"aboutCar",
+			"mainInfo",
+			"list",
+			"self.totalPageOfOrders",
+			"self.pageOfOrders",
+			"поездки",
+			"removeFromMap",
+			"placemarkB",
+			"placemarkA",
+			"self.breakPoints",
+			"showMessage",
+			"mainPoints",
+			"self.points.main.endPoint.field",
+			"self.points.main.beginPoint.field",
+			"self.addPointHandler",
+			"self.originalState",
+			"self.placemarksNotChanged",
+			"self.getGeoObjects",
+			"self.statePlacemarkChange",
+			"this.scope",
+			"self.map",
+			"self",
+			"self.map",
+			"placemarkB",
+			"placemarkA",
+			"/mobile-app/",
+			"stateBlack",
+			"stateWhite",
+			"self.showingCommentField",
+			"self.showCommentField",
+			"tabSelected",
+			"self.tabSelected",
+			"orderForm",
+			"lon",
+			"lat",
+			"scope",
+			"auth",
+			"rec",
+			"userConfirmPass",
+			"userPass",
+			"arg",
+			"client",
+			"assets",
+			"ng-click=\"driver.",
+			"ng-show=\"driver.",
+			"self.",
+			"ng-click=\"home.",
+			"ng-show=\"home.",
+			"ng-click=\"home.",
+			"ng-model=\"home.",
+			"self.",
+			"$scope.showingBreakpointFields",
+			"showingBreakpointFields",
+			"GoeCodingService",
+			"$scope.fields.endPoint",
+			"$scope.fields.beginPoint",
+			"endPoint",
+			"beginPoint",
+			"4000",
+			"path",
+			"seasonStatistic",
+			"generalStatisticValue",
+			"generalStatisticValue ",
+			"ng-src",
+			"#F85F4B",
+			"\"",
+			"",
+			":id_category",
+			":year",
+			"case",
+			"/app/scripts/stats/stats_getdata.php",
+			"DAYOFYEAR(NOW())",
+			"DAYOFYEAR(time_event)",
+			"DAYOFMONTH(NOW())",
+			"MONTH(time_event)",
+			"MONTH(NOW())",
+			"NOW()",
+			"YEAR(date)",
+			"MONTH(date)",
+			"$this->connect()",
+			"stats_model",
+			"'.$day_of_year_now.'",
+			"'.$day_of_year_time_event.'",
+			"'.$current_day.'",
+			"'.$event_month.'",
+			"'.$current_day.'",
+			"active",
+			"user",
+			"id_status",
+			"client",
+			"WHERE '.$month.'",
+			" ",
+			"ROUND(AVG(price))",
+			"price",
+			"AVG"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 61.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.clipboard_manager":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 92.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/C++11/C++11.sublime-build",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Google Диск/задание/test_task.sublime-workspace"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 354.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 610.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 344.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 2
+	}
+}
