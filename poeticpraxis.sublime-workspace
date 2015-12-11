@@ -665,6 +665,8 @@
 	},
 	"file_history":
 	[
+		"/Users/maks/Documents/Projects/poeticpraxis/client/index.html",
+		"/Users/maks/Documents/Projects/poeticpraxis/client/assets/css/style.css",
 		"/Users/maks/Documents/Projects/poeticpraxis/poeticpraxis.sublime-project",
 		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/services/mapService.js",
 		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/components/registration/registrationController.js",
@@ -790,9 +792,7 @@
 		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/advancedParametersDirective.js",
 		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/animateClickDirective.js",
 		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/commonSelectDirective.js",
-		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/infiniteScrollingDirective.js",
-		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/materialTextareaDirective.js",
-		"/Users/maks/Documents/Work/ets/www/ets-web/gulpfile.js~"
+		"/Users/maks/Documents/Work/ets/www/ets-web/src/main/webapp/public/app/shared/directives/infiniteScrollingDirective.js"
 	],
 	"find":
 	{
