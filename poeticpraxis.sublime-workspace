@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"client",
+				"client/"
+			],
+			[
 				"is",
 				"isUndefined"
 			],
@@ -510,10 +514,6 @@
 			[
 				"root",
 				"$rootScope	AngularJS"
-			],
-			[
-				"scop",
-				"$scope	AngularJS"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "server.js",
 			"settings":
 			{
-				"buffer_size": 4680,
+				"buffer_size": 3939,
 				"line_ending": "Unix"
 			}
 		}
@@ -677,7 +677,8 @@
 	"expanded_folders":
 	[
 		"/Users/STN/Documents/Projects/poeticpraxis",
-		"/Users/STN/Documents/Projects/poeticpraxis/.openshift"
+		"/Users/STN/Documents/Projects/poeticpraxis/.openshift",
+		"/Users/STN/Documents/Projects/poeticpraxis/public"
 	],
 	"file_history":
 	[
@@ -826,6 +827,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"zapp",
+			"SampleApp",
 			"debug",
 			"$LogProvider",
 			"$log",
@@ -951,9 +954,7 @@
 			"stopTrip",
 			"tripProcess",
 			"$rootScope",
-			"getGeoObjects",
-			"stopTrip",
-			"self.waitingTimer"
+			"getGeoObjects"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1082,15 +1083,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4680,
+						"buffer_size": 3939,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4680,
-								4680
+								2893,
+								2893
 							]
 						],
 						"settings":
@@ -1162,7 +1163,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1798.0,
+						"translation.y": 999.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
