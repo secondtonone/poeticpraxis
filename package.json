@@ -23,8 +23,9 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
-    "bower": "^1.7.9",
     "express": "^4.13.4",
+    "jquery": "^2.2.3",
+    "react": "^15.0.2",
     "webpack": "^1.13.0"
   },
   "devDependencies": {},

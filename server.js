@@ -1,21 +1,30 @@
 #!/bin/env node
  //  OpenShift sample Node application
 var express = require('express');
+
 var fs = require('fs');
 var path = require("path");
+
 var webpack = require("webpack");
-var bowerComponentsDir = path.join(__dirname, 'bower_components');
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+var jQuery = require("jquery");
 
 var config = {
     entry: {
-        jQuery: path.join(bowerComponentsDir, 'jquery/dist/jquery.js'),
-        react: [ path.join(bowerComponentsDir, 'react/react-dom.js'), path.join(bowerComponentsDir, 'react/react.js')],
-        app: path.join(__dirname, 'app/app.js')
+        'jquery': 'jquery',
+        /*'react': React,
+        'reactDom': ReactDOM,
+        'app': path.join(__dirname, 'app/app.js')*/
     },
     output: {
         path: path.join(__dirname, 'public/js'), // выходная директория
         filename: 'app.js'
-    }
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin()
+    ]
 };
 
 // returns a Compiler instance
@@ -28,6 +37,7 @@ var App = function() {
 
     //  Scope.
     var self = this;
+    var isProd = true;
 
 
     /*  ================================================================  */
@@ -47,6 +57,7 @@ var App = function() {
             //  allows us to run/test the app locally.
             self.ipaddress = "localhost";
             self.port = 9080;
+            isProd = false;
         }
     };
 
@@ -127,6 +138,20 @@ var App = function() {
         self.setupTerminationHandlers();
         // Create the express server and routes.
         self.initializeServer();
+
+
+        if (isProd) {
+            compiler.run(function(err, stats) {
+                console.log('Webpack run!');
+            });
+        } else {
+            compiler.watch({ // watch options:
+                aggregateTimeout: 300, // wait so long for more changes
+                poll: true // use polling instead of native watchers
+            }, function(err, stats) {
+                console.log('Webpack watching!');
+            });
+        }
     };
 
 
