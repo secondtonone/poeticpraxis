@@ -7,16 +7,13 @@ var path = require("path");
 
 var webpack = require("webpack");
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var jQuery = require("jquery");
+/*var React = require('react');
+var ReactDOM = require('react-dom');*/
+//var jQuery = require("jquery");
 
 var config = {
     entry: {
-        'jquery': 'jquery',
-        /*'react': React,
-        'reactDom': ReactDOM,
-        'app': path.join(__dirname, 'app/app.js')*/
+        app: [path.join(__dirname, 'app/app.js')]
     },
     output: {
         path: path.join(__dirname, 'public/js'), // выходная директория
