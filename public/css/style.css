@@ -125,9 +125,71 @@ acronym {
 }
 
 
+@keyframes move {
+    50% {
+        transform: translateY(-50px);
+    }
+    100% {
+        background-color: rgb(250, 250, 250);
+        box-shadow: 5px 4px 20px 3px rgba(0, 0, 0, 0.2);
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes show {
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
 
 body {
     background: rgba(251, 250, 245, 0.1);
+}
+
+.menu-list {
+    position: fixed;
+    width: 100%;
+    background-color: #F9F8F7;;
+    border: solid 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.2);
+    top: 0;
+    left: 0;
+    transform: translateY(-85px);
+    animation-name: move;
+    animation-delay:4s;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+    z-index: 10;
+}
+
+.menu {
+    float: right;
+    padding: 0 10px 0 10px;
+}
+
+.menu__item {
+    display: inline-block;
+    padding: 15px;
+    cursor: pointer;
+    font-family: Qolyazma;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    font-size: 16px;
+    line-height: 32px;
+    color: #181311;
+}
+
+.menu__item_active {
+    color: #DE2420;
 }
 
 .logo {
@@ -257,6 +319,9 @@ body {
     position: relative;
     top: 200px;
     height: 1000px;
+    z-index: 9;
+    width: 595px;
+    margin: 0 auto;
 }
 
 .list {
@@ -274,6 +339,32 @@ body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 
+}
+
+.button_rounded {
+    background-color: #F9F8F7;
+    box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.2);
+    height: 40px;
+    width: 40px;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.linting-button {
+    position: absolute;
+    padding-top: 5px;
+    top: 10%;
+    right: -20px;
+    z-index: 10;
+    opacity: 0;
+    transform: rotate(-90deg);
+    animation-name: show;
+    animation-delay:5s;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
 }
 
 @keyframes unscale-1 {

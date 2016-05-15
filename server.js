@@ -24,8 +24,20 @@ var config = {
     ]
 };
 
-// returns a Compiler instance
-var compiler = webpack(config);
+var localConfig = {
+    entry: {
+        app: [path.join(__dirname, 'app/app2.0.js')]
+    },
+    output: {
+        path: path.join(__dirname, 'public/js'), // выходная директория
+        filename: 'app.js'
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin()
+    ]
+};
+
+
 
 /**
  *  Define the sample application.
@@ -35,7 +47,6 @@ var App = function() {
     //  Scope.
     var self = this;
     var isProd = true;
-
 
     /*  ================================================================  */
     /*  Helper functions.                                                 */
@@ -54,42 +65,42 @@ var App = function() {
             //  allows us to run/test the app locally.
             self.ipaddress = "localhost";
             self.port = 9080;
+
             isProd = false;
         }
     };
-
-
     /**
      *  terminator === the termination handler
      *  Terminate server on receipt of the specified signal.
      *  @param {string} sig  Signal to terminate on.
      */
     self.terminator = function(sig) {
-        if (typeof sig === "string") {
-            console.log('Poetic begin ...',
-                Date(Date.now()), sig);
+        if (typeof sig === 'string') {
+            console.log('\rPoetic stoped ...', 'Signal - ', sig);
+            //выход в консоли из node
             process.exit(1);
         }
         console.log('%s: Node server stopped.', Date(Date.now()));
     };
-
-
     /**
      *  Setup termination handlers (for exit and a list of signals).
      */
     self.setupTerminationHandlers = function() {
+        //слушает событие exit
         //  Process on exit and signals.
-        process.on('exit', function() { self.terminator(); });
-
+        process.on('exit', function() {
+            self.terminator();
+        });
+        //бинд для выключения сервера через консоль
         // Removed 'SIGPIPE' from the list - bugz 852598.
         ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
             'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
         ].forEach(function(element, index, array) {
-            process.on(element, function() { self.terminator(element); });
+            process.on(element, function() {
+                self.terminator(element);
+            });
         });
     };
-
-
     /*  ================================================================  */
     /*  App server functions (main app logic here).                       */
     /*  ================================================================  */
@@ -97,18 +108,14 @@ var App = function() {
     /**
      *  Create the routing table entries + handlers for the application.
      */
-
-
     self.createRoutes = function() {
+
         self.routes = {};
 
         self.routes['/'] = function(req, res) {
-
             res.sendFile(path.join(__dirname, '/public/index.html'));
         };
     };
-
-
     /**
      *  Initialize the server (express) and create the routes and register
      *  the handlers.
@@ -136,12 +143,19 @@ var App = function() {
         // Create the express server and routes.
         self.initializeServer();
 
+        var compiler;
 
         if (isProd) {
+
+            // returns a Compiler instance
+            compiler= webpack(config);
+
             compiler.run(function(err, stats) {
                 console.log('Webpack run!');
             });
         } else {
+            compiler= webpack(localConfig);
+
             compiler.watch({ // watch options:
                 aggregateTimeout: 300, // wait so long for more changes
                 poll: true // use polling instead of native watchers
@@ -150,8 +164,6 @@ var App = function() {
             });
         }
     };
-
-
     /**
      *  Start the server (starts up the sample application).
      */
@@ -164,8 +176,6 @@ var App = function() {
     };
 
 }; /*  Sample Application.  */
-
-
 
 /**
  *  main():  Main code.

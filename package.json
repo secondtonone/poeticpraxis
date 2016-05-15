@@ -23,6 +23,8 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
+    "babel-core": "^6.8.0",
+    "babel-loader": "^6.2.4",
     "express": "^4.13.4",
     "jquery": "^2.2.3",
     "react": "^15.0.2",
