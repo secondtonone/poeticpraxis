@@ -23,9 +23,8 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
-    "express": "^4.13.4",
+    "express": "^4.13.4"
   },
-
   "devDependencies": {
     "extract-text-webpack-plugin": "^1.0.1",
     "jquery": "^2.2.3",
@@ -44,7 +43,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "babel-core": "^6.9.0",
-    "babel-loader": "^6.2.4",
+    "babel-loader": "^6.2.4"
   },
   "bundleDependencies": [],
   "private": true,
