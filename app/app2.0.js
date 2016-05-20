@@ -1,146 +1,147 @@
-//для статистики
 var workFieldModel = [];
 var counterChar = 0;
 var counterLine = 0;
 var vowelArray = [];
+var ghostWorkField = $('.fake-field');
 //иницилизация
 function init() {
-   $('.work-field')[0].focus();
+    $('.work-field')[0].focus();
 }
 
-function caretPlace (el) {
 
-   var lastElement = '';
+function caretPlace(el) {
 
-   el.focus();
+    var lastElement = '';
 
-   if (window.getSelection) {
+    el.focus();
 
-      var sel = window.getSelection();
-      //создаем range размером с контейнер
-      range.selectNodeContents(el);
-      range.collapse(false);
-      //создаем выделение
-      sel.removeAllRanges();
-      sel.addRange(range);
+    if (window.getSelection) {
+
+        var sel = window.getSelection();
+        //создаем range размером с контейнер
+        range.selectNodeContents(el);
+        range.collapse(false);
+        //создаем выделение
+        sel.removeAllRanges();
+        sel.addRange(range);
 
 
-      //элемент после каретки
-      lastElement = sel.anchorNode.parentElement.id;
+        //элемент после каретки
+        lastElement = sel.anchorNode.parentElement.id;
 
-      console.log(lastElement);
+        console.log(lastElement);
 
-   } else if (document.body.createTextRange) {
-      var textRange = document.body.createTextRange();
-      textRange.moveToElementText(el);
-      textRange.collapse(false);
-      textRange.select();
-      lastElement = textRange.parentElement.id;
-   }
+    } else if (document.body.createTextRange) {
+        var textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(false);
+        textRange.select();
+        lastElement = textRange.parentElement.id;
+    }
 
-   console.log(lastElement);
+    console.log(lastElement);
 
-   return lastElement;
+    return lastElement;
 }
 //ставим каретку в конец строки
 function placeCaretAtEnd(el) {
 
-   var lastElement = '';
+    var lastElement = '';
 
-   el.focus();
+    el.focus();
 
-   if (window.getSelection && document.createRange) {
-      var range = document.createRange();
-      var sel = window.getSelection();
-      //создаем range размером с контейнер
-      range.selectNodeContents(el);
-      range.collapse(false);
-      //создаем выделение
-      sel.removeAllRanges();
-      sel.addRange(range);
+    if (window.getSelection && document.createRange) {
+        var range = document.createRange();
+        var sel = window.getSelection();
+        //создаем range размером с контейнер
+        range.selectNodeContents(el);
+        range.collapse(false);
+        //создаем выделение
+        sel.removeAllRanges();
+        sel.addRange(range);
 
-      console.log(sel);
-      console.log(range);
+        console.log(sel);
+        console.log(range);
 
 
-   } else if (document.body.createTextRange) {
-      var textRange = document.body.createTextRange();
-      textRange.moveToElementText(el);
-      textRange.collapse(false);
-      textRange.select();
-      lastElement = textRange.parentElement.id;
-   }
+    } else if (document.body.createTextRange) {
+        var textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(false);
+        textRange.select();
+        lastElement = textRange.parentElement.id;
+    }
 }
 //генерируем шаблон для символа
 function generateTemp(code, node) {
 
-   var id = ++counterChar;
+    var id = ++counterChar;
 
-   var temp = {};
-   var fakeTemp = {};
-   var char = '';
+    var temp = {};
+    var fakeTemp = {};
+    var char = '';
 
-   if (code === 13) {
-      temp = $('<span/>', {
-         id: 'lb-' + id,
-         class: 'break'
-      });
+    if (code === 13) {
+        temp = $('<span/>', {
+            id: 'lb-' + id,
+            class: 'break'
+        });
 
-      fakeTemp = $('<div/>');
+        fakeTemp = $('<div/>');
 
-      fakeTemp.append(temp);
-      fakeTemp.append('&zwnj;');
+        fakeTemp.append(temp);
+        fakeTemp.append('&zwnj;');
 
-      temp = fakeTemp.html();
+        temp = fakeTemp.html();
 
-   } else if (code === 32) {
-      temp = $('<span/>', {
-         id: 'sp-' + id,
-         class: 'space'
-      });
+    } else if (code === 32) {
+        temp = $('<span/>', {
+            id: 'sp-' + id,
+            class: 'space'
+        });
 
-      temp.html('&nbsp;');
+        temp.html('&nbsp;');
 
-   } else {
+    } else {
 
-      char = getChar(code);
+        char = getChar(code);
 
-      if (isVowel(char)) {
-         //vowel-гласная
-         temp = $('<span/>', {
-            id: 'v-' + id,
-            class: 'black'
-         });
+        if (isVowel(char)) {
+            //vowel-гласная
+            temp = $('<span/>', {
+                id: 'v-' + id,
+                class: 'black'
+            });
 
-         temp.on('click', function() {
-            $(this).toggleClass("red black");
-         });
-      } else {
-         //consonantal-согласная
-         temp = $('<span/>', {
-            id: 'c-' + id,
-            class: 'regular'
-         });
-      }
+            temp.on('click', function() {
+                $(this).toggleClass("red black");
+            });
+        } else {
+            //consonantal-согласная
+            temp = $('<span/>', {
+                id: 'c-' + id,
+                class: 'regular'
+            });
+        }
 
-      temp.html(char);
-   }
+        temp.html(char);
+    }
 
-   return temp;
+    return temp;
 }
 //определние гласных
 function isVowel(char) {
-   return /^[aeiouуеыаоэёяию]$/.test(char.toLowerCase());
+    return /^[aeiouуеыаоэёяию]$/.test(char.toLowerCase());
 }
 
 function isLetter(char) {
-   return /^[a-zA-ZА-Яа-яёЁ]$/.test(char.toLowerCase());
+    return /^[a-zA-ZА-Яа-яёЁ]$/.test(char.toLowerCase());
 }
 //код символа превращаем в букву
 //32 - пробел, 13 - enter
 function getChar(code) {
-   var char = String.fromCharCode(code);
-   return char;
+    var char = String.fromCharCode(code);
+    return char;
 }
 //для delete клавиши,  press не ловит
 //удаляет br-теги
@@ -175,105 +176,101 @@ function getChar(code) {
 });*/
 
 $('.work-field').on('click', function(e) {
-   $('.work-field')[0].focus();
+    $('.work-field')[0].focus();
 });
 
 
 $('.work-field').on('input', function(e) {
-   //отменяем стандартное поведение
-   console.log(e);
 
-   e.preventDefault();
+    console.log(e.target.innerText);
 
-   var fieldArray = [];
+    e.preventDefault();
 
-   var children = e.target.childNodes;
+    var tagsArray = [];
 
-   $.each(children, function (index) {
+    var children = e.target.innerText.split("");
 
-      console.log(this);
+    $.each(children, function(index) {
 
-      if(this.nodeType == 3) {
-
-         var text = this.nodeValue.split("");
-         var string = '';
-
-         var stringTemp = '';
-
-         $.each(text, function (index) {
-
-            if(isLetter(this)) {
-
-               var id = ++counterChar;
-
-               var temp = {};
-
-               var div = $('<div/>');
+        console.log(this);
 
 
-               if(isVowel(this)) {
+        if (isLetter(this)) {
 
-                  temp = $('<span/>', {
-                     id: 'v-' + id,
-                     class: 'black',
-                     contentEditable: false
-                  });
+            var id = ++counterChar;
 
-                  vowelArray.push('v-' + id);
+            var temp = {};
 
-               } else {
+            var div = $('<div/>');
 
-                  temp = $('<span/>', {
-                     id: 'c-' + id,
-                     class: 'regular',
-                     contentEditable: false
-                  });
 
-               }
+            if (isVowel(this)) {
 
-               stringTemp = temp.html(this)[0].outerHTML;
+                temp = $('<span/>', {
+                    id: 'v-' + id,
+                    class: 'black',
+                    contentEditable: false
+                });
 
-               string += stringTemp;
+                vowelArray.push('v-' + id);
 
             } else {
 
-               string += this;
+                temp = $('<span/>', {
+                    id: 'c-' + id,
+                    class: 'regular',
+                    contentEditable: false
+                });
 
             }
 
-         });
+            tagsArray.push(temp.html(this)[0].outerHTML);
 
-         fieldArray.push(string);
+        } else {
 
-         console.log(string);
+            tagsArray.push(this);
 
-      } else {
+        }
 
-         fieldArray.push(this.outerHTML);
+    });
 
-      }
+    console.log(tagsArray.join(''));
 
-   });
+    ghostWorkField.html('');
 
-   console.log(fieldArray);
+    ghostWorkField.append(tagsArray.join(''));
 
-   $('.work-field').html('');
+    console.log(ghostWorkField[0].children);
 
-   $('.work-field').append(fieldArray.join(''));
+    $.each(ghostWorkField[0].children, function(index) {
 
-   $.each(vowelArray, function (index) {
-
-      $('#' + this).click( function() {
-         $(this).toggleClass('red black');
-      });
-
-   });
+        if(this.className == 'black') {
 
 
+            var temp = $('<div/>', {
+                /*id: 'lb-' + id,*/
+                contentEditable: false,
+                css: {
+                    position: 'absolute',
+                    width: $(this).width() + 'px',
+                    height: $(this).height() + 'px',
+                    top:$(this).position().top + 'px',
+                    left:$(this).position().left + 'px'
+                }
+            });
 
-   placeCaretAtEnd($('.work-field')[0]);
+            this.innerHTML = '';
 
+            temp.html(this.outerHTML);
 
+            console.log(this.outerHTML);
+
+            console.log(temp);
+
+            $('.work-field').append(temp);
+        }
+
+    });
 
 });
 

@@ -3,41 +3,12 @@
 var express = require('express');
 
 var fs = require('fs');
-var path = require("path");
+var path = require('path');
 
-var webpack = require("webpack");
+var webpack = require('webpack');
 
-/*var React = require('react');
-var ReactDOM = require('react-dom');*/
-//var jQuery = require("jquery");
-
-var config = {
-    entry: {
-        app: [path.join(__dirname, 'app/app.js')]
-    },
-    output: {
-        path: path.join(__dirname, 'public/js'), // выходная директория
-        filename: 'app.js'
-    },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin()
-    ]
-};
-
-var localConfig = {
-    entry: {
-        app: [path.join(__dirname, 'app/app2.0.js')]
-    },
-    output: {
-        path: path.join(__dirname, 'public/js'), // выходная директория
-        filename: 'app.js'
-    },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin()
-    ]
-};
-
-
+var configDev = require('./webpack.config.js');
+var configProd = require('./webpack.production.config.js');
 
 /**
  *  Define the sample application.
@@ -46,7 +17,6 @@ var App = function() {
 
     //  Scope.
     var self = this;
-    var isProd = true;
 
     /*  ================================================================  */
     /*  Helper functions.                                                 */
@@ -59,14 +29,14 @@ var App = function() {
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+        process.env.NODE_ENV = 'prodaction';
 
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
             //  allows us to run/test the app locally.
             self.ipaddress = "localhost";
             self.port = 9080;
-
-            isProd = false;
+            process.env.NODE_ENV = 'development';
         }
     };
     /**
@@ -145,16 +115,11 @@ var App = function() {
 
         var compiler;
 
-        if (isProd) {
-
-            // returns a Compiler instance
-            compiler= webpack(config);
-
-            compiler.run(function(err, stats) {
-                console.log('Webpack run!');
-            });
+        if (process.env.NODE_ENV === 'prodaction') {
+            compiler= webpack(configProd);
+            compiler.run();
         } else {
-            compiler= webpack(localConfig);
+            compiler= webpack(configDev);
 
             compiler.watch({ // watch options:
                 aggregateTimeout: 300, // wait so long for more changes
