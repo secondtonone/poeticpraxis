@@ -25,6 +25,7 @@ class WorkField extends React.Component {
         return /^[a-zA-ZА-Яа-яёЁ]$/.test(char.toLowerCase());
     }
 
+
     handleTextChange(e) {
 
         let self = this;
@@ -83,6 +84,7 @@ class WorkField extends React.Component {
         console.log(tagsArray.join(''));
 
         ghostWorkField.html('');
+
 
         ghostWorkField.append(tagsArray.join(''));
 
