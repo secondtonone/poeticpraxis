@@ -92,6 +92,9 @@ class WorkField extends React.Component {
 
             if(this.className == 'black') {
 
+                console.log(this.offsetTop,this.offsetLeft);
+
+                console.log($(this).position().top,$(this).position().left );
 
                 var temp = $('<div/>', {
                     /*id: 'lb-' + id,*/
@@ -100,8 +103,8 @@ class WorkField extends React.Component {
                         position: 'absolute',
                         width: $(this).width() + 'px',
                         height: $(this).height() + 'px',
-                        top:$(this).position().top + 'px',
-                        left:$(this).position().left + 'px'
+                        top:this.offsetTop + 'px',
+                        left:this.offsetLeft + 'px'
                     }
                 });
 
