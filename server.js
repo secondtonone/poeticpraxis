@@ -5,7 +5,7 @@ var express = require('express');
 var fs = require('fs');
 var path = require('path');
 
-var webpack = {};
+var webpack = require('webpack');
 
 var configDev = require('./webpack.config.js');
 var configProd = require('./webpack.production.config.js');
@@ -115,10 +115,10 @@ var App = function() {
 
         var compiler;
 
-        if (process.env.NODE_ENV === 'development') {
-
-            webpack = require('webpack');
-
+        if (process.env.NODE_ENV === 'prodaction') {
+            compiler= webpack(configProd);
+            compiler.run();
+        } else {
             compiler= webpack(configDev);
 
             compiler.watch({ // watch options:
