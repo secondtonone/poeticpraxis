@@ -21,14 +21,16 @@ module.exports = {
         }, {
             test: /\.scss$/,
             loaders: ['style', 'css-loader?-url&-import', 'sass']
-        }/*, {
-            test: /\.(jpe?g|png|gif|svg|cur|woff|woff2|eot|ttf)$/,
-            loader: 'ignore-loader'
-        }*/]
+        }]
 
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
     ]
 };

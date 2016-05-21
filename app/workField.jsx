@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
+
 class WorkField extends React.Component {
 
     constructor(props) {
@@ -25,7 +26,6 @@ class WorkField extends React.Component {
         return /^[a-zA-ZА-Яа-яёЁ]$/.test(char.toLowerCase());
     }
 
-
     handleTextChange(e) {
 
         let self = this;
@@ -43,7 +43,6 @@ class WorkField extends React.Component {
         $.each(children, function(index) {
 
             console.log(this);
-
 
             if (self.isLetter(this)) {
 
