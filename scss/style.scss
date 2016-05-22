@@ -303,7 +303,7 @@ body {
    height: 0;
 }
 
-.regular, .vowel {
+.regular {
    color: black;
 }
 
@@ -311,7 +311,7 @@ body {
    height: 0;
 }
 
-.break:after {
+.break::after {
     content: '\A';
     white-space: pre;
 }

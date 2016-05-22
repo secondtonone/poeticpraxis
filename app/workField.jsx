@@ -26,11 +26,18 @@ class WorkField extends React.Component {
         return /^[a-zA-ZА-Яа-яёЁ]$/.test(char.toLowerCase());
     }
 
+    isBreakLine(char) {
+        return /\n/g.test(char.toLowerCase());
+    }
+
     handleTextChange(e) {
 
         const self = this;
 
         let ghostWorkField = $('.fake-field');
+
+
+        $('#field').find('span').remove();
 
         console.log(e.target.innerText);
 
@@ -42,17 +49,19 @@ class WorkField extends React.Component {
 
         $.each(children, function(index) {
 
-            console.log(this);
+            let symbol = this;
 
-            if (self.isLetter(this)) {
-
-                let id = ++self.counterChar;
-
-                let temp = $('<span/>', {
+            let temp = $('<span/>', {
                     contentEditable: false
                 });
 
-                if (self.isVowel(this)) {
+            if (self.isLetter(symbol)) {
+
+                let id = ++self.counterChar;
+
+
+
+                if (self.isVowel(symbol)) {
 
                     temp.addClass('black').attr('id','v-' + id);
 
@@ -64,24 +73,35 @@ class WorkField extends React.Component {
 
                 }
 
-                tagsArray.push(temp.html(this)[0].outerHTML);
-
-            } else {
-
-                tagsArray.push(this);
-
             }
+
+            if (self.isBreakLine(symbol)) {
+                temp = $('<div/>', {
+                    contentEditable: false
+                });
+            }
+
+            temp[0].innerHTML = symbol;
+
+            symbol = temp[0].outerHTML;
+
+
+            tagsArray.push(symbol);
+
 
         });
 
-        ghostWorkField.html('');
+        console.log(tagsArray);
+
+        ghostWorkField[0].innerHTML = '';
 
 
         ghostWorkField.append(tagsArray.join(''));
 
+
         console.log(ghostWorkField);
 
-        let childs = ghostWorkField[0].childNodes;
+        let childs = ghostWorkField[0].children;
 
         $.each(childs, function(index) {
 
@@ -103,13 +123,14 @@ class WorkField extends React.Component {
                     }
                 });
 
-                this.innerHTML = '';
+                let tag = $('<span/>', {
+                    contentEditable: false,
+                    class: 'black'
+                });
 
-                temp[0].innerHTML = this.outerHTML;
+                temp.append(tag);
 
                 console.log(this.outerHTML);
-
-                console.log(temp);
 
                 document.getElementById('field').appendChild(temp[0]);
             }
