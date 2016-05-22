@@ -4,11 +4,11 @@ var express = require('express');
 
 var fs = require('fs');
 var path = require('path');
-
+/*
 var webpack = {};
 
 var configDev = require('./webpack.config.js');
-var configProd = require('./webpack.production.config.js');
+var configProd = require('./webpack.production.config.js');*/
 
 /**
  *  Define the sample application.
@@ -113,7 +113,7 @@ var App = function() {
         // Create the express server and routes.
         self.initializeServer();
 
-        var compiler;
+       /* var compiler;
 
         if (process.env.NODE_ENV === 'development') {
 
@@ -127,7 +127,7 @@ var App = function() {
             }, function(err, stats) {
                 console.log('Webpack watching!');
             });
-        }
+        }*/
     };
     /**
      *  Start the server (starts up the sample application).

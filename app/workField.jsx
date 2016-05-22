@@ -28,7 +28,7 @@ class WorkField extends React.Component {
 
     handleTextChange(e) {
 
-        let self = this;
+        const self = this;
 
         let ghostWorkField = $('.fake-field');
 
@@ -46,27 +46,21 @@ class WorkField extends React.Component {
 
             if (self.isLetter(this)) {
 
-                var id = ++self.counterChar;
+                let id = ++self.counterChar;
 
-                var temp = {};
+                let temp = $('<span/>', {
+                    contentEditable: false
+                });
 
                 if (self.isVowel(this)) {
 
-                    temp = $('<span/>', {
-                        id: 'v-' + id,
-                        class: 'black',
-                        contentEditable: false
-                    });
+                    temp.addClass('black').attr('id','v-' + id);
 
                     self.state.vowelArray.push('v-' + id);
 
                 } else {
 
-                    temp = $('<span/>', {
-                        id: 'c-' + id,
-                        class: 'regular',
-                        contentEditable: false
-                    });
+                    temp.addClass('regular').attr('id','c-' + id);
 
                 }
 
@@ -80,24 +74,24 @@ class WorkField extends React.Component {
 
         });
 
-        console.log(tagsArray.join(''));
-
         ghostWorkField.html('');
 
 
         ghostWorkField.append(tagsArray.join(''));
 
-        console.log(ghostWorkField[0].children);
+        console.log(ghostWorkField);
 
-        $.each(ghostWorkField[0].children, function(index) {
+        let childs = ghostWorkField[0].childNodes;
+
+        $.each(childs, function(index) {
 
             if(this.className == 'black') {
 
-                console.log(this.offsetTop,this.offsetLeft);
+                console.log(this);
 
                 console.log($(this).position().top,$(this).position().left );
 
-                var temp = $('<div/>', {
+                let temp = $('<div/>', {
                     /*id: 'lb-' + id,*/
                     contentEditable: false,
                     css: {
