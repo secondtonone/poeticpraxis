@@ -9,7 +9,7 @@
     <title>POETIC PRAXIS</title>
     <meta name="google-site-verification" content="sohMAevZvZLTrp8D-OtMPYWyIvtqo8wqbzrhyV3JNXI" />
     <meta name="description" content="Увидь поэзию.">
-    <meta name="keywords" content="поэзия стихи размер метр стопа ударение гласная стихотворение поэт поэтический лирика литература творчество">
+    <meta name="keywords" content="поэзия стихи размер метр стопа строфа ударение гласная стихотворение поэт поэтический лирика литература творчество">
     <meta property="og:title" content="POETIC PRAXIS">
     <meta property="og:description" content="Увидь поэзию.">
     <meta property="og:image" content="/img/Logo.png">
@@ -40,11 +40,12 @@
             </ul> -->
         </nav>
     </header>
+
+    <div id="app">
+
+    </div>
     <div class="background"></div>
     <div class="lists" id="work-field-container">
-        <!-- <div class="list work-field fake-field">
-        </div>
-        <div class="list work-field" contenteditable="true"></div> -->
     </div>
     <!-- <button type="button" class="linting-button button_rounded">
             <img src="img/Sign.png" alt="sign" height="20" width="20">
@@ -56,8 +57,8 @@
         <div class="list list_5"></div>
         <div class="list list_6"></div> -->
     </div>
-    <!-- <script src="js/app.js"></script>
- -->    <script src="js/app.js"></script>
+
+    <script src="js/app.js"></script>
     <script>
      (function(i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
@@ -73,6 +74,17 @@
 
         ga('create', 'UA-77286868-1', 'auto');
         ga('send', 'pageview');
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBdbgCfcFIcC1q4OXpdcmUo5oM8w1VaTtY",
+        authDomain: "poetic-praxis.firebaseapp.com",
+        databaseURL: "https://poetic-praxis.firebaseio.com",
+        storageBucket: "poetic-praxis.appspot.com",
+      };
+      firebase.initializeApp(config);
     </script>
 </body>
 
