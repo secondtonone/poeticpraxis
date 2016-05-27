@@ -1,21 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import WorkField from './workField.jsx';
-import Menu from './routing.jsx';
-import '../scss/style.scss';
+import { render } from 'react-dom';
+import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
+/*import Menu from './menu.jsx';*/
+import App from './app.jsx';
+import Table from './table.jsx';
+import About from './about.jsx';
 
 
-ReactDOM.render(<Menu />, document.getElementById('navigation'));
-ReactDOM.render(<WorkField />, document.getElementById('work-field-container'));
+render(
+    (<Router history={hashHistory}>
+        <Route path="/" component={App}>
+            <IndexRedirect to="/app" />
+            <Route path="/app" component={Table} />
+            <Route path="/about" component={About} />
+        </Route>
+    </Router>), document.getElementById('app')
+);
 
-/*ReactDOM.render((
-   <Router history = {browserHistory}>
-      <Route path = "/" component = {App}>
-         <IndexRoute component = {Home} />
-         <Route path = "home" component = {Home} />
-         <Route path = "about" component = {About} />
-         <Route path = "contact" component = {Contact} />
-      </Route>
-   </Router>
+//render(<Menu />, document.getElementById('navigation'));
 
-), document.getElementById('navigation'));*/
+/*render(<WorkField />, document.getElementById('work-field-container'));*/

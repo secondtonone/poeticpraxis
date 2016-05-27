@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
 
@@ -16,7 +15,6 @@ class WorkField extends React.Component {
 
         this.handleTextChange = this.handleTextChange.bind(this);
     }
-
 
     isVowel(char) {
         return /^[aeiouуеыаоэёяию]$/.test(char.toLowerCase());
@@ -131,6 +129,10 @@ class WorkField extends React.Component {
                 temp.append(tag);
 
                 console.log(this.outerHTML);
+
+                temp.on('click', function() {
+                    $(this).children().toggleClass("red black");
+                });
 
                 document.getElementById('field').appendChild(temp[0]);
             }

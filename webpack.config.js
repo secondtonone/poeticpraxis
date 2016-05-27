@@ -1,9 +1,11 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: {
-        '/public/js/app.js': ['./app/index.js', './scss/style.scss']
+        '/public/js/app.js': './app/index.js',
+        '/public/css/style.css': './scss/style.scss'
     },
     output: {
         path: './',
@@ -19,17 +21,22 @@ module.exports = {
             }
         }, {
             test: /\.scss$/,
-            loaders: ['style', 'css-loader?-url&-import', 'sass']
+            loader:
+                ExtractTextPlugin.extract('style', 'css-loader?-url&-import', 'sass')
+
         }]
 
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+/*        new webpack.HotModuleReplacementPlugin(),*/
         new webpack.NoErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
             }
+        }),
+        new ExtractTextPlugin('/public/css/style.css', {
+            allChunks: true
         })
     ]
 };
