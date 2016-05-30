@@ -299,7 +299,6 @@ body {
 }
 
 .black {
-    position: relative;
     cursor: url('../img/red_triangle.svg'),
             url('../img/red_triangle.cur'),
             url('../img/red_triangle.png'), auto;
@@ -318,8 +317,8 @@ body {
 }
 
 .red {
-   position: relative;
-   cursor: url('../img/black_triangle.svg'),
+
+    cursor: url('../img/black_triangle.svg'),
             url('../img/black_triangle.cur'),
             url('../img/black_triangle.png'), auto;
 

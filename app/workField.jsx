@@ -8,7 +8,8 @@ class WorkField extends React.Component {
         super(props);
 
         this.state = {
-            vowelArray: []
+            vowelArray: [],
+            string:{}
         };
 
         this.counterChar = 0;

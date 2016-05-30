@@ -2,6 +2,17 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export default class Menu extends React.Component {
+
+
+    constructor(props) {
+
+        super(props);
+
+        this.lang = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage);
+
+        this.state = {};
+    }
+
     render() {
         return (
             <nav className="navbar">
