@@ -44,5 +44,9 @@
   },
   "bundleDependencies": [],
   "private": true,
-  "main": "server.js"
+  "main": "server.js",
+  "scripts" : {
+    "start": "node server.js",
+    "watch": "NODE_ENV=production webpack --progress --colors --watch"
+  }
 }

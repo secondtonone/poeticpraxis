@@ -96,14 +96,12 @@ acronym {
     border: 0;
 }
 
-
 @font-face {
     font-family: Qolyazma;
     src: local('UKIJ Qolyazma'), local('UKIJQolyazma'), url('../font/ukijqolyazma.woff2') format('woff2'), url('../font/ukijqolyazma.woff') format('woff'), url('../font/ukijqolyazma.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
-/* Standard syntax */
 
 @keyframes blured {
     50% {
@@ -116,8 +114,6 @@ acronym {
         opacity: 0.9;
     }
 }
-
-/* Standard syntax */
 
 @keyframes unscale {
     50% {
@@ -164,6 +160,16 @@ acronym {
     }
 }
 
+@keyframes hide {
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        top: -560px;
+    }
+}
+
 
 
 
@@ -171,7 +177,7 @@ body {
     background: rgba(251, 250, 245, 0.1);
 }
 
-.menu-list {
+.navbar {
     position: fixed;
     width: 100%;
     background-color: #F9F8F7;;
@@ -223,6 +229,18 @@ body {
     z-index: 12;
 }
 
+.logo-navbar {
+    background: url('../img/Logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 62px;
+    width: 108px;
+    position: absolute;
+    left: 15px;
+    top: 6px;
+    display: none;
+}
+
 .logo-background {
     position: fixed;
     width: 687px;
@@ -262,11 +280,8 @@ body {
 
 .work-field {
     position: relative;
-
-
     z-index: 10;
     outline: none;
-
     transform: scale(0.43);
     animation-name: unscale;
     animation-delay:3s;
@@ -277,6 +292,10 @@ body {
     cursor: url('../img/pen.svg'),
             url('../img/pen.cur'),
             url('../img/pen.png'), auto;
+}
+
+.fake-field {
+    opacity: 0;
 }
 
 .black {
@@ -361,6 +380,13 @@ body {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    transform: scale(0.43);
+    animation-name: unscale;
+    animation-delay:3s;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
 
 }
 
@@ -544,31 +570,82 @@ body {
     padding: 15px;
 }
 
+@media (max-width: 786px) {
+    .logo-background {
+        top: -238px;
+        left: -136px;
+    }
+
+    .logo {
+        top: 208px;
+        left: 50px;
+    }
+}
+
+@media (max-width: 640px) {
+    .logo-background {
+        display: none;
+    }
+
+    .logo-navbar {
+        display: block;
+    }
+
+    .list {
+        width: 95%;
+    }
+
+    .lists {
+        width: 100%;
+    }
+}
+
 
 @media (max-width: 450px) {
+
+    .logo {
+        top: 173px;
+        left: 50px;
+        width: 368px;
+        height: 202px;
+    }
+
+    .logo-background {
+        display: block;
+        opacity: 1;
+        top: -82px;
+        transform: rotate(696deg) scale(1);
+        animation-name: hide;
+        animation-delay:3s;
+        animation-duration: 3s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        animation-timing-function: linear;
+    }
+
     .list {
         position: absolute;
-        width: 90%;
-        height: 542px;
+        width: 100%;
+        height: 1000px;
+        top: 0;
+        opacity: 0;
+        transform: scale(1);
+        animation-name: show;
+        animation-delay:3s;
+        animation-duration: 3s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        animation-timing-function: linear;
     }
 
     .lists {
         position: relative;
-        top: 200px;
-        height: 700px;
-        top: 180px;
+        height: auto;
+        top: 0;
     }
 
-    .logo {
-        height: 100px;
-        top: 137px;
-        left: 74px;
-    }
-
-    .logo-background {
-        width: 542px;
-        height: 231px;
-        top: -150px;
+    .logo-navbar {
+        display: none;
     }
 
     .work-field {
@@ -595,7 +672,22 @@ body {
         left: 1px;
     }
 
-    .fake-field {
-        display: none;
+    .menu {
+        float: none;
+        text-align: center;
+    }
+
+
+    .navbar {
+        bottom: 0;
+        top: auto;
+        opacity: 0;
+        transform: translateY(0);
+        animation-name: show;
+        animation-delay:3s;
+        animation-duration: 3s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        animation-timing-function: linear;
     }
 }

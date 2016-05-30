@@ -93,9 +93,7 @@ class WorkField extends React.Component {
 
         ghostWorkField[0].innerHTML = '';
 
-
         ghostWorkField.append(tagsArray.join(''));
-
 
         console.log(ghostWorkField);
 
