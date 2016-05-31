@@ -14,7 +14,10 @@ export default class App extends React.Component {
                     <Menu />
                 </header>
                 <div className="background"></div>
+                <section className="main-content">
                 {this.props.children}
+                </section>
+                <footer></footer>
             </div>
         )
     }
