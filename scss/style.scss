@@ -384,7 +384,16 @@ body {
    height: 0;
 }
 
-.break::after {
+/*
+    можно использовать один break без before
+ */
+/*
+
+.break {
+    display: table;
+} */
+
+.break::before {
     content: '\A';
     white-space: pre;
 }
