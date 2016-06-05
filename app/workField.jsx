@@ -15,6 +15,10 @@ class WorkField extends React.Component {
         this.counterChar = 0;
 
         this.handleTextChange = this.handleTextChange.bind(this);
+
+        setTimeout(function () {
+            document.getElementById('field').focus();
+        }, 7000);
     }
 
     isVowel(char) {
