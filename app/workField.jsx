@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
-
+/*
+    добавление букв можно написать через react, ровно как и тэгов
+*/
 
 class WorkField extends React.Component {
 
@@ -15,10 +17,14 @@ class WorkField extends React.Component {
         this.counterChar = 0;
 
         this.handleTextChange = this.handleTextChange.bind(this);
+    }
 
-        setTimeout(function () {
-            document.getElementById('field').focus();
-        }, 7000);
+    componentDidMount(){
+        setTimeout(this.fieldFocusing, 8000);
+    }
+
+    fieldFocusing() {
+        document.getElementById('field').focus();
     }
 
     isVowel(char) {

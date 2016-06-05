@@ -45,7 +45,7 @@
   "bundleDependencies": [],
   "private": true,
   "main": "server.js",
-  "scripts" : {
+  "scripts": {
     "start": "node server.js",
     "watch": "NODE_ENV=production webpack --progress --colors --watch"
   }
