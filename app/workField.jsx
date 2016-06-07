@@ -4,6 +4,17 @@ import $ from 'jquery';
     добавление букв можно написать через react, ровно как и тэгов
 */
 
+class Letter extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (<span className="{this.props.class}" contentEditable="true" id="{this.props.id}">{this.props.letter}</span>);
+    }
+}
+
+
 class WorkField extends React.Component {
 
     constructor(props) {
@@ -72,7 +83,11 @@ class WorkField extends React.Component {
 
                 if (self.isVowel(symbol)) {
 
+                    id = 'v-' + id;
+
                     temp.addClass('black').attr('id','v-' + id);
+
+                    /*tagsArray.push(<Letter class={'black'} id={id} letter={symbol} />);*/
 
                     self.state.vowelArray.push('v-' + id);
 
@@ -159,7 +174,5 @@ class WorkField extends React.Component {
     }
 
 }
-
-/*ReactDOM.render(<workField />, document.getElementById('work-field-container'));*/
 
 export default WorkField;
