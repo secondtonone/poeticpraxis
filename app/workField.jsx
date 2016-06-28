@@ -1,18 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
+import letterContainer from './letterContainer.jsx';
 /*
     добавление букв можно написать через react, ровно как и тэгов
 */
-
-class Letter extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (<span className="{this.props.class}" contentEditable="true" id="{this.props.id}">{this.props.letter}</span>);
-    }
-}
 
 
 class WorkField extends React.Component {
@@ -22,12 +13,11 @@ class WorkField extends React.Component {
 
         this.state = {
             vowelArray: [],
-            string:{}
+            string:{},
+            tagsArray: []
         };
 
         this.counterChar = 0;
-
-        this.handleTextChange = this.handleTextChange.bind(this);
     }
 
     componentDidMount(){
@@ -63,8 +53,6 @@ class WorkField extends React.Component {
 
         e.preventDefault();
 
-        var tagsArray = [];
-
         var children = e.target.innerText.split("");
 
         $.each(children, function(index) {
@@ -79,23 +67,29 @@ class WorkField extends React.Component {
 
                 let id = ++self.counterChar;
 
-
+                let className = '';
 
                 if (self.isVowel(symbol)) {
 
                     id = 'v-' + id;
 
-                    temp.addClass('black').attr('id','v-' + id);
+                    className = 'black';
 
-                    /*tagsArray.push(<Letter class={'black'} id={id} letter={symbol} />);*/
+                    /*temp.addClass('black').attr('id',id);*/
 
                     self.state.vowelArray.push('v-' + id);
 
                 } else {
 
-                    temp.addClass('regular').attr('id','c-' + id);
+                    id = 'c-' + id;
+
+                    className = 'regular';
+
+                    /*temp.addClass('regular').attr('id', id);*/
 
                 }
+
+                this.state.tagsArray.push(<Letter type={className} id={id} symbol={symbol} />);
 
             }
 
@@ -105,21 +99,23 @@ class WorkField extends React.Component {
                 });
             }
 
-            temp[0].innerHTML = symbol;
+            /*temp[0].innerHTML = symbol;
 
             symbol = temp[0].outerHTML;
 
 
-            tagsArray.push(symbol);
+            this.state.tagsArray.push(symbol);*/
+
+            this.state.tagsArray.push(<Letter symbol={symbol} />);
 
 
         });
 
-        console.log(tagsArray);
+        console.log(this.state.tagsArray);
 
         ghostWorkField[0].innerHTML = '';
 
-        ghostWorkField.append(tagsArray.join(''));
+        ghostWorkField.append(this.state.tagsArray.join(''));
 
         console.log(ghostWorkField);
 
@@ -167,8 +163,8 @@ class WorkField extends React.Component {
     render() {
         return (
             <div>
-                <div className="list work-field fake-field"></div>
-                <div className="list work-field" id="field" contentEditable="true" onInput={this.handleTextChange} ></div>
+                <div className="list work-field fake-field">{this.state.tagsArray}</div>
+                <div className="list work-field" id="field" contentEditable="true" onInput={()=>this.handleTextChange} ></div>
             </div>
         )
     }
