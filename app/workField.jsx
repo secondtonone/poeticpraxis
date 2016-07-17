@@ -163,7 +163,7 @@ class WorkField extends React.Component {
     render() {
         return (
             <div>
-                <div className="list work-field fake-field">{this.state.tagsArray}</div>
+                <div className="list work-field fake-field" ref="fakeField">{this.state.tagsArray}</div>
                 <div className="list work-field" id="field" contentEditable="true" onInput={()=>this.handleTextChange} ></div>
             </div>
         )

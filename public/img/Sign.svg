@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>A</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="New-Logo" transform="translate(-307.000000, -307.000000)">
+            <g id="A" transform="translate(307.000000, 312.000000)">
+                <polygon points="2 41 18.4440678 0 35 41"></polygon>
+                <polygon id="Triangle-9" fill="#212121" points="25 0 50 41 0 41"></polygon>
+                <polygon id="Triangle-9" fill="#E53935" points="25 11 43 41 7 41"></polygon>
+                <rect id="Rectangle-11" fill="#212121" x="6" y="35" width="38" height="6"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
