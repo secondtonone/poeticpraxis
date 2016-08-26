@@ -4,10 +4,17 @@ import React from 'react';
 export default class Letter extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            letter: {}
+        };
     }
 
     componentDidMount(){
         this.state.letter = this.refs.Letter;
+
+        console.log('Letter',this.state.letter);
+        this.props.addLetter(this.state.letter);
     }
 
     render() {

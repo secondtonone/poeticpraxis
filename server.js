@@ -4,6 +4,13 @@ var express = require('express');
 
 var fs = require('fs');
 var path = require('path');
+var https = require('https');
+var key = fs.readFileSync('./poeticpraxis-key.pem');
+var cert = fs.readFileSync('./poeticpraxis-cert.pem');
+var https_options = {
+    key: key,
+    cert: cert
+};
 /*
 var webpack = {};
 

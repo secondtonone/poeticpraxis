@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-import letterContainer from './letterContainer.jsx';
+import Letter from './letterContainer.jsx';
 /*
     добавление букв можно написать через react, ровно как и тэгов
 */
@@ -14,10 +14,13 @@ class WorkField extends React.Component {
         this.state = {
             vowelArray: [],
             string:{},
-            tagsArray: []
+            tagsArray: [],
+            lettersArray: []
         };
 
         this.counterChar = 0;
+
+        this.handleTextChange = this.handleTextChange.bind(this);
     }
 
     componentDidMount(){
@@ -39,6 +42,11 @@ class WorkField extends React.Component {
     isBreakLine(char) {
         return /\n/g.test(char.toLowerCase());
     }
+
+    addLetter(letter) {
+        this.state.lettersArray.push(letter);
+    }
+
 
     handleTextChange(e) {
 
@@ -89,7 +97,12 @@ class WorkField extends React.Component {
 
                 }
 
-                this.state.tagsArray.push(<Letter type={className} id={id} symbol={symbol} />);
+                self.state.tagsArray.push({
+                    className,
+                    id,
+                    symbol,
+                    letter
+                });
 
             }
 
@@ -106,12 +119,13 @@ class WorkField extends React.Component {
 
             this.state.tagsArray.push(symbol);*/
 
-            this.state.tagsArray.push(<Letter symbol={symbol} />);
+            self.state.tagsArray.push(<Letter symbol={symbol} />);
 
 
         });
 
         console.log(this.state.tagsArray);
+        console.log(this.state.lettersArray);
 
         ghostWorkField[0].innerHTML = '';
 
@@ -161,10 +175,18 @@ class WorkField extends React.Component {
     }
 
     render() {
+
+        let self = this;
+
+        let tagsArray = this.state.tagsArray.map(function(tag){
+
+/*            return (<Letter type={tag.className} id={tag.id} symbol={tag.symbol} addLetter={(tag.letter)=>self.addLetter(letter)}/>);*/
+        });
+
         return (
             <div>
-                <div className="list work-field fake-field" ref="fakeField">{this.state.tagsArray}</div>
-                <div className="list work-field" id="field" contentEditable="true" onInput={()=>this.handleTextChange} ></div>
+                <div className="list work-field fake-field" ref="fakeField">{tagsArray}</div>
+                <div className="list work-field" id="field" contentEditable="true" onInput={this.handleTextChange} ></div>
             </div>
         )
     }

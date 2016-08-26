@@ -1,35 +1,35 @@
 {
-    "short_name": "Poetic praxis",
     "name": "POETIC PRAXIS",
+    "short_name": "POETIC PRAXIS",
     "description": "Увидь поэзию.",
     "icons": [
         {
-            "src": "./img/Sign.png",
+            "src": "/img/Signx48.png",
             "sizes": "48x48",
             "type": "image/png"
         },
         {
-            "src": "./img/Sign.png",
+            "src": "/img/Signx96.png",
             "sizes": "96x96",
             "type": "image/png"
         },
         {
-            "src": "./img/Sign.png",
+            "src": "/img/Signx144.png",
             "sizes": "144x144",
             "type": "image/png"
         },
         {
-            "src": "./img/Sign.png",
+            "src": "/img/Signx192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "./img/Sign.png",
+            "src": "/img/Signx256.png",
             "sizes": "256x256",
             "type": "image/png"
         }
     ],
-    "start_url": "./index.html",
+    "start_url": "/index.html",
     "display": "standalone",
     "orientation": "portrait",
     "theme_color": "#181311",
