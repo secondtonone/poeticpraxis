@@ -20,7 +20,10 @@ export default class Menu extends React.Component {
                 <ul className="menu" role="nav">
                     <li className="menu__item">
                         <Link to="/app" activeClassName="menu__item_active">Стол</Link>
-                        </li>
+                    </li>
+                    <li className="menu__item">
+                        <Link to="/image-engine" activeClassName="menu__item_active">Имаджиэнджин</Link>
+                    </li>
                     <li className="menu__item">
                         <Link to="/about" activeClassName="menu__item_active">Что и для чего?</Link>
                     </li>

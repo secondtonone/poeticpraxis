@@ -5,6 +5,7 @@ import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
 import App from './app.jsx';
 import Table from './table.jsx';
 import About from './about.jsx';
+import imageEngine from './imageEngine.jsx'
 
 
 render(
@@ -12,6 +13,7 @@ render(
         <Route path="/" component={App}>
             <IndexRedirect to="/app" />
             <Route path="/app" component={Table} />
+            <Route path="/image-engine" component={imageEngine} />
             <Route path="/about" component={About} />
         </Route>
     </Router>), document.getElementById('app')

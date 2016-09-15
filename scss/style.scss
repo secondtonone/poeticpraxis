@@ -1,4 +1,4 @@
-$font-stack: Qolyazma;
+$font-stack: Tex Gyre Adventor;
 
 html {
     box-sizing: border-box;
@@ -97,9 +97,12 @@ acronym {
 }
 
 @font-face {
-    font-family: Qolyazma;
-    src: local('UKIJ Qolyazma'), local('UKIJQolyazma'), url('../font/ukijqolyazma.woff2') format('woff2'), url('../font/ukijqolyazma.woff') format('woff'), url('../font/ukijqolyazma.ttf') format('truetype');
-    font-weight: 400;
+    font-family: 'Tex Gyre Adventor';
+    src: url('../font/texgyreadventor-regular-webfont.eot');
+    src: url('../font/texgyreadventor-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/texgyreadventor-regular-webfont.woff') format('woff'),
+         url('../font/texgyreadventor-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
     font-style: normal;
 }
 
@@ -309,8 +312,8 @@ body {
        border-bottom: 9px solid #181311;
        content: '';
        position: absolute;
-       top: -11px;
-       left: 3px;
+       top: -8px;
+       left: 1px;
        width: 0;
        height: 0;
     }
@@ -328,8 +331,8 @@ body {
        border-bottom: 9px solid #181311;
        content: '';
        position: absolute;
-       top: -11px;
-       left: 3px;
+       top: -8px;
+       left: 1px;
        width: 0;
        height: 0;
     }
@@ -347,8 +350,8 @@ body {
        border-top: 9px solid #DE2420;
        content: '';
        position: absolute;
-       top: -11px;
-       left: 2px;
+       top: -8px;
+       left: 1px;
        width: 0;
        height: 0;
     }
@@ -367,8 +370,8 @@ body {
        border-top: 9px solid #DE2420;
        content: '';
        position: absolute;
-       top: -11px;
-       left: 2px;
+       top: -8px;
+       left: 1px;
        width: 0;
        height: 0;
     }
@@ -634,7 +637,7 @@ body {
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 760px) {
     .logo-background {
         display: none;
     }
@@ -653,7 +656,7 @@ body {
 }
 
 
-@media (max-width: 450px) {
+@media (max-width: 550px) {
 
     .logo {
         position: fixed;
@@ -732,8 +735,8 @@ body {
         text-align: center;
 
         &__item {
-            padding: 10px 25px;
-            font-size: 14px;
+            padding: 10px 14px;
+            font-size: 12px;
             line-height: 28px;
         }
     }
