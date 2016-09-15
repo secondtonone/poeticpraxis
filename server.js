@@ -141,7 +141,7 @@ var App = function() {
      */
     self.start = function() {
         //  Start the app on the specific interface (and port).
-        self.app.listen(self.port, self.ipaddress, function() {
+        https.createServer(https_options, self.app).listen(self.port, self.ipaddress, function() {
             console.log('%s: Node server started on %s:%d ...',
                 Date(Date.now()), self.ipaddress, self.port);
         });
