@@ -1,0 +1,108 @@
+@keyframes blured {
+    50% {
+        -webkit-filter: blur(1px);
+        filter: blur(1px);
+    }
+    100% {
+        -webkit-filter: blur(3px);
+        filter: blur(3px);
+        opacity: 0.9;
+    }
+}
+
+@keyframes down {
+    50% {
+        transform: translateY(-100%);
+    }
+    100% {
+        background-color: rgb(250, 250, 250);
+        box-shadow: 5px 4px 20px 3px rgba(0, 0, 0, 0.2);
+        transform: translateY(0);
+    }
+}
+
+@keyframes up {
+    100% {
+        background-color: rgb(250, 250, 250);
+        box-shadow: 5px 4px 20px 3px rgba(0, 0, 0, 0.2);
+        top: 0;
+    }
+}
+
+@keyframes upNav {
+    50% {
+        transform: translateY(100%);
+    }
+    100% {
+        background-color: rgb(250, 250, 250);
+        box-shadow: 5px 4px 20px 3px rgba(0, 0, 0, 0.2);
+        transform: translateY(0);
+    }
+}
+
+@keyframes downLogo {
+    50% {
+        transform: translateY(-100%) rotate(688deg);
+    }
+    100% {
+        background-color: rgb(250, 250, 250);
+        box-shadow: 5px 4px 20px 3px rgba(0, 0, 0, 0.2);
+        transform: translateY(0) rotate(688deg);
+    }
+}
+
+
+@keyframes show {
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes hide {
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        top: -560px;
+    }
+}
+
+
+@keyframes halfed {
+    100% {
+        width: 397px;
+        padding: 32px;
+    }
+}
+
+@media (max-width: 550px) {
+    @keyframes halfed {
+
+        50% {
+            width: 397px;
+        }
+
+        100% {
+            width: 100%;
+        }
+    }
+
+}
+
+@media (max-width: 880px) {
+    @keyframes halfed {
+
+        50% {
+            top: -10px;
+        }
+
+        100% {
+            top: 0;
+        }
+    }
+
+}
