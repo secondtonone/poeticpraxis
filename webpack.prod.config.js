@@ -96,7 +96,11 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: './public/index.ejs',
-            inject: 'body'
+            inject: 'body',
+            env:{
+                Prod: true,
+                Dev: false
+            }
         }),
         new CopyWebpackPlugin([
             {

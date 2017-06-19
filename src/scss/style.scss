@@ -528,7 +528,6 @@ body {
     letter-spacing: 0px;
     font-weight: 300;
     word-spacing: 9px;
-    padding: 8px 0;
     margin: 0 0 32px;
     word-break: break-word;
 
@@ -543,12 +542,6 @@ body {
     &__item {
         position: relative;
         padding: 8px 0;
-        box-sizing: border-box;
-        border-bottom: 1px solid transparent;
-
-        &:hover {
-            border-bottom: 1px dotted $primary-gray;
-        }
     }
 
     &__text {
@@ -694,12 +687,12 @@ body {
     .list {
         position: absolute;
         width: 100%;
-        min-height: 1000px;
+        min-height: 100%;
         height: auto;
         top: 0;
         text-align: left;
-        margin: 0 auto 64px;
         padding: 25px;
+        margin: 0 auto;
 
         .list--half {
             width: 100%;
@@ -709,21 +702,21 @@ body {
             left: 0;
             position: relative;
             min-height: 100%;
-            margin: 0 auto;
+            padding: 25px;
         }
 
         &--right {
             left: 0;
             min-height: 100%;
             position: relative;
-            margin: 0 auto 128px;
+            padding: 25px 25px 128px;
 
         }
 
     }
 
     .list-about {
-        padding: 25px 10px;
+        padding: 25px 10px 64px;
     }
 
     .lists {
@@ -794,12 +787,12 @@ body {
         overflow-x: scroll;
         overflow-y: hidden;
         white-space: nowrap;
-        padding: 0 20px;
+
 
         &__item {
             padding: 10px 8px;
             line-height: 17px;
-            width: 112px;
+            width: 106px;
         }
 
         &__title {
@@ -833,5 +826,10 @@ body {
 @media (max-width: 550px) and (max-height:400px) {
     .navbar {
         opacity: 0;
+    }
+
+    .button_main {
+        bottom: 32px;
+        right: 32px;
     }
 }

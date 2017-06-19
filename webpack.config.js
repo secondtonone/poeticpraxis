@@ -92,7 +92,11 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: './public/index.ejs',
-            inject: 'body'
+            inject: 'body',
+            env:{
+                Prod: false,
+                Dev: true
+            }
         }),
         new OfflinePlugin()
     ],
