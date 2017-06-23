@@ -67,7 +67,7 @@
     }
     100% {
         opacity: 0;
-        top: -560px;
+        transform: translateY(-100%);
     }
 }
 

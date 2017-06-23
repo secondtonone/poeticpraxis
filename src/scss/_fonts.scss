@@ -8,6 +8,8 @@
 }
  */
 
+$path: '../../public';
+
 @font-face {
     font-family: 'Cormorant';
     src: url('#{$path}/font/Cormorantsclight.woff2') format('woff2'), url('#{$path}/font/Cormorantsclight.woff') format('woff'),

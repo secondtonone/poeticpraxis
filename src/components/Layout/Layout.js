@@ -2,6 +2,8 @@ import React from 'react';
 
 import Menu from '../Menu';
 
+import './Layout.scss';
+
 
 export default class Layout extends React.Component {
 

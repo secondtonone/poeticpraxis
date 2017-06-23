@@ -38,11 +38,16 @@ module.exports = {
                 test: /\.scss$/,
                 use: [
                     {
-                        loader: "style-loader"
+                        loader: 'style-loader'
                     }, {
-                        loader: "css-loader"
+                        loader: 'css-loader'
                     }, {
-                        loader: "sass-loader"
+                        loader: 'sass-loader'
+                    },{
+                        loader: 'sass-resources-loader',
+                        options: {
+                            resources: ['./src/scss/_variables.scss', './src/scss/_mixins.scss']
+                        }
                     }
                 ]
             }, {
@@ -80,6 +85,7 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.NamedModulesPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: Infinity,

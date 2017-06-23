@@ -2,6 +2,8 @@ import React from 'react';
 import Textarea from '../Textarea';
 import {randomize} from '../../utils';
 
+import './Workfield.scss';
+
 /*парсить по словам, сравнивать с предыдущим деревом*/
 
 export default class Workfield extends React.Component {
@@ -246,7 +248,7 @@ export default class Workfield extends React.Component {
 
             let words = [];
 
-            let tokens = string.split(/(\s|[a-zA-ZА-Яа-яёЁ]+|[\.,\/#!$%\^&\*;:{}=\-_`~()])/).filter(n => n);
+            let tokens = string.split(/(\s|[a-zA-ZА-Яа-яёЁ-]+|[\.,\/#!$%\^&\*;:{}=\-_`~()])/).filter(n => n);
 
             let order = [];
 
@@ -336,6 +338,12 @@ export default class Workfield extends React.Component {
 
                 } else {
 
+                    if(self.isSpace(token)) {
+                        type = 'sp';
+
+                        idToken = `sp${index}${randomize()}`;
+                    }
+
                     idToken = `${idString}${idToken}`;
 
                     elements[idToken] = {
@@ -386,6 +394,10 @@ export default class Workfield extends React.Component {
 
     isBreakLine(char) {
         return /\n/g.test(char);
+    }
+
+    isSpace(char) {
+        return /\s/g.test(char);
     }
 
     handleTextInput = (e) => {
@@ -447,7 +459,7 @@ export default class Workfield extends React.Component {
 
         text = text.replace(/ /g, ' <wbr>');
         }*/
-        console.log(text);
+
         return text;
     }
     /*следить за счет глобальной позиции*/
@@ -482,7 +494,7 @@ export default class Workfield extends React.Component {
 
         let stringCounter = 0;
 
-        const tags = this.state.tags.map( sign =>{
+        const renderedTags = this.state.tags.map( sign =>{
 
             const style = {
                 top: sign.tag.top,
@@ -593,7 +605,7 @@ export default class Workfield extends React.Component {
 
         });
 
-        const fakeStrings = orderStrings.map((id,index) => {
+        const markingTags = orderStrings.map((id,index) => {
 
             const string = strings[id];
 
@@ -624,7 +636,7 @@ export default class Workfield extends React.Component {
 
                 let delta = tag.height - field.lineHeight;
 
-                return [this.props.syllableOff || !strings[id].vowel.length ? null: <div key={`s-${tag.top}`} className="syllable com-popover" style={{top: tag.top + delta}} title="Количество слогов">{strings[id].vowel.length}</div>, this.props.stringNumberOff ? null:<div key={`n-${tag.top}`} className="string-number com-popover" style={{top: tag.top}} title="Номер строки">{++stringCounter}</div>];
+                return [this.props.syllableOff || !strings[id].vowel.length ? null: <div key={`s-${tag.top}`} className="syllable com-popover" style={{top: tag.top + delta}} title="Количество слогов">{strings[id].vowel.length}</div>, this.props.stringNumberOff || !strings[id].words.length? null:<div key={`n-${tag.top}`} className="string-number com-popover" style={{top: tag.top}} title="Номер строки">{++stringCounter}</div>];
             }
         });
 
@@ -639,10 +651,10 @@ export default class Workfield extends React.Component {
 
         return (
             <div className="work-field">
-                <div className="field-editable fake-field" ref="fakeField">{fakeStrings}</div>
+                <div className="field-editable fake-field" ref="fakeField">{markingTags}</div>
                 <div className="backdrop field-editable">{this.state.selectedText}
                 </div>
-                <div className="paint-field">{tags}{infoTags}
+                <div className="paint-field">{renderedTags}{infoTags}
                     <Textarea {...props}/>
                 </div>
             </div>

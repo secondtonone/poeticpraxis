@@ -38,6 +38,11 @@ module.exports = {
                         loader: "css-loader"
                     }, {
                         loader: "sass-loader"
+                    },{
+                        loader: 'sass-resources-loader',
+                        options: {
+                            resources: ['./src/scss/_variables.scss', './src/scss/_mixins.scss']
+                        }
                     }
                 ]
             }, {
