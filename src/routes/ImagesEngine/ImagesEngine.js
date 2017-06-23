@@ -39,6 +39,10 @@ export default class ImagesEngine extends React.Component {
         });
     }
 
+    checkPosition = () => {
+        return window.matchMedia('(max-width: 800px)').matches;
+    }
+
     getResult = () => {
 
         let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ\-]+/g) || [];
@@ -47,14 +51,22 @@ export default class ImagesEngine extends React.Component {
 
         let isListHidden = this.state.isListHidden;
 
-        if(isListHidden) {
+        let isExpanded = this.state.isExpanded;
 
+        if(isListHidden) {
             isListHidden = false;
         }
 
+        if(this.checkPosition()) {
+            isExpanded = false;
+        }
+
+        this.toTheTop();
+
         this.setState({
             result,
-            isListHidden
+            isListHidden,
+            isExpanded
         });
     }
 
@@ -91,6 +103,8 @@ export default class ImagesEngine extends React.Component {
 
         let text = '';
 
+        this.toTheTop();
+
         this.setState({
             text
         });
@@ -101,6 +115,10 @@ export default class ImagesEngine extends React.Component {
 
         let isExpanded = this.state.isExpanded? false: true;
 
+
+        this.toTheTop();
+
+
         this.setState({
             isExpanded
         });
@@ -108,7 +126,7 @@ export default class ImagesEngine extends React.Component {
     }
 
 
-    toTable = () => {
+    toRhythmic = () => {
 
         let imageEngine = {
             pinned: this.state.pinned
@@ -119,6 +137,10 @@ export default class ImagesEngine extends React.Component {
         });
 
         browserHistory.push('/rhythmic');
+    }
+
+    toTheTop = () => {
+        window.scrollTo(0,0);
     }
 
     render() {
@@ -146,6 +168,19 @@ export default class ImagesEngine extends React.Component {
             return `list list--animated ${additional}`;
         };
 
+        const styleChanger = () => {
+
+            if(this.state.isExpanded) {
+                return {};
+            }
+
+            return {
+                height: 0,
+                overflow: 'hidden'
+            };
+        }
+
+
         return (
             <div>
 
@@ -154,10 +189,11 @@ export default class ImagesEngine extends React.Component {
                 <div className={classChanger('list--left', 'list--first')}>
 
                     {this.state.isExpanded?null:<label className="field-title">{props.label}</label>}
-
-                   {this.state.isExpanded? <div className="work-field">
-                        <Textarea {...props}/>
-                    </div>:null}
+                    <div style={styleChanger()}>
+                        <div className="work-field">
+                            <Textarea {...props}/>
+                        </div>
+                    </div>
 
                     {this.state.text.length && this.state.isExpanded?<button className="button_rounded field-clear-button" type="button" onClick={this.clearInput} title="Стереть текст"><i className="material-icons material-icons--small">delete</i>
                     </button>:null}
@@ -180,7 +216,7 @@ export default class ImagesEngine extends React.Component {
                                 </button>
                                 {match}</li>)
                         })}</ul>
-                        {this.state.pinned.length?<button className="button_flat button_transparent button_long matches__send" type="button" onClick={this.toTable}>Посмотреть ритм <i className="material-icons material-icons--small">arrow_forward</i>
+                        {this.state.pinned.length?<button className="button_flat button_transparent button_long matches__send" type="button" onClick={this.toRhythmic}>Посмотреть ритм <i className="material-icons material-icons--small">arrow_forward</i>
                         </button>: null}
                     </div>
                     <div className="matches">
@@ -196,6 +232,8 @@ export default class ImagesEngine extends React.Component {
                                 </button>
                                 <div className="matches__text">{match}</div></li>)
                         })}</ul>
+                        {this.state.result.length > 30?<button className="button_flat button_transparent button_long matches__send" type="button" onClick={this.toTheTop}>Вернуться наверх <i className="material-icons material-icons--small">arrow_upward</i>
+                        </button>: null}
                     </div>
                 </div>
 
