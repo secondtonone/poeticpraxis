@@ -188,7 +188,7 @@ export default class ImagesEngine extends React.Component {
 
                 <div className={classChanger('list--left', 'list--first')}>
 
-                    {this.state.isExpanded?null:<label className="field-title">{props.label}</label>}
+                    {this.state.isExpanded?null:<label className="field-title" onClick={this.expanding}>{props.label}</label>}
                     <div style={styleChanger()}>
                         <div className="work-field">
                             <Textarea {...props}/>
