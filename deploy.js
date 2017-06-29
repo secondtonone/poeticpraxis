@@ -1,28 +1,58 @@
-var Client = require('ftp');
-var fs = require('fs');
+const PromiseFtp = require('promise-ftp');
+const fs = require('fs');
 
-var config = {
-    user: 'u0263016_second',
-    password: 'secondt0', // optional, prompted if none given
-    host: '37.140.192.213',
-    port: 21
-    /*localRoot: __dirname + '/dist',
-    remoteRoot: '/www/poeticpraxis.ru/'*/
-    /*include: ['build/version.txt'],
-    exclude: ['.git', '.idea', 'tmp/*', 'build/*']*/
+const config = {
+  user: 'u0263016_second',
+  password: 'secondt0', // optional, prompted if none given
+  host: '37.140.192.213',
+  port: 21
+      /*localRoot: __dirname + '/dist',
+      remoteRoot: '/www/poeticpraxis.ru/'*/
+      /*include: ['build/version.txt'],
+      exclude: ['.git', '.idea', 'tmp/*', 'build/*']*/
 }
 
-var c = new Client();
+const remotePath = '/www/poeticpraxis.ru';
 
-c.on('ready', function() {
-    c.cwd('www/poeticpraxis.ru', function(){
-        c.list(function(err, list) {
-            if (err) throw err;
-            console.dir(list.length);
-            c.end();
+const ftp = new PromiseFtp();
+
+fs.readdir('./dist/', (err, files) => {
+    console.log('Directory local:');
+    files.forEach(file => {
+
+        console.log(file);
+    });
+})
+
+ftp.connect(config)
+.then(function(serverMessage) {
+
+    console.log('Server message: ' + serverMessage);
+    return ftp.list('/www/poeticpraxis.ru');
+
+}).then(function(list) {
+
+    console.log('Directory listing:');
+
+    return new Promise(function (resolve, reject) {
+
+        list.map(function(item) {
+            if(item.type !== 'd') {
+                console.log(remotePath + '/' + item.name);
+            } else {
+                console.log(remotePath + '/' + item.name);
+            }
         });
+
+        resolve();
+
     });
 
+
+}).then(function() {
+
+
+}).then(function(list) {
+
+    return ftp.end();
 });
-// connect to localhost:21 as anonymous
-c.connect(config);

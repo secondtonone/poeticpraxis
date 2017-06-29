@@ -356,7 +356,7 @@ body {
 .text {
     &_common {
         font-family: $helvetica-font;
-        line-height: 28px;
+        line-height: 29px;
         font-size: 18px;
         letter-spacing: 0px;
         font-weight: 300;
@@ -369,7 +369,7 @@ body {
         margin-top: 20px;
         padding:  0 20px 0;
         border-left: 2px solid $primary-black;
-        line-height: 28px;
+        line-height: 29px;
         font-size: 18px;
         letter-spacing: 0px;
         font-weight: 300;
@@ -520,7 +520,7 @@ body {
             left: 0;
 
             position: relative;
-            padding: 24px 24px 104px;
+            padding: 24px 24px 128px;
 
         }
 
@@ -555,5 +555,9 @@ body {
         right: 44px;
         bottom: 118px;
         margin: auto;
+    }
+
+    .list {
+        padding-bottom:150px;
     }
 }
