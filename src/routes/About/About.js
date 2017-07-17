@@ -44,7 +44,7 @@ export default class About extends React.Component {
 
                 <p className="text_common">Это всего лишь инструмент в познании. За вас он ничего не сделает, но поможет, "визуализируя размер". Главное - это практика.</p>
 
-                <p className="text_common text_attention">Проект проходит тестирование. По вопросам и  предложениям можно связаться со мной <a className="menu__item_active" href="mailto:secondtonone.secondtonone@gmail.com">по почте</a>.
+                <p className="text_common text_attention">К инструментам добавляются новые возможности. По вопросам и  предложениям можно связаться со мной по <a className="menu__item_active" href="mailto:secondtonone.secondtonone@gmail.com?subject=Poetic Praxis">почте</a>.
                 </p>
             </arcticle>
         </div>)

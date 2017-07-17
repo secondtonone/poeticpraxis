@@ -19,14 +19,20 @@ export default class Workfield extends React.Component {
             tags: [],
             stringsDictionary: {},
             stringLinks: {},
-            vowel: [],
             wordsDictionary: {},
             wordLinks: {},
             field: {},
-            selectedText: []
         };
 
+        this.caretPosition = 0;
+
+        this.symbolCounter = 0;
+
         this.mainTimer = 0;
+
+        this.renderCaesuraButtonStyle = {
+            top: 0
+        };
     }
 
 
@@ -38,6 +44,8 @@ export default class Workfield extends React.Component {
         if(Array.isArray(this.props.text)){
             text = this.props.text.join('\n');
         }
+
+        this.mainField = this.refs.textarea.refs.field;
 
         this.setStateAsync({
             stringsDictionary: this.getStringsDictionary(),
@@ -154,7 +162,7 @@ export default class Workfield extends React.Component {
 
                 symbols.forEach( symbol => {
 
-                    if ( symbol.className === 'black' || symbol.className === 'red' || symbol.className === 'red_secondary'){
+                    if ( symbol.className === 'black' || symbol.className === 'red' || symbol.className === 'red_secondary' || symbol.className === 'string-pause'){
 
                         elements[symbol.id].tag = {
                             left: symbol.offsetLeft + string.offsetLeft,
@@ -248,7 +256,7 @@ export default class Workfield extends React.Component {
 
             let words = [];
 
-            let tokens = string.split(/(\s|[a-zA-ZА-Яа-яёЁ-]+|[\.,\/#!$%\^&\*;:{}=\-_`~()])/).filter(n => n);
+            let tokens = string.split(/(\s|[a-zA-ZА-Яа-яёЁ-]+|[\.,\/#!$%\^&\*;:{}=\-_`~()⋀])/).filter(n => n);
 
             let order = [];
 
@@ -344,6 +352,12 @@ export default class Workfield extends React.Component {
                         idToken = `sp${index}${randomize()}`;
                     }
 
+                    if(self.isPause(token)) {
+                        type = 'p';
+
+                        idToken = `p${index}${randomize()}`;
+                    }
+
                     idToken = `${idString}${idToken}`;
 
                     elements[idToken] = {
@@ -400,9 +414,17 @@ export default class Workfield extends React.Component {
         return /\s/g.test(char);
     }
 
+    isPause(char) {
+        return /⋀/g.test(char);
+    }
+
     handleTextInput = (e) => {
 
         const text = e.target.value;
+
+
+        this.caretPosition = e.target.selectionEnd;
+
 
         this.textLinting(text);
 
@@ -438,50 +460,86 @@ export default class Workfield extends React.Component {
         },500);*/
     }
 
-    textHighlighting = (text, start, end) => {
+    makeCaesura = () => {
+        this.insertionToPosition('⋀', this.mainField);
+    }
 
-        /*const re = new RegExp(`${string}`, 'g');
+    insertionToPosition = (str, textarea) => {
 
-        text = text
-        .replace(/\n$/g, '\n\n')
-        .replace(re, '<span class="mark">$&</span>');*/
+        const value = textarea.value;
+        const before = value.substring(0, textarea.selectionStart);
+        const after = value.substring(textarea.selectionEnd, value.length);
 
-        text = text.split('').map((symbol, index) => {
+        this.textLinting(`${before}${str}${after}`);
+        this.setCursor(textarea, before.length + str.length);
+    }
 
-            if(index >= start && index < end) {
-                return (<span className="mark-selected">{symbol}</span>);
+    setCursor = (elem, pos) =>{
+        if (elem.setSelectionRange) {
+            elem.setSelectionRange(pos, pos);
+        } else if (elem.createTextRange) {
+            const range = elem.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character', pos);
+            range.moveStart('character', pos);
+            range.select();
+        }
+        elem.focus();
+
+
+        this.caretPosition = pos;
+    }
+
+    copyToClipboard = () => {
+
+        const field = this.refs.fakeField;
+
+        if (document.selection) {
+            const range = document.body.createTextRange();
+            range.moveToElementText(field);
+            range.select().createTextRange();
+
+        } else if (window.getSelection) {
+            const range = document.createRange();
+            range.selectNode(field);
+            window.getSelection().addRange(range);
+        }
+
+        document.execCommand("Copy");
+    }
+
+    caretWatch = (orderStrings, symbolCounter) => {
+
+
+        let indent = orderStrings.length-1;
+
+        orderStrings.some((id, index) => {
+
+
+            symbolCounter += this.state.strings[id].string.length;
+
+            console.log(index , '-',this.state.strings[id].string.length);
+            console.log(this.caretPosition , symbolCounter);
+
+            if(this.caretPosition-indent <= symbolCounter) {
+
+                if(this.state.strings[id].tag) {
+
+                    const tag = this.state.strings[id].tag;
+                    const delta = tag.height - this.state.field.lineHeight;
+
+                    this.renderCaesuraButtonStyle = {
+                        top: tag.top + delta
+                    }
+
+
+
+                    return this.caretPosition-1 <= symbolCounter;
+                }
+
             }
-
-            return symbol;
         });
 
-        /*if (isIE) {
-
-        text = text.replace(/ /g, ' <wbr>');
-        }*/
-
-        return text;
-    }
-    /*следить за счет глобальной позиции*/
-    selectionHandler = (e) =>{
-        let txt = '';
-
-        if (window.getSelection) {// Не IE, используем метод getSelection
-            txt = window.getSelection().toString();
-        } else { // IE, используем объект selection
-            txt = document.selection.createRange().text;
-        }
-
-        if(txt) {
-            console.log(txt);
-
-
-            let selectedText=this.textHighlighting(this.state.text, e.target.selectionStart, e.target.selectionEnd);
-
-            this.setState({
-                selectedText
-            });
-        }
     }
 
     render() {
@@ -490,9 +548,13 @@ export default class Workfield extends React.Component {
 
         const accents = ['black', 'red', 'red_secondary'];
 
+        const decription = ['Слабая доля', 'Сильная доля', 'Побочное ударение'];
+
         const {strings, field, elements, orderStrings } = this.state;
 
         let stringCounter = 0;
+
+        let symbolCounter = 0;
 
         const renderedTags = this.state.tags.map( sign =>{
 
@@ -502,6 +564,10 @@ export default class Workfield extends React.Component {
                 height: sign.tag.height,
                 width: sign.tag.width
             };
+
+            if(sign.type === 'p') {
+                return (<span className="string-pause-relative" key={sign.id} id={sign.id} style={style} title="Однодольная пауза">&#8896;</span>);
+            }
 
             const signHandler = (e) =>{
                 e.preventDefault();
@@ -601,7 +667,7 @@ export default class Workfield extends React.Component {
                 });
             };
 
-            return (<span className={accents[sign.accent] + '-relative'} key={sign.id} id={sign.id} style={style} onClick={signHandler}></span>);
+            return (<span className={accents[sign.accent] + '-relative'} key={sign.id} id={sign.id} style={style} onClick={signHandler} title={decription[sign.accent]}></span>);
 
         });
 
@@ -617,7 +683,12 @@ export default class Workfield extends React.Component {
 
                 if (symbol.type === 'v'){
 
-                    return (<span className={accents[symbol.accent]} key={id} id={id}>{char}</span>);
+                    return (<span className={accents[symbol.accent]} key={id} id={id} >{char}</span>);
+
+                }
+                if (symbol.type === 'p'){
+
+                    return (<span className="string-pause" key={id} id={id}>{char}</span>);
 
                 }
 
@@ -634,29 +705,41 @@ export default class Workfield extends React.Component {
 
                 const tag = strings[id].tag;
 
-                let delta = tag.height - field.lineHeight;
+                const delta = tag.height - field.lineHeight;
 
                 return [this.props.syllableOff || !strings[id].vowel.length ? null: <div key={`s-${tag.top}`} className="syllable com-popover" style={{top: tag.top + delta}} title="Количество слогов">{strings[id].vowel.length}</div>, this.props.stringNumberOff || !strings[id].words.length? null:<div key={`n-${tag.top}`} className="string-number com-popover" style={{top: tag.top}} title="Номер строки">{++stringCounter}</div>];
             }
         });
 
+
+
+        this.caretWatch(orderStrings, symbolCounter);
+
+        let renderCaesuraButtonStyle = this.renderCaesuraButtonStyle;
+
         let props = {
             onInput:this.handleTextInput,
             value: this.state.text,
-            classNames: "field-editable",
+            classNames: 'field-editable',
             getMeasure: this.getMeasureField,
             readOnly: this.props.readOnly,
-            placeHolder: 'Напишите или вставьте текст...'
+            placeHolder: 'Напишите или вставьте текст...',
+            onFocus: () => {
+                this.caretWatch(orderStrings, symbolCounter)
+            }
         };
 
         return (
             <div className="work-field">
+
+
                 <div className="field-editable fake-field" ref="fakeField">{markingTags}</div>
-                <div className="backdrop field-editable">{this.state.selectedText}
+                <div className="paint-field ">{renderedTags}{infoTags}
+                    <Textarea {...props} ref="textarea"/>
+
+
                 </div>
-                <div className="paint-field">{renderedTags}{infoTags}
-                    <Textarea {...props}/>
-                </div>
+                <button type="button" className="button_rounded button_middle string-pause-button" onClick={this.makeCaesura} style={renderCaesuraButtonStyle} title="Поставить паузу"><i className="material-icons">keyboard_capslock</i></button>
             </div>
         )
     }

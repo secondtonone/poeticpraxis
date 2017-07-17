@@ -7,17 +7,6 @@ import About from './About';
 import ImagesEngine from './ImagesEngine';
 
 
-/*export default () =>
-    <Router history={browserHistory}>
-        <Route path="/" component={Layout}>
-            <IndexRedirect to="/images-engine"/>
-            <Route path="/images-engine" component={ImagesEngine} />
-            <Route path="/rhythmic" component={Rhythmic} />
-            <Route path="/about" component={About} />
-            <Route path="*" component={ImagesEngine}/>
-        </Route>
-    </Router>*/
-
 export default {
     path: '/',
     component: Layout,

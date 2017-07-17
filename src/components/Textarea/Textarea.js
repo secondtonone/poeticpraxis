@@ -64,14 +64,14 @@ export default class Textarea extends React.Component {
 
     render() {
 
-        const { classNames, value, onMouseUp, onInput, readOnly, placeHolder, label} = this.props;
+        const { classNames, value, onMouseUp, onInput, onClick, readOnly, placeHolder, label, onFocus} = this.props;
 
         const id = `i${randomize()}`;
 
         return (
             <div>
                 <label htmlFor={id} className={label && value?'field-title':'visuallyhidden'}>{label}</label>
-                <textarea name={id} id={id} className={classNames} onInput={onInput} onMouseUp={onMouseUp} value={value} ref="field" readOnly={readOnly} placeholder={placeHolder}></textarea>
+                <textarea name={id} id={id} className={classNames} onInput={onInput} onMouseUp={onMouseUp} onClick={onClick} onFocus={onFocus} value={value} ref="field" readOnly={readOnly} placeholder={placeHolder}></textarea>
             </div>);
     }
 }

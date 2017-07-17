@@ -168,7 +168,7 @@ body {
     word-spacing: 0;
     font-size: 18px;
     font-weight: 500;
-    line-height: 34px;
+    line-height: 40px;
     display: block;
     text-align: left;
     white-space: pre-wrap;
@@ -194,7 +194,12 @@ body {
     font-family: $helvetica-font;
 }
 
-.field-clear-button {
+.through {
+    pointer-events: none;
+}
+
+.field-clear-button,
+.field-copy-button {
     position: absolute;
 
     color: $primary-black;

@@ -45,7 +45,14 @@ export default class ImagesEngine extends React.Component {
 
     getResult = () => {
 
-        let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ\-]+/g) || [];
+        /*let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ\-]+/g) || [];*/
+
+        let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ'-]+/g).filter(n => {
+            console.log(n);
+            return /[^'-]/g.test(n);
+        }) || [];
+
+
 
         const result = imaged(words);
 
