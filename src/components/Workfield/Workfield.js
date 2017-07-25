@@ -21,7 +21,7 @@ export default class Workfield extends React.Component {
             stringLinks: {},
             wordsDictionary: {},
             wordLinks: {},
-            field: {},
+            field: {}
         };
 
         this.caretPosition = 0;
@@ -30,9 +30,8 @@ export default class Workfield extends React.Component {
 
         this.mainTimer = 0;
 
-        this.renderCaesuraButtonStyle = {
-            top: 0
-        };
+        this.mouseTrackingTimer = 0;
+
     }
 
 
@@ -46,6 +45,7 @@ export default class Workfield extends React.Component {
         }
 
         this.mainField = this.refs.textarea.refs.field;
+
 
         this.setStateAsync({
             stringsDictionary: this.getStringsDictionary(),
@@ -62,6 +62,8 @@ export default class Workfield extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateDimensions);
+
+        clearTimeout(this.mouseTrackingTimer);
     }
 
     setStateAsync = (newState) => {
@@ -421,11 +423,9 @@ export default class Workfield extends React.Component {
     handleTextInput = (e) => {
 
         const text = e.target.value;
-
-
-        this.caretPosition = e.target.selectionEnd;
-
-
+        this.props.toParent({
+            fieldText:text
+        });
         this.textLinting(text);
 
     }
@@ -475,17 +475,21 @@ export default class Workfield extends React.Component {
     }
 
     setCursor = (elem, pos) =>{
-        if (elem.setSelectionRange) {
-            elem.setSelectionRange(pos, pos);
-        } else if (elem.createTextRange) {
-            const range = elem.createTextRange();
-            range.collapse(true);
-            range.moveEnd('character', pos);
-            range.moveStart('character', pos);
-            range.select();
-        }
+
         elem.focus();
 
+        setTimeout(()=>{
+
+            if (elem.setSelectionRange) {
+                elem.setSelectionRange(pos, pos);
+            } else if (elem.createTextRange) {
+                const range = elem.createTextRange();
+                range.collapse(true);
+                range.moveEnd('character', pos);
+                range.moveStart('character', pos);
+                range.select();
+            }
+        }, 50);
 
         this.caretPosition = pos;
     }
@@ -508,39 +512,7 @@ export default class Workfield extends React.Component {
         document.execCommand("Copy");
     }
 
-    caretWatch = (orderStrings, symbolCounter) => {
 
-
-        let indent = orderStrings.length-1;
-
-        orderStrings.some((id, index) => {
-
-
-            symbolCounter += this.state.strings[id].string.length;
-
-            console.log(index , '-',this.state.strings[id].string.length);
-            console.log(this.caretPosition , symbolCounter);
-
-            if(this.caretPosition-indent <= symbolCounter) {
-
-                if(this.state.strings[id].tag) {
-
-                    const tag = this.state.strings[id].tag;
-                    const delta = tag.height - this.state.field.lineHeight;
-
-                    this.renderCaesuraButtonStyle = {
-                        top: tag.top + delta
-                    }
-
-
-
-                    return this.caretPosition-1 <= symbolCounter;
-                }
-
-            }
-        });
-
-    }
 
     render() {
 
@@ -711,35 +683,27 @@ export default class Workfield extends React.Component {
             }
         });
 
-
-
-        this.caretWatch(orderStrings, symbolCounter);
-
-        let renderCaesuraButtonStyle = this.renderCaesuraButtonStyle;
-
         let props = {
             onInput:this.handleTextInput,
             value: this.state.text,
             classNames: 'field-editable',
             getMeasure: this.getMeasureField,
             readOnly: this.props.readOnly,
-            placeHolder: 'Напишите или вставьте текст...',
-            onFocus: () => {
-                this.caretWatch(orderStrings, symbolCounter)
-            }
+            placeHolder: 'Напишите или вставьте текст...'
         };
 
         return (
             <div className="work-field">
 
 
+
                 <div className="field-editable fake-field" ref="fakeField">{markingTags}</div>
-                <div className="paint-field ">{renderedTags}{infoTags}
+                <div className="paint-field" >{renderedTags}{infoTags}
                     <Textarea {...props} ref="textarea"/>
 
 
                 </div>
-                <button type="button" className="button_rounded button_middle string-pause-button" onClick={this.makeCaesura} style={renderCaesuraButtonStyle} title="Поставить паузу"><i className="material-icons">keyboard_capslock</i></button>
+
             </div>
         )
     }

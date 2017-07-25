@@ -62,6 +62,7 @@ textarea {
     }
 }
 
+
 body {
     background: rgba(251, 250, 245, 0.1);
      text-rendering: optimizeLegibility;
@@ -97,6 +98,11 @@ body {
     &_middle {
         height: 38px;
         width: 38px;
+    }
+
+    &_big {
+        width: 64px;
+        height: 64px;
     }
 
     &_flat {
@@ -147,6 +153,66 @@ body {
 
 }
 
+.input-container {
+    position: relative;
+    padding: 4px 8px;
+    font-family: $helvetica-font;
+    font-size: 16px;
+    font-weight: 300;
+    color: $primary-gray;
+    line-height: 24px;
+
+    &_main {
+        position: fixed;
+        bottom: 48px;
+        right: 128px;
+        z-index: 100;
+        background-color: $primary-white;
+        box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.1);
+
+        @media (max-width: 600px) {
+            bottom: 108px;
+        }
+
+        @media (max-width: 350px) {
+            left: 0;
+            right: auto;
+        }
+    }
+
+    &_label {
+
+    }
+
+    &_select, &_input {
+        border: none;
+        position: relative;
+        box-shadow: none;
+        background-color: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+           -moz-appearance: none;
+                appearance: none;
+        margin-left: 8px;
+        font-family: $helvetica-font;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1;
+        min-width: 24px;
+        outline: none;
+        z-index: 2;
+        cursor: pointer;
+    }
+
+
+    &_icon {
+        position: absolute;
+        right: 0;
+        top: 4px;
+        z-index: 1;
+    }
+}
+
 .visuallyhidden {
     border: 0;
     clip: rect(0 0 0 0);
@@ -162,7 +228,7 @@ body {
     font-family: $cormorant-font;
     height: 100%;
     width: 100%;
-    padding: 0;
+    padding: 0 5px 0 5px;
     margin: 0;
     letter-spacing: 0;
     word-spacing: 0;
@@ -210,6 +276,35 @@ body {
     margin: 0 auto;
 }
 
+.field-copy-button {
+
+
+    @media (max-width: 600px) {
+        bottom: 176px;
+        right: 128px;
+
+        position: fixed;
+        top: auto;
+        left: auto;
+        right: 32px;
+        margin: auto;
+
+        width: 64px;
+        height: 64px;
+
+    }
+
+
+    @media (max-width: 600px) and (max-height:400px) {
+        bottom: 32px;
+        right: 128px;
+    }
+
+
+
+}
+
+
 .field-editable:focus {
     outline: none;
 }
@@ -244,10 +339,6 @@ body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     transition: padding, width, left 1.5s ease-in-out;
-
-    @media (max-width: 794px) {
-        width: 100%;
-    }
 
     &--animated {
 
@@ -333,7 +424,7 @@ body {
     }
 
     &__text {
-        margin: 0 20px 0 0;
+        margin: 0 38px 0 0;
     }
 
 
@@ -365,8 +456,19 @@ body {
         font-size: 18px;
         letter-spacing: 0px;
         font-weight: 300;
-        word-spacing: 9px;
-        margin-bottom: 18px;
+        word-spacing: 6px;
+        margin-bottom: 24px;
+    }
+
+    &_footer {
+        font-family: $helvetica-font;
+        line-height: 29px;
+        font-size: 12px;
+        letter-spacing: 0px;
+        font-weight: 300;
+        word-spacing: 3px;
+        margin-top: 18px;
+        text-align: center;
     }
 
     &_attention {
@@ -384,6 +486,15 @@ body {
     &-wrapper {
         padding: 50px 25% 50px 20%;
     }
+
+    &_title {
+        font-family: $helvetica-font;
+        line-height: 32px;
+        font-size: 22px;
+        letter-spacing: 0px;
+        font-weight: 300;
+        margin-bottom: 18px;
+    }
 }
 
 
@@ -391,10 +502,6 @@ body {
 
 
 @media (max-width: 880px) {
-
-    .lists {
-        width: 100%;
-    }
 
     .list {
         position: absolute;
@@ -458,6 +565,12 @@ body {
 
         }
 
+    }
+}
+
+@media (max-width: 794px) {
+    .list {
+        width: 100%;
     }
 }
 

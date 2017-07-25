@@ -41,9 +41,7 @@ function zip(xs) {
     return zip(splitAt(words.length/2, shuffle(words)));
 }*/
 
-export default function imaged(words, chunkSize) {
-
-    chunkSize = chunkSize || 2;
+export default function imaged(words, chunkSize = 2) {
 
     return chunkArray(shuffle(shuffle(words)),chunkSize);
 }

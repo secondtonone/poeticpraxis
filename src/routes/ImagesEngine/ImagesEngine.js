@@ -15,7 +15,8 @@ export default class ImagesEngine extends React.Component {
             text:'',
             words: [],
             field:{},
-            pinned: []
+            pinned: [],
+            wordsNumber: 2
         };
     }
 
@@ -54,7 +55,7 @@ export default class ImagesEngine extends React.Component {
 
 
 
-        const result = imaged(words);
+        const result = imaged(words, this.state.wordsNumber);
 
         let isListHidden = this.state.isListHidden;
 
@@ -75,6 +76,16 @@ export default class ImagesEngine extends React.Component {
             isListHidden,
             isExpanded
         });
+    }
+
+    setWordsNumber = (e) => {
+
+        const wordsNumber = e.target.value;
+
+        this.setState({
+            wordsNumber
+        });
+
     }
 
     pinMatch = (match, index) => {
@@ -191,7 +202,17 @@ export default class ImagesEngine extends React.Component {
         return (
             <div>
 
-                <button className="button_rounded button_main" type="button" onClick={this.getResult} disabled={!this.state.text} title="Нарезать"><i className="material-icons material-icons--big">widgets</i></button>
+                <div className="input-container input-container_main animation-up">
+                    <label htmlFor="wordNumber" className="input-container_label">Словосочетание из:</label>
+                    <i className="material-icons input-container_icon">arrow_drop_down</i>
+                    <select name="wordsNumber" className="input-container_select" id="wordNumber" value={this.state.wordsNumber} onChange={this.setWordsNumber}>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+
+                </div>
+
+                <button className="button_rounded button_main animation-up" type="button" onClick={this.getResult} disabled={!this.state.text} title="Нарезать"><i className="material-icons material-icons--big">widgets</i></button>
 
                 <div className={classChanger('list--left', 'list--first')}>
 

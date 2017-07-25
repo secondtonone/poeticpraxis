@@ -29,10 +29,10 @@ module.exports = {
         filename: '[name].[hash].js',
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /.js?$/,
-                loader: 'babel-loader',
+                use: ['babel-loader'],
                 exclude: /node_modules/
             }, {
                 test: /\.scss$/,
@@ -75,7 +75,7 @@ module.exports = {
             },
             {
                 test: /\.ejs$/,
-                loader: 'ejs-loader?variable=data'
+                use:[ 'ejs-loader?variable=data']
             }
         ]
     },
