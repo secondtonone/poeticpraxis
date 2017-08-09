@@ -67,9 +67,7 @@ body {
     background: rgba(251, 250, 245, 0.1);
      text-rendering: optimizeLegibility;
      -webkit-font-smoothing: subpixel-antialiased
-    /* -webkit-font-smoothing: antialiased; */
 }
-
 
 
 .button {
@@ -249,6 +247,7 @@ body {
 
     @media (max-width: 600px) {
         font-size: 20px;
+        padding: 0;
     }
 }
 
@@ -282,13 +281,12 @@ body {
     @media (max-width: 600px) {
         bottom: 176px;
         right: 128px;
-
         position: fixed;
         top: auto;
         left: auto;
         right: 32px;
         margin: auto;
-
+        z-index: 100;
         width: 64px;
         height: 64px;
 
@@ -616,7 +614,7 @@ body {
         }
 
         &--first {
-            padding-bottom: 64px;
+            padding-bottom: 168px;
         }
 
         &--left {
