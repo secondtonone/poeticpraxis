@@ -49,7 +49,6 @@ export default class ImagesEngine extends React.Component {
         /*let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ\-]+/g) || [];*/
 
         let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ'-]+/g).filter(n => {
-            console.log(n);
             return /[^'-]/g.test(n);
         }) || [];
 

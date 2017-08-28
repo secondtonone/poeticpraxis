@@ -172,6 +172,10 @@ body {
             bottom: 108px;
         }
 
+        @media (max-width: 600px) and (max-height:400px) {
+            bottom: 48px;
+        }
+
         @media (max-width: 350px) {
             left: 0;
             right: auto;
@@ -593,7 +597,7 @@ body {
         height: auto;
         top: 0;
         text-align: left;
-        padding: 25px;
+        padding: 25px 25px 25px 25px;
         margin: 0 auto;
 
         /* &__button-expand {

@@ -72,16 +72,21 @@
 
 .string-pause-relative {
     position: absolute;
-    text-shadow: -1px -1px 0 $primary-white,
-    1px -1px 0 $primary-white,
+    text-shadow:
+    -1px -3px 0 $primary-white,
+    1px -3px 0 $primary-white,
     -1px 1px 0 $primary-white,
     1px 1px 0 $primary-white,
+    -2px 1px 0 $primary-white,
+    2px 1px 0 $primary-white,
     0 -2px 0 $primary-white,
+    0 -3px 0 $primary-white,
+    0 -4px 0 $primary-white,
     0 1px 0 $primary-white;
+    padding: 0 0 1px 0;
     color: $primary-gray;
     border: 0;
     font-size: 18px;
-    box-sizing: border-box;
     border-bottom: 1px solid $primary-white;
 
     @media (max-width: 600px) {
@@ -96,9 +101,8 @@
 .string-pause {
     font-size: 18px;
     color: $primary-gray;
+    border: 0;
     margin: 0 0 0 -0.1px;
-    border-bottom: 1px solid transparent;
-    box-sizing: border-box;
     padding: 0;
 
     @media (max-width: 600px) {
@@ -108,21 +112,25 @@
 
 .syllable {
     position: absolute;
-    right: -20px;
+    right: -25px;
     text-align: left;
     font-family: $helvetica-font;
     font-size: 14px;
     font-weight: 200;
     line-height: 46px;
-    color: #bb4846;
+    color: $primary-black;
     cursor: help;
+
+    .syllable__accent {
+        color: #bb4846;
+    }
 
     @media (max-width: 880px) {
         right: -12px;
     }
 
     @media (max-width: 600px) {
-        right: -15px;
+        right: -20px;
     }
 }
 

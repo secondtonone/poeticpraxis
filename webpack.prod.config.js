@@ -7,16 +7,19 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 
 module.exports = {
-    entry:{
+    entry: {
         app: [
-            './src/main.js'
-        ],
-        vendor: [
-            'babel-polyfill',
             'react',
             'react-dom',
+            'react-router',
+            './src/main.js'
+        ]/*,
+        vendor: [*/
+            /*'babel-polyfill',*/
+            /*'react',
+            'react-dom',
             'react-router'
-        ]
+        ]*/
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -24,48 +27,43 @@ module.exports = {
         filename: '[name].[hash].js',
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /.js?$/,
                 use: ['babel-loader'],
                 exclude: /node_modules/
             }, {
                 test: /\.scss$/,
-                use: [
-                    {
-                        loader: "style-loader"
-                    }, {
-                        loader: "css-loader"
-                    }, {
-                        loader: "sass-loader"
-                    },{
-                        loader: 'sass-resources-loader',
-                        options: {
-                            resources: ['./src/scss/_variables.scss', './src/scss/_mixins.scss']
-                        }
+                use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader"
+                }, {
+                    loader: "sass-loader"
+                }, {
+                    loader: 'sass-resources-loader',
+                    options: {
+                        resources: ['./src/scss/_variables.scss', './src/scss/_mixins.scss']
                     }
-                ]
+                }]
             }, {
-                test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 100000
-                        }
+                test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 5000
                     }
-                ]
+                }]
             }, {
-                test: /\.(eot|ttf)$/,
-                use:[
+                test: /\.(png|jpg|jpeg|gif)$/,
+                use: [
                     'file-loader'
                 ]
             }, {
                 test: /\.webmanifest$/,
                 include: /public/,
                 loader: [
-                  'file-loader?name=[name].[ext]',
-                  'webmanifest-loader'
+                    'file-loader?name=[name].[ext]',
+                    'webmanifest-loader'
                 ].join('!')
             },
             {
@@ -80,10 +78,14 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
+            name: 'app',
             minChunks: Infinity,
             filename: '[name].js',
         }),
+        /*new webpack.optimize.AggressiveSplittingPlugin({
+            minSize: 30000,
+            maxSize: 950000
+        }),*/
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
@@ -102,20 +104,26 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './public/index.ejs',
             inject: 'body',
-            env:{
+            env: {
                 Prod: true,
                 Dev: false
             }
         }),
-        new CopyWebpackPlugin([
-            {
-                from: 'public/robots.txt'
-            },{
-                from: 'public/sitemap.xml'
-            },{
-                from: 'public/.htaccess'
+        new CopyWebpackPlugin([{
+            from: 'public/robots.txt'
+        }, {
+            from: 'public/sitemap.xml'
+        }, {
+            from: 'public/.htaccess'
+        }]),
+        new OfflinePlugin({
+            publicPath: '/',
+            externals: [
+                '/'
+            ],
+            ServiceWorker: {
+                navigateFallbackURL: '/'
             }
-        ]),
-        new OfflinePlugin()
+        })
     ]
 };

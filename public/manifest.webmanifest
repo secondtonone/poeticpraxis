@@ -1,6 +1,6 @@
 {
     "name": "POETIC PRAXIS",
-    "short_name": "POETIC PRAXIS",
+    "short_name": "PoeticPraxis",
     "icons": [
         {
             "src": "img/Signx48.png",
@@ -33,7 +33,7 @@
             "type": "image/png"
         }
     ],
-    "start_url": "/",
+    "start_url": "./",
     "display": "fullscreen",
     "orientation": "portrait",
     "theme_color": "#f9f8f7",

@@ -17,7 +17,7 @@ module.exports = {
             'react-hot-loader/patch',
             'webpack-dev-server/client?http://localhost:9080',
             'webpack/hot/only-dev-server',
-            'babel-polyfill',
+            /*'babel-polyfill',*/
             'react',
             'react-dom',
             'react-router'
@@ -51,18 +51,16 @@ module.exports = {
                     }
                 ]
             }, {
-                test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 100000
-                        }
+                test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192
                     }
-                ]
+                }]
             }, {
-                test: /\.(eot|ttf)$/,
-                use:[
+                test: /\.(png|jpg|jpeg|gif)$/,
+                use: [
                     'file-loader'
                 ]
             }, {
@@ -104,7 +102,15 @@ module.exports = {
                 Dev: true
             }
         }),
-        new OfflinePlugin()
+        new OfflinePlugin({
+            publicPath: '/',
+            externals: [
+                '/'
+            ],
+            ServiceWorker: {
+                navigateFallbackURL: '/'
+            }
+        })
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),

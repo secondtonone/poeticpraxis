@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
+import {analyticsInit} from './utils';
+
 import App from './containers/App';
 import './scss/style.scss';
 
@@ -20,6 +22,9 @@ const render = Component => {
 
 render(App);
 
+if(process.env.NODE_ENV === 'production') {
+  analyticsInit();
+}
 
 if (module.hot) {
   module.hot.accept('./containers/App', () => {

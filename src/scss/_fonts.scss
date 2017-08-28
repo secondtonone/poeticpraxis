@@ -19,7 +19,8 @@ $path: '../../public';
 }
 @font-face {
     font-family: 'Cormorant';
-    src:  url('#{$path}/font/Cormorantsc.woff2') format('woff2'),
+    src: local('Cormorant'),
+        url('#{$path}/font/Cormorantsc.woff2') format('woff2'),
         url('#{$path}/font/Cormorantsc.woff') format('woff'),
         url('#{$path}/font/Cormorantsc.ttf') format('truetype');
     font-weight: 400;
@@ -27,7 +28,8 @@ $path: '../../public';
 }
 @font-face {
     font-family: 'Cormorant';
-    src:  url('#{$path}/font/Cormorantscbook.woff2') format('woff2'), url('#{$path}/font/Cormorantscbook.woff') format('woff'),
+    src:  local('Cormorant'),
+        url('#{$path}/font/Cormorantscbook.woff2') format('woff2'), url('#{$path}/font/Cormorantscbook.woff') format('woff'),
         url('#{$path}/font/Cormorantscbook.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
@@ -49,8 +51,8 @@ $path: '../../public';
 @font-face {
     font-family: 'Helvetica';
     src: local('Helvetica'),
-        url('#{$path}/font/HelveticaRegular.eot') format('eot'),
-        url('#{$path}/font/HelveticaRegular.eot?#iefix') format('embedded-opentype'),
+        /* url('#{$path}/font/HelveticaRegular.eot') format('eot'),
+        url('#{$path}/font/HelveticaRegular.eot?#iefix') format('embedded-opentype'), */
         url('#{$path}/font/HelveticaRegular.woff') format('woff'),
         url('#{$path}/font/HelveticaRegular.ttf') format('truetype');
     font-style: normal;
@@ -60,8 +62,8 @@ $path: '../../public';
 @font-face {
     font-family: 'Helvetica';
     src: local('Helvetica Light'),
-        url('#{$path}/font/HelveticaLight.eot') format('eot'),
-        url('#{$path}/font/HelveticaLight.eot?#iefix') format('embedded-opentype'),
+        /* url('#{$path}/font/HelveticaLight.eot') format('eot'),
+        url('#{$path}/font/HelveticaLight.eot?#iefix') format('embedded-opentype'), */
         url('#{$path}/font/HelveticaLight.woff') format('woff'),
         url('#{$path}/font/HelveticaLight.ttf') format('truetype');
     font-style: normal;
@@ -72,7 +74,7 @@ $path: '../../public';
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url('#{$path}/font/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  /* src: url('#{$path}/font/MaterialIcons-Regular.eot'); */
   src: local('Material Icons'),
     local('MaterialIcons-Regular'),
     url('#{$path}/font/MaterialIcons-Regular.woff2') format('woff2'),

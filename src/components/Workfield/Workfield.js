@@ -679,7 +679,15 @@ export default class Workfield extends React.Component {
 
                 const delta = tag.height - field.lineHeight;
 
-                return [this.props.syllableOff || !strings[id].vowel.length ? null: <div key={`s-${tag.top}`} className="syllable com-popover" style={{top: tag.top + delta}} title="Количество слогов">{strings[id].vowel.length}</div>, this.props.stringNumberOff || !strings[id].words.length? null:<div key={`n-${tag.top}`} className="string-number com-popover" style={{top: tag.top}} title="Номер строки">{++stringCounter}</div>];
+                let vowelAccentCount = 0;
+
+                strings[id].vowel.forEach( id => {
+                    if(elements[id].accent) {
+                        ++vowelAccentCount;
+                    }
+                });
+
+                return [this.props.syllableOff || !strings[id].vowel.length ? null: <div key={`s-${tag.top}`} className="syllable com-popover" style={{top: tag.top + delta}} title="Ударение/количество слогов">{vowelAccentCount?<span className="syllable__accent">{vowelAccentCount}/</span>:null}{strings[id].vowel.length}</div>, this.props.stringNumberOff || !strings[id].words.length? null:<div key={`n-${tag.top}`} className="string-number com-popover" style={{top: tag.top}} title="Номер строки">{++stringCounter}</div>];
             }
         });
 
