@@ -1,39 +1,39 @@
-import 'disable-react-devtools';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
+import { h, render } from 'preact';
+
+import store from './store';
+
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
 import {analyticsInit} from './utils';
 
-import App from './containers/App';
 import './scss/style.scss';
 
-OfflinePluginRuntime.install();
-
-const render = Component => {
-    ReactDOM.render(
-        <AppContainer>
-          <Component />
-        </AppContainer>,
-        document.getElementById('app')
-    )
-};
-
-render(App);
-
-if(process.env.NODE_ENV === 'production') {
-  analyticsInit();
+if (process.env.NODE_ENV==='production') {
+    OfflinePluginRuntime.install();
 }
 
-if (module.hot) {
-  module.hot.accept('./containers/App', () => {
-    const NextApp = require('./containers/App').default;
-    ReactDOM.render(
-      <AppContainer>
-        <NextApp/>
-      </AppContainer>,
-      document.getElementById('add')
+let root;
+
+const run = () => {
+
+    const App = require('./containers/App').default;
+
+    root = render(
+        <App store={store}/>,
+        document.body,
+        root || document.getElementById('app')
     );
-  });
+};
+
+if(process.env.NODE_ENV === 'development') {
+    if (module.hot) {
+        require('preact/devtools');
+        module.hot.accept('./containers/App', run);
+    }
+}
+
+run();
+
+if(process.env.NODE_ENV === 'production') {
+    analyticsInit();
 }

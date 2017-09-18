@@ -4,23 +4,23 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 
+
+const PORT = 9080;
+
 module.exports = {
     devtool: 'eval-source-map',
     entry:{
         app: [
-            'react-hot-loader/patch',
-            'webpack-dev-server/client?http://localhost:9080',
+            'webpack-dev-server/client?http://localhost:'+PORT,
             'webpack/hot/only-dev-server',
             './src/main.js'
+
         ],
         vendor: [
-            'react-hot-loader/patch',
-            'webpack-dev-server/client?http://localhost:9080',
-            'webpack/hot/only-dev-server',
-            /*'babel-polyfill',*/
-            'react',
-            'react-dom',
-            'react-router'
+            'preact',
+            'react-router-dom',
+            'redux',
+            'preact-redux'
         ]
     },
     output: {
@@ -32,7 +32,7 @@ module.exports = {
         rules: [
             {
                 test: /.js?$/,
-                use: ['babel-loader'],
+                use: ['react-hot-loader/webpack','babel-loader'],
                 exclude: /node_modules/
             }, {
                 test: /\.scss$/,
@@ -78,7 +78,11 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js', '.json']
+        extensions: ['.js', '.json'],
+        alias: {
+            'react': 'preact-compat',
+            'react-dom': 'preact-compat'
+        }
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
@@ -98,8 +102,7 @@ module.exports = {
             template: './public/index.ejs',
             inject: 'body',
             env:{
-                Prod: false,
-                Dev: true
+                Prod: false
             }
         }),
         new OfflinePlugin({
@@ -115,7 +118,7 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),
         hot: true,
-        port: 9080,
+        port: PORT,
         historyApiFallback: true,
         publicPath: '/'
     }

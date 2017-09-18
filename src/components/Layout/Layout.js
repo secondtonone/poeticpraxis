@@ -1,51 +1,27 @@
-import React from 'react';
+import { h, Component } from 'preact';
 
 import Menu from '../Menu';
 
 import './Layout.scss';
 
 
-export default class Layout extends React.Component {
+export default class Layout extends Component {
 
+    render({children}) {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            imageEngine:{
-                pinned: []
-            },
-            table:{}
-        };
-    }
-
-    transmit = (newState) => {
-        this.setState(newState);
-    }
-
-    render() {
-
-        const transmit = this.transmit;
-
-        const tableText = this.state.imageEngine.pinned;
-
-        const childrenWithProps = React.Children.map(this.props.children,(child) => React.cloneElement(child, {
-            transmit,
-            tableText
-        }));
 
         return (
             <div>
                 <header>
-                    <div className="logo-background">
-                        <a href="/"><div className="logo"></div></a>
+                    <div class="logo-background">
+                        <a href="/" alt="POETIC PRAXIS" title="POETIC PRAXIS"><div class="logo"></div></a>
                     </div>
                     <Menu />
                 </header>
-                <div className="background"></div>
-                <section className="main-content">
-                {childrenWithProps}
-                </section>
+                <div class="background"></div>
+                <main class="main-content">
+                {children}
+                </main>
                 <footer></footer>
             </div>
         )

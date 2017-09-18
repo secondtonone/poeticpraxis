@@ -1,16 +1,3 @@
-function errorLoading(error) {
-    throw new Error(`Dynamic page loading failed: ${error}`);
-}
+import ImagesEngine from './ImagesEngineContainer';
 
-function loadRoute(cb) {
-    return module => cb(null, module.default);
-}
-
-export default {
-    path: 'images-engine',
-    getComponent (location, cb) {
-        System.import('./ImagesEngine')
-        .then(loadRoute(cb))
-        .catch(errorLoading);
-    }
-};
+export default ImagesEngine;

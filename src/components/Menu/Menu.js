@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router';
+import { h, Component } from 'preact';
+import { NavLink } from 'react-router-dom';
 
 import './Menu.scss';
 
-export default class Menu extends React.Component {
+export default class Menu extends Component {
 
 
     constructor(props) {
@@ -11,8 +11,6 @@ export default class Menu extends React.Component {
         super(props);
 
         this.lang = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage);
-
-        this.state = {};
     }
 
     render() {
@@ -30,27 +28,27 @@ export default class Menu extends React.Component {
         };
 
         return (
-            <nav className="navbar navbar--animated">
-                <a href="/" className="logo-navbar"></a>
-                <ul className="menu" role="nav">
+            <nav class="navbar navbar--animated" id="nav">
+                <a href="/" class="logo-navbar" aria-labelledby="nav pp" id="pp">POETIC PRAXIS</a>
+                <ul class="menu">
 
-                    <li className="menu__item">
-                        <Link to={urls.imagesEngine} activeClassName="menu__item_active">
-                        <div className="menu__icon"><i className="material-icons">widgets</i></div>
-                        <div className="menu__title">{titles.imagesEngine}</div></Link>
+                    <li class="menu__item">
+                        <NavLink to={urls.imagesEngine} activeClassName="menu__item_active">
+                        <div class="menu__icon"><i class="material-icons">widgets</i></div>
+                        <div class="menu__title">{titles.imagesEngine}</div></NavLink>
                     </li>
 
-                    <li className="menu__item">
-                        <Link to={urls.rhythmic} activeClassName="menu__item_active">
-                            <div className="menu__icon"><i className="material-icons">change_history</i></div>
-                            <div className="menu__title">{titles.rhythmic}</div>
-                        </Link>
+                    <li class="menu__item">
+                        <NavLink to={urls.rhythmic} activeClassName="menu__item_active">
+                            <div class="menu__icon"><i class="material-icons">change_history</i></div>
+                            <div class="menu__title">{titles.rhythmic}</div>
+                        </NavLink>
                     </li>
 
-                    <li className="menu__item">
-                        <Link to={urls.about} activeClassName="menu__item_active">
-                        <div className="menu__icon"><i className="material-icons">info_outline</i></div>
-                        <div className="menu__title">{titles.about}</div></Link>
+                    <li class="menu__item">
+                        <NavLink to={urls.about} activeClassName="menu__item_active">
+                        <div class="menu__icon"><i class="material-icons">info_outline</i></div>
+                        <div class="menu__title">{titles.about}</div></NavLink>
                     </li>
                 </ul>
             </nav>

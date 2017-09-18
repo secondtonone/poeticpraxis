@@ -70,6 +70,8 @@
 }
 
 .logo-navbar {
+    color: rgba(0, 0, 0, 0);
+    font-size: 0;
     background: url('#{$path}/img/Logo.svg');
     background-size: contain;
     background-repeat: no-repeat;

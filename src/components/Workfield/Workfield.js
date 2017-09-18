@@ -1,4 +1,4 @@
-import React from 'react';
+import { h, Component } from 'preact';
 import Textarea from '../Textarea';
 import {randomize} from '../../utils';
 
@@ -6,7 +6,7 @@ import './Workfield.scss';
 
 /*парсить по словам, сравнивать с предыдущим деревом*/
 
-export default class Workfield extends React.Component {
+export default class Workfield extends Component {
 
     constructor(props) {
         super(props);
@@ -23,6 +23,8 @@ export default class Workfield extends React.Component {
             wordLinks: {},
             field: {}
         };
+
+        this.strings = {};
 
         this.caretPosition = 0;
 
@@ -44,7 +46,7 @@ export default class Workfield extends React.Component {
             text = this.props.text.join('\n');
         }
 
-        this.mainField = this.refs.textarea.refs.field;
+        this.mainField = this.textarea.field;
 
 
         this.setStateAsync({
@@ -133,7 +135,7 @@ export default class Workfield extends React.Component {
     }
 
 
-    tagMaker(node, textAnalized) {
+    tagMaker = (node, textAnalized) => {
 
         const stringNodes = [ ...node];
 
@@ -147,9 +149,11 @@ export default class Workfield extends React.Component {
             'red_secondary': 2
         };
 
-        const {elements, orderStrings, strings} = textAnalized;
+        const {elements, strings} = textAnalized;
 
         stringNodes.forEach( string => {
+
+
 
             const symbols = [ ...string.children];
 
@@ -164,7 +168,10 @@ export default class Workfield extends React.Component {
 
                 symbols.forEach( symbol => {
 
+
+
                     if ( symbol.className === 'black' || symbol.className === 'red' || symbol.className === 'red_secondary' || symbol.className === 'string-pause'){
+
 
                         elements[symbol.id].tag = {
                             left: symbol.offsetLeft + string.offsetLeft,
@@ -182,7 +189,6 @@ export default class Workfield extends React.Component {
         return {
             elements,
             strings,
-            orderStrings,
             tags
         };
     }
@@ -423,35 +429,40 @@ export default class Workfield extends React.Component {
     handleTextInput = (e) => {
 
         const text = e.target.value;
-        this.props.toParent({
-            fieldText:text
-        });
+
+
         this.textLinting(text);
 
     }
 
     textLinting = (text) => {
 
-        let strings = this.textAnalizator(text, this.state);
+        let analizedText = this.textAnalizator(text, this.state);
 
         this.setStateAsync({
-            ...strings,
+            ...analizedText,
             text
         }).then(()=>{
 
-            let stringsLinted = this.tagMaker(this.refs.fakeField.children, strings);
+            let stringsLinted = this.tagMaker(this.fakeField.children, analizedText);
 
             this.setState({
                 ...stringsLinted
             });
+
+            if(!this.props.readOnly){
+                this.props.setRhytmicState(this.state);
+            }
         });
+
+
 
         /*if(this.mainTimer) {
             window.clearTimeout(this.mainTimer);
         }
 
         this.mainTimer = setTimeout(()=>{
-            strings = this.tagMaker(this.refs.fakeField.children, strings);
+            strings = this.tagMaker(this.fakeField.children, strings);
 
             this.setState({
                 ...strings
@@ -496,7 +507,7 @@ export default class Workfield extends React.Component {
 
     copyToClipboard = () => {
 
-        const field = this.refs.fakeField;
+        const field = this.fakeField;
 
         if (document.selection) {
             const range = document.body.createTextRange();
@@ -512,23 +523,43 @@ export default class Workfield extends React.Component {
         document.execCommand("Copy");
     }
 
+    getSelection = () => {
+
+        const start = this.mainField.selectionStart;
+
+        const end = this.mainField.selectionEnd;
+
+        console.log('begin: ',start, ' end: ',end);
+
+        const textSelected = this.state.text.substring(start, end);
+
+        const stringToSymbol = this.state.text.substring(0, start);
+
+        const inWhatString = stringToSymbol.match(/\n/g)?stringToSymbol.match(/\n/g).length+1: 1;
+
+        console.log('text: ',textSelected,'length: ', textSelected.length,'inWhatString: ', inWhatString);
+
+        /*здесь мы высчитываем и сразу корректируем state.elements*/
+
+    }
 
 
-    render() {
+
+    render({readOnly, syllableOff, stringNumberOff}, state) {
 
         const self = this;
+
+        const  {strings, field, elements, orderStrings, tags} = state;
 
         const accents = ['black', 'red', 'red_secondary'];
 
         const decription = ['Слабая доля', 'Сильная доля', 'Побочное ударение'];
 
-        const {strings, field, elements, orderStrings } = this.state;
-
         let stringCounter = 0;
 
         let symbolCounter = 0;
 
-        const renderedTags = this.state.tags.map( sign =>{
+        const renderedTags = tags.map( sign =>{
 
             const style = {
                 top: sign.tag.top,
@@ -538,17 +569,17 @@ export default class Workfield extends React.Component {
             };
 
             if(sign.type === 'p') {
-                return (<span className="string-pause-relative" key={sign.id} id={sign.id} style={style} title="Однодольная пауза">&#8896;</span>);
+                return (<span class="string-pause-relative" key={sign.id} id={sign.id} style={style} title="Однодольная пауза">&#8896;</span>);
             }
 
             const signHandler = (e) =>{
                 e.preventDefault();
 
-                if(this.props.readOnly) {
+                if(readOnly) {
                     return false;
                 }
 
-                let {elements, strings, wordsDictionary, stringsDictionary, stringLinks, wordLinks} = self.state;
+                let {elements, strings, wordsDictionary, stringsDictionary, stringLinks, wordLinks} = state;
 
                 const element = elements[sign.id];
 
@@ -639,7 +670,7 @@ export default class Workfield extends React.Component {
                 });
             };
 
-            return (<span className={accents[sign.accent] + '-relative'} key={sign.id} id={sign.id} style={style} onClick={signHandler} title={decription[sign.accent]}></span>);
+            return (<span class={accents[sign.accent] + '-relative'} key={sign.id} id={sign.id} style={style} onClick={signHandler} title={decription[sign.accent]}></span>);
 
         });
 
@@ -655,12 +686,12 @@ export default class Workfield extends React.Component {
 
                 if (symbol.type === 'v'){
 
-                    return (<span className={accents[symbol.accent]} key={id} id={id} >{char}</span>);
+                    return (<span class={accents[symbol.accent]} key={id} id={id} >{char}</span>);
 
                 }
                 if (symbol.type === 'p'){
 
-                    return (<span className="string-pause" key={id} id={id}>{char}</span>);
+                    return (<span class="string-pause" key={id} id={id}>{char}</span>);
 
                 }
 
@@ -668,7 +699,7 @@ export default class Workfield extends React.Component {
 
             });
 
-            return (<div className="string-field" key={id} id={id}>{symbols.length ? symbols : ' '}</div>);
+            return (<div class="string-field" key={id} id={id}>{symbols.length ? symbols : ' '}</div>);
         });
 
         const infoTags = orderStrings.map(id => {
@@ -687,31 +718,25 @@ export default class Workfield extends React.Component {
                     }
                 });
 
-                return [this.props.syllableOff || !strings[id].vowel.length ? null: <div key={`s-${tag.top}`} className="syllable com-popover" style={{top: tag.top + delta}} title="Ударение/количество слогов">{vowelAccentCount?<span className="syllable__accent">{vowelAccentCount}/</span>:null}{strings[id].vowel.length}</div>, this.props.stringNumberOff || !strings[id].words.length? null:<div key={`n-${tag.top}`} className="string-number com-popover" style={{top: tag.top}} title="Номер строки">{++stringCounter}</div>];
+                return [syllableOff || !strings[id].vowel.length ? null: <div key={`s-${tag.top}`} class="syllable com-popover" style={{top: tag.top + delta}} title="Ударение/количество слогов">{vowelAccentCount?<span class="syllable__accent">{vowelAccentCount}/</span>:null}{strings[id].vowel.length}</div>, stringNumberOff || !strings[id].words.length? null:<div key={`n-${tag.top}`} class="string-number com-popover" style={{top: tag.top}} title="Номер строки">{++stringCounter}</div>];
             }
         });
 
         let props = {
             onInput:this.handleTextInput,
-            value: this.state.text,
+            value: state.text,
             classNames: 'field-editable',
             getMeasure: this.getMeasureField,
-            readOnly: this.props.readOnly,
+            readOnly: readOnly,
             placeHolder: 'Напишите или вставьте текст...'
         };
 
         return (
-            <div className="work-field">
-
-
-
-                <div className="field-editable fake-field" ref="fakeField">{markingTags}</div>
-                <div className="paint-field" >{renderedTags}{infoTags}
-                    <Textarea {...props} ref="textarea"/>
-
-
+            <div class="work-field">
+                <div class="field-editable fake-field" ref={ ref => this.fakeField = ref }>{markingTags}</div>
+                <div class="paint-field" >{renderedTags}{infoTags}
                 </div>
-
+                <Textarea {...props} ref={ ref => this.textarea = ref }/>
             </div>
         )
     }

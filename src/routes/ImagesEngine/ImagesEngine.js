@@ -1,9 +1,9 @@
-import React from 'react';
+import { h, Component } from 'preact';
 import {imaged, randomize} from '../../utils';
 import Textarea from '../../components/Textarea';
-import {browserHistory} from 'react-router';
 
-export default class ImagesEngine extends React.Component {
+
+export default class ImagesEngine extends Component {
 
     constructor(props) {
         super(props);
@@ -75,6 +75,8 @@ export default class ImagesEngine extends React.Component {
             isListHidden,
             isExpanded
         });
+
+        this.props.setEngineState(this.state);
     }
 
     setWordsNumber = (e) => {
@@ -84,6 +86,8 @@ export default class ImagesEngine extends React.Component {
         this.setState({
             wordsNumber
         });
+
+        this.props.setEngineState(this.state);
 
     }
 
@@ -102,6 +106,8 @@ export default class ImagesEngine extends React.Component {
             result
         });
 
+        this.props.setEngineState(this.state);
+
     }
 
     deleteMatch = (index) => {
@@ -114,6 +120,9 @@ export default class ImagesEngine extends React.Component {
             pinned
         });
 
+
+        this.props.setEngineState(this.state);
+
     }
 
     clearInput = () => {
@@ -125,6 +134,9 @@ export default class ImagesEngine extends React.Component {
         this.setState({
             text
         });
+
+
+        this.props.setEngineState(this.state);
     }
 
 
@@ -140,6 +152,8 @@ export default class ImagesEngine extends React.Component {
             isExpanded
         });
 
+        this.props.setEngineState(this.state);
+
     }
 
 
@@ -149,18 +163,16 @@ export default class ImagesEngine extends React.Component {
             pinned: this.state.pinned
         };
 
-        this.props.transmit({
-            imageEngine
-        });
+        this.props.setEngineState(this.state);
 
-        browserHistory.push('/rhythmic');
+        this.props.history.push('/rhythmic');
     }
 
     toTheTop = () => {
         window.scrollTo(0,0);
     }
 
-    render() {
+    render({}, state) {
 
         const self = this;
 
@@ -177,7 +189,7 @@ export default class ImagesEngine extends React.Component {
 
             let additional = order;
 
-            if(!this.state.isListHidden) {
+            if(!state.isListHidden) {
 
                 additional = `${side} list--half`;
             }
@@ -187,7 +199,7 @@ export default class ImagesEngine extends React.Component {
 
         const styleChanger = () => {
 
-            if(this.state.isExpanded) {
+            if(state.isExpanded) {
                 return {};
             }
 
@@ -198,75 +210,73 @@ export default class ImagesEngine extends React.Component {
         }
 
 
-        return (
-            <div>
+        return (<section>
 
-                <div className="input-container input-container_main animation-up">
-                    <label htmlFor="wordNumber" className="input-container_label">Словосочетание из:</label>
-                    <i className="material-icons input-container_icon">arrow_drop_down</i>
-                    <select name="wordsNumber" className="input-container_select" id="wordNumber" value={this.state.wordsNumber} onChange={this.setWordsNumber}>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-
-                </div>
-
-                <button className="button_rounded button_main animation-up" type="button" onClick={this.getResult} disabled={!this.state.text} title="Нарезать"><i className="material-icons material-icons--big">widgets</i></button>
-
-                <div className={classChanger('list--left', 'list--first')}>
-
-                    {this.state.isExpanded?null:<label className="field-title" onClick={this.expanding}>{props.label}</label>}
-                    <div style={styleChanger()}>
-                        <div className="work-field">
-                            <Textarea {...props}/>
-                        </div>
-                    </div>
-
-                    {this.state.text.length && this.state.isExpanded?<button className="button_rounded field-clear-button" type="button" onClick={this.clearInput} title="Стереть текст"><i className="material-icons material-icons--small">delete</i>
-                    </button>:null}
-
-
-
-                    {this.state.isListHidden?null:<button className="button_rounded button_transparent list__button-expand" type="button" onClick={this.expanding} title="Стереть текст">{this.state.isExpanded?<i className="material-icons material-icons--big">expand_less</i>: <i className="material-icons material-icons--big">expand_more</i>}
-                    </button>}
-
-                </div>
-
-                <div className={classChanger('list--right', 'list--second')}>
-                    <div className="matches">
-                        <h1 className="matches__title">Выбранные</h1>
-                        {this.state.pinned.length?null:<div className="matches__hint">Выберите сочетание,<br/> нажав на  <i className="material-icons material-icons--small">check_circle</i></div>}
-                        <ul>{this.state.pinned.map((match, index)=>{
-                            return (<li className="matches__item" key={`p${randomize()}`}>
-                                <button className="button_rounded button_transparent button_middle  matches__pin matches__pin--pinned" type="button" title="Удалить" onClick={() => this.deleteMatch(index)}>
-                                    <i className="material-icons material-icons--middle">cancel</i>
-                                </button>
-                                {match}</li>)
-                        })}</ul>
-                        {this.state.pinned.length?<button className="button_flat button_transparent button_long matches__send" type="button" onClick={this.toRhythmic}>Посмотреть ритм <i className="material-icons material-icons--small">arrow_forward</i>
-                        </button>: null}
-                    </div>
-                    <div className="matches">
-                        <h1 className="matches__title">Сочетания</h1>
-                        {this.state.result.length?null:<div className="matches__hint">Нажмите снова на <i className="material-icons material-icons--small">widgets</i>,<br/> чтобы получить новые сочетаиния</div>}
-                        <ul>{this.state.result.map((words, index)=>{
-
-                            const match = words.join(' ');
-
-                            return (<li className="matches__item" key={`w${randomize()}`}>
-                                <button className="button_rounded button_transparent button_middle matches__pin" type="button" title="Выбрать" onClick={() => this.pinMatch(match, index)}>
-                                    <i className="material-icons material-icons--middle">check_circle</i>
-                                </button>
-                                <div className="matches__text">{match}</div></li>)
-                        })}</ul>
-                        {this.state.result.length > 30?<button className="button_flat button_transparent button_long matches__send" type="button" onClick={this.toTheTop}>Вернуться наверх <i className="material-icons material-icons--small">arrow_upward</i>
-                        </button>: null}
-                    </div>
-                </div>
-
-
+            <div class="input-container input-container_main animation-up">
+                <label for="wordNumber" class="input-container_label">Словосочетание из:</label>
+                <i class="material-icons input-container_icon">arrow_drop_down</i>
+                <select name="wordsNumber" class="input-container_select" id="wordNumber" value={state.wordsNumber} onChange={this.setWordsNumber}>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
 
             </div>
-        )
+
+            <button class="button_rounded button_main animation-up" type="button" onClick={this.getResult} disabled={!state.text} title="Нарезать"><i class="material-icons material-icons--big">widgets</i></button>
+
+            <div class={classChanger('list--left', 'list--first')}>
+
+                {state.isExpanded?null:<label class="field-title" onClick={this.expanding}>{props.label}</label>}
+                <div style={styleChanger()}>
+                    <div class="work-field">
+                        <Textarea {...props}/>
+                    </div>
+                </div>
+
+                {state.text.length && state.isExpanded?<button class="button_rounded field-clear-button" type="button" onClick={this.clearInput} title="Стереть текст"><i class="material-icons material-icons--small">delete</i>
+                </button>:null}
+
+
+
+                {state.isListHidden?null:<button class="button_rounded button_transparent list__button-expand" type="button" onClick={this.expanding} title="Стереть текст">{state.isExpanded?<i class="material-icons material-icons--big">expand_less</i>: <i class="material-icons material-icons--big">expand_more</i>}
+                </button>}
+
+            </div>
+
+            <div class={classChanger('list--right', 'list--second')}>
+                <div class="matches">
+                    <h1 class="matches__title">Выбранные</h1>
+                    {state.pinned.length?null:<div class="matches__hint">Выберите сочетание,<br/> нажав на  <i class="material-icons material-icons--small">check_circle</i></div>}
+                    <ul>{state.pinned.map((match, index)=>{
+                        return (<li class="matches__item" key={`p${randomize()}`}>
+                            <button class="button_rounded button_transparent button_middle  matches__pin matches__pin--pinned" type="button" title="Удалить" onClick={() => this.deleteMatch(index)}>
+                                <i class="material-icons material-icons--middle">cancel</i>
+                            </button>
+                            {match}</li>)
+                    })}</ul>
+                    {state.pinned.length?<button class="button_flat button_transparent button_long matches__send" type="button" onClick={this.toRhythmic}>Посмотреть ритм <i class="material-icons material-icons--small">arrow_forward</i>
+                    </button>: null}
+                </div>
+                <div class="matches">
+                    <h1 class="matches__title">Сочетания</h1>
+                    {state.result.length?null:<div class="matches__hint">Нажмите снова на <i class="material-icons material-icons--small">widgets</i>,<br/> чтобы получить новые сочетаиния</div>}
+                    <ul>{state.result.map((words, index)=>{
+
+                        const match = words.join(' ');
+
+                        return (<li class="matches__item" key={`w${randomize()}`}>
+                            <button class="button_rounded button_transparent button_middle matches__pin" type="button" title="Выбрать" onClick={() => this.pinMatch(match, index)}>
+                                <i class="material-icons material-icons--middle">check_circle</i>
+                            </button>
+                            <div class="matches__text">{match}</div></li>)
+                    })}</ul>
+                    {state.result.length > 30?<button class="button_flat button_transparent button_long matches__send" type="button" onClick={this.toTheTop}>Вернуться наверх <i class="material-icons material-icons--small">arrow_upward</i>
+                    </button>: null}
+                </div>
+            </div>
+
+
+
+        </section>);
     }
 }

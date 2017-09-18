@@ -1,25 +1,39 @@
-import React from 'react';
-import { Router, Route, browserHistory, IndexRedirect } from 'react-router';
+import { h, Component } from 'preact';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 import Layout from '../components/Layout';
-import Rhythmic from './Rhythmic';
-import About from './About';
-import ImagesEngine from './ImagesEngine';
+import Bundle from '../components/Bundle';
 
+import loadRhythmic from 'bundle-loader?lazy!./Rhythmic';
+import loadAbout from 'bundle-loader?lazy!./About';
+import loadImagesEngine from 'bundle-loader?lazy!./ImagesEngine';
 
-export default {
-    path: '/',
-    component: Layout,
-    indexRoute: {
-        onEnter: (nextState, replace) => replace('/images-engine')
-    },
-    childRoutes: [
-        About,
-        Rhythmic,
-        ImagesEngine,
-        {
-            path: '*',
-            getComponent: ImagesEngine.getComponent
-        }
-    ]
-};
+const About = (props) => (
+  <Bundle load={loadAbout}>
+    {(About) => <About {...props}/>}
+  </Bundle>
+)
+
+const Rhythmic = (props) => (
+  <Bundle load={loadRhythmic}>
+    {(Rhythmic) => <Rhythmic {...props}/>}
+  </Bundle>
+)
+
+const ImagesEngine = (props) => (
+  <Bundle load={loadImagesEngine}>
+    {(ImagesEngine) => <ImagesEngine {...props}/>}
+  </Bundle>
+)
+
+export default () => (
+    <Layout>
+        <Switch>
+            <Route exact path="/" render={() => <Redirect to='/about' />} />
+            <Route path='/images-engine' component={ImagesEngine} />
+            <Route path='/rhythmic' component={Rhythmic} />
+            <Route path='/about' component={About} />
+            <Redirect path="*" to="/" />
+        </Switch>
+    </Layout>
+);

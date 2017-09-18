@@ -1,6 +1,13 @@
-import React from 'react';
-import { Router, browserHistory } from 'react-router';
+import { h, Component } from 'preact';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'preact-redux';
 
-import routes from '../routes';
+import Routes from '../routes';
 
-export default () => <Router history={browserHistory} routes={routes} />;
+export default ({ store }) => (
+    <Provider store = { store } >
+        <BrowserRouter >
+            <Routes />
+        </BrowserRouter>
+    </Provider>
+);

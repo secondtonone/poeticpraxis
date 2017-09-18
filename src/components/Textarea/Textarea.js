@@ -1,7 +1,7 @@
-import React from 'react';
+import { h, Component } from 'preact';
 import {randomize} from '../../utils';
 
-export default class Textarea extends React.Component {
+export default class Textarea extends Component {
     constructor(props) {
         super(props);
 
@@ -20,10 +20,10 @@ export default class Textarea extends React.Component {
             }, this.props.focus);
         }
 
-        const width = this.refs.field.clientWidth;
-        const height = this.refs.field.clientHeight;
-        const offset =  this.refs.field.offsetHeight - height;
-        let lineHeight = window.getComputedStyle(this.refs.field, null).lineHeight;
+        const width = this.field.clientWidth;
+        const height = this.field.clientHeight;
+        const offset =  this.field.offsetHeight - height;
+        let lineHeight = window.getComputedStyle(this.field, null).lineHeight;
 
         lineHeight = parseInt(lineHeight, 10);
 
@@ -42,7 +42,7 @@ export default class Textarea extends React.Component {
     }
 
     componentDidUpdate() {
-        this.heightChange(this.refs.field);
+        this.heightChange(this.field);
     }
 
     componentWillUnmount() {
@@ -59,19 +59,17 @@ export default class Textarea extends React.Component {
     }
 
     fieldFocusing = () => {
-        this.refs.field.focus();
+        this.field.focus();
     }
 
-    render() {
-
-        const { classNames, value, onMouseUp, onInput, onClick, readOnly, placeHolder, label, onFocus, onKeyDown, onKeyUp} = this.props;
+    render({ classNames, value, onMouseUp, onInput, onClick, readOnly, placeHolder, label, onFocus, onKeyDown, onKeyUp}) {
 
         const id = `i${randomize()}`;
 
         return (
             <div>
-                <label htmlFor={id} className={label && value?'field-title':'visuallyhidden'}>{label}</label>
-                <textarea name={id} id={id} className={classNames} onInput={onInput} onMouseUp={onMouseUp} onClick={onClick} onFocus={onFocus} onKeyUp={onKeyUp} onKeyDown={onKeyDown} value={value} ref="field" readOnly={readOnly} placeholder={placeHolder}></textarea>
+                <label for={id} class={label && value?'field-title':'visuallyhidden'}>{label}</label>
+                <textarea name={id} id={id} class={classNames} onInput={onInput} onMouseUp={onMouseUp} onClick={onClick} onFocus={onFocus} onKeyUp={onKeyUp} onKeyDown={onKeyDown} value={value} ref={ ref => this.field = ref } readOnly={readOnly} placeholder={placeHolder} aria-label="workfield"></textarea>
             </div>);
     }
 }

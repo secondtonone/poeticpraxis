@@ -1,5 +1,6 @@
 *.sublime-workspace
 *.sublime-project
+.vscode
 /bower_components
 /node_modules
 /dist

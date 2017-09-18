@@ -1,7 +1,11 @@
-var path = require('path');
-var express = require('express');
+const path = require('path');
+const express = require('express');
+const compress = require('compression');
 
-var app = express();
+const app = express();
+
+
+app.use(compress());
 
 app.use(express.static('dist'));
 

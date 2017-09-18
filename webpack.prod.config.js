@@ -9,22 +9,19 @@ const OfflinePlugin = require('offline-plugin');
 module.exports = {
     entry: {
         app: [
-            'react',
-            'react-dom',
-            'react-router',
             './src/main.js'
         ]/*,
-        vendor: [*/
-            /*'babel-polyfill',*/
-            /*'react',
-            'react-dom',
-            'react-router'
+        vendor: [
+            'preact',
+            'react-router-dom',
+            'redux',
+            'preact-redux'
         ]*/
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: '[name].[hash].js',
+        filename: '[name].[hash].js'
     },
     module: {
         rules: [{
@@ -73,7 +70,11 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js', '.json']
+        extensions: ['.js', '.json'],
+        alias: {
+            'react': 'preact-compat',
+            'react-dom': 'preact-compat'
+        }
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
@@ -84,9 +85,9 @@ module.exports = {
         }),
         /*new webpack.optimize.AggressiveSplittingPlugin({
             minSize: 30000,
-            maxSize: 950000
-        }),*/
-        new webpack.optimize.OccurrenceOrderPlugin(),
+            maxSize: 50000
+        }),
+*/      new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             output: {
@@ -105,8 +106,7 @@ module.exports = {
             template: './public/index.ejs',
             inject: 'body',
             env: {
-                Prod: true,
-                Dev: false
+                Prod: true
             }
         }),
         new CopyWebpackPlugin([{
@@ -119,7 +119,9 @@ module.exports = {
         new OfflinePlugin({
             publicPath: '/',
             externals: [
-                '/'
+                '/'/*,
+                'https://fonts.googleapis.com/css?family=Cormorant+SC:500&amp;subset=cyrillic',
+                'https://fonts.googleapis.com/icon?family=Material+Icons'*/
             ],
             ServiceWorker: {
                 navigateFallbackURL: '/'

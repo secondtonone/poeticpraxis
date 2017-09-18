@@ -10,7 +10,7 @@
 
 $path: '../../public';
 
-@font-face {
+/* @font-face {
     font-family: 'Cormorant';
     src: url('#{$path}/font/Cormorantsclight.woff2') format('woff2'), url('#{$path}/font/Cormorantsclight.woff') format('woff'),
         url('#{$path}/font/Cormorantsclight.ttf') format('truetype');
@@ -26,6 +26,7 @@ $path: '../../public';
     font-weight: 400;
     font-style: normal;
 }
+*/
 @font-face {
     font-family: 'Cormorant';
     src:  local('Cormorant'),
@@ -71,11 +72,11 @@ $path: '../../public';
 }
 
 @font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
   /* src: url('#{$path}/font/MaterialIcons-Regular.eot'); */
-  src: local('Material Icons'),
+    src: local('Material Icons'),
     local('MaterialIcons-Regular'),
     url('#{$path}/font/MaterialIcons-Regular.woff2') format('woff2'),
     url('#{$path}/font/MaterialIcons-Regular.woff') format('woff'),

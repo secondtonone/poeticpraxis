@@ -3,6 +3,9 @@
 @import 'animations';
 @import 'material-icons';
 
+.first-paint {
+    display: none;
+}
 
 input,
 textarea {
@@ -183,7 +186,7 @@ body {
     }
 
     &_label {
-
+        color: $primary-black;
     }
 
     &_select, &_input {
@@ -212,6 +215,7 @@ body {
         right: 0;
         top: 4px;
         z-index: 1;
+        color: $primary-black;
     }
 }
 
@@ -227,6 +231,7 @@ body {
 }
 
 .field-editable {
+    position: relative;
     font-family: $cormorant-font;
     height: 100%;
     width: 100%;
@@ -254,6 +259,15 @@ body {
         padding: 0;
     }
 }
+
+.fake-field {
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    background-color: $second-white;
+    color: #5d5c5c;
+}
+
 
 .field-title {
     font-size: 18px;

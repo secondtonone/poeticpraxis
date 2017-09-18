@@ -12,13 +12,6 @@
     margin: 0 0 32px 0;
 }
 
-.fake-field {
-    position: absolute;
-    top: 0;
-    opacity: 0;
-    background-color: $second-white;
-    color: #5d5c5c;
-}
 
 .string-field {
     position: relative;
@@ -72,6 +65,7 @@
 
 .string-pause-relative {
     position: absolute;
+    z-index: 1000;
     text-shadow:
     -1px -3px 0 $primary-white,
     1px -3px 0 $primary-white,
@@ -136,13 +130,13 @@
 
 .string-number {
     position: absolute;
-    left: -30px;
+    left: -10px;
     text-align: left;
     font-family: $helvetica-font;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 200;
-    line-height: 46px;
-    color: rgb(232, 232, 232);
+    line-height: 48px;
+    color: rgb(102, 102, 102);
     cursor: help;
 
     @media (max-width: 880px) {

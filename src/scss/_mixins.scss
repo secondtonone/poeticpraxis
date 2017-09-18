@@ -1,5 +1,6 @@
 @mixin tringle($color, $triangle, $borderType ) {
     position: absolute;
+    z-index: 1000;
     cursor: url('#{$path}/img/cursors/#{$triangle}_triangle.svg'), url('#{$path}/img/cursors/#{$triangle}_triangle.png'),pointer;
 
     &::after {
@@ -35,6 +36,7 @@
         width: 0;
         font-size: 14px;
         height: 0;
+
     }
 
     &:hover::before {
