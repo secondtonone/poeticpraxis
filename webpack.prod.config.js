@@ -4,19 +4,20 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 
 module.exports = {
     entry: {
         app: [
             './src/main.js'
-        ]/*,
+        ],
         vendor: [
             'preact',
             'react-router-dom',
             'redux',
             'preact-redux'
-        ]*/
+        ]
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -47,7 +48,7 @@ module.exports = {
                 use: [{
                     loader: 'url-loader',
                     options: {
-                        limit: 5000
+                        limit: 8000
                     }
                 }]
             }, {
@@ -79,7 +80,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'app',
+            name: 'vendor',
             minChunks: Infinity,
             filename: '[name].js',
         }),
@@ -87,7 +88,8 @@ module.exports = {
             minSize: 30000,
             maxSize: 50000
         }),
-*/      new webpack.optimize.OccurrenceOrderPlugin(),
+*/
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             output: {
@@ -100,6 +102,14 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
+            }
+        }),
+        new ScriptExtHtmlWebpackPlugin({
+            sync: /vendor/,
+            async: /\.js$/,
+            preload: {
+              test: /\.js$/,
+              chunks: 'async'
             }
         }),
         new HtmlWebpackPlugin({
@@ -119,9 +129,7 @@ module.exports = {
         new OfflinePlugin({
             publicPath: '/',
             externals: [
-                '/'/*,
-                'https://fonts.googleapis.com/css?family=Cormorant+SC:500&amp;subset=cyrillic',
-                'https://fonts.googleapis.com/icon?family=Material+Icons'*/
+                '/'
             ],
             ServiceWorker: {
                 navigateFallbackURL: '/'

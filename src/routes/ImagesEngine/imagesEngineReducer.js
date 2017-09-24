@@ -15,7 +15,8 @@ const initialState = {
         words: [],
         field:{},
         pinned: [],
-        wordsNumber: 2
+        wordsNumber: 2,
+        sharedText: ''
     }
 }
 

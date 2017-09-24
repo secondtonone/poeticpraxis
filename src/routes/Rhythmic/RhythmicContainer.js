@@ -9,7 +9,8 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-    rhythmicState: state.Rhythmic.currentRhythmicState
+    rhythmicState: state.Rhythmic.currentRhythmicState,
+    sharedText: state.ImagesEngine.currentEngineState.sharedText
 })
 
 

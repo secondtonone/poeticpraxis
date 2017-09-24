@@ -8,16 +8,31 @@ export default class ImagesEngine extends Component {
     constructor(props) {
         super(props);
 
+        const {
+            result,
+            isListHidden,
+            isExpanded,
+            text,
+            words,
+            field,
+            pinned,
+            wordsNumber
+        } = props.engineState;
+
         this.state = {
-            result:[],
-            isListHidden: true,
-            isExpanded: true,
-            text:'',
-            words: [],
-            field:{},
-            pinned: [],
-            wordsNumber: 2
+            result,
+            isListHidden,
+            isExpanded,
+            text,
+            words,
+            field,
+            pinned,
+            wordsNumber,
+            sharedText: ''
         };
+
+
+
     }
 
     componentDidMount(){
@@ -162,6 +177,12 @@ export default class ImagesEngine extends Component {
         let imageEngine = {
             pinned: this.state.pinned
         };
+
+        const sharedText = this.state.pinned.join('\n');
+
+        this.setState({
+            sharedText
+        });
 
         this.props.setEngineState(this.state);
 

@@ -3,6 +3,7 @@ module.exports = {
     "plugins": [
         "standard"
     ],
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaVersion": 8,
         "sourceType": "module",
@@ -13,6 +14,7 @@ module.exports = {
     "rules": {
         "no-unused-vars": 0,
         "semi": 0,
-        "eol-last": 0
+        "eol-last": 0,
+        "indent": "off"
     }
 };
