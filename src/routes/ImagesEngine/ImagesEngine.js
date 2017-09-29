@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import cn from 'classnames';
 import {imaged, randomize} from '../../utils';
 import Textarea from '../../components/Textarea';
 
@@ -200,7 +201,7 @@ export default class ImagesEngine extends Component {
         const props = {
             onInput:this.handleTextInput,
             value: this.state.text,
-            classNames: "field-editable",
+            classNames: 'field-editable',
             getMeasure: this.getMeasureField,
             label: 'Материал',
             placeHolder: 'Введите слова или вставьте текст...'

@@ -39,10 +39,12 @@ export default class Rhythmic extends Component {
 
         this.mouseTrackingTimer = setTimeout(()=>{*/
 
-            let top = e.pageY - 270 < 0 ? 0 : Math.floor(e.pageY - 270);
+            /*let top = e.pageY - 270 < 0 ? 0 : Math.floor(e.pageY - 270);*/
+            let transform = `translateY(${e.pageY - 270 < 0 ? 0 : Math.floor(e.pageY - 270)}px)`
 
             const renderCaesuraButtonStyle = {
-                top
+                /*top*/
+                transform
             };
 
             this.setState({

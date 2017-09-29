@@ -106,11 +106,7 @@ module.exports = {
         }),
         new ScriptExtHtmlWebpackPlugin({
             sync: /vendor/,
-            async: /\.js$/,
-            preload: {
-              test: /\.js$/,
-              chunks: 'async'
-            }
+            async: /\.js$/
         }),
         new HtmlWebpackPlugin({
             template: './public/index.ejs',

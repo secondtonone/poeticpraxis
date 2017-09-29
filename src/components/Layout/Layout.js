@@ -1,6 +1,8 @@
 import { h, Component } from 'preact';
+import {randomize} from '../../utils';
 
 import Menu from '../Menu';
+import Background from '../Background'
 
 import './Layout.scss';
 
@@ -8,8 +10,6 @@ import './Layout.scss';
 export default class Layout extends Component {
 
     render({children}) {
-
-
         return (
             <div>
                 <header>
@@ -18,7 +18,7 @@ export default class Layout extends Component {
                     </div>
                     <Menu />
                 </header>
-                <div class="background"></div>
+                <Background blocksCount={15}/>
                 <main class="main-content">
                 {children}
                 </main>

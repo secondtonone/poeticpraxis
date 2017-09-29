@@ -1,21 +1,3 @@
-.background {
-    background-image: url('#{$path}/img/Papers_small.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    animation-name: blured;
-    animation-duration: 5s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-in-out;
-    z-index: 1;
-    opacity: 1;
-}
-
 .logo-background {
     position: fixed;
     width: 687px;
@@ -25,7 +7,7 @@
     box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.2);
     top: -190px;
     left: -170px;
-    transform: translateY(-100%) rotate(688deg);
+    transform: translateY(-100%) rotate(690deg);
     animation-name: downLogo;
     animation-duration: 1s;
     animation-iteration-count: 1;
@@ -35,7 +17,7 @@
 
     @media (max-width: 794px) {
         top: -238px;
-        left: -136px;
+        left: -180px;
     }
 
     @media (max-width: 880px) {
@@ -48,8 +30,8 @@
 
         display: block;
         opacity: 1;
-        top: -102px;
-        transform: rotate(688deg) scale(1);
+        top: -60px;
+        transform: rotate(690deg) scale(1);
         animation-name: hide;
         animation-duration: 1s;
         animation-iteration-count: 1;
@@ -64,10 +46,10 @@
     background: url('#{$path}/img/Logo.svg');
     background-size: contain;
     background-repeat: no-repeat;
-    width: 272px;
+    width: 200px;
     height: 152px;
     position: fixed;
-    top: 180px;
+    top: 200px;
     left: 120px;
     z-index: 12;
 
@@ -78,8 +60,6 @@
 
 
     @media (max-width: 600px) {
-
-
         position: fixed;
         top: 173px;
         left: 0;
