@@ -8,7 +8,7 @@ const OfflinePlugin = require('offline-plugin');
 const PORT = 9080;
 
 module.exports = {
-    devtool: 'eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
     entry:{
         app: [
             'webpack-dev-server/client?http://localhost:'+PORT,

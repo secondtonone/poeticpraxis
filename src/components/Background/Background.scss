@@ -20,8 +20,11 @@
         min-height: 521px;
         background-color: $primary-white;
         border: 1px solid rgba(255, 255, 255, 0.2);
-        top: 25%;
-        left: 25%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin:0 auto;
         transform: rotate(0) translate(0);
         box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.2);
         transition: transform 1s ease-out;

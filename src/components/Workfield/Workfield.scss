@@ -53,8 +53,6 @@
 
     @media (max-width: 600px) {
         display: block;
-
-
         bottom: 96px;
         right: 32px;
     }
@@ -85,6 +83,20 @@
     font-size: 18px;
     border-bottom: 1px solid $primary-white;
 
+    &::after {
+        position: absolute;
+        right: auto;
+        margin: 0 auto;
+        width: 0;
+        height: 0;
+        content: '\25CF';
+        color: $primary-gray;
+        top: 0;
+        left: 10px;
+        font-size: 16px;
+        transform: rotate(180deg) scale(0.7,0.7);
+    }
+
     @media (max-width: 600px) {
         font-size: 20px;
     }
@@ -113,7 +125,7 @@
     font-family: $helvetica-font;
     font-size: 14px;
     font-weight: 200;
-    line-height: 46px;
+    line-height: 32px;
     color: $primary-black;
     cursor: help;
 
@@ -137,7 +149,7 @@
     font-family: $helvetica-font;
     font-size: 10px;
     font-weight: 200;
-    line-height: 48px;
+    line-height: 58px;
     color: rgb(102, 102, 102);
     cursor: help;
 
@@ -155,7 +167,7 @@
 .red,
 .red_secondary {
     position: relative;
-    margin: 0 0 0 -0.1px;
+    margin: 0 -0.1px;
     padding: 0;
     border: 0;
 }

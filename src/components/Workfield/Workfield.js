@@ -1,10 +1,13 @@
 import { h, Component } from 'preact';
 import Textarea from '../Textarea';
-import {randomize} from '../../utils';
+import {randomize, hashFunction} from '../../utils';
 
 import './Workfield.scss';
 
-/*парсить по словам, сравнивать с предыдущим деревом*/
+/*парсить по словам, сравнивать с предыдущим деревом
+ componentDidUpdate -  заместо коллбэка
+
+ */
 
 export default class Workfield extends Component {
 
@@ -17,9 +20,10 @@ export default class Workfield extends Component {
             orderStrings: [],
             elements: {},
             tags: [],
+            hashTable: {},
             stringsDictionary: {},
             stringLinks: {},
-            wordsDictionary: {},
+            wordsDictionary: props.wordsDictionary || {},
             wordLinks: {},
             field: {}
         };
@@ -36,8 +40,6 @@ export default class Workfield extends Component {
 
     }
 
-
-
     componentDidMount(){
 
         let text = this.props.text;
@@ -50,13 +52,14 @@ export default class Workfield extends Component {
 
 
         this.setStateAsync({
-            stringsDictionary: this.getStringsDictionary(),
-            wordsDictionary: this.getWordsDictionary()
+            stringsDictionary: this.getStringsDictionary()
         }).then(() => {
             if(text) {
                 this.textLinting(text);
             }
         });
+
+
 
         window.addEventListener("resize", this.updateDimensions);
 
@@ -90,36 +93,18 @@ export default class Workfield extends Component {
         this.textLinting(this.state.text);
     }
 
-    getWordsDictionary = () => {
-
-        let wordsDictionary = {};
-
-        if(!window.localStorage) {
-            return wordsDictionary;
-        }
-
-        if(localStorage.getItem('wordsDictionary')) {
-            wordsDictionary = JSON.parse(localStorage.getItem('wordsDictionary'));
-        }
-
-        return wordsDictionary;
-    }
-
     setWordsDictionary = (word, accents) => {
 
-        let wordsDictionary = {};
-
-        if(!window.localStorage) {
-            return;
-        }
-
-        if(localStorage.getItem('wordsDictionary')) {
-            wordsDictionary = JSON.parse(localStorage.getItem('wordsDictionary'));
-        }
+        let wordsDictionary = this.state.wordsDictionary;
 
         wordsDictionary[word] = accents;
 
-        localStorage.setItem('wordsDictionary',JSON.stringify(wordsDictionary));
+        this.setState({
+            wordsDictionary
+        });
+
+
+        this.props.setWordsDictionary(wordsDictionary);
     }
 
     getStringsDictionary = () => {
@@ -167,8 +152,6 @@ export default class Workfield extends Component {
             if (symbols.length) {
 
                 symbols.forEach( symbol => {
-
-
 
                     if ( symbol.className === 'black' || symbol.className === 'red' || symbol.className === 'red_secondary' || symbol.className === 'string-pause'){
 
@@ -254,7 +237,13 @@ export default class Workfield extends Component {
 
         let elements = {};
 
+        let hashTable = {};
+
+        let interator = 0;
+
         const orderStrings = fieldStrings.map((string, index)=>{
+
+            interator += index;
 
             let idString = `s${index}${randomize()}`;
 
@@ -270,6 +259,8 @@ export default class Workfield extends Component {
 
             let stringIndex = 0;
 
+
+
             tokens.forEach((token,index, array)=>{
 
                 let type = 't';
@@ -282,6 +273,8 @@ export default class Workfield extends Component {
 
                 let orderToken = [];
 
+                let hashTokenId = '';
+
                 if (self.isLetter(token)) {
 
                     idToken = `w${index}${randomize()}`;
@@ -289,6 +282,8 @@ export default class Workfield extends Component {
                     type = 'w';
 
                     orderToken = [...token].map((char, index, array)=>{
+
+                        hashTokenId = hashFunction(char,++interator);
 
                         const isLast = index === array.length - 1;
 
@@ -324,8 +319,13 @@ export default class Workfield extends Component {
                             id: idSymbol,
                             idString,
                             idToken,
-                            stringIndex
+                            stringIndex,
+                            hashTokenId
                         };
+
+                        hashTable[hashTokenId] = {
+                            idSymbol
+                        }
 
                         order.push(idSymbol);
 
@@ -349,10 +349,16 @@ export default class Workfield extends Component {
                         accents,
                         orderToken,
                         id: idToken,
-                        idString
+                        idString,
+                        hashTokenId
                     };
 
+
+
                 } else {
+
+
+                    hashTokenId = hashFunction(token,++interator);
 
                     if(self.isSpace(token)) {
                         type = 'sp';
@@ -372,10 +378,16 @@ export default class Workfield extends Component {
                         type,
                         char: token,
                         id: idToken,
-                        idString
+                        idString,
+                        hashTokenId
                     };
 
+                    hashTable[hashTokenId] = {
+                        idToken
+                    }
+
                     order.push(idToken);
+
 
                     ++stringIndex;
                 }
@@ -400,6 +412,7 @@ export default class Workfield extends Component {
             strings,
             orderStrings,
             elements,
+            hashTable,
             wordLinks,
             stringLinks
         };
@@ -509,18 +522,22 @@ export default class Workfield extends Component {
 
         const field = this.fakeField;
 
+        let range = {};
+
         if (document.selection) {
-            const range = document.body.createTextRange();
+
+            range = document.body.createTextRange();
             range.moveToElementText(field);
             range.select().createTextRange();
 
         } else if (window.getSelection) {
-            const range = document.createRange();
+            range = document.createRange();
             range.selectNode(field);
             window.getSelection().addRange(range);
         }
 
-        document.execCommand("Copy");
+        document.execCommand('Copy');
+
     }
 
     getSelection = () => {
@@ -529,15 +546,31 @@ export default class Workfield extends Component {
 
         const end = this.mainField.selectionEnd;
 
+        const hashTable = this.state.hashTable;
+
+        const elements = this.state.elements;
+
         console.log('begin: ',start, ' end: ',end);
 
         const textSelected = this.state.text.substring(start, end);
 
         const stringToSymbol = this.state.text.substring(0, start);
 
-        const inWhatString = stringToSymbol.match(/\n/g)?stringToSymbol.match(/\n/g).length+1: 1;
 
-        console.log('text: ',textSelected,'length: ', textSelected.length,'inWhatString: ', inWhatString);
+        /*hashTokenId = hashFunction(token,++interator);*/
+
+        textSelected.split('').forEach((char,index) => {
+
+            let hashTokenId = hashFunction(char, index+start+1);
+
+
+            let elementId = hashTable[hashTokenId].idSymbol;
+
+            console.log(elements[elementId]);
+
+        });
+
+
 
         /*здесь мы высчитываем и сразу корректируем state.elements*/
 

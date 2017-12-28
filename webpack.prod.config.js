@@ -1,23 +1,25 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const OfflinePlugin = require('offline-plugin');
 
 module.exports = {
     entry: {
         app: [
             './src/main.js'
-        ],
-        vendor: [
-            'preact',
-            'react-router-dom',
-            'redux',
-            'preact-redux'
         ]
+        /*,
+                vendor: [
+                    'preact',
+                    'react-router-dom',
+                    'redux',
+                    'preact-redux'
+                ]*/
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -32,11 +34,14 @@ module.exports = {
             }, {
                 test: /\.scss$/,
                 use: [{
-                    loader: "style-loader"
+                    loader: 'style-loader'
                 }, {
-                    loader: "css-loader"
+                    loader: 'css-loader',
+                    options: {
+                        minimize: true
+                    }
                 }, {
-                    loader: "sass-loader"
+                    loader: 'sass-loader'
                 }, {
                     loader: 'sass-resources-loader',
                     options: {
@@ -48,7 +53,7 @@ module.exports = {
                 use: [{
                     loader: 'url-loader',
                     options: {
-                        limit: 8000
+                        limit: 10000
                     }
                 }]
             }, {
@@ -79,16 +84,14 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
+        new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            minChunks: Infinity,
-            filename: '[name].js',
+            filename: '[name].[hash].js',
+            minChunks: 2,
+            children: true
         }),
-        /*new webpack.optimize.AggressiveSplittingPlugin({
-            minSize: 30000,
-            maxSize: 50000
-        }),
-*/
+        /*new BundleAnalyzerPlugin(),*/
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
@@ -96,7 +99,16 @@ module.exports = {
                 comments: false
             },
             compress: {
-                warnings: false
+                warnings: false,
+                screw_ie8: true,
+                conditionals: true,
+                unused: true,
+                comparisons: true,
+                sequences: true,
+                dead_code: true,
+                evaluate: true,
+                if_return: true,
+                join_vars: true
             }
         }),
         new webpack.DefinePlugin({
@@ -105,12 +117,12 @@ module.exports = {
             }
         }),
         new ScriptExtHtmlWebpackPlugin({
-            sync: /vendor/,
-            async: /\.js$/
+            defer: /vendor/,
+            defer: /\.js$/
         }),
         new HtmlWebpackPlugin({
             template: './public/index.ejs',
-            inject: 'body',
+            inject: 'head',
             env: {
                 Prod: true
             }
