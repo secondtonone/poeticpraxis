@@ -15,6 +15,7 @@ module.exports = {
         "no-unused-vars": 0,
         "semi": 0,
         "eol-last": 0,
-        "indent": "off"
+        "indent": "off",
+        "no-useless-constructor": 0
     }
 };

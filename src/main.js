@@ -8,14 +8,13 @@ import {analyticsInit} from './utils';
 
 import './scss/style.scss';
 
-if (process.env.NODE_ENV==='production') {
+if (process.env.NODE_ENV === 'production') {
     OfflinePluginRuntime.install();
 }
 
 let root;
 
 const run = () => {
-
     const App = require('./containers/App').default;
 
     root = render(
@@ -25,7 +24,7 @@ const run = () => {
     );
 };
 
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
     if (module.hot) {
         require('preact/devtools');
         module.hot.accept('./containers/App', run);
@@ -34,6 +33,6 @@ if(process.env.NODE_ENV === 'development') {
 
 run();
 
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
     analyticsInit();
 }

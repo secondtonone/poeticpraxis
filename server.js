@@ -3,17 +3,18 @@ const express = require('express');
 const compress = require('compression');
 
 const app = express();
-
+const port = 9090;
+const host = '0.0.0.0';
 
 app.use(compress());
 
 app.use(express.static('dist'));
 
-app.get('*', function(req, res) {
+app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.listen(9090, '0.0.0.0', function(err) {
+app.listen(port, host, (err) => {
     if (err) {
         console.log(err);
         return;

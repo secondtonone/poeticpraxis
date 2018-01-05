@@ -1,7 +1,7 @@
 import randomize from './randomize';
 import imaged from './imaged';
 import analyticsInit from './analytics';
-import hashFunction from './hashfunction';
+import hashFunction from './hashFunction';
 
 export {randomize};
 export {imaged};
