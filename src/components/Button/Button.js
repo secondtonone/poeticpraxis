@@ -59,7 +59,7 @@ const StyledButton = styled.button.attrs({ className: withElements })`
         line-height: 36px;
         padding: 0 10px;
         text-transform: uppercase;
-        vertical-align: middle;
+        vertical-align: sub;
     }
 
     &._transparent {
@@ -103,6 +103,8 @@ const StyledButton = styled.button.attrs({ className: withElements })`
     &._oval {
         width: auto;
         text-transform: uppercase;
+        border-radius: 32px;
+        padding:8px 16px;
     }
 
     &._white {

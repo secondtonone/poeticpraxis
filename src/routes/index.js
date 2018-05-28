@@ -9,30 +9,26 @@ import loadAbout from 'bundle-loader?lazy!./About';
 import loadImagesEngine from 'bundle-loader?lazy!./ImagesEngine';
 
 const About = (props) => (
-  <Bundle load={loadAbout}>
-    {(About) => <About {...props}/>}
-  </Bundle>
-)
+    <Bundle load={loadAbout}>{(About) => <About {...props} />}</Bundle>
+);
 
 const Rhythmic = (props) => (
-  <Bundle load={loadRhythmic}>
-    {(Rhythmic) => <Rhythmic {...props}/>}
-  </Bundle>
-)
+    <Bundle load={loadRhythmic}>{(Rhythmic) => <Rhythmic {...props} />}</Bundle>
+);
 
 const ImagesEngine = (props) => (
-  <Bundle load={loadImagesEngine}>
-    {(ImagesEngine) => <ImagesEngine {...props}/>}
-  </Bundle>
-)
+    <Bundle load={loadImagesEngine}>
+        {(ImagesEngine) => <ImagesEngine {...props} />}
+    </Bundle>
+);
 
 export default () => (
     <Layout>
         <Switch>
-            <Route exact path="/" render={() => <Redirect to='/about' />} />
-            <Route path='/images-engine' component={ImagesEngine} />
-            <Route path='/rhythmic' component={Rhythmic} />
-            <Route path='/about' component={About} />
+            <Route exact path="/" render={() => <Redirect to="/about" />} />
+            <Route path="/images-engine" component={ImagesEngine} />
+            <Route path="/rhythmic" component={Rhythmic} />
+            <Route path="/about" component={About} />
             <Redirect path="*" to="/" />
         </Switch>
     </Layout>

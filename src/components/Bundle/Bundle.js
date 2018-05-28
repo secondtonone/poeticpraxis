@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 
-
 export default class Bundle extends Component {
     state = {
         mod: null

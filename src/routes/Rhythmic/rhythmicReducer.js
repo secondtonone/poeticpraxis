@@ -1,32 +1,39 @@
-import { SET_RHYTMIC_STATE, SET_WORDS_DICTIONARY } from './RhythmicActions';
+import {
+    SET_RHYTMIC_STATE,
+    SET_WORDS_DICTIONARY,
+    SHARING_TEXT
+} from "./RhythmicActions";
 
 const ACTION_HANDLERS = {
-    [SET_RHYTMIC_STATE]: (state, action) => Object.assign({}, state, {
-        currentRhythmicState: action.payload
-    }),
-    [SET_WORDS_DICTIONARY]: (state, action) => Object.assign({}, state, {
-        wordsDictionary: action.payload
-    })
-}
+    [SET_RHYTMIC_STATE]: (state, action) =>
+        Object.assign({}, state, {
+            currentRhythmicState: {
+                ...state.currentRhythmicState,
+                ...action.payload
+            }
+        }),
+    [SET_WORDS_DICTIONARY]: (state, action) =>
+        Object.assign({}, state, {
+            wordsDictionary: action.payload
+        }),
+    [SHARING_TEXT]: (state, action) =>
+        Object.assign({}, state, {
+            currentRhythmicState: {
+                text: action.payload
+            }
+        })
+};
 
 const initialState = {
     currentRhythmicState: {
-        text:'',
-        strings:{},
-        orderStrings: [],
-        elements: {},
-        hashTable: {},
-        tags: [],
-        stringsDictionary: {},
-        stringLinks: {},
-        wordLinks: {},
-        field: {}
+        text: "",
+        stringsDictionary: {}
     },
     wordsDictionary: {}
-}
+};
 
 export default function rhythmicReducer(state = initialState, action) {
-    const handler = ACTION_HANDLERS[action.type]
+    const handler = ACTION_HANDLERS[action.type];
 
-    return handler ? handler(state, action) : state
+    return handler ? handler(state, action) : state;
 }

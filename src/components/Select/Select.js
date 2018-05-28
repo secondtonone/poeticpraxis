@@ -1,0 +1,91 @@
+import { h, Component } from 'preact';
+import styled, { css } from 'styled-components';
+
+import theme from '../../styles/theme';
+
+import ArrowDropDown from '../IconSVG/ArrowDropDown';
+
+const Label = styled.label`
+    color: ${(props) => props.theme.secondColor};
+`;
+
+const Container = styled.div`
+    position: relative;
+    padding: 4px 8px;
+    font-family: ${theme.mainFont};
+    font-size: ${(props) => props.size || '16px'};
+    font-weight: ${(props) => props.weight || 300};
+    color: ${(props) => props.theme.secondColor};
+    fill: ${(props) => props.theme.secondColor};
+    line-height: 24px;
+`;
+
+const StyledSelect = styled.select`
+    border: none;
+    position: relative;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-left: 8px;
+    color: ${(props) => props.theme.secondColor};
+    font-family: ${theme.mainFont};
+    font-size: ${(props) => props.size || '16px'};
+    font-weight: ${(props) => props.weight || 300};
+    line-height: 1;
+    min-width: 24px;
+    outline: none;
+    z-index: 2;
+    cursor: pointer;
+`;
+
+const IconContainer = styled.div`
+    position: absolute;
+    right: 0;
+    top: 4px;
+    z-index: 1;
+`;
+
+function Select(props) {
+    let select = {};
+
+    return (
+        <Container
+            className={props.className}
+            size={props.size}
+            weight={props.weight}
+            onClick={() => {
+                select.focus();
+            }}>
+            {props.label && (
+                <Label for={props.id} class="input-container_label">
+                    {props.label}
+                </Label>
+            )}
+            <IconContainer>
+                <ArrowDropDown />
+            </IconContainer>
+            <StyledSelect
+                innerRef={(ref) => (select = ref)}
+                name={props.id}
+                size={props.size}
+                weight={props.weight}
+                class="input-container_select"
+                id={props.id}
+                value={props.value}
+                onChange={props.onChange}>
+                {props.options.map((option) => {
+                    if (!option.disabled) {
+                        return (
+                            <option value={option.value}>{option.title}</option>
+                        );
+                    }
+                })}
+            </StyledSelect>
+        </Container>
+    );
+}
+
+export default Select;

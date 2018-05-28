@@ -1,13 +1,15 @@
 import { h, Component } from 'preact';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, StaticRouter } from 'react-router-dom';
 import { Provider } from 'preact-redux';
 
 import Routes from '../routes';
 
-export default ({ store }) => (
-    <Provider store = { store } >
-        <BrowserRouter >
+const App = ({ store }) => (
+    <Provider store={store}>
+        <BrowserRouter>
             <Routes />
         </BrowserRouter>
     </Provider>
 );
+
+export default App;

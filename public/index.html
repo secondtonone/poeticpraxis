@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1,user-scalable=no, minimal-ui">
+
+    <link rel="icon" href="<%= require('./img/Signx48.png') %>">
+    <link rel="icon" sizes="192x192" href="<%= require('./img/Signx192.png') %>">
+
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"> -->
+
+    <link rel="manifest" href="<%= require('./manifest.webmanifest') %>">
+    
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="indie-catalog">
+
+
+    <title>POETIC PRAXIS</title>
+
+    <meta name="google-site-verification" content="sohMAevZvZLTrp8D-OtMPYWyIvtqo8wqbzrhyV3JNXI" />
+    <meta name="google-site-verification" content="ojb0yCV0QjCvPmvwMJFgYARMH3BLr6vGJ1S8NZQuxgI" />
+    <meta name="yandex-verification" content="f7507b925022203f" />
+
+    <meta name="mailru-domain" content="aXoCyBrJfmBJKZIk" />
+    <meta name="description" content="Поэтическая практика. Увидь поэзию.">
+    <meta name="keywords" content="поэзия стихи размер метр стопа строфа ударение гласная стихотворение поэт поэтический лирика литература творчество строфы стихотворчество стихоплетство рифмачество муза лира искусство текст строфы стишки слова слоги буквы вирши язык икт ямб хорей анапест дактиль амфибрахий поэтическая практика poetic praxis машина образов образы инструмент исследование искусство русская поэзия современная поэзия что такое поэзия ударение пауза стиховедение Пушкин Бродский Есенин Маяковский Цветаева">
+
+    <meta property="og:title" content="POETIC PRAXIS">
+    <meta property="og:description" content="Поэтическая практика. Увидь поэзию.">
+    <meta property="og:image" content="<%= require('./img/Sign.svg') %>">
+    <meta property="og:type" content="product">
+
+    <meta name="author" content="Кузнецов Макс А.Ю">
+    <meta name="robots" content="noyaca">
+    <meta name="robots" content="noodp">
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#F9F8F7">
+
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#F9F8F7">
+
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="indie-catalog">
+
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org/",
+            "@type": "WebSite",
+            "name": "POETIC PRAXIS",
+            "alternateName": "POETIC PRAXIS | Поэтическая практика",
+            "url": "https://www.poeticpraxis.ru",
+            "description": "Творчество, исследования, поэзия, искусство",
+            "keywords": "поэзия стихи размер метр стопа строфа ударение гласная стихотворение поэт поэтический лирика литература творчество строфы стихотворчество стихоплетство рифмачество муза лира искусство текст строфы стишки слова слоги буквы вирши язык икт ямб хорей анапест дактиль амфибрахий поэтическая практика poetic praxis машина образов образы инструмент исследование искусство",
+            "creator": {
+                "@type": "Person",
+                "name": "Макс А.Ю.",
+                "email": "secondtonone.secondtonone@gmail.com"
+            }
+        }
+    </script>
+    <%= require('../src/prerender.js').default().styles %>
+</head>
+
+<body>
+
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/48473147" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+
+    <noscript><p class="first-paint">Если вы видите этот текст, то в вашем браузере отключен Javascript. Для дальнейшей работы вы должны его включить.</p></noscript>
+
+    
+    <p class="first-paint">POETIC<span class="first-paint__second-word">PRAXIS</span>POETIC<span class="first-paint__second-word">PRAXIS</span>POETIC<span class="first-paint__second-word">PRAXIS</span>POETIC<span class="first-paint__second-word">PRAXIS</span>POETIC<span class="first-paint__second-word">PRAXIS</span>POETIC
+    <span class="first-paint__second-word">PRAXIS</span>POETIC
+    <span class="first-paint__second-word">PRAXIS</span>POETIC
+    <span class="first-paint__second-word">PRAXIS</span>POETIC
+    <span class="first-paint__second-word">PRAXIS</span>POETIC
+    <span class="first-paint__second-word">PRAXIS</span>POETIC
+    <span class="first-paint__second-word">PRAXIS</span>POETIC
+    <span class="first-paint__second-word">PRAXIS</span></p>
+    
+    <div class="blocks">
+        <div class="block block__first"></div>
+        <div class="block block__second"></div>
+        <div class="block block__third"></div>
+        <div class="block block__fourth"></div>
+    </div>
+
+
+    <div id="app">
+        <%= require('../src/prerender.js').default().html %>
+    </div>
+</body>
+
+</html>

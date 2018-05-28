@@ -1,68 +1,88 @@
 import { h, Component } from 'preact';
 import Textarea from '../Textarea';
-import {randomize, hashFunction} from '../../utils';
+import {
+    randomize,
+    hashFunction,
+    isLetter,
+    isPause,
+    isSpace,
+    isVowel,
+    isAccented,
+    makeListLinks,
+    fontReady
+} from '../../utils';
 
-import './Workfield.scss';
+import { FieldEditableArea } from '../../styles/components';
 
-/* парсить по словам, сравнивать с предыдущим деревом
+import {
+    Accent,
+    StringPauseRelative,
+    StringPause,
+    StringField,
+    Syllable,
+    StringNumber,
+    FakeField,
+    AccentRelative,
+    WorkField,
+    FieldEditable,
+    PaintField
+} from './styled';
 
-
- */
+/* парсить по словам, сравнивать с предыдущим деревом */
 
 export default class Workfield extends Component {
-
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.state = {
-            text: '',
+            text: this.props.text,
             strings: {},
             orderStrings: [],
             elements: {},
             tags: [],
             hashTable: {},
-            stringsDictionary: {},
             stringLinks: {},
-            wordsDictionary: props.wordsDictionary || {},
             wordLinks: {},
-            field: {}
+            field: {},
+            fontSizeStyle: {
+                fontSize: 18
+            },
+            zoomIn: false
         };
 
         this.strings = {};
+
+        this.wordsDictionary = props.wordsDictionary || {};
+
+        this.stringsDictionary = props.stringsDictionary || {};
 
         this.caretPosition = 0;
 
         this.symbolCounter = 0;
 
-        this.mainTimer = 0;
-
-        this.mouseTrackingTimer = 0;
+        this.timerLinting = 0;
     }
 
-    componentDidMount () {
-        let text = this.props.text;
-
-        if (Array.isArray(this.props.text)) {
-            text = this.props.text.join('\n');
-        }
-
+    componentDidMount() {
         this.mainField = this.textarea.field;
 
-        this.setStateAsync({
-            stringsDictionary: this.getStringsDictionary()
-        }).then(() => {
-            if (text) {
+        let text = this.state.text;
+
+        if (Array.isArray(text)) {
+            text = text.join('\n');
+        }
+
+        if (text) {
+            fontReady(() => {
                 this.textLinting(text);
-            }
-        });
+            });
+        }
 
         window.addEventListener('resize', this.updateDimensions);
     }
 
-    componentWillUnmount () {
+    componentWillUnmount() {
         window.removeEventListener('resize', this.updateDimensions);
-
-        clearTimeout(this.mouseTrackingTimer);
     }
 
     setStateAsync = (newState) => {
@@ -71,46 +91,20 @@ export default class Workfield extends Component {
                 resolve();
             });
         });
-    }
-
-    delay = (ms) => {
-        return new Promise(function (resolve) {
-            if (ms <= 0) {
-                resolve();
-            } else {
-                setTimeout(resolve, ms);
-            }
-        });
-    }
+    };
 
     updateDimensions = () => {
         this.textLinting(this.state.text);
-    }
-
-    setWordsDictionary = (word, accents) => {
-        let wordsDictionary = this.state.wordsDictionary;
-
-        wordsDictionary[word] = accents;
-
-        this.setState({
-            wordsDictionary
-        });
-
-        this.props.setWordsDictionary(wordsDictionary);
-    }
-
-    getStringsDictionary = () => {
-        return this.props.stringsDictionary ? JSON.parse(this.props.stringsDictionary) : {};
-    }
+    };
 
     getMeasureField = (field) => {
         this.setState({
             field
         });
-    }
+    };
 
     tagMaker = (node, textAnalized) => {
-        const stringNodes = [ ...node];
+        const stringNodes = [...node];
 
         let symbols = [];
 
@@ -119,13 +113,13 @@ export default class Workfield extends Component {
         const accents = {
             black: 0,
             red: 1,
-            'red_secondary': 2
+            red_secondary: 2
         };
 
-        const {elements, strings} = textAnalized;
+        const { elements, strings } = textAnalized;
 
-        stringNodes.forEach(string => {
-            const symbols = [ ...string.children];
+        stringNodes.forEach((string) => {
+            const symbols = [...string.children];
 
             strings[string.id].tag = {
                 left: string.offsetLeft,
@@ -135,8 +129,13 @@ export default class Workfield extends Component {
             };
 
             if (symbols.length) {
-                symbols.forEach(symbol => {
-                    if (symbol.className === 'black' || symbol.className === 'red' || symbol.className === 'red_secondary' || symbol.className === 'string-pause') {
+                symbols.forEach((symbol) => {
+                    if (
+                        symbol.dataset.type === 'black' ||
+                        symbol.dataset.type === 'red' ||
+                        symbol.dataset.type === 'red_secondary' ||
+                        symbol.dataset.type === 'string-pause'
+                    ) {
                         elements[symbol.id].tag = {
                             left: symbol.offsetLeft + string.offsetLeft,
                             top: symbol.offsetTop + string.offsetTop,
@@ -155,54 +154,15 @@ export default class Workfield extends Component {
             strings,
             tags
         };
-    }
-
+    };
     /* убрать знаки припенания, для выявления слов*/
 
-     /* str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');*/
+    /* str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');*/
 
-     /* let stringWords = string.match(/[a-zA-ZА-Яа-яёЁ]+/g) || [];
+    /* let stringWords = string.match(/[a-zA-ZА-Яа-яёЁ]+/g) || [];
 
         words = [...words, ...stringWords];*/
-    isWordAccented = (word, index) => {
-        const wordsDictionary = this.state.wordsDictionary;
-
-        let wordLowerCased = word.toLowerCase();
-
-        return wordsDictionary[wordLowerCased] ? wordsDictionary[wordLowerCased].accents[index].type : 0;
-    }
-
-    isStringAccented = (string, index) => {
-        const stringsDictionary = this.state.stringsDictionary;
-
-        let stringLowerCased = string.toLowerCase();
-
-        return stringsDictionary[stringLowerCased] ? stringsDictionary[stringLowerCased].accents[index].type : 0;
-    }
-
-    addToWordLinks = (token, idToken, wordLinks) => {
-        let wordLowerCased = token.toLowerCase();
-
-        let links = wordLinks[wordLowerCased] || [];
-
-        links = [...links, idToken];
-
-        wordLinks[wordLowerCased] = [...new Set(links)];
-    }
-
-    addToStringLinks = (string, idString, stringLinks) => {
-        let stringLowerCased = string.toLowerCase();
-
-        let links = stringLinks[stringLowerCased] || [];
-
-        links = [...links, idString];
-
-        stringLinks[stringLowerCased] = [...new Set(links)];
-    }
-
-    textAnalizator (text, { wordLinks, stringLinks }) {
-        const self = this;
-
+    textAnalizator(text, stringsDictionary, wordsDictionary) {
         const fieldStrings = text.split('\n');
 
         let strings = {};
@@ -212,6 +172,10 @@ export default class Workfield extends Component {
         let hashTable = {};
 
         let interator = 0;
+
+        let wordLinks = {};
+
+        let stringLinks = {};
 
         /* Строка */
         const orderStrings = fieldStrings.map((string, index) => {
@@ -225,7 +189,9 @@ export default class Workfield extends Component {
 
             let words = [];
 
-            let tokens = string.split(/(\s|[a-zA-ZА-Яа-яёЁ-]+|[\.,\/#!$%\^&\*;:{}=\-_`~()⋀])/).filter(n => n);
+            let tokens = string
+                .split(/(\s|[a-zA-ZА-Яа-яёЁ-]+|[\.,\/#!$%\^&\*;:{}=\-_`~()⋀])/)
+                .filter((n) => n);
 
             let order = [];
 
@@ -245,7 +211,7 @@ export default class Workfield extends Component {
 
                 let hashTokenId = '';
 
-                if (self.isLetter(token)) {
+                if (isLetter(token)) {
                     idToken = `w${index}${randomize()}`;
 
                     type = 'w';
@@ -262,13 +228,19 @@ export default class Workfield extends Component {
 
                         accent = 0;
 
-                        if (self.isVowel(char)) {
+                        if (isVowel(char)) {
                             idSymbol = `v${index}${randomize()}`;
 
                             type = 'v';
 
-                            if (!self.props.readOnly || self.props.stringsDictionary) {
-                                accent = self.isStringAccented(string, stringIndex) || self.isWordAccented(token, index);
+                            if (stringsDictionary) {
+                                accent =
+                                    isAccented(
+                                        string,
+                                        stringIndex,
+                                        stringsDictionary
+                                    ) ||
+                                    isAccented(token, index, wordsDictionary);
                             }
 
                             vowel.push(`${idString}${idToken}${idSymbol}`);
@@ -291,7 +263,7 @@ export default class Workfield extends Component {
 
                         hashTable[hashTokenId] = {
                             idSymbol
-                        }
+                        };
 
                         order.push(idSymbol);
 
@@ -304,7 +276,7 @@ export default class Workfield extends Component {
 
                     words.push(idToken);
 
-                    self.addToWordLinks(token, idToken, wordLinks);
+                    wordLinks = makeListLinks(token, idToken, wordLinks);
 
                     elements[idToken] = {
                         type,
@@ -318,13 +290,13 @@ export default class Workfield extends Component {
                 } else {
                     hashTokenId = hashFunction(token, ++interator);
 
-                    if (self.isSpace(token)) {
+                    if (isSpace(token)) {
                         type = 'sp';
 
                         idToken = `sp${index}${randomize()}`;
                     }
 
-                    if (self.isPause(token)) {
+                    if (isPause(token)) {
                         type = 'p';
 
                         idToken = `p${index}${randomize()}`;
@@ -342,7 +314,7 @@ export default class Workfield extends Component {
 
                     hashTable[hashTokenId] = {
                         idToken
-                    }
+                    };
 
                     order.push(idToken);
 
@@ -350,7 +322,7 @@ export default class Workfield extends Component {
                 }
             });
 
-            self.addToStringLinks(string, idString, stringLinks);
+            stringLinks = makeListLinks(string, idString, stringLinks);
 
             strings[idString] = {
                 order,
@@ -373,76 +345,70 @@ export default class Workfield extends Component {
         };
     }
 
-    isVowel (char) {
-        return /^[eyuioaуеыаоэёяию]$/.test(char.toLowerCase());
-    }
-
-    isLetter (char) {
-        return /[a-zA-ZА-Яа-яёЁ]$/.test(char);
-    }
-
-    isBreakLine (char) {
-        return /\n/g.test(char);
-    }
-
-    isSpace (char) {
-        return /\s/g.test(char);
-    }
-
-    isPause (char) {
-        return /⋀/g.test(char);
-    }
-
     handleTextInput = (e) => {
         const text = e.target.value;
 
         this.textLinting(text);
-    }
+
+        this.props.transmitState({
+            text
+        });
+    };
 
     textLinting = (text) => {
-        let analizedText = this.textAnalizator(text, this.state);
+        let stringsDictionary = this.stringsDictionary;
 
-        this.setStateAsync({
-            ...analizedText,
-            text
-        }).then(() => {
-            let stringsLinted = this.tagMaker(this.fakeField.children, analizedText);
+        let wordsDictionary = this.wordsDictionary;
 
-            this.setState({
-                ...stringsLinted
-            });
+        let analizedText = this.textAnalizator(
+            text,
+            stringsDictionary,
+            wordsDictionary
+        );
 
-            if (!this.props.readOnly) {
-                this.props.setRhytmicState(this.state);
-            }
+        this.setState({
+            text,
+            tag: {}
         });
 
-        /* if(this.mainTimer) {
-            window.clearTimeout(this.mainTimer);
-        }
+        clearTimeout(this.timerLinting);
 
-        this.mainTimer = setTimeout(()=>{
-            strings = this.tagMaker(this.fakeField.children, strings);
+        this.timerLinting = setTimeout(() => {
+            this.setStateAsync({
+                ...analizedText
+            }).then(() => {
+                let stringsLinted = this.tagMaker(
+                    this.fakeField.children,
+                    analizedText
+                );
 
-            this.setState({
-                ...strings
+                this.setState({
+                    ...stringsLinted
+                });
             });
-
-        },500);*/
-    }
+        }, 50);
+    };
 
     makeCaesura = () => {
         this.insertionToPosition('⋀', this.mainField);
-    }
+        this.mainField.focus();
+    };
 
     insertionToPosition = (str, textarea) => {
         const value = textarea.value;
         const before = value.substring(0, textarea.selectionStart);
         const after = value.substring(textarea.selectionEnd, value.length);
 
-        this.textLinting(`${before}${str}${after}`);
+        const text = `${before}${str}${after}`;
+
+        this.textLinting(text);
+
+        this.props.transmitState({
+            text
+        });
+
         this.setCursor(textarea, before.length + str.length);
-    }
+    };
 
     setCursor = (elem, pos) => {
         elem.focus();
@@ -460,7 +426,7 @@ export default class Workfield extends Component {
         }, 50);
 
         this.caretPosition = pos;
-    }
+    };
 
     copyToClipboard = () => {
         const field = this.fakeField;
@@ -471,14 +437,16 @@ export default class Workfield extends Component {
             range = document.body.createTextRange();
             range.moveToElementText(field);
             range.select().createTextRange();
+            document.execCommand('Copy');
+            console.log('range');
         } else if (window.getSelection) {
             range = document.createRange();
-            range.selectNode(field);
+            range.selectNodeContents(field);
+            window.getSelection().removeAllRanges();
             window.getSelection().addRange(range);
+            document.execCommand('Copy');
         }
-
-        document.execCommand('Copy');
-    }
+    };
 
     getSelection = () => {
         const start = this.mainField.selectionStart;
@@ -506,13 +474,126 @@ export default class Workfield extends Component {
         });
 
         /* здесь мы высчитываем и сразу корректируем state.elements*/
-    }
+    };
 
-    render ({readOnly, syllableOff, stringNumberOff}, state) {
-        const self = this;
+    changeZoomMode = (zoomIn) => {
+        this.setStateAsync({
+            zoomIn
+        }).then(() => {
+            let text = this.state.text;
+            this.textLinting(text);
+        });
+    };
 
-        const {strings, field, elements, orderStrings, tags} = state;
+    paintFieldHandler = (e) => {
+        e.preventDefault();
 
+        if (this.props.viewOnly || e.target.dataset.type !== 'v') {
+            return false;
+        }
+
+        const signId = e.target.id;
+
+        let { elements, strings, stringLinks, wordLinks } = this.state;
+
+        let wordsDictionary = this.wordsDictionary;
+
+        let stringsDictionary = this.stringsDictionary;
+
+        const element = elements[signId];
+
+        const idWord = `${element.idString}${element.idToken}`;
+
+        const word = elements[idWord];
+
+        const wordLowerCased = word.token.toLowerCase();
+
+        const string = strings[element.idString];
+
+        const stringLowerCased = string.string.toLowerCase();
+
+        let accent = element.accent;
+
+        let stringLinksTriggered = false;
+
+        if (accent < 2) {
+            ++accent;
+        } else {
+            accent = 0;
+        }
+
+        elements[signId].accent = accent;
+
+        const wordAccents = word.orderToken.map((id) => {
+            return {
+                type: elements[id].accent
+            };
+        });
+
+        wordsDictionary[wordLowerCased] = {
+            accents: wordAccents
+        };
+
+        const stringAccents = string.order.map((id) => {
+            return {
+                type: elements[id].accent
+            };
+        });
+
+        stringsDictionary[stringLowerCased] = {
+            accents: stringAccents
+        };
+
+        /* баги*/
+
+        if (stringLinks[stringLowerCased]) {
+            stringLinks[stringLowerCased].forEach((idString) => {
+                if (strings[idString]) {
+                    let idElement =
+                        strings[idString].order[element.stringIndex];
+
+                    if (element.id !== idElement) {
+                        elements[idElement].accent =
+                            elements[element.id].accent;
+
+                        stringLinksTriggered = true;
+                    }
+                }
+            });
+        }
+
+        /* if(!stringLinksTriggered && wordLinks[wordLowerCased]) {
+            wordLinks[wordLowerCased].forEach( idWord => {
+
+                if(elements[idWord]) {
+
+                    let idElement = elements[idWord].orderToken[element.index];
+
+                    if(element.id != idElement) {
+                        elements[idElement].accent = elements[element.id].accent;
+                    }
+
+                }
+            });
+        }*/
+
+        this.setState({
+            elements
+        });
+
+        if (!this.props.readOnly) {
+            this.props.setWordsDictionary(wordsDictionary);
+
+            this.props.transmitState({
+                stringsDictionary
+            });
+        }
+    };
+
+    render(
+        { readOnly, syllableOff, stringNumberOff, focusHandler },
+        { strings, field, elements, orderStrings, tags, text, zoomIn }
+    ) {
         const accents = ['black', 'red', 'red_secondary'];
 
         const decription = ['Слабая доля', 'Сильная доля', 'Побочное ударение'];
@@ -521,7 +602,7 @@ export default class Workfield extends Component {
 
         let symbolCounter = 0;
 
-        const renderedTags = tags.map(sign => {
+        const renderedTags = tags.map((sign) => {
             const style = {
                 top: sign.tag.top,
                 left: sign.tag.left,
@@ -530,103 +611,28 @@ export default class Workfield extends Component {
             };
 
             if (sign.type === 'p') {
-                return (<span class="string-pause-relative" key={sign.id} id={sign.id} style={style} title="Однодольная пауза">&#8896;</span>);
+                return (
+                    <StringPauseRelative
+                        key={sign.id}
+                        id={sign.id}
+                        style={style}
+                        data-type={sign.type}
+                        title="Однодольная пауза">
+                        &#8896;
+                    </StringPauseRelative>
+                );
             }
 
-            const signHandler = (e) => {
-                e.preventDefault();
-
-                if (readOnly) {
-                    return false;
-                }
-
-                let {elements, strings, wordsDictionary, stringsDictionary, stringLinks, wordLinks} = state;
-
-                const element = elements[sign.id];
-
-                const idWord = `${element.idString}${element.idToken}`;
-
-                const word = elements[idWord];
-
-                const wordLowerCased = word.token.toLowerCase();
-
-                const string = strings[element.idString];
-
-                const stringLowerCased = string.string.toLowerCase();
-
-                let accent = element.accent;
-
-                let stringLinksTriggered = false;
-
-                if (accent < 2) {
-                    ++accent;
-                } else {
-                    accent = 0;
-                }
-
-                elements[sign.id].accent = accent;
-
-                const wordAccents = word.orderToken.map(id => {
-                    return {
-                        type: elements[id].accent
-                    };
-                });
-
-                wordsDictionary[wordLowerCased] = {
-                    accents: wordAccents
-                };
-
-                self.setWordsDictionary(wordLowerCased, wordsDictionary[wordLowerCased]);
-
-                const stringAccents = string.order.map(id => {
-                    return {
-                        type: elements[id].accent
-                    };
-                });
-
-                stringsDictionary[stringLowerCased] = {
-                    accents: stringAccents
-                }
-
-                /* баги*/
-
-                if (stringLinks[stringLowerCased]) {
-                    stringLinks[stringLowerCased].forEach(idString => {
-                        if (strings[idString]) {
-                            let idElement = strings[idString].order[element.stringIndex];
-
-                            if (element.id != idElement) {
-                                elements[idElement].accent = elements[element.id].accent;
-
-                                stringLinksTriggered = true;
-                            }
-                        }
-                    });
-                }
-
-                /* if(!stringLinksTriggered && wordLinks[wordLowerCased]) {
-                    wordLinks[wordLowerCased].forEach( idWord => {
-
-                        if(elements[idWord]) {
-
-                            let idElement = elements[idWord].orderToken[element.index];
-
-                            if(element.id != idElement) {
-                                elements[idElement].accent = elements[element.id].accent;
-                            }
-
-                        }
-                    });
-                }*/
-
-                self.setState({
-                    elements,
-                    wordsDictionary,
-                    stringsDictionary
-                });
-            };
-
-            return (<span class={accents[sign.accent] + '-relative'} key={sign.id} id={sign.id} style={style} onClick={signHandler} title={decription[sign.accent]}></span>);
+            return (
+                <AccentRelative
+                    accent={accents[sign.accent]}
+                    key={sign.id}
+                    id={sign.id}
+                    style={style}
+                    data-type={sign.type}
+                    title={decription[sign.accent]}
+                />
+            );
         });
 
         const markingTags = orderStrings.map((id, index) => {
@@ -638,19 +644,35 @@ export default class Workfield extends Component {
                 let char = symbol.char;
 
                 if (symbol.type === 'v') {
-                    return (<span class={accents[symbol.accent]} key={id} id={id} >{char}</span>);
+                    return (
+                        <Accent
+                            data-type={accents[symbol.accent]}
+                            accent={accents[symbol.accent]}
+                            key={id}
+                            id={id}>
+                            {char}
+                        </Accent>
+                    );
                 }
                 if (symbol.type === 'p') {
-                    return (<span class="string-pause" key={id} id={id}>{char}</span>);
+                    return (
+                        <StringPause key={id} id={id} data-type="string-pause">
+                            {char}
+                        </StringPause>
+                    );
                 }
 
                 return char;
             });
 
-            return (<div class="string-field" key={id} id={id}>{symbols.length ? symbols : ' '}</div>);
+            return (
+                <StringField key={id} id={id}>
+                    {symbols.length ? symbols : ' '}
+                </StringField>
+            );
         });
 
-        const infoTags = orderStrings.map(id => {
+        const infoTags = orderStrings.map((id) => {
             if (strings[id].tag) {
                 const tag = strings[id].tag;
 
@@ -658,32 +680,75 @@ export default class Workfield extends Component {
 
                 let vowelAccentCount = 0;
 
-                strings[id].vowel.forEach(id => {
+                strings[id].vowel.forEach((id) => {
                     if (elements[id].accent) {
                         ++vowelAccentCount;
                     }
                 });
 
-                return [syllableOff || !strings[id].vowel.length ? null : <div key={`s-${tag.top}`} class="syllable com-popover" style={{top: tag.top + delta}} title="Ударение/количество слогов">{vowelAccentCount ? <span class="syllable__accent">{vowelAccentCount}/</span> : null}{strings[id].vowel.length}</div>, stringNumberOff || !strings[id].words.length ? null : <div key={`n-${tag.top}`} class="string-number com-popover" style={{top: tag.top}} title="Номер строки">{++stringCounter}</div>];
+                return [
+                    syllableOff || !strings[id].vowel.length ? null : (
+                        <Syllable
+                            key={`s-${tag.top}`}
+                            style={{ top: tag.top + delta }}
+                            title="Ударение/количество слогов">
+                            {vowelAccentCount ? (
+                                <Syllable.Accent>
+                                    {vowelAccentCount}
+                                </Syllable.Accent>
+                            ) : null}
+                            {strings[id].vowel.length}
+                        </Syllable>
+                    ),
+                    stringNumberOff || !strings[id].words.length ? null : (
+                        <StringNumber
+                            key={`n-${tag.top}`}
+                            style={{ top: tag.top }}
+                            title="Номер строки">
+                            {++stringCounter}
+                        </StringNumber>
+                    )
+                ];
             }
         });
 
         let props = {
             onInput: this.handleTextInput,
-            value: state.text,
-            classNames: 'field-editable',
+            value: text,
+            Textarea: FieldEditableArea,
             getMeasure: this.getMeasureField,
             readOnly: readOnly,
+            zoomIn: zoomIn,
+            onFocus: () => focusHandler(true),
+            onBlur: () => focusHandler(false),
             placeHolder: 'Напишите или вставьте текст...'
         };
 
         return (
-            <div class="work-field">
-                <div class="field-editable fake-field" ref={ ref => { this.fakeField = ref } }>{markingTags}</div>
-                <div class="paint-field" >{renderedTags}{infoTags}
-                </div>
-                <Textarea {...props} ref={ ref => { this.textarea = ref } }/>
-            </div>
-        )
+            <WorkField>
+                <FakeField
+                    data-id-comp="fakeField"
+                    zoomIn={zoomIn}
+                    innerRef={(ref) => {
+                        this.fakeField = ref;
+                    }}>
+                    {markingTags}
+                </FakeField>
+
+                <PaintField
+                    data-id-comp="paintField"
+                    zoomIn={zoomIn}
+                    onClick={this.paintFieldHandler}>
+                    {renderedTags}
+                    {infoTags}
+                </PaintField>
+                <Textarea
+                    {...props}
+                    ref={(ref) => {
+                        this.textarea = ref;
+                    }}
+                />
+            </WorkField>
+        );
     }
 }

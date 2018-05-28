@@ -1,26 +1,37 @@
 import { h, Component } from 'preact';
+
 import Workfield from '../../components/Workfield';
+import Button from '../../components/Button';
+
+import ArrowBack from '../../components/IconSVG/ArrowBack';
+import Widgets from '../../components/IconSVG/Widgets';
+import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
+import ContentCopy from '../../components/IconSVG/ContentCopy';
+
+
+import { Text, Link, Footer, List } from '../../styles/components';
 
 export default class About extends Component {
-    componentDidMount () {
+    componentDidMount() {
         window.scrollTo(0, 0);
     }
 
-    render () {
+    render() {
         const text = `Духовной жаждою томим,\nВ пустыне мрачной я влачился,\nИ шестикрылый серафим\nНа перепутье мне явился...`;
 
-        const stringsDictionary =
-            '{"духовной жаждою томим,":{"accents":[{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{"type":0},{},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{"type":2},{},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{}]},"в пустыне мрачной я влачился,":{"accents":[{"type":0},{},{"type":0},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{"type":0},{},{"type":1},{},{"type":0},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{}]},"и шестикрылый серафим":{"accents":[{"type":0},{},{"type":0},{"type":2},{"type":0},{"type":0},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{},{"type":0},{"type":2},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0}]},"на перепутье мне явился...":{"accents":[{"type":0},{"type":0},{},{"type":0},{"type":2},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{},{"type":0},{"type":0},{"type":1},{},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{},{},{}]}}';
+        const stringsDictionary = JSON.parse(
+            '{"духовной жаждою томим,":{"accents":[{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{"type":0},{},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{"type":2},{},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{}]},"в пустыне мрачной я влачился,":{"accents":[{"type":0},{},{"type":0},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{"type":0},{},{"type":1},{},{"type":0},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{}]},"и шестикрылый серафим":{"accents":[{"type":0},{},{"type":0},{"type":2},{"type":0},{"type":0},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{},{"type":0},{"type":2},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0}]},"на перепутье мне явился...":{"accents":[{"type":0},{"type":0},{},{"type":0},{"type":2},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{},{"type":0},{"type":0},{"type":1},{},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{},{},{}]}}'
+        );
 
         return (
-            <section class="list list--animated list-about">
-                <h1 class="text_title">POETIC PRAXIS?</h1>
-                <p class="text_common">
+            <List _animated>
+                <Text.Title>POETIC PRAXIS?</Text.Title>
+                <Text>
                     POETIC PRAXIS - это проект Общества Председателей Земного
                     шара, созданный для поэтической практики.
-                </p>
-                <h1 class="text_title">Прием монтажа</h1>
-                <p class="text_common">
+                </Text>
+                <Text.Title>Прием монтажа</Text.Title>
+                <Text>
                     Новые технологии дарят нам новые возможности и инструменты.
                     "Машина образов", изобретённая С. А. Есениным, позволяет из
                     любого набора слов составлять случайные пары или семьи,
@@ -31,115 +42,106 @@ export default class About extends Component {
                     отрывка из книги, а может даже из стихотворения? А из
                     нескольких? Вам стоит узнать, что из этого выйдет. Без
                     бумаги и ножниц. Быстро и сколько угодно.
-                </p>
+                </Text>
 
-                <p class="text_common">
+                <Text>
                     Работает она очень просто. Напишите слова или вставьте текст
                     на странице{' '}
-                    <a class="menu__item_active" href="/images-engine">
-                        МАШИНА ОБРАЗОВ
-                    </a>{' '}
-                    и нажмите на кнопку{' '}
-                    <button
-                        class="button_rounded button_transparent"
-                        type="button">
-                        <i class="material-icons material-icons--small">
-                            widgets
-                        </i>
-                    </button>. После этого будут составлены сочетания слов из
+                    <Link href="/images-engine">МАШИНА ОБРАЗОВ</Link> и нажмите
+                    на кнопку{' '}
+                    <Button _rounded _transparent type="button">
+                        <Widgets _small />
+                    </Button>. После этого будут составлены сочетания слов из
                     которых вы выбираете интересные вам и не очень. Можно
                     сгенерировать новые сочетания нажимая на ту же кнопку, они
                     заменят предыдущие, но выбранные вами останутся.
-                </p>
+                </Text>
 
-                <p class="text_common">
+                <Text>
                     Все выбранные сочетания можно перенести в{' '}
-                    <a class="menu__item_active" href="/rhythmic">
-                        РИТМИКУ
-                    </a>, нажимая на{' '}
-                    <button
-                        class="button_flat  button_transparent"
-                        type="button">
-                        Посмотреть ритм
-                        <i class="material-icons material-icons--small">
-                            arrow_forward
-                        </i>
-                    </button>.
-                </p>
+                    <Link href="/rhythmic">РИТМИКУ</Link>, нажимая на{' '}
+                    <Button _flat _transparent type="button">
+                        Посмотреть ритм <ArrowBack _small _rotate-left />
+                    </Button>.
+                </Text>
 
-                <h1 class="text_title">Ритмы</h1>
-                <p class="text_common">
+                <Text.Title>Ритмы</Text.Title>
+                <Text>
                     Ритм стиха - немаловажный аспект. Но ритм существует не
                     только в стихах, его можно встретить и в ритмической прозе.
-                    На странице{' '}
-                    <a class="menu__item_active" href="/rhythmic">
-                        РИТМИКА
-                    </a>{' '}
-                    можно исследовать текст. Редактор обозначает гласные буквы,
-                    но исследователь сам ставит акценты нажатием на букву.
+                    На странице <Link href="/rhythmic">РИТМИКА</Link> можно
+                    исследовать текст. Редактор обозначает гласные буквы, но
+                    исследователь сам ставит акценты нажатием на букву.
                     Попробуйте ниже:
-                </p>
+                </Text>
 
-                <div class="text-wrapper">
-                    <Workfield text={text} />
-                </div>
+                <Text.Wrapper>
+                    <Workfield text={text} readOnly />
+                </Text.Wrapper>
 
-                <p class="text_common">
+                <Text>
                     Редактор запоминает ударения только на одном и том же
                     устройстве. В знакомых словах он сам будет обзаначать их.
                     Показывает справа от строки количество в ней акцентных
                     слогов на количество слогов в общем. Есть возможность
-                    расставлять паузы кнопкой
-                    <button
-                        class="button_rounded button_transparent"
-                        type="button">
-                        <i class="material-icons material-icons--small">
-                            keyboard_capslock
-                        </i>
-                    </button>.{' '}
-                </p>
+                    расставлять паузы кнопкой{' '}
+                    <Button _rounded _transparent type="button">
+                        <KeyboardCapslock _small />
+                    </Button>.
+                </Text>
 
-                <p class="text_common">
+                <Text>
                     Полученную ритмическую картину можно перенести в текстовый
                     редактор (Google Docs, Microsoft Word и т.д.) кнопкой{' '}
-                    <button
-                        class="button_rounded button_transparent"
-                        type="button">
-                        <i class="material-icons material-icons--small">
-                            content_copy
-                        </i>
-                    </button>.
-                </p>
+                    <Button _rounded _transparent type="button">
+                        <ContentCopy _small />
+                    </Button>.
+                </Text>
 
-                <p class="text_common">
+                <Text>
                     Это лишь инструмент в познании и творчестве. За вас он
                     ничего не сделает. Однако это хорошее подспорье.
-                </p>
+                </Text>
 
-                <h1 class="text_title">Что дальше?</h1>
-                <p class="text_common">
+                <Text.Title>Что дальше?</Text.Title>
+                <Text>
                     К инструментам время от времени добавляются новые функции,
-                    которые открывают новые возможности. Исследуйте и творите. У
-                    проекта есть{' '}
-                    <a
-                        class="menu__item_active"
-                        href="https://t.me/poeticpraxis">
-                        Telegram-канал
-                    </a>. По вопросам и предложениям можно связаться со мной по{' '}
-                    <a
-                        class="menu__item_active"
-                        href="mailto:secondtonone.secondtonone@gmail.com?subject=Poetic Praxis">
-                        почте
-                    </a>{' '}
-                    или в{' '}
-                    <a
-                        class="menu__item_active"
-                        href="https://t.me/second_to_none">
-                        Telegram
-                    </a>.
-                </p>
-                <p class="text_footer">&copy; Кузнецов Макс А. Ю. 2017</p>
-            </section>
+                    которые открывают новые возможности. Исследуйте и творите.
+                </Text>
+                <Text>
+                    Блог проекта в Telegram:{' '}
+                    <Link href="https://t.me/poeticpraxis">@poeticpraxis</Link>
+                </Text>
+                <Text>
+                    Блог проекта в VK:{' '}
+                    <Link href="https://vk.com/poeticpraxis">
+                        vk.com/poeticpraxis
+                    </Link>
+                </Text>
+                <Text>
+                    А так же в{' '}
+                    <Link href="https://zen.yandex.ru/profile/editor/id/5acdd7635991d30775549af1">
+                        Яндекс Дзен
+                    </Link>
+                </Text>
+
+                <Footer>
+                    &copy; Макс А. Ю. 2016 - {new Date().getFullYear()}
+                </Footer>
+            </List>
         );
     }
 }
+
+/* Когда наступит время */
+/* <Text>
+    Если сайт для вас был полезен, можете его поддержать:
+    <iframe
+        src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0&targets-hint=&default-sum=&button-text=12&payment-type-choice=on&hint=&successURL=&quickpay=shop&account=410014951905022"
+        width="100%"
+        height="220"
+        frameborder="0"
+        allowtransparency="true"
+        scrolling="no"
+    />
+</Text> */

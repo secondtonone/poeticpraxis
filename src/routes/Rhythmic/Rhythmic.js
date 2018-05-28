@@ -1,120 +1,273 @@
 import { h, Component } from 'preact';
+
+import { isTouchDevice } from '../../utils';
+
 import Workfield from '../../components/Workfield';
+import MessageBox from '../../components/MessageBox';
+import Button from '../../components/Button';
+import Toolbar from '../../components/Toolbar';
+import Toggle from '../../components/Toggle';
+
+import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
+import ContentCopy from '../../components/IconSVG/ContentCopy';
+import ZoomInIcon from '../../components/IconSVG/ZoomIn';
+import ZoomOut from '../../components/IconSVG/ZoomOut';
+import Lock from '../../components/IconSVG/Lock';
+import LockOpen from '../../components/IconSVG/LockOpen';
+import ViewDay from '../../components/IconSVG/ViewDay';
+import ArrowBack from '../../components/IconSVG/ArrowBack';
+
+import { List, InlineContainer } from '../../styles/components';
+
+import {
+    ChangeModeButton,
+    StringPauseButton,
+    StringPauseButtonMobile,
+    CopyButton,
+    CopyButtonMobile,
+    ToolbarButton
+} from './styled';
 
 export default class Rhythmic extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.state = {
             renderCaesuraButtonStyle: {
                 top: 64
             },
-            fieldText: ''
+            textMessage: '',
+            zoomIn: false,
+            isFocused: false,
+            isEditable: !isTouchDevice() || !props.rhythmicState.text,
+            isDevice: isTouchDevice(),
+            isToolbarHidden: true
         };
+
+        this.mouseTrackingTimer = 0;
     }
 
-    componentDidMount () {
+    componentDidMount() {
         window.scrollTo(0, 0);
-
-        if (
-            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                navigator.userAgent
-            )
-        ) {
-            console.log('mobile device');
-        }
     }
+
+    showMessage = (textMessage) => {
+        this.setState({
+            textMessage
+        });
+
+        setTimeout(() => {
+            this.setState({
+                textMessage: null
+            });
+        }, 2000);
+    };
 
     copyToClipboard = () => {
         this.workfield.copyToClipboard();
-        // this.workfield.getSelection();
+        this.showMessage('Текст скопирован в буфер.');
     };
 
     makeCaesura = () => {
         this.workfield.makeCaesura();
     };
 
+    changeMode = () => {
+        let isEditable = this.state.isEditable;
+        const zoomIn = false;
+
+        if (isEditable) {
+            isEditable = false;
+        } else {
+            isEditable = true;
+        }
+
+        this.setState({
+            zoomIn,
+            isEditable
+        });
+
+        this.workfield.changeZoomMode(zoomIn);
+    };
+
+    changeZoomMode = () => {
+        let zoomIn = this.state.zoomIn;
+
+        if (zoomIn) {
+            zoomIn = false;
+        } else {
+            zoomIn = true;
+        }
+
+        this.setState({
+            zoomIn
+        });
+
+        this.workfield.changeZoomMode(zoomIn);
+    };
+
     getChildData = (data) => {
         this.setState(data);
     };
 
+    focusHandler = (isFocused) => {
+        const isEditable = this.state.isEditable;
+
+        setTimeout(() => {
+            this.setState({
+                isFocused: isEditable ? isFocused : false,
+                isToolbarHidden: true
+            });
+        }, 100);
+    };
+
+    triggerToolbar = () => {
+        let isToolbarHidden = this.state.isToolbarHidden;
+
+        this.setState({
+            isToolbarHidden: isToolbarHidden ? false : true
+        });
+    };
+
     mouseTracking = (e) => {
-        /* if(this.mouseTrackingTimer) {
+        if (this.mouseTrackingTimer) {
             window.clearTimeout(this.mouseTrackingTimer);
         }
 
-        this.mouseTrackingTimer = setTimeout(()=>{*/
-
-        /* let top = e.pageY - 270 < 0 ? 0 : Math.floor(e.pageY - 270);*/
         let transform = `translateY(${
-            e.pageY - 270 < 0 ? 0 : Math.floor(e.pageY - 270)
+            e.pageY - 194 < 0 ? 0 : Math.floor(e.pageY - 194)
         }px)`;
 
         const renderCaesuraButtonStyle = {
-            /* top*/
             transform
         };
 
-        this.setState({
-            renderCaesuraButtonStyle
-        });
-
-        /* },50);*/
+        this.mouseTrackingTimer = setTimeout(() => {
+            this.setState({
+                renderCaesuraButtonStyle
+            });
+        }, 100);
     };
 
-    render (
+    render(
         {
             setRhytmicState,
             setWordsDictionary,
-            sharedText,
             rhythmicState,
-            wordsDictionary
+            wordsDictionary,
+            variant
         },
-        { renderCaesuraButtonStyle }
+        {
+            renderCaesuraButtonStyle,
+            textMessage,
+            zoomIn,
+            isEditable,
+            isFocused,
+            isToolbarHidden,
+            isDevice
+        }
     ) {
         return (
             <section>
-                <div class="list list--animated">
-                    <button
-                        class="button_rounded field-copy-button animation-up"
-                        type="button"
-                        disabled={!rhythmicState.text}
-                        onClick={this.copyToClipboard}
-                        title="Копировать в текстовый редактор">
-                        <i class="material-icons material-icons--small">
-                            content_copy
-                        </i>
-                    </button>
+                <MessageBox text={textMessage} bottom={216} />
 
-                    <button
+                {isDevice &&
+                    isFocused && (
+                        <StringPauseButtonMobile
+                            _rounded
+                            _big
+                            type="button"
+                            onClick={this.makeCaesura}
+                            title="Поставить паузу">
+                            <KeyboardCapslock _big />
+                        </StringPauseButtonMobile>
+                    )}
+                {isDevice &&
+                    !isFocused && (
+                        <ToolbarButton
+                            type="button"
+                            _rounded
+                            _main
+                            _white
+                            _animated-up
+                            onClick={this.triggerToolbar}
+                            title="Инструменты">
+                            {isToolbarHidden ? (
+                                <ViewDay _big />
+                            ) : (
+                                <ArrowBack _big />
+                            )}
+                        </ToolbarButton>
+                    )}
+
+                <List _animated>
+                    {!isDevice && (
+                        <CopyButton
+                            _rounded
+                            _top-centred
+                            type="button"
+                            disabled={!rhythmicState.text}
+                            onClick={this.copyToClipboard}
+                            title="Копировать в текстовый редактор">
+                            <ContentCopy _small />
+                        </CopyButton>
+                    )}
+
+                    <StringPauseButton
+                        _rounded
+                        _middle
                         type="button"
-                        class="button_rounded button_middle string-pause-button animation-show"
                         onClick={this.makeCaesura}
                         style={renderCaesuraButtonStyle}
                         title="Поставить паузу">
-                        <i class="material-icons">keyboard_capslock</i>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="button_rounded button_middle string-pause-button string-pause-button__mobile animation-up"
-                        onClick={this.makeCaesura}
-                        title="Поставить паузу">
-                        <i class="material-icons">keyboard_capslock</i>
-                    </button>
+                        <KeyboardCapslock />
+                    </StringPauseButton>
 
                     <div onMouseMove={this.mouseTracking}>
                         <Workfield
-                            text={sharedText || rhythmicState.text}
-                            setRhytmicState={setRhytmicState}
+                            readOnly={!isEditable}
+                            text={rhythmicState.text}
+                            transmitState={setRhytmicState}
+                            focusHandler={this.focusHandler}
                             setWordsDictionary={setWordsDictionary}
                             wordsDictionary={wordsDictionary}
+                            stringDictionary={rhythmicState.stringsDictionary}
                             ref={(ref) => {
                                 this.workfield = ref;
                             }}
                         />
                     </div>
-                </div>
+                </List>
+                <Toolbar isHidden={isToolbarHidden}>
+                    <Button
+                        type="button"
+                        _rounded
+                        _transparent
+                        disabled={!rhythmicState.text}
+                        onClick={this.changeMode}
+                        title={isEditable ? 'Блокировать' : 'Разблокировать'}>
+                        {isEditable ? <Lock _big /> : <LockOpen _big />}
+                    </Button>
+                    {!isEditable && (
+                        <Button
+                            type="button"
+                            _rounded
+                            _transparent
+                            onClick={this.changeZoomMode}
+                            title={zoomIn ? 'Уменьшить' : 'Увеличить'}>
+                            {zoomIn ? <ZoomOut _big /> : <ZoomInIcon _big />}
+                        </Button>
+                    )}
+                    <Button
+                        _rounded
+                        _transparent
+                        type="button"
+                        disabled={!rhythmicState.text}
+                        onClick={this.copyToClipboard}
+                        title="Копировать в текстовый редактор">
+                        <ContentCopy _big />
+                    </Button>
+                </Toolbar>
             </section>
         );
     }

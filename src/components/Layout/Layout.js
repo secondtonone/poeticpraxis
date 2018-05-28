@@ -1,30 +1,34 @@
 import { h, Component } from 'preact';
-import {randomize} from '../../utils';
+
+import { MainContent, Page } from './styled';
+import { ThemeProvider } from 'styled-components';
+import theme from '../../styles/theme';
+import {
+    MobileHiddenContainer,
+    InlineContainer
+} from '../../styles/components';
 
 import Menu from '../Menu';
-import Background from '../Background'
-
-import './Layout.scss';
-
+import Header from '../Header';
+import Settings from '../Settings';
 
 export default class Layout extends Component {
-
-
-    render({children}) {
+    render({ children, variant }) {
         return (
-            <div>
-                <header>
-                    <div class="logo-background">
-                        <a href="/" alt="POETIC PRAXIS" title="POETIC PRAXIS"><div class="logo"></div></a>
-                    </div>
-                    <Menu />
-                </header>
-                <Background blocksCount={15}/>
-                <main class="main-content">
-                {children}
-                </main>
-                <footer></footer>
-            </div>
-        )
+            <ThemeProvider theme={theme[variant]}>
+                <Page _animated>
+                    <Header variant={variant}>
+                        <Menu inline />
+                        <InlineContainer>
+                            <MobileHiddenContainer>
+                                <Settings />
+                            </MobileHiddenContainer>
+                        </InlineContainer>
+                    </Header>
+                    <MainContent>{children}</MainContent>
+                    <footer />
+                </Page>
+            </ThemeProvider>
+        );
     }
 }

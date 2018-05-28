@@ -1,132 +1,214 @@
 import { h, Component } from 'preact';
 import cn from 'classnames';
-import {imaged, randomize} from '../../utils';
-import Textarea from '../../components/Textarea';
+import { imaged, randomize } from '../../utils';
+import styled from 'styled-components';
 
+import {
+    FieldEditableArea,
+    Hint,
+    SecondaryTitle,
+    LeftedLayout,
+    Container,
+    List
+} from '../../styles/components';
+
+import MatchList from '../../components/MatchList';
+import Textarea from '../../components/Textarea';
+import Button from '../../components/Button';
+import ArrowBack from '../../components/IconSVG/ArrowBack';
+import Widgets from '../../components/IconSVG/Widgets';
+import Delete from '../../components/IconSVG/Delete';
+import CheckCircle from '../../components/IconSVG/CheckCircle';
+import Subject from '../../components/IconSVG/Subject';
+import PlaylistAddCheck from '../../components/IconSVG/PlaylistAddCheck';
+import Select from '../../components/Select';
+import SecondaryMenu from '../../components/SecondaryMenu';
+
+import { MainSelect, FieldClearButton } from './styled';
+import MessageBox from '../../components/MessageBox';
 
 export default class ImagesEngine extends Component {
-
     constructor(props) {
         super(props);
 
-        const {
-            result,
-            isListHidden,
-            isExpanded,
-            text,
-            words,
-            field,
-            pinned,
-            wordsNumber
-        } = props.engineState;
+        const { result, text, pinned, wordsNumber } = props.engineState;
 
         this.state = {
             result,
-            isListHidden,
-            isExpanded,
+            textMessage: '',
             text,
-            words,
-            field,
+            words: [],
+            field: {},
             pinned,
             wordsNumber,
-            sharedText: ''
+            sharedText: '',
+            actualHeight: window.innerHeight,
+            initHeight: window.innerHeight,
+            currentView: 'material',
+            views: [
+                {
+                    value: 'material',
+                    icon: <Subject />,
+                    title: 'Материал',
+                    disabled: false
+                },
+                {
+                    value: 'words',
+                    icon: <PlaylistAddCheck />,
+                    title: 'Слова',
+                    disabled: true
+                }
+            ]
         };
-
-
-
     }
 
-    componentDidMount(){
-        window.scrollTo(0,0);
+    componentDidMount() {
+        window.scrollTo(0, 0);
+
+        let { views } = this.state;
+
+        if (this.state.result.length) {
+            views[1].disabled = false;
+
+            this.setState({
+                views
+            });
+        }
+
+        window.addEventListener('resize', this.updateDimensions);
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateDimensions);
+    }
+
+    updateDimensions = () => {
+        this.setState({
+            actualHeight: window.innerHeight
+        });
+    };
 
     handleTextInput = (e) => {
-
         let text = e.target.value;
 
         this.setState({
             text
         });
-    }
+
+        this.props.setEngineState({
+            text
+        });
+    };
 
     getMeasureField = (field) => {
-
         this.setState({
             field
         });
-    }
+    };
 
-    checkPosition = () => {
-        return window.matchMedia('(max-width: 800px)').matches;
-    }
+    changeView = (currentView) => {
+        this.setState({
+            currentView
+        });
+
+        this.props.setEngineState({
+            currentView
+        });
+    };
 
     getResult = () => {
-
         /*let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ\-]+/g) || [];*/
 
-        let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ'-]+/g).filter(n => {
-            return /[^'-]/g.test(n);
-        }) || [];
-
-
+        let words =
+            this.state.text
+                .toLowerCase()
+                .match(/[a-zA-ZА-Яа-яёЁ'-]+/g)
+                .filter((n) => {
+                    return /[^'-]/g.test(n);
+                }) || [];
 
         const result = imaged(words, this.state.wordsNumber);
 
-        let isListHidden = this.state.isListHidden;
+        let { views } = this.state;
 
-        let isExpanded = this.state.isExpanded;
-
-        if(isListHidden) {
-            isListHidden = false;
-        }
-
-        if(this.checkPosition()) {
-            isExpanded = false;
-        }
+        views[1].disabled = false;
 
         this.toTheTop();
 
+        this.showMessage('Словосочетания составлены.');
+
+        this.changeView('words');
+
         this.setState({
             result,
-            isListHidden,
-            isExpanded
+            views
         });
 
-        this.props.setEngineState(this.state);
-    }
+        this.props.setEngineState({
+            result
+        });
+    };
 
     setWordsNumber = (e) => {
-
         const wordsNumber = e.target.value;
 
         this.setState({
             wordsNumber
         });
 
-        this.props.setEngineState(this.state);
+        this.props.setEngineState({
+            wordsNumber
+        });
+    };
 
-    }
+    pinMatch = (e) => {
+        if (!e.target.dataset.index) {
+            return false;
+        }
 
-    pinMatch = (match, index) => {
+        const index = e.target.dataset.index;
 
         let pinned = this.state.pinned;
 
         let result = this.state.result;
 
+        const words = result.splice(index, 1);
+
+        const match = words[0].join(' ');
+
         pinned.push(match);
 
-        result.splice(index, 1);
+        this.showMessage('Словосочетание добавлено.');
 
         this.setState({
             pinned,
             result
         });
 
-        this.props.setEngineState(this.state);
+        this.props.setEngineState({
+            pinned,
+            result
+        });
+    };
 
-    }
+    showMessage = (textMessage) => {
+        this.setState({
+            textMessage
+        });
 
-    deleteMatch = (index) => {
+        setTimeout(() => {
+            this.setState({
+                textMessage: null
+            });
+        }, 2000);
+    };
+
+    deleteMatch = (e) => {
+        if (!e.target.dataset.index) {
+            return false;
+        }
+
+        const index = e.target.dataset.index;
 
         let pinned = this.state.pinned;
 
@@ -136,13 +218,12 @@ export default class ImagesEngine extends Component {
             pinned
         });
 
-
-        this.props.setEngineState(this.state);
-
-    }
+        this.props.setEngineState({
+            pinned
+        });
+    };
 
     clearInput = () => {
-
         let text = '';
 
         this.toTheTop();
@@ -151,154 +232,224 @@ export default class ImagesEngine extends Component {
             text
         });
 
-
-        this.props.setEngineState(this.state);
-    }
-
-
-    expanding = () => {
-
-        let isExpanded = this.state.isExpanded? false: true;
-
-
-        this.toTheTop();
-
-
-        this.setState({
-            isExpanded
+        this.props.setEngineState({
+            text
         });
-
-        this.props.setEngineState(this.state);
-
-    }
-
+    };
 
     toRhythmic = () => {
+        const pinned = this.state.pinned;
 
-        let imageEngine = {
-            pinned: this.state.pinned
-        };
+        const sharedText = pinned.join('\n');
 
-        const sharedText = this.state.pinned.join('\n');
-
-        this.setState({
-            sharedText
-        });
-
-        this.props.setEngineState(this.state);
+        this.props.sharingText(sharedText);
 
         this.props.history.push('/rhythmic');
-    }
+    };
 
     toTheTop = () => {
-        window.scrollTo(0,0);
-    }
+        window.scrollTo(0, 0);
+    };
 
-    render({}, state) {
+    focusHandler = (isFocused) => {
+        setTimeout(() => {
+            this.setState({
+                isFocused
+            });
+        }, 100);
+    };
 
-        const self = this;
-
+    render(
+        {},
+        {
+            result,
+            textMessage,
+            text,
+            words,
+            field,
+            pinned,
+            wordsNumber,
+            sharedText,
+            currentView,
+            views,
+            actualHeight,
+            initHeight
+        }
+    ) {
         const props = {
-            onInput:this.handleTextInput,
-            value: this.state.text,
-            classNames: 'field-editable',
+            onInput: this.handleTextInput,
+            value: text,
+            Textarea: FieldEditableArea,
             getMeasure: this.getMeasureField,
-            label: 'Материал',
             placeHolder: 'Введите слова или вставьте текст...'
         };
 
-        const classChanger = (side, order)=>{
-
-            let additional = order;
-
-            if(!state.isListHidden) {
-
-                additional = `${side} list--half`;
+        const wordNumberSelectOptions = [
+            {
+                value: 2,
+                title: '2'
+            },
+            {
+                value: 3,
+                title: '3'
             }
+        ];
 
-            return `list list--animated ${additional}`;
-        };
-
-        const styleChanger = () => {
-
-            if(state.isExpanded) {
-                return {};
-            }
-
-            return {
-                height: 0,
-                overflow: 'hidden'
-            };
-        }
-
-
-        return (<section>
-
-            <div class="input-container input-container_main animation-up">
-                <label for="wordNumber" class="input-container_label">Словосочетание из:</label>
-                <i class="material-icons input-container_icon">arrow_drop_down</i>
-                <select name="wordsNumber" class="input-container_select" id="wordNumber" value={state.wordsNumber} onChange={this.setWordsNumber}>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-
-            </div>
-
-            <button class="button_rounded button_main animation-up" type="button" onClick={this.getResult} disabled={!state.text} title="Нарезать"><i class="material-icons material-icons--big">widgets</i></button>
-
-            <div class={classChanger('list--left', 'list--first')}>
-
-                {state.isExpanded?null:<label class="field-title" onClick={this.expanding}>{props.label}</label>}
-                <div style={styleChanger()}>
-                    <div class="work-field">
-                        <Textarea {...props}/>
+        const secondMenu = [
+            {
+                value: 'material',
+                icon: <Subject />,
+                title: 'Материал',
+                content: (
+                    <div>
+                        <Subject />
+                        <div>Материал</div>
                     </div>
-                </div>
+                ),
+                disabled: views[0].disabled
+            },
+            {
+                value: 'words',
+                icon: <PlaylistAddCheck />,
+                title: 'Слова',
+                content: (
+                    <div>
+                        <PlaylistAddCheck />
+                        <div>Слова</div>
+                    </div>
+                ),
+                disabled: views[1].disabled
+            }
+        ];
 
-                {state.text.length && state.isExpanded?<button class="button_rounded field-clear-button" type="button" onClick={this.clearInput} title="Стереть текст"><i class="material-icons material-icons--small">delete</i>
-                </button>:null}
+        return (
+            <section class="images-engine">
+                <SecondaryMenu
+                    items={secondMenu}
+                    handler={this.changeView}
+                    current={currentView}>
+                    {currentView === 'material' && (
+                        <Button
+                            _rounded
+                            _transparent
+                            _small
+                            disabled={!text.length}
+                            type="button"
+                            onClick={this.clearInput}
+                            title="Стереть текст">
+                            <Delete _middle />
+                        </Button>
+                    )}
+                </SecondaryMenu>
 
+                {!(actualHeight * 1.3 < initHeight) && (
+                    <div>
+                        <MainSelect
+                            label="Словосочетание из:"
+                            id="wordNumber"
+                            value={wordsNumber}
+                            onChange={this.setWordsNumber}
+                            options={wordNumberSelectOptions}
+                        />
+                        <Button
+                            _rounded
+                            _main
+                            _animated-up
+                            type="button"
+                            onClick={this.getResult}
+                            disabled={!text}
+                            title="Нарезать">
+                            <Widgets _big />
+                        </Button>
+                    </div>
+                )}
 
+                <LeftedLayout>
+                    {currentView === 'material' && (
+                        <List _animated>
+                            <div class="work-field">
+                                <Textarea {...props} />
+                            </div>
 
-                {state.isListHidden?null:<button class="button_rounded button_transparent list__button-expand" type="button" onClick={this.expanding} title="Стереть текст">{state.isExpanded?<i class="material-icons material-icons--big">expand_less</i>: <i class="material-icons material-icons--big">expand_more</i>}
-                </button>}
+                            <FieldClearButton
+                                _rounded
+                                _top-centred
+                                disabled={!text.length}
+                                type="button"
+                                onClick={this.clearInput}
+                                title="Стереть текст">
+                                <Delete _small />
+                            </FieldClearButton>
+                        </List>
+                    )}
 
-            </div>
+                    {currentView === 'words' && (
+                        <List _animated>
+                            <Container margin="0 0 32px">
+                                <SecondaryTitle>Выбранные</SecondaryTitle>
 
-            <div class={classChanger('list--right', 'list--second')}>
-                <div class="matches">
-                    <h1 class="matches__title">Выбранные</h1>
-                    {state.pinned.length?null:<div class="matches__hint">Выберите сочетание,<br/> нажав на  <i class="material-icons material-icons--small">check_circle</i></div>}
-                    <ul>{state.pinned.map((match, index)=>{
-                        return (<li class="matches__item" key={`p${randomize()}`}>
-                            <button class="button_rounded button_transparent button_middle  matches__pin matches__pin--pinned" type="button" title="Удалить" onClick={() => this.deleteMatch(index)}>
-                                <i class="material-icons material-icons--middle">cancel</i>
-                            </button>
-                            {match}</li>)
-                    })}</ul>
-                    {state.pinned.length?<button class="button_flat button_transparent button_long matches__send" type="button" onClick={this.toRhythmic}>Посмотреть ритм <i class="material-icons material-icons--small">arrow_forward</i>
-                    </button>: null}
-                </div>
-                <div class="matches">
-                    <h1 class="matches__title">Сочетания</h1>
-                    {state.result.length?null:<div class="matches__hint">Нажмите снова на <i class="material-icons material-icons--small">widgets</i>,<br/> чтобы получить новые сочетаиния</div>}
-                    <ul>{state.result.map((words, index)=>{
+                                <MatchList
+                                    handler={this.deleteMatch}
+                                    list={pinned}
+                                    type={'cancel'}
+                                />
 
-                        const match = words.join(' ');
+                                {pinned.length ? null : (
+                                    <Hint>
+                                        Выберите сочетание,<br /> нажав на{' '}
+                                        <CheckCircle _small />
+                                    </Hint>
+                                )}
+                                {pinned.length ? (
+                                    <Container margin="8px 0 0">
+                                        <Button
+                                            _flat
+                                            _transparent
+                                            _long
+                                            _light-gray
+                                            type="button"
+                                            onClick={this.toRhythmic}>
+                                            Посмотреть ритм{' '}
+                                            <ArrowBack _small _rotate-left />
+                                        </Button>
+                                    </Container>
+                                ) : null}
+                            </Container>
 
-                        return (<li class="matches__item" key={`w${randomize()}`}>
-                            <button class="button_rounded button_transparent button_middle matches__pin" type="button" title="Выбрать" onClick={() => this.pinMatch(match, index)}>
-                                <i class="material-icons material-icons--middle">check_circle</i>
-                            </button>
-                            <div class="matches__text">{match}</div></li>)
-                    })}</ul>
-                    {state.result.length > 30?<button class="button_flat button_transparent button_long matches__send" type="button" onClick={this.toTheTop}>Вернуться наверх <i class="material-icons material-icons--small">arrow_upward</i>
-                    </button>: null}
-                </div>
-            </div>
+                            <Container margin="0 0 32px">
+                                <SecondaryTitle>Сочетания</SecondaryTitle>
+                                {result.length ? null : (
+                                    <Hint>
+                                        Нажмите снова на <Widgets _small />,<br />{' '}
+                                        чтобы получить новые сочетаиния
+                                    </Hint>
+                                )}
+                                <MatchList
+                                    handler={this.pinMatch}
+                                    list={result}
+                                    type={'add'}
+                                />
 
-
-
-        </section>);
+                                {result.length > 30 ? (
+                                    <Container margin="8px 0 0">
+                                        <Button
+                                            _flat
+                                            _transparent
+                                            _long
+                                            _light-gray
+                                            type="button"
+                                            onClick={this.toTheTop}>
+                                            Вернуться наверх{' '}
+                                            <ArrowBack _small _rotate-right />
+                                        </Button>
+                                    </Container>
+                                ) : null}
+                            </Container>
+                        </List>
+                    )}
+                </LeftedLayout>
+                <MessageBox text={textMessage} bottom={190} />
+            </section>
+        );
     }
 }

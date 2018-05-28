@@ -1,87 +1,79 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
-
 
 const PORT = 9080;
 
 module.exports = {
-    devtool: 'cheap-module-eval-source-map',
-    entry:{
+    devtool: 'eval',
+    entry: {
         app: [
-            'webpack-dev-server/client?http://localhost:'+PORT,
-            'webpack/hot/only-dev-server',
-            './src/main.js'
-
-        ],
-        vendor: [
-            'preact',
-            'react-router-dom',
-            'redux',
-            'preact-redux'
+            'react-hot-loader/patch',
+            './src/index.js'
         ]
+        /* vendor: ["preact", "react-router-dom", "redux", "preact-redux"] */
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: '[name].[hash].js',
+        filename: '[name].[hash].js'
     },
     module: {
         rules: [
             {
                 test: /.js?$/,
-                use: ['react-hot-loader/webpack','babel-loader'],
+                use: ['babel-loader'],
                 exclude: /node_modules/
-            }, {
-                test: /\.scss$/,
+            },
+            {
+                test: /\.css$/,
                 use: [
                     {
                         loader: 'style-loader'
-                    }, {
+                    },
+                    {
                         loader: 'css-loader'
-                    }, {
-                        loader: 'sass-loader'
-                    },{
-                        loader: 'sass-resources-loader',
+                    }
+                ]
+            },
+            {
+                test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
                         options: {
-                            resources: ['./src/scss/_variables.scss', './src/scss/_mixins.scss']
+                            limit: 8192
                         }
                     }
                 ]
-            }, {
-                test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
-                use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 8192
-                    }
-                }]
-            }, {
+            },
+            /* {
+                test: /\.ejs$/,
+                use: ['ejs-loader?variable=data']
+            }, */
+            {
                 test: /\.(png|jpg|jpeg|gif)$/,
-                use: [
-                    'file-loader'
-                ]
-            }, {
+                use: ['file-loader']
+            },
+            {
                 test: /\.webmanifest$/,
                 include: /public/,
                 loader: [
-                  'file-loader?name=[name].[ext]',
-                  'webmanifest-loader'
+                    'file-loader?name=[name].[ext]',
+                    'webmanifest-loader'
                 ].join('!')
-            },
-            {
-                test: /\.ejs$/,
-                use:[ 'ejs-loader?variable=data']
             }
         ]
     },
     resolve: {
         extensions: ['.js', '.json'],
         alias: {
-            'react': 'preact-compat',
-            'react-dom': 'preact-compat'
+            react: 'preact-compat',
+            'react-dom': 'preact-compat',
+            'preact-compat': 'preact-compat/dist/preact-compat'
         }
     },
     plugins: [
@@ -89,27 +81,34 @@ module.exports = {
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: Infinity,
-            filename: '[name].[hash].js',
+            minChunks: 2,
+            children: true,
+            async: true
         }),
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify('development')
+                NODE_ENV: JSON.stringify('development')
             }
         }),
+        new ScriptExtHtmlWebpackPlugin({
+            defer: /app/,
+            defer: /\.js$/
+        }),
         new HtmlWebpackPlugin({
-            template: './public/index.ejs',
-            inject: 'body',
-            env:{
+            template: './public/index.html',
+            inject: 'head',
+            minify: {
+                minifyCSS: true,
+                minifyJS: true,
+                removeComments: true
+            },
+            env: {
                 Prod: false
             }
         }),
         new OfflinePlugin({
             publicPath: '/',
-            externals: [
-                '/'
-            ],
+            externals: ['/'],
             ServiceWorker: {
                 navigateFallbackURL: '/'
             }
