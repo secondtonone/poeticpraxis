@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import theme from '../../styles/theme';
 import { AnimationShow, AnimationUp } from '../../styles/components';
 
 import Button from '../../components/Button';
@@ -54,9 +53,7 @@ const CopyButton = styled(Button)`
 const CopyButtonMobile = styled(Button)``;
 
 const ToolbarButton = styled(Button)`
-    @media (max-width: 600px) {
-        bottom: 128px !important;
-    }
+    
 `;
 
 export {

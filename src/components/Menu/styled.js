@@ -2,8 +2,6 @@ import { h, Component } from 'preact';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-import theme from '../../styles/theme';
-
 const NavBar = styled.nav`
     display: ${(props) => props.inline? 'inline-block': 'block'};
 `;

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 import Button from '../../components/Button';
 import theme from '../../styles/theme';
-import { up } from '../../styles/animations';
 
 export const StyledMatchList = styled.ul`
     font-family: ${theme.mainFont};
@@ -26,17 +25,11 @@ export const StyledMatchList = styled.ul`
 
 StyledMatchList.Item = styled.li`
     position: relative;
-    padding: 8px 0;
+    padding: 8px 8px 8px 54px;
     width: 50%;
     display: inline-block;
 
-    &:nth-child(2n) {
-        padding-left: 16px;
 
-        @media (max-width: 880px) {
-            padding-left: 0;
-        }
-    }
 
     @media (max-width: 880px) {
         width: 100%;
@@ -45,8 +38,8 @@ StyledMatchList.Item = styled.li`
 
 StyledMatchList.PinButton = styled(Button)`
     position: absolute;
-    right: 0;
-    top: 2px;
+    left: 0;
+    top: 6px;
     color: ${theme.primaryGray};
     fill: ${theme.primaryGray};
 

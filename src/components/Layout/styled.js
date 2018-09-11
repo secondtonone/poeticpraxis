@@ -4,7 +4,7 @@ import { show } from '../../styles/animations';
 import { withElements } from '../../styles/helpers';
 
 const MainContent = styled.main`
-    padding-top: 180px;
+    padding-top: 168px;
 
     @media (max-width: 600px) {
         padding: 0 0 100px 0;

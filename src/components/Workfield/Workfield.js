@@ -1,16 +1,15 @@
 import { h, Component } from 'preact';
 import Textarea from '../Textarea';
+import { randomize, hashFunction, fontReady } from '../../utils';
+
 import {
-    randomize,
-    hashFunction,
     isLetter,
     isPause,
     isSpace,
     isVowel,
     isAccented,
-    makeListLinks,
-    fontReady
-} from '../../utils';
+    makeListLinks
+} from '../../modules/rhythmic';
 
 import { FieldEditableArea } from '../../styles/components';
 
@@ -24,7 +23,6 @@ import {
     FakeField,
     AccentRelative,
     WorkField,
-    FieldEditable,
     PaintField
 } from './styled';
 
@@ -35,7 +33,6 @@ export default class Workfield extends Component {
         super(props);
 
         this.state = {
-            text: this.props.text,
             strings: {},
             orderStrings: [],
             elements: {},
@@ -66,7 +63,7 @@ export default class Workfield extends Component {
     componentDidMount() {
         this.mainField = this.textarea.field;
 
-        let text = this.state.text;
+        let text = this.props.text;
 
         if (Array.isArray(text)) {
             text = text.join('\n');
@@ -85,6 +82,12 @@ export default class Workfield extends Component {
         window.removeEventListener('resize', this.updateDimensions);
     }
 
+    componentWillReceiveProps(prevProps) {
+        if (prevProps.text !== this.props.text) {
+            this.textLinting(prevProps.text);
+        }
+    }
+
     setStateAsync = (newState) => {
         return new Promise((resolve) => {
             this.setState(newState, () => {
@@ -94,7 +97,7 @@ export default class Workfield extends Component {
     };
 
     updateDimensions = () => {
-        this.textLinting(this.state.text);
+        this.textLinting(this.props.text);
     };
 
     getMeasureField = (field) => {
@@ -106,15 +109,7 @@ export default class Workfield extends Component {
     tagMaker = (node, textAnalized) => {
         const stringNodes = [...node];
 
-        let symbols = [];
-
         let tags = [];
-
-        const accents = {
-            black: 0,
-            red: 1,
-            red_secondary: 2
-        };
 
         const { elements, strings } = textAnalized;
 
@@ -184,8 +179,6 @@ export default class Workfield extends Component {
             let idString = `s${index}${randomize()}`;
 
             let vowel = [];
-
-            let tag = {};
 
             let words = [];
 
@@ -346,12 +339,8 @@ export default class Workfield extends Component {
     }
 
     handleTextInput = (e) => {
-        const text = e.target.value;
-
-        this.textLinting(text);
-
         this.props.transmitState({
-            text
+            text: e.target.value
         });
     };
 
@@ -459,9 +448,7 @@ export default class Workfield extends Component {
 
         console.log('begin: ', start, ' end: ', end);
 
-        const textSelected = this.state.text.substring(start, end);
-
-        const stringToSymbol = this.state.text.substring(0, start);
+        const textSelected = this.props.text.substring(start, end);
 
         /* hashTokenId = hashFunction(token,++interator);*/
 
@@ -480,7 +467,7 @@ export default class Workfield extends Component {
         this.setStateAsync({
             zoomIn
         }).then(() => {
-            let text = this.state.text;
+            let text = this.props.text;
             this.textLinting(text);
         });
     };
@@ -591,16 +578,14 @@ export default class Workfield extends Component {
     };
 
     render(
-        { readOnly, syllableOff, stringNumberOff, focusHandler },
-        { strings, field, elements, orderStrings, tags, text, zoomIn }
+        { readOnly, syllableOff, stringNumberOff, focusHandler, text },
+        { strings, field, elements, orderStrings, tags, zoomIn }
     ) {
         const accents = ['black', 'red', 'red_secondary'];
 
         const decription = ['Слабая доля', 'Сильная доля', 'Побочное ударение'];
 
         let stringCounter = 0;
-
-        let symbolCounter = 0;
 
         const renderedTags = tags.map((sign) => {
             const style = {
@@ -635,10 +620,10 @@ export default class Workfield extends Component {
             );
         });
 
-        const markingTags = orderStrings.map((id, index) => {
+        const markingTags = orderStrings.map( id => {
             const string = strings[id];
 
-            let symbols = string.order.map((id, index) => {
+            let symbols = string.order.map( id => {
                 const symbol = elements[id];
 
                 let char = symbol.char;

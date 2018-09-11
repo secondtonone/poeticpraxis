@@ -1,9 +1,9 @@
-function splitAt(i, xs) {
+/* function splitAt(i, xs) {
     let ci = Math.ceil(i);
     let a = xs.slice(0, ci);
     let b = xs.slice(ci, xs.length) || '';
     return [a, b];
-}
+} */
 
 function chunkArray(arr, chunkSize){
     var results = [];
@@ -29,13 +29,13 @@ function shuffle(a) {
     return a;
 }
 
-function zip(xs) {
+/* function zip(xs) {
     return xs[0].map(function(_,i) {
         return xs.map(function(x) {
             return x[i];
         }).join(' ');
     });
-}
+} */
 
 /*export default function imaged(words) {
     return zip(splitAt(words.length/2, shuffle(words)));

@@ -1,6 +1,5 @@
 import { h, render } from 'preact';
 import { AppContainer } from 'react-hot-loader';
-import { ServerStyleSheet, injectGlobal } from 'styled-components';
 
 import './fonts/fonts.css';
 
@@ -8,7 +7,7 @@ import store from './store';
 
 import runtime from 'offline-plugin/runtime';
 
-import { analyticsInit } from './utils';
+import analyticsInit from './modules/analytics';
 
 import App from './containers/App';
 

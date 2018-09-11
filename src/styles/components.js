@@ -54,13 +54,13 @@ const SecondaryTitle = styled.h2`
     font-size: 18px;
     font-weight: 400;
     margin-bottom: 8px;
-    color: ${theme.primaryGray};
+    color: ${(props) => props.theme.secondColor};
 `;
 
 const Hint = styled.div`
     font-size: 14px;
     font-weight: 300;
-    color: ${theme.primaryGray};
+    color: ${(props) => props.theme.secondColor};
     margin: 16px auto;
     text-align: center;
     line-height: 22px;
@@ -112,6 +112,17 @@ const MobileHiddenContainer = styled.div`
     @media (max-width: 600px) {
         display: none;
     }
+`;
+
+const Span = styled.span`
+    font-family: ${theme.mainFont};
+    line-height: 29px;
+    font-size: 18px;
+    letter-spacing: 0px;
+    font-weight: 300;
+    word-spacing: 6px;
+    margin-bottom: 24px;
+    text-transform: ${(props) => (props.textTransform ? 'uppercase' : 'none')};
 `;
 
 const Text = styled.div`
@@ -169,7 +180,7 @@ const FieldLabel = styled.label`
 
 const List = styled.div.attrs({ className: withElements })`
     position: relative;
-    padding: 16px 64px 80px;
+    padding: 32px 64px 80px;
     max-width: 794px;
     width: 100%;
     min-height: 1042px;
@@ -212,19 +223,21 @@ const List = styled.div.attrs({ className: withElements })`
 
 const DropdownList = styled.li`
     position: absolute;
-    top: -3px;
+    top: ${(props) => props.top || '-3px'};
     ${(props) => props.side || 'left'}: 8px;
     list-style: none;
     background: ${(props) => props.theme.primaryColor};
     margin: 0;
     padding: 0;
     width: 100%;
-    min-width: 250px;
-    box-shadow: 5px 4px 25px 3px
-        rgba(${(props) => hexToRgb(props.theme.secondColor).join(',')}, 0.1);
+    min-width: 252px;
+    box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.1);
     max-height: 200px;
-
-    &:focus {
+    outline: none;
+    ${(props) =>
+        props.theme.name === 'dark'
+            ? `background: rgba(162, 162, 162, 0.1);`
+            : ''} &:focus {
         outline: none;
     }
 `;
@@ -232,6 +245,9 @@ const DropdownList = styled.li`
 DropdownList.ListItem = styled.ul`
     margin: 0;
     padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     color: ${(props) =>
         props.active ? props.theme.accentColor : props.theme.secondColor};
 `;
@@ -248,6 +264,7 @@ export {
     AnimationUp,
     Container,
     Text,
+    Span,
     Link,
     Footer,
     FieldLabel,

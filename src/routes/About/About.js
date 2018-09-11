@@ -8,8 +8,7 @@ import Widgets from '../../components/IconSVG/Widgets';
 import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
 import ContentCopy from '../../components/IconSVG/ContentCopy';
 
-
-import { Text, Link, Footer, List } from '../../styles/components';
+import { Text, Link, Footer, List, Span } from '../../styles/components';
 
 export default class About extends Component {
     componentDidMount() {
@@ -19,29 +18,49 @@ export default class About extends Component {
     render() {
         const text = `Духовной жаждою томим,\nВ пустыне мрачной я влачился,\nИ шестикрылый серафим\nНа перепутье мне явился...`;
 
-        const stringsDictionary = JSON.parse(
+        /* const stringsDictionary = JSON.parse(
             '{"духовной жаждою томим,":{"accents":[{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{"type":0},{},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{"type":2},{},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{}]},"в пустыне мрачной я влачился,":{"accents":[{"type":0},{},{"type":0},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{"type":0},{},{"type":1},{},{"type":0},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{}]},"и шестикрылый серафим":{"accents":[{"type":0},{},{"type":0},{"type":2},{"type":0},{"type":0},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{},{"type":0},{"type":2},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0}]},"на перепутье мне явился...":{"accents":[{"type":0},{"type":0},{},{"type":0},{"type":2},{"type":0},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{},{"type":0},{"type":0},{"type":1},{},{"type":0},{"type":0},{"type":1},{"type":0},{"type":0},{"type":0},{},{},{}]}}'
-        );
+        ); */
 
         return (
             <List _animated>
                 <Text.Title>POETIC PRAXIS?</Text.Title>
                 <Text>
-                    POETIC PRAXIS - это проект Общества Председателей Земного
-                    шара, созданный для поэтической практики.
+                    POETIC PRAXIS{' '}
+                    <Span textTransform="uppercase">(Ποιητικός Πράξις)</Span> -
+                    это проект, созданный для поэтической практики.
                 </Text>
-                <Text.Title>Прием монтажа</Text.Title>
+                <Text>
+                    Блог в Яндекс Дзен:{' '}
+                    <Link href="https://zen.yandex.ru/id/5acdd7635991d30775549af1">
+                        Поэтическая практика
+                    </Link>
+                </Text>
+                <Text>
+                    Канал проекта в Telegram:{' '}
+                    <Link href="https://t.me/poeticpraxis">@poeticpraxis</Link>
+                </Text>
+                <Text>
+                    Сообщество в VK:{' '}
+                    <Link href="https://vk.com/poeticpraxis">
+                        vk.com/poeticpraxis
+                    </Link>
+                </Text>
+
+                <Text.Title id="images-engine">Машина образов или прием монтажа</Text.Title>
                 <Text>
                     Новые технологии дарят нам новые возможности и инструменты.
                     "Машина образов", изобретённая С. А. Есениным, позволяет из
-                    любого набора слов составлять случайные пары или семьи,
-                    когда слова - три, получая неожиданные образы. Здесь она
-                    претерпела изменения. Что если попробовать получить новые
-                    сочетания не из простого набора слов, а из не
-                    подготовленного материала: случайной статьи, переписки,
-                    отрывка из книги, а может даже из стихотворения? А из
-                    нескольких? Вам стоит узнать, что из этого выйдет. Без
-                    бумаги и ножниц. Быстро и сколько угодно.
+                    любого набора слов, составлять случайные пары или семьи,
+                    когда слов больше двух, получая неожиданные образы. Для
+                    лучшего результата, нужно использовать существиетльные и
+                    приглагательные. Здесь машина претерпела изменения. Что если
+                    попробовать получить новые сочетания не из простого набора
+                    слов, а из не подготовленного материала: случайной статьи,
+                    переписки, отрывка из книги, а может даже из стихотворения?
+                    А из нескольких? Или слов ваших друзей. Смешивая ваши
+                    нарративы, вам стоит узнать, что из этого выйдет. Без бумаги
+                    и ножниц. Быстро и сколько угодно.
                 </Text>
 
                 <Text>
@@ -51,10 +70,11 @@ export default class About extends Component {
                     на кнопку{' '}
                     <Button _rounded _transparent type="button">
                         <Widgets _small />
-                    </Button>. После этого будут составлены сочетания слов из
-                    которых вы выбираете интересные вам и не очень. Можно
-                    сгенерировать новые сочетания нажимая на ту же кнопку, они
-                    заменят предыдущие, но выбранные вами останутся.
+                    </Button>
+                    . После этого будут составлены сочетания слов из которых вы
+                    выбираете интересные вам и не очень. Можно сгенерировать
+                    новые сочетания нажимая на ту же кнопку, они заменят
+                    предыдущие, но выбранные вами останутся.
                 </Text>
 
                 <Text>
@@ -62,10 +82,11 @@ export default class About extends Component {
                     <Link href="/rhythmic">РИТМИКУ</Link>, нажимая на{' '}
                     <Button _flat _transparent type="button">
                         Посмотреть ритм <ArrowBack _small _rotate-left />
-                    </Button>.
+                    </Button>
+                    .
                 </Text>
 
-                <Text.Title>Ритмы</Text.Title>
+                <Text.Title id="rhythmic">Ритмика</Text.Title>
                 <Text>
                     Ритм стиха - немаловажный аспект. Но ритм существует не
                     только в стихах, его можно встретить и в ритмической прозе.
@@ -87,7 +108,8 @@ export default class About extends Component {
                     расставлять паузы кнопкой{' '}
                     <Button _rounded _transparent type="button">
                         <KeyboardCapslock _small />
-                    </Button>.
+                    </Button>
+                    .
                 </Text>
 
                 <Text>
@@ -95,7 +117,8 @@ export default class About extends Component {
                     редактор (Google Docs, Microsoft Word и т.д.) кнопкой{' '}
                     <Button _rounded _transparent type="button">
                         <ContentCopy _small />
-                    </Button>.
+                    </Button>
+                    .
                 </Text>
 
                 <Text>
@@ -107,22 +130,6 @@ export default class About extends Component {
                 <Text>
                     К инструментам время от времени добавляются новые функции,
                     которые открывают новые возможности. Исследуйте и творите.
-                </Text>
-                <Text>
-                    Блог проекта в Telegram:{' '}
-                    <Link href="https://t.me/poeticpraxis">@poeticpraxis</Link>
-                </Text>
-                <Text>
-                    Блог проекта в VK:{' '}
-                    <Link href="https://vk.com/poeticpraxis">
-                        vk.com/poeticpraxis
-                    </Link>
-                </Text>
-                <Text>
-                    А так же в{' '}
-                    <Link href="https://zen.yandex.ru/profile/editor/id/5acdd7635991d30775549af1">
-                        Яндекс Дзен
-                    </Link>
                 </Text>
 
                 <Footer>

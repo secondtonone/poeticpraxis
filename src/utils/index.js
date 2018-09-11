@@ -1,14 +1,3 @@
-import imaged from './imaged';
-import analyticsInit from './analytics';
-import {
-    isBreakLine,
-    isLetter,
-    isPause,
-    isSpace,
-    isVowel,
-    isAccented,
-    makeListLinks
-} from './rhythmic';
 
 export function isTouchDevice() {
     return 'ontouchstart' in document.documentElement;
@@ -52,15 +41,3 @@ export function hexToRgb(hex) {
         parseInt(result[3], 16)
     ] : null;
 }
-
-export { imaged };
-export { analyticsInit };
-export {
-    isBreakLine,
-    isLetter,
-    isPause,
-    isSpace,
-    isVowel,
-    isAccented,
-    makeListLinks
-};

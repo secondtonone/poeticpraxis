@@ -1,4 +1,4 @@
-import { SET_ENGINE_STATE } from "./ImagesEngineActions.js";
+import { SET_ENGINE_STATE } from './ImagesEngineActions.js';
 
 const ACTION_HANDLERS = {
     [SET_ENGINE_STATE]: (state, action) =>
@@ -13,9 +13,10 @@ const ACTION_HANDLERS = {
 const initialState = {
     currentEngineState: {
         result: [],
-        text: "",
+        text: '',
         pinned: [],
-        wordsNumber: 2
+        wordsNumber: 2,
+        currentView: 'material'
     }
 };
 

@@ -2,7 +2,7 @@ import {
     SET_RHYTMIC_STATE,
     SET_WORDS_DICTIONARY,
     SHARING_TEXT
-} from "./RhythmicActions";
+} from './RhythmicActions';
 
 const ACTION_HANDLERS = {
     [SET_RHYTMIC_STATE]: (state, action) =>
@@ -26,7 +26,7 @@ const ACTION_HANDLERS = {
 
 const initialState = {
     currentRhythmicState: {
-        text: "",
+        text: '',
         stringsDictionary: {}
     },
     wordsDictionary: {}

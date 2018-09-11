@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import theme from '../../styles/theme';
 
@@ -11,7 +11,7 @@ const Label = styled.label`
 
 const Container = styled.div`
     position: relative;
-    padding: 4px 8px;
+    padding: 4px 28px 4px 8px;
     font-family: ${theme.mainFont};
     font-size: ${(props) => props.size || '16px'};
     font-weight: ${(props) => props.weight || 300};
@@ -36,6 +36,7 @@ const StyledSelect = styled.select`
     font-weight: ${(props) => props.weight || 300};
     line-height: 1;
     min-width: 24px;
+    width: 100%;
     outline: none;
     z-index: 2;
     cursor: pointer;

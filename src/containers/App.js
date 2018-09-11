@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { BrowserRouter, StaticRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'preact-redux';
 
 import Routes from '../routes';

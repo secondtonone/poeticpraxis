@@ -5,7 +5,7 @@ export default `html {
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 body,

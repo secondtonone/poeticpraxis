@@ -1,10 +1,9 @@
 import { h, Component } from 'preact';
 import styled from 'styled-components';
 
-import theme from '../../styles/theme';
 import { withElements } from '../../styles/helpers';
 
-const StyledIcon = styled.i.attrs({ className: withElements }) `
+const StyledIcon = styled.i.attrs({ className: withElements })`
     font-weight: normal;
     font-style: normal;
     font-size: 24px; /* Preferred icon size */
@@ -17,6 +16,7 @@ const StyledIcon = styled.i.attrs({ className: withElements }) `
     direction: ltr;
     transform-origin: center;
     display: inline-block;
+    pointer-events: none;
 
     & svg {
         height: 24px;

@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import { isTouchDevice } from '../../utils';
 import { NavBar, NavMenu, RouterNavLink } from './styled';
 
 import Widgets from '../../components/IconSVG/Widgets';

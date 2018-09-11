@@ -1,4 +1,3 @@
-import { h, Component } from 'preact';
 import styled, { css } from 'styled-components';
 
 import theme from '../../styles/theme';

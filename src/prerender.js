@@ -8,8 +8,6 @@ import store from './store';
 
 import App from './containers/AppPrerender';
 
-import Routes from './routes';
-
 injectGlobal`${styles}`;
 
 if (typeof window === 'undefined') {

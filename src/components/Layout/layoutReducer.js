@@ -1,14 +1,29 @@
-import { CHANGE_THEME } from './LayoutActions.js';
+import { CHANGE_THEME, GHANGE_LANG } from './LayoutActions.js';
 
 const ACTION_HANDLERS = {
-    [CHANGE_THEME]: (state, action) =>
-        Object.assign({}, state, {
-            variant: state.variant === 'light' ? 'dark' : 'light'
-        })
+    [CHANGE_THEME]: (state, action) => {
+        let variant = 'light';
+
+        if (!action.payload) {
+            variant = state.variant === 'light' ? 'dark' : 'light';
+        }
+
+        if (action.payload === 'dark') {
+            variant = 'dark';
+        }
+
+        return Object.assign({}, state, {
+            variant
+        });
+    },
+    [GHANGE_LANG]: (state, action) => Object.assign({}, state, {
+        lang: action.payload
+    })
 };
 
 const initialState = {
-    variant: 'light'
+    variant: 'light',
+    lang: 'ru'
 };
 
 export default function engineReducer(state = initialState, action) {

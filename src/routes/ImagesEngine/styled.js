@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
-import theme from '../../styles/theme';
 import { AnimationUp } from '../../styles/components';
 import Button from '../../components/Button';
 import Select from '../../components/Select';
+import Recorder from '../../components/Recorder';
 
-import { hexToRgb } from "../../utils";
 
 const MainSelect = styled(Select)`
     position: fixed;
@@ -14,8 +13,7 @@ const MainSelect = styled(Select)`
     z-index: 100;
     background-color: ${(props) => props.theme.primaryColor};
     color: ${(props) => props.theme.secondColor};
-    box-shadow: 5px 4px 25px 5px
-        rgba(0,0,0, 0.1);
+    box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.1);
 
     @media (max-width: 600px) {
         bottom: 122px;
@@ -54,7 +52,5 @@ const FieldClearButton = styled(Button)`
         margin: auto;
     }
 `;
-
-const Matches = styled.div``;
 
 export { MainSelect, FieldClearButton };

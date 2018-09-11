@@ -17,12 +17,12 @@ const fontWeightsMontserrat = [
     }
 ];
 
-const fontWeightsMaterialIcons = [
+/* const fontWeightsMaterialIcons = [
     {
         weight: 400,
         font: 'MaterialIcons-Regular'
     }
-];
+]; */
 
 const fontFace = (name, fontWeight, font) => {
     return `

@@ -6,7 +6,6 @@ import Workfield from '../../components/Workfield';
 import MessageBox from '../../components/MessageBox';
 import Button from '../../components/Button';
 import Toolbar from '../../components/Toolbar';
-import Toggle from '../../components/Toggle';
 
 import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
 import ContentCopy from '../../components/IconSVG/ContentCopy';
@@ -17,14 +16,12 @@ import LockOpen from '../../components/IconSVG/LockOpen';
 import ViewDay from '../../components/IconSVG/ViewDay';
 import ArrowBack from '../../components/IconSVG/ArrowBack';
 
-import { List, InlineContainer } from '../../styles/components';
+import { List } from '../../styles/components';
 
 import {
-    ChangeModeButton,
     StringPauseButton,
     StringPauseButtonMobile,
     CopyButton,
-    CopyButtonMobile,
     ToolbarButton
 } from './styled';
 
@@ -150,13 +147,7 @@ export default class Rhythmic extends Component {
     };
 
     render(
-        {
-            setRhytmicState,
-            setWordsDictionary,
-            rhythmicState,
-            wordsDictionary,
-            variant
-        },
+        { setRhytmicState, setWordsDictionary, rhythmicState, wordsDictionary },
         {
             renderCaesuraButtonStyle,
             textMessage,
@@ -175,6 +166,7 @@ export default class Rhythmic extends Component {
                     isFocused && (
                         <StringPauseButtonMobile
                             _rounded
+                            _white
                             _big
                             type="button"
                             onClick={this.makeCaesura}
@@ -183,20 +175,17 @@ export default class Rhythmic extends Component {
                         </StringPauseButtonMobile>
                     )}
                 {isDevice &&
-                    !isFocused && (
+                    !isFocused &&
+                    isToolbarHidden && (
                         <ToolbarButton
                             type="button"
                             _rounded
                             _main
-                            _white
+                            _black
                             _animated-up
                             onClick={this.triggerToolbar}
                             title="Инструменты">
-                            {isToolbarHidden ? (
-                                <ViewDay _big />
-                            ) : (
-                                <ArrowBack _big />
-                            )}
+                            <ViewDay _big />
                         </ToolbarButton>
                     )}
 
@@ -239,6 +228,14 @@ export default class Rhythmic extends Component {
                     </div>
                 </List>
                 <Toolbar isHidden={isToolbarHidden}>
+                    <Button
+                        _rounded
+                        _transparent
+                        type="button"
+                        onClick={this.triggerToolbar}
+                        title="Закрыть">
+                        <ArrowBack _big />
+                    </Button>
                     <Button
                         type="button"
                         _rounded

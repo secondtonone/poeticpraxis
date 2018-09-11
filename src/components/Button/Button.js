@@ -8,8 +8,9 @@ import { hexToRgb } from '../../utils';
 
 const StyledButton = styled.button.attrs({ className: withElements })`
     &._rounded {
-        background-color: ${(props) => props.theme.primaryColor};
-        box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
+        background-color: /* ${(props) =>
+            props.theme.primaryColor} */ transparent;
+        /* box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1); */
         color: ${(props) => props.theme.secondColor};
         fill: ${(props) => props.theme.secondColor};
         height: 40px;
@@ -21,7 +22,8 @@ const StyledButton = styled.button.attrs({ className: withElements })`
         &:disabled {
             color: ${(props) => props.theme.grayColor};
             fill: ${(props) => props.theme.grayColor};
-            background-color: ${(props) => props.theme.primaryColor};
+            background-color: /* ${(props) =>
+                props.theme.primaryColor} */ transparent;
             cursor: default;
             box-shadow: 2px 1px 10px 0px rgba(0, 0, 0, 0.1);
         }
@@ -104,13 +106,19 @@ const StyledButton = styled.button.attrs({ className: withElements })`
         width: auto;
         text-transform: uppercase;
         border-radius: 32px;
-        padding:8px 16px;
+        padding: 8px 16px;
     }
 
     &._white {
         color: ${theme.primaryBlack};
         fill: ${theme.primaryBlack};
         background-color: ${theme.primaryWhite};
+    }
+
+    &._black {
+        color: ${theme.primaryWhite};
+        fill: ${theme.primaryWhite};
+        background-color: ${theme.primaryBlack};
     }
 
     &._gray {

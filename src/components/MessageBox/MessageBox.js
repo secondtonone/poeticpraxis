@@ -10,8 +10,8 @@ const StyledMessageBox = styled.div`
     z-index: 1001;
     padding: 8px 24px;
     text-align: center;
-    background-color: ${(props) => props.theme.secondColor};
     color: ${(props) => props.theme.primaryColor};
+    background-color: ${(props) => props.theme.secondColor};
     min-height: 48px;
     min-width: 288px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
@@ -25,8 +25,10 @@ const StyledMessageBox = styled.div`
     transition: transform 0.2s, opacity 0.2s;
     opacity: ${(props) => (props.text ? 1 : 0)};
     -webkit-font-smoothing: antialiased;
-
-    @media (max-width: 600px) {
+    ${(props) =>
+        props.theme.name === 'dark'
+            ? `border: 1px solid ${props.theme.secondColor}`
+            : ''} @media (max-width: 600px) {
         bottom: 0;
         transform: translateY(
             ${(props) => (props.text ? `-${props.bottom}px` || 0 : '100px')}

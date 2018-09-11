@@ -1,14 +1,19 @@
 import { connect } from 'preact-redux';
-import { changeTheme } from '../../components/Layout/LayoutActions';
+import { changeTheme, changeLang } from '../../components/Layout/LayoutActions';
 
 import Settings from './Settings';
 
 const mapDispatchToProps = {
-    changeTheme
+    changeTheme,
+    changeLang
 };
 
 const mapStateToProps = (state) => ({
-    variant: state.Layout.variant
+    variant: state.Layout.variant,
+    lang: state.Layout.lang
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Settings);

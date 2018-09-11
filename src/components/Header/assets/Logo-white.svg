@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="463px" height="182px" viewBox="0 0 463 182" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
     <title>Logo-white</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
@@ -9,7 +9,7 @@
             <g id="Group" transform="translate(74.000000, 92.000000) scale(-1, 1) rotate(-180.000000) translate(-74.000000, -92.000000) translate(0.000000, 18.000000)">
                 <path d="M74,148 C33.131,148 0,114.87 0,74 C0,33.131 33.131,0 74,0 C114.87,0 148,33.131 148,74 C148,114.87 114.87,148 74,148 Z M74.5,139 C110.12,139 139,110.12 139,74.5 C139,38.878 110.12,10 74.5,10 C38.878,10 10,38.878 10,74.5 C10,110.12 38.878,139 74.5,139 Z" id="Combined-Shape" fill="#F9F8F7"></path>
                 <polygon id="Combined-Shape" fill="#F9F8F7" points="74.5 9.1951 129.44 108.34 19.556 108.34"></polygon>
-                <polygon id="Polygon-Copy" fill="#EA5D5A" points="74.5 29 113.44 99 35.562 99"></polygon>
+                <polygon id="Polygon-Copy" fill="#CF514E" points="74.5 29 113.44 99 35.562 99"></polygon>
             </g>
             <polygon id="I" fill="#F9F8F7" points="376 2 385 2 385 90 376 90"></polygon>
             <polygon id="T" fill="#F9F8F7" points="331 11 331 2 379 2 379 11 359 11 359 90 351 90 351 11"></polygon>

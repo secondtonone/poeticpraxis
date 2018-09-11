@@ -1,7 +1,5 @@
 import { h, Component } from 'preact';
-import cn from 'classnames';
-import { imaged, randomize } from '../../utils';
-import styled from 'styled-components';
+import imaged from '../../modules/imaged';
 
 import {
     FieldEditableArea,
@@ -12,6 +10,9 @@ import {
     List
 } from '../../styles/components';
 
+import { isTouchDevice } from '../../utils';
+
+import Recorder from '../../components/Recorder';
 import MatchList from '../../components/MatchList';
 import Textarea from '../../components/Textarea';
 import Button from '../../components/Button';
@@ -21,7 +22,6 @@ import Delete from '../../components/IconSVG/Delete';
 import CheckCircle from '../../components/IconSVG/CheckCircle';
 import Subject from '../../components/IconSVG/Subject';
 import PlaylistAddCheck from '../../components/IconSVG/PlaylistAddCheck';
-import Select from '../../components/Select';
 import SecondaryMenu from '../../components/SecondaryMenu';
 
 import { MainSelect, FieldClearButton } from './styled';
@@ -31,20 +31,13 @@ export default class ImagesEngine extends Component {
     constructor(props) {
         super(props);
 
-        const { result, text, pinned, wordsNumber } = props.engineState;
-
         this.state = {
-            result,
             textMessage: '',
-            text,
             words: [],
             field: {},
-            pinned,
-            wordsNumber,
             sharedText: '',
             actualHeight: window.innerHeight,
             initHeight: window.innerHeight,
-            currentView: 'material',
             views: [
                 {
                     value: 'material',
@@ -66,8 +59,9 @@ export default class ImagesEngine extends Component {
         window.scrollTo(0, 0);
 
         let { views } = this.state;
+        const { result } = this.props.engineState;
 
-        if (this.state.result.length) {
+        if (result.length) {
             views[1].disabled = false;
 
             this.setState({
@@ -91,10 +85,6 @@ export default class ImagesEngine extends Component {
     handleTextInput = (e) => {
         let text = e.target.value;
 
-        this.setState({
-            text
-        });
-
         this.props.setEngineState({
             text
         });
@@ -107,10 +97,6 @@ export default class ImagesEngine extends Component {
     };
 
     changeView = (currentView) => {
-        this.setState({
-            currentView
-        });
-
         this.props.setEngineState({
             currentView
         });
@@ -118,16 +104,16 @@ export default class ImagesEngine extends Component {
 
     getResult = () => {
         /*let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ\-]+/g) || [];*/
-
+        const { text, wordsNumber } = this.props.engineState;
         let words =
-            this.state.text
+            text
                 .toLowerCase()
                 .match(/[a-zA-ZА-Яа-яёЁ'-]+/g)
                 .filter((n) => {
                     return /[^'-]/g.test(n);
                 }) || [];
 
-        const result = imaged(words, this.state.wordsNumber);
+        const result = imaged(words, wordsNumber);
 
         let { views } = this.state;
 
@@ -140,7 +126,6 @@ export default class ImagesEngine extends Component {
         this.changeView('words');
 
         this.setState({
-            result,
             views
         });
 
@@ -152,10 +137,6 @@ export default class ImagesEngine extends Component {
     setWordsNumber = (e) => {
         const wordsNumber = e.target.value;
 
-        this.setState({
-            wordsNumber
-        });
-
         this.props.setEngineState({
             wordsNumber
         });
@@ -166,11 +147,9 @@ export default class ImagesEngine extends Component {
             return false;
         }
 
+        const { result, pinned } = this.props.engineState;
+
         const index = e.target.dataset.index;
-
-        let pinned = this.state.pinned;
-
-        let result = this.state.result;
 
         const words = result.splice(index, 1);
 
@@ -179,11 +158,6 @@ export default class ImagesEngine extends Component {
         pinned.push(match);
 
         this.showMessage('Словосочетание добавлено.');
-
-        this.setState({
-            pinned,
-            result
-        });
 
         this.props.setEngineState({
             pinned,
@@ -208,15 +182,11 @@ export default class ImagesEngine extends Component {
             return false;
         }
 
+        const { pinned } = this.props.engineState;
+
         const index = e.target.dataset.index;
 
-        let pinned = this.state.pinned;
-
         pinned.splice(index, 1);
-
-        this.setState({
-            pinned
-        });
 
         this.props.setEngineState({
             pinned
@@ -228,17 +198,13 @@ export default class ImagesEngine extends Component {
 
         this.toTheTop();
 
-        this.setState({
-            text
-        });
-
         this.props.setEngineState({
             text
         });
     };
 
     toRhythmic = () => {
-        const pinned = this.state.pinned;
+        const { pinned } = this.props.engineState;
 
         const sharedText = pinned.join('\n');
 
@@ -260,21 +226,11 @@ export default class ImagesEngine extends Component {
     };
 
     render(
-        {},
         {
-            result,
-            textMessage,
-            text,
-            words,
-            field,
-            pinned,
-            wordsNumber,
-            sharedText,
-            currentView,
-            views,
-            actualHeight,
-            initHeight
-        }
+            setEngineState,
+            engineState: { result, text, pinned, wordsNumber, currentView }
+        },
+        { textMessage, views, actualHeight, initHeight }
     ) {
         const props = {
             onInput: this.handleTextInput,
@@ -343,25 +299,18 @@ export default class ImagesEngine extends Component {
                 </SecondaryMenu>
 
                 {!(actualHeight * 1.3 < initHeight) && (
-                    <div>
-                        <MainSelect
-                            label="Словосочетание из:"
-                            id="wordNumber"
-                            value={wordsNumber}
-                            onChange={this.setWordsNumber}
-                            options={wordNumberSelectOptions}
-                        />
-                        <Button
+                    
+                <Button
                             _rounded
                             _main
                             _animated-up
                             type="button"
                             onClick={this.getResult}
                             disabled={!text}
-                            title="Нарезать">
+                            title="Монтаж">
                             <Widgets _big />
                         </Button>
-                    </div>
+                    
                 )}
 
                 <LeftedLayout>
@@ -370,16 +319,16 @@ export default class ImagesEngine extends Component {
                             <div class="work-field">
                                 <Textarea {...props} />
                             </div>
-
-                            <FieldClearButton
-                                _rounded
-                                _top-centred
-                                disabled={!text.length}
-                                type="button"
-                                onClick={this.clearInput}
-                                title="Стереть текст">
-                                <Delete _small />
-                            </FieldClearButton>
+                            {!isTouchDevice() && (
+                                <Recorder
+                                    _rounded
+                                    _top-centred
+                                    title="Запись"
+                                    text={text}
+                                    transmitState={setEngineState}
+                                    showMessage={this.showMessage}
+                                />
+                            )}
                         </List>
                     )}
 
@@ -397,7 +346,9 @@ export default class ImagesEngine extends Component {
                                 {pinned.length ? null : (
                                     <Hint>
                                         Выберите сочетание,<br /> нажав на{' '}
-                                        <CheckCircle _small />
+                                        <Button _flat _transparent>
+                                            <CheckCircle _small />
+                                        </Button>
                                     </Hint>
                                 )}
                                 {pinned.length ? (
@@ -453,3 +404,21 @@ export default class ImagesEngine extends Component {
         );
     }
 }
+
+/* <FieldClearButton
+    _rounded
+    _top-centred
+    disabled={!text.length}
+    type="button"
+    onClick={this.clearInput}
+    title="Стереть текст">
+    <Delete _small />
+</FieldClearButton> */
+
+/* <MainSelect
+    label="Словосочетание из:"
+    id="wordNumber"
+    value={wordsNumber}
+    onChange={this.setWordsNumber}
+    options={wordNumberSelectOptions}
+/> */

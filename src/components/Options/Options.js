@@ -1,16 +1,15 @@
 import { h, Component } from 'preact';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import theme from '../../styles/theme';
 import { DropdownList } from '../../styles/components';
-import { hexToRgb } from '../../utils';
 
 import ArrowDropDown from '../IconSVG/ArrowDropDown';
-import Button from '../Button';
 
 const Label = styled.label`
     color: ${(props) => props.theme.secondColor};
 `;
+
 
 const Container = styled.div`
     position: relative;
@@ -36,6 +35,10 @@ const StyledSelect = styled.div`
     color: ${(props) => props.theme.secondColor};
     min-width: 24px;
     cursor: pointer;
+
+    &:focus {
+        outline: none;
+    }
 `;
 
 const IconContainer = styled.div`
