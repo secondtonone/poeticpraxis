@@ -4,20 +4,24 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Bundle from '../components/Bundle';
 
-import loadRhythmic from 'bundle-loader?lazy!./Rhythmic';
-import loadAbout from 'bundle-loader?lazy!./About';
-import loadImagesEngine from 'bundle-loader?lazy!./ImagesEngine';
+/* import loadRhythmic from './Rhythmic';
+import loadAbout from './About';
+import loadImagesEngine from './ImagesEngine'; */
 
 const About = (props) => (
-    <Bundle load={loadAbout}>{(About) => <About {...props} />}</Bundle>
+    <Bundle load={import(/* webpackChunkName: "About" */ './About')}>
+        {(About) => <About {...props} />}
+    </Bundle>
 );
 
 const Rhythmic = (props) => (
-    <Bundle load={loadRhythmic}>{(Rhythmic) => <Rhythmic {...props} />}</Bundle>
+    <Bundle load={import(/* webpackChunkName: "Rhythmic" */ './Rhythmic')}>
+        {(Rhythmic) => <Rhythmic {...props} />}
+    </Bundle>
 );
 
 const ImagesEngine = (props) => (
-    <Bundle load={loadImagesEngine}>
+    <Bundle load={import(/* webpackChunkName: "ImagesEngine" */ './ImagesEngine')}>
         {(ImagesEngine) => <ImagesEngine {...props} />}
     </Bundle>
 );

@@ -189,7 +189,7 @@ const accentMixin = (color, imgSVG, imgPNG, accent) => {
             color: ${color};
 
             ${
-                accent == 'black'
+                accent == 'black' || accent == 'gray'
                     ? `content: '\\25CF';
                         top: -16px;`
                     : `content: '\\25BC';
@@ -236,6 +236,14 @@ const AccentRelative = styled.span`
                 props.accent
             );
         }
+        if (props.accent === 'gray') {
+            return accentMixin(
+                props.theme.grayColor,
+                blackTriangleSVG,
+                blackTrianglePNG,
+                props.accent
+            );
+        }
     }};
 `;
 
@@ -262,6 +270,11 @@ const Accent = styled.span`
             return `
                 color: ${theme.secondRed};
                 `;
+        }
+        if (props.accent === 'gray') {
+            return `
+                    color: ${theme.grayColor};
+                    `;
         }
     }};
 `;

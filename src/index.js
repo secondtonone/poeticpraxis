@@ -8,6 +8,7 @@ import store from './store';
 import runtime from 'offline-plugin/runtime';
 
 import analyticsInit from './modules/analytics';
+import { delay } from './utils';
 
 import App from './containers/App';
 
@@ -53,5 +54,5 @@ if (module.hot) {
 }
 
 if (process.env.NODE_ENV === 'production') {
-    analyticsInit('yandex');
+    delay(() => analyticsInit('yandex'));
 }

@@ -1,6 +1,7 @@
 import theme from './theme';
 import { loaded, whited } from './animations';
 
+
 export default `
 body {
     padding: 0;

@@ -11,6 +11,7 @@ import {
 } from '../../styles/components';
 
 import { isTouchDevice } from '../../utils';
+import { translations } from './translations';
 
 import Recorder from '../../components/Recorder';
 import MatchList from '../../components/MatchList';
@@ -40,15 +41,9 @@ export default class ImagesEngine extends Component {
             initHeight: window.innerHeight,
             views: [
                 {
-                    value: 'material',
-                    icon: <Subject />,
-                    title: 'Материал',
                     disabled: false
                 },
                 {
-                    value: 'words',
-                    icon: <PlaylistAddCheck />,
-                    title: 'Слова',
                     disabled: true
                 }
             ]
@@ -121,7 +116,7 @@ export default class ImagesEngine extends Component {
 
         this.toTheTop();
 
-        this.showMessage('Словосочетания составлены.');
+        this.showMessage(translations[this.props.lang].messages['PAIRS_READY']);
 
         this.changeView('words');
 
@@ -157,7 +152,7 @@ export default class ImagesEngine extends Component {
 
         pinned.push(match);
 
-        this.showMessage('Словосочетание добавлено.');
+        this.showMessage(translations[this.props.lang].messages['PAIR_ADDED']);
 
         this.props.setEngineState({
             pinned,
@@ -228,7 +223,8 @@ export default class ImagesEngine extends Component {
     render(
         {
             setEngineState,
-            engineState: { result, text, pinned, wordsNumber, currentView }
+            engineState: { result, text, pinned, wordsNumber, currentView },
+            lang = 'ru'
         },
         { textMessage, views, actualHeight, initHeight }
     ) {
@@ -237,29 +233,29 @@ export default class ImagesEngine extends Component {
             value: text,
             Textarea: FieldEditableArea,
             getMeasure: this.getMeasureField,
-            placeHolder: 'Введите слова или вставьте текст...'
+            placeHolder: `${translations[lang].placeholders['ENGINE']}...`
         };
 
-        const wordNumberSelectOptions = [
-            {
-                value: 2,
-                title: '2'
-            },
-            {
-                value: 3,
-                title: '3'
-            }
-        ];
+        // const wordNumberSelectOptions = [
+        //     {
+        //         value: 2,
+        //         title: '2'
+        //     },
+        //     {
+        //         value: 3,
+        //         title: '3'
+        //     }
+        // ];
 
         const secondMenu = [
             {
                 value: 'material',
                 icon: <Subject />,
-                title: 'Материал',
+                title: translations[lang].engineMenu['MATERIAL'],
                 content: (
                     <div>
                         <Subject />
-                        <div>Материал</div>
+                        <div>{translations[lang].engineMenu['MATERIAL']}</div>
                     </div>
                 ),
                 disabled: views[0].disabled
@@ -267,11 +263,11 @@ export default class ImagesEngine extends Component {
             {
                 value: 'words',
                 icon: <PlaylistAddCheck />,
-                title: 'Слова',
+                title: translations[lang].engineMenu['WORDS'],
                 content: (
                     <div>
                         <PlaylistAddCheck />
-                        <div>Слова</div>
+                        <div>{translations[lang].engineMenu['WORDS']}</div>
                     </div>
                 ),
                 disabled: views[1].disabled
@@ -299,18 +295,16 @@ export default class ImagesEngine extends Component {
                 </SecondaryMenu>
 
                 {!(actualHeight * 1.3 < initHeight) && (
-                    
-                <Button
-                            _rounded
-                            _main
-                            _animated-up
-                            type="button"
-                            onClick={this.getResult}
-                            disabled={!text}
-                            title="Монтаж">
-                            <Widgets _big />
-                        </Button>
-                    
+                    <Button
+                        _rounded
+                        _main
+                        _animated-up
+                        type="button"
+                        onClick={this.getResult}
+                        disabled={!text}
+                        title="Монтаж">
+                        <Widgets _big />
+                    </Button>
                 )}
 
                 <LeftedLayout>
@@ -335,7 +329,9 @@ export default class ImagesEngine extends Component {
                     {currentView === 'words' && (
                         <List _animated>
                             <Container margin="0 0 32px">
-                                <SecondaryTitle>Выбранные</SecondaryTitle>
+                                <SecondaryTitle>
+                                    {translations[lang].matchList['FAVORITES']}
+                                </SecondaryTitle>
 
                                 <MatchList
                                     handler={this.deleteMatch}
@@ -345,7 +341,11 @@ export default class ImagesEngine extends Component {
 
                                 {pinned.length ? null : (
                                     <Hint>
-                                        Выберите сочетание,<br /> нажав на{' '}
+                                        {
+                                            translations[lang].matchList[
+                                                'FAVOR_HINT'
+                                            ]
+                                        }{' '}
                                         <Button _flat _transparent>
                                             <CheckCircle _small />
                                         </Button>
@@ -360,7 +360,11 @@ export default class ImagesEngine extends Component {
                                             _light-gray
                                             type="button"
                                             onClick={this.toRhythmic}>
-                                            Посмотреть ритм{' '}
+                                            {
+                                                translations[lang].matchList[
+                                                    'SEE_RHYTHM'
+                                                ]
+                                            }{' '}
                                             <ArrowBack _small _rotate-left />
                                         </Button>
                                     </Container>
@@ -368,11 +372,22 @@ export default class ImagesEngine extends Component {
                             </Container>
 
                             <Container margin="0 0 32px">
-                                <SecondaryTitle>Сочетания</SecondaryTitle>
+                                <SecondaryTitle>
+                                    {translations[lang].matchList['PAIRS']}
+                                </SecondaryTitle>
                                 {result.length ? null : (
                                     <Hint>
-                                        Нажмите снова на <Widgets _small />,<br />{' '}
-                                        чтобы получить новые сочетаиния
+                                        {
+                                            translations[lang].matchList[
+                                                'PAIRS_HINT'
+                                            ][0]
+                                        }{' '}
+                                        <Widgets _small />,<br />{' '}
+                                        {
+                                            translations[lang].matchList[
+                                                'PAIRS_HINT'
+                                            ][1]
+                                        }
                                     </Hint>
                                 )}
                                 <MatchList
@@ -390,7 +405,11 @@ export default class ImagesEngine extends Component {
                                             _light-gray
                                             type="button"
                                             onClick={this.toTheTop}>
-                                            Вернуться наверх{' '}
+                                            {
+                                                translations[lang].matchList[
+                                                    'RETURN'
+                                                ]
+                                            }{' '}
                                             <ArrowBack _small _rotate-right />
                                         </Button>
                                     </Container>

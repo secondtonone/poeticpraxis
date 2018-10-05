@@ -22,10 +22,8 @@ const StyledButton = styled.button.attrs({ className: withElements })`
         &:disabled {
             color: ${(props) => props.theme.grayColor};
             fill: ${(props) => props.theme.grayColor};
-            background-color: /* ${(props) =>
-                props.theme.primaryColor} */ transparent;
+            background-color: transparent;
             cursor: default;
-            box-shadow: 2px 1px 10px 0px rgba(0, 0, 0, 0.1);
         }
     }
 
@@ -95,6 +93,14 @@ const StyledButton = styled.button.attrs({ className: withElements })`
         fill: ${theme.primaryWhite};
         background-color: ${(props) => props.theme.accentColor};
         z-index: 100;
+
+        &:disabled {
+            color: ${(props) => props.theme.grayColor};
+            fill: ${(props) => props.theme.grayColor};
+            background-color: transparent;
+            cursor: default;
+            box-shadow: 2px 1px 10px 0px rgba(0, 0, 0, 0.1);
+        }
 
         @media (max-width: 600px) {
             bottom: 108px;

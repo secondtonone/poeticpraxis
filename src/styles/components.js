@@ -133,6 +133,7 @@ const Text = styled.div`
     font-weight: 300;
     word-spacing: 6px;
     margin-bottom: 24px;
+    ${(props) => (props.isHidden? 'display: none;': '')}
 `;
 
 Text.Title = styled.h1`

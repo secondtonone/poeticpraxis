@@ -11,7 +11,11 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
     rhythmicState: state.Rhythmic.currentRhythmicState,
     wordsDictionary: state.Rhythmic.wordsDictionary,
-    variant: state.Layout.variant
+    variant: state.Layout.variant,
+    lang: state.Layout.lang
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Rhythmic);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Rhythmic);

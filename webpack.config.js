@@ -8,12 +8,10 @@ const OfflinePlugin = require('offline-plugin');
 const PORT = 9080;
 
 module.exports = {
+    mode: 'development',
     devtool: 'eval',
     entry: {
-        app: [
-            'react-hot-loader/patch',
-            './src/index.js'
-        ]
+        app: ['react-hot-loader/patch', './src/index.js']
         /* vendor: ["preact", "react-router-dom", "redux", "preact-redux"] */
     },
     output: {
@@ -76,24 +74,22 @@ module.exports = {
             'preact-compat': 'preact-compat/dist/preact-compat'
         }
     },
+    optimization: {
+        namedModules: true, // NamedModulesPlugin()
+        splitChunks: {
+            // CommonsChunkPlugin()
+            chunks: 'all'
+        },
+        noEmitOnErrors: true
+    },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.NamedModulesPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            minChunks: 2,
-            children: true,
-            async: true
-        }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('development')
             }
         }),
-        new ScriptExtHtmlWebpackPlugin({
-            defer: /app/,
-            defer: /\.js$/
-        }),
+
         new HtmlWebpackPlugin({
             template: './public/index.html',
             inject: 'head',
@@ -106,12 +102,9 @@ module.exports = {
                 Prod: false
             }
         }),
-        new OfflinePlugin({
-            publicPath: '/',
-            externals: ['/'],
-            ServiceWorker: {
-                navigateFallbackURL: '/'
-            }
+        new ScriptExtHtmlWebpackPlugin({
+            defer: /app/,
+            defer: /\.js$/
         })
     ],
     devServer: {

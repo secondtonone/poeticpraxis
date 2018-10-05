@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { randomize } from '../../utils';
+import { randomize, delay } from '../../utils';
 
 import { FieldLabel, SimpleTextarea } from '../../styles/components';
 
@@ -12,16 +12,22 @@ export default class Textarea extends Component {
                 width: 0
             }
         };
+
+        this.delayHeightChange = 0;
     }
 
     componentDidMount() {
-        if (this.props.focus) {
-            this.timerID = setTimeout(() => {
-                this.fieldFocusing();
-            }, this.props.focus);
-        }
+        delay(this.getBoxMeasure);
+    }
 
-        const width = this.field.clientWidth;
+    getBoxMeasure = () => {
+        // if (this.props.focus) {
+        //     this.timerID = setTimeout(() => {
+        //         this.fieldFocusing();
+        //     }, this.props.focus);
+        // }
+
+        //const width = this.field.clientWidth;
         const height = this.field.clientHeight;
         const offset = this.field.offsetHeight - height;
         let lineHeight = window.getComputedStyle(this.field, null).lineHeight;
@@ -29,33 +35,39 @@ export default class Textarea extends Component {
         lineHeight = parseInt(lineHeight, 10);
 
         const field = {
-            width,
+            //width,
             height,
             offset,
             lineHeight
         };
 
+        this.props.getMeasure(field);
+
         this.setState({
             field
         });
-
-        this.props.getMeasure(field);
-    }
+    };
 
     componentDidUpdate() {
-        this.heightChange(this.field);
+        if (this.delayHeightChange) {
+            clearTimeout(this.delayHeightChange);
+        }
+        this.delayHeightChange = delay(
+            () => this.heightChange(this.field));
+        
     }
 
     componentWillUnmount() {
-        clearTimeout(this.timerID);
+        //clearTimeout(this.timerID);
+        clearTimeout(this.delayHeightChange);
     }
 
     heightChange = (element) => {
         element.style.height = 'auto';
 
-        const newHeight = element.scrollHeight + this.state.field.offset;
+        const height = element.scrollHeight;
 
-        element.style.height = `${newHeight}px`;
+        element.style.height = height + this.state.field.offset + 'px';
     };
 
     fieldFocusing = () => {

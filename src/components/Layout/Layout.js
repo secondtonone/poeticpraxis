@@ -8,17 +8,41 @@ import {
     InlineContainer
 } from '../../styles/components';
 
+import { isDaytime, userLang } from '../../utils';
+
 import Menu from '../Menu';
 import Header from '../Header';
 import Settings from '../Settings';
 
 export default class Layout extends Component {
-    render({ children, variant }) {
+    componentDidMount() {
+        if (isDaytime()) {
+            this.props.changeTheme('light');
+        } else {
+            this.props.changeTheme('dark');
+        }
+
+        let isLangEn = false;
+
+        if (URLSearchParams) {
+            const searchParams = new URLSearchParams(location.search);
+            isLangEn = searchParams.get('lang') === 'en';
+        }
+
+        if (isLangEn || !userLang().includes('ru')) {
+            this.props.changeLang('en');
+            document.documentElement.lang = 'en';
+        } else {
+            this.props.changeLang('ru');
+        }
+    }
+
+    render({ children, variant, lang }) {
         return (
             <ThemeProvider theme={theme[variant]}>
                 <Page _animated>
                     <Header variant={variant}>
-                        <Menu inline />
+                        <Menu inline lang={lang} />
                         <InlineContainer>
                             <MobileHiddenContainer>
                                 <Settings />

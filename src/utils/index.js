@@ -1,6 +1,14 @@
-
 export function isTouchDevice() {
     return 'ontouchstart' in document.documentElement;
+}
+
+export function isDaytime() {
+    const hours = new Date().getHours();
+    return hours > 6 && hours < 23;
+}
+
+export function userLang() {
+    return window.navigator.language || window.navigator.userLanguage || 'ru';
 }
 
 export function hashFunction(char, order) {
@@ -35,9 +43,15 @@ export function fontReady(cb) {
 
 export function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? [
-        parseInt(result[1], 16),
-        parseInt(result[2], 16),
-        parseInt(result[3], 16)
-    ] : null;
+    return result
+        ? [
+            parseInt(result[1], 16),
+            parseInt(result[2], 16),
+            parseInt(result[3], 16)
+        ]
+        : null;
+}
+
+export function delay(fn, ms = 0) {
+    return setTimeout(fn, ms);
 }

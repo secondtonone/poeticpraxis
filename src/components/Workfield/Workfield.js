@@ -49,10 +49,6 @@ export default class Workfield extends Component {
 
         this.strings = {};
 
-        this.wordsDictionary = props.wordsDictionary || {};
-
-        this.stringsDictionary = props.stringsDictionary || {};
-
         this.caretPosition = 0;
 
         this.symbolCounter = 0;
@@ -84,7 +80,13 @@ export default class Workfield extends Component {
 
     componentWillReceiveProps(prevProps) {
         if (prevProps.text !== this.props.text) {
-            this.textLinting(prevProps.text);
+            if (this.timerLinting) {
+                clearTimeout(this.timerLinting);
+            }
+
+            this.timerLinting = setTimeout(() => {
+                this.textLinting(prevProps.text);
+            }, 50);
         }
     }
 
@@ -111,9 +113,11 @@ export default class Workfield extends Component {
 
         let tags = [];
 
+        let symbols = [];
+
         const { elements, strings } = textAnalized;
 
-        stringNodes.forEach((string) => {
+        const symbolsSet = stringNodes.map((string) => {
             const symbols = [...string.children];
 
             strings[string.id].tag = {
@@ -123,26 +127,37 @@ export default class Workfield extends Component {
                 width: string.offsetWidth
             };
 
-            if (symbols.length) {
-                symbols.forEach((symbol) => {
-                    if (
-                        symbol.dataset.type === 'black' ||
-                        symbol.dataset.type === 'red' ||
-                        symbol.dataset.type === 'red_secondary' ||
-                        symbol.dataset.type === 'string-pause'
-                    ) {
-                        elements[symbol.id].tag = {
-                            left: symbol.offsetLeft + string.offsetLeft,
-                            top: symbol.offsetTop + string.offsetTop,
-                            height: symbol.offsetHeight,
-                            width: symbol.offsetWidth
-                        };
-
-                        tags.push(elements[symbol.id]);
-                    }
-                });
-            }
+            return symbols;
         });
+
+        symbolsSet.forEach((set) => {
+            symbols = [...symbols, ...set];
+        });
+
+        if (symbols.length) {
+            symbols.forEach((symbol) => {
+                const type = symbol.dataset.type;
+                if (
+                    type === 'black' ||
+                    type === 'red' ||
+                    type === 'red_secondary' ||
+                    type === 'gray' ||
+                    type === 'string-pause'
+                ) {
+                    const offsetLeft = symbol.parentNode.offsetLeft;
+                    const offsetTop = symbol.parentNode.offsetTop;
+
+                    elements[symbol.id].tag = {
+                        left: symbol.offsetLeft + offsetLeft,
+                        top: symbol.offsetTop + offsetTop,
+                        height: symbol.offsetHeight,
+                        width: symbol.offsetWidth
+                    };
+
+                    tags.push(elements[symbol.id]);
+                }
+            });
+        }
 
         return {
             elements,
@@ -180,6 +195,8 @@ export default class Workfield extends Component {
 
             let vowel = [];
 
+            let soundGramma = [];
+
             let words = [];
 
             let tokens = string
@@ -191,7 +208,7 @@ export default class Workfield extends Component {
             let stringIndex = 0;
 
             /* Слово */
-            tokens.forEach((token, index, array) => {
+            tokens.forEach((token, index) => {
                 let type = 't';
 
                 let idToken = `t${index}${randomize()}`;
@@ -236,7 +253,13 @@ export default class Workfield extends Component {
                                     isAccented(token, index, wordsDictionary);
                             }
 
-                            vowel.push(`${idString}${idToken}${idSymbol}`);
+                            const idVowel = `${idString}${idToken}${idSymbol}`;
+
+                            vowel.push(idVowel);
+
+                            if (accent !== 3) {
+                                soundGramma.push(idVowel);
+                            }
                         }
 
                         idSymbol = `${idString}${idToken}${idSymbol}`;
@@ -293,6 +316,8 @@ export default class Workfield extends Component {
                         type = 'p';
 
                         idToken = `p${index}${randomize()}`;
+
+                        soundGramma.push(idToken);
                     }
 
                     idToken = `${idString}${idToken}`;
@@ -322,6 +347,7 @@ export default class Workfield extends Component {
                 string,
                 words,
                 vowel,
+                soundGramma,
                 id: idString
             };
 
@@ -345,9 +371,9 @@ export default class Workfield extends Component {
     };
 
     textLinting = (text) => {
-        let stringsDictionary = this.stringsDictionary;
+        let stringsDictionary = this.props.stringsDictionary || {};
 
-        let wordsDictionary = this.wordsDictionary;
+        let wordsDictionary = this.props.wordsDictionary || {};
 
         let analizedText = this.textAnalizator(
             text,
@@ -355,27 +381,29 @@ export default class Workfield extends Component {
             wordsDictionary
         );
 
-        this.setState({
-            text,
-            tag: {}
-        });
+        // this.setState({
+        //     text,
+        //     tag: {}
+        // });
 
-        clearTimeout(this.timerLinting);
+        // if (this.timerLinting) {
+        //     clearTimeout(this.timerLinting);
+        // }
 
-        this.timerLinting = setTimeout(() => {
-            this.setStateAsync({
-                ...analizedText
-            }).then(() => {
-                let stringsLinted = this.tagMaker(
-                    this.fakeField.children,
-                    analizedText
-                );
+        // this.timerLinting = setTimeout(() => {
+        this.setStateAsync({
+            ...analizedText
+        }).then(() => {
+            let stringsLinted = this.tagMaker(
+                this.fakeField.children,
+                analizedText
+            );
 
-                this.setState({
-                    ...stringsLinted
-                });
+            this.setState({
+                ...stringsLinted
             });
-        }, 50);
+        });
+        // }, 50);
     };
 
     makeCaesura = () => {
@@ -463,6 +491,27 @@ export default class Workfield extends Component {
         /* здесь мы высчитываем и сразу корректируем state.elements*/
     };
 
+    /* анализ строк */
+    getSugesstions = (strings) => {
+        if(string) {
+            return {
+                stroke: 'all',
+                rhythm: {
+                    size: 2,
+                    accent: 1
+                }
+            };
+        }
+    };
+    /* применение */
+    onSuggestion = (stroke, rhythm) => {
+        if(stroke === 'all') {
+
+        } else {
+
+        }
+    };
+
     changeZoomMode = (zoomIn) => {
         this.setStateAsync({
             zoomIn
@@ -483,9 +532,9 @@ export default class Workfield extends Component {
 
         let { elements, strings, stringLinks, wordLinks } = this.state;
 
-        let wordsDictionary = this.wordsDictionary;
+        let wordsDictionary = this.props.wordsDictionary || {};
 
-        let stringsDictionary = this.stringsDictionary;
+        let stringsDictionary = this.props.stringsDictionary || {};
 
         const element = elements[signId];
 
@@ -495,21 +544,23 @@ export default class Workfield extends Component {
 
         const wordLowerCased = word.token.toLowerCase();
 
-        const string = strings[element.idString];
+        let string = strings[element.idString];
 
         const stringLowerCased = string.string.toLowerCase();
 
         let accent = element.accent;
 
-        let stringLinksTriggered = false;
+        //let stringLinksTriggered = false;
 
-        if (accent < 2) {
+        if (accent < 3) {
             ++accent;
         } else {
             accent = 0;
         }
 
         elements[signId].accent = accent;
+
+        /* Работа со словом */
 
         const wordAccents = word.orderToken.map((id) => {
             return {
@@ -521,6 +572,7 @@ export default class Workfield extends Component {
             accents: wordAccents
         };
 
+        /* Работа со строкой */
         const stringAccents = string.order.map((id) => {
             return {
                 type: elements[id].accent
@@ -531,6 +583,14 @@ export default class Workfield extends Component {
             accents: stringAccents
         };
 
+        const indexSoundGramma = string.soundGramma.indexOf(signId);        
+
+        if (accent === 3 && indexSoundGramma !== -1) {
+            strings[element.idString].soundGramma.splice(indexSoundGramma, 1);
+        } 
+        if (accent === 0 && indexSoundGramma === -1) {
+            strings[element.idString].soundGramma.push(signId);
+        }
         /* баги*/
 
         if (stringLinks[stringLowerCased]) {
@@ -565,7 +625,8 @@ export default class Workfield extends Component {
         }*/
 
         this.setState({
-            elements
+            elements,
+            strings
         });
 
         if (!this.props.readOnly) {
@@ -578,12 +639,24 @@ export default class Workfield extends Component {
     };
 
     render(
-        { readOnly, syllableOff, stringNumberOff, focusHandler, text },
+        {
+            readOnly,
+            syllableOff,
+            stringNumberOff,
+            focusHandler,
+            text,
+            placeHolder
+        },
         { strings, field, elements, orderStrings, tags, zoomIn }
     ) {
-        const accents = ['black', 'red', 'red_secondary'];
+        const accents = ['black', 'red', 'red_secondary', 'gray'];
 
-        const decription = ['Слабая доля', 'Сильная доля', 'Побочное ударение'];
+        const decription = [
+            'Слабая доля',
+            'Сильная доля',
+            'Побочное ударение',
+            'Непроизносимый звук'
+        ];
 
         let stringCounter = 0;
 
@@ -620,10 +693,10 @@ export default class Workfield extends Component {
             );
         });
 
-        const markingTags = orderStrings.map( id => {
+        const markingTags = orderStrings.map((id) => {
             const string = strings[id];
 
-            let symbols = string.order.map( id => {
+            let symbols = string.order.map((id) => {
                 const symbol = elements[id];
 
                 let char = symbol.char;
@@ -666,7 +739,10 @@ export default class Workfield extends Component {
                 let vowelAccentCount = 0;
 
                 strings[id].vowel.forEach((id) => {
-                    if (elements[id].accent) {
+                    if (
+                        elements[id].accent === 1 ||
+                        elements[id].accent === 2
+                    ) {
                         ++vowelAccentCount;
                     }
                 });
@@ -682,7 +758,7 @@ export default class Workfield extends Component {
                                     {vowelAccentCount}
                                 </Syllable.Accent>
                             ) : null}
-                            {strings[id].vowel.length}
+                            {strings[id].soundGramma.length}
                         </Syllable>
                     ),
                     stringNumberOff || !strings[id].words.length ? null : (
@@ -704,9 +780,17 @@ export default class Workfield extends Component {
             getMeasure: this.getMeasureField,
             readOnly: readOnly,
             zoomIn: zoomIn,
-            onFocus: () => focusHandler(true),
-            onBlur: () => focusHandler(false),
-            placeHolder: 'Напишите или вставьте текст...'
+            onFocus: () => {
+                if (focusHandler) {
+                    focusHandler(true);
+                }
+            },
+            onBlur: () => {
+                if (focusHandler) {
+                    focusHandler(true);
+                }
+            },
+            placeHolder: placeHolder || ''
         };
 
         return (

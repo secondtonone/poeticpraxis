@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 
 import { isTouchDevice } from '../../utils';
+import { translations } from './translations';
 
 import Workfield from '../../components/Workfield';
 import MessageBox from '../../components/MessageBox';
@@ -62,7 +63,7 @@ export default class Rhythmic extends Component {
 
     copyToClipboard = () => {
         this.workfield.copyToClipboard();
-        this.showMessage('Текст скопирован в буфер.');
+        this.showMessage(translations[this.props.lang].messages['COPIED']);
     };
 
     makeCaesura = () => {
@@ -147,7 +148,13 @@ export default class Rhythmic extends Component {
     };
 
     render(
-        { setRhytmicState, setWordsDictionary, rhythmicState, wordsDictionary },
+        {
+            setRhytmicState,
+            setWordsDictionary,
+            rhythmicState,
+            wordsDictionary,
+            lang = 'ru'
+        },
         {
             renderCaesuraButtonStyle,
             textMessage,
@@ -170,7 +177,7 @@ export default class Rhythmic extends Component {
                             _big
                             type="button"
                             onClick={this.makeCaesura}
-                            title="Поставить паузу">
+                            title="Цезура">
                             <KeyboardCapslock _big />
                         </StringPauseButtonMobile>
                     )}
@@ -221,6 +228,9 @@ export default class Rhythmic extends Component {
                             setWordsDictionary={setWordsDictionary}
                             wordsDictionary={wordsDictionary}
                             stringDictionary={rhythmicState.stringsDictionary}
+                            placeHolder={`${
+                                translations[lang].placeholders['RHYTHMICS']
+                            }...`}
                             ref={(ref) => {
                                 this.workfield = ref;
                             }}

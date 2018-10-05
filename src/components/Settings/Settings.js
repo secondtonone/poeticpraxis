@@ -7,6 +7,8 @@ import SettingsIcon from '../IconSVG/Settings';
 import { SettingsContainer } from './styled';
 import { DropdownList, InlineContainer } from '../../styles/components';
 
+import { translations } from './translations';
+
 export default class Settings extends Component {
     constructor(props) {
         super(props);
@@ -20,15 +22,6 @@ export default class Settings extends Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
-
-        const hours = new Date().getHours();
-        const isDayTime = hours > 7 && hours < 21;
-
-        if (isDayTime) {
-            this.props.changeTheme('light');
-        } else {
-            this.props.changeTheme('dark');
-        }
     }
 
     componentWillUnmount() {
@@ -54,10 +47,10 @@ export default class Settings extends Component {
         });
     };
 
-    render({ variant, changeTheme, lang, changeLang }, state) {
+    render({ variant, changeTheme, lang = 'ru', changeLang }, state) {
         const langOptions = [
             { title: 'Русский', value: 'ru' },
-            { title: 'English', value: 'eng' }
+            { title: 'English', value: 'en' }
         ];
 
         return (
@@ -82,10 +75,8 @@ export default class Settings extends Component {
                         }}
                         innerRef={(el) => (this.dropdown = el)}>
                         <DropdownList.ListItem>
-                            <InlineContainer
-                                vertical="middle"
-                                margin="0 54px 0 0">
-                                Ночной режим
+                            <InlineContainer vertical="middle">
+                                {translations[lang].settings['NIGHT_MODE']}
                             </InlineContainer>
                             <InlineContainer vertical="middle">
                                 <Toggle
@@ -98,10 +89,8 @@ export default class Settings extends Component {
                             </InlineContainer>
                         </DropdownList.ListItem>
                         <DropdownList.ListItem>
-                            <InlineContainer
-                                vertical="middle"
-                                margin="0 54px 0 0">
-                                Язык
+                            <InlineContainer vertical="middle">
+                                {translations[lang].settings['LANG']}
                             </InlineContainer>
                             <InlineContainer vertical="middle">
                                 <Select
@@ -111,6 +100,7 @@ export default class Settings extends Component {
                                     options={langOptions}
                                     onChange={(e) => {
                                         changeLang(e.target.value);
+                                        document.documentElement.lang = e.target.value;
                                     }}
                                 />
                             </InlineContainer>

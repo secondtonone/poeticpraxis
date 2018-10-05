@@ -1,26 +1,29 @@
 import { h, Component } from 'preact';
+
 import { NavBar, NavMenu, RouterNavLink } from './styled';
 
+import { translations } from './translations';
 import Widgets from '../../components/IconSVG/Widgets';
 import ChangeHistory from '../../components/IconSVG/ChangeHistory';
 import Info from '../../components/IconSVG/Info';
 
 export default class Menu extends Component {
-    render({ inline }) {
+    render({ inline, lang = 'ru' }) {
+
         const menu = [
             {
                 url: 'images-engine',
-                title: 'Машина образов',
+                title: translations[lang].menu['ENGINE'],
                 icon: <Widgets />
             },
             {
                 url: 'rhythmic',
-                title: 'Ритмика',
+                title: translations[lang].menu['RHYTHMICS'],
                 icon: <ChangeHistory />
             },
             {
                 url: 'about',
-                title: 'О проекте',
+                title: translations[lang].menu['ABOUT'],
                 icon: <Info />
             }
         ];

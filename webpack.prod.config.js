@@ -2,14 +2,15 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 
 module.exports = {
+    mode: 'production',
     entry: {
         app: ['./src/index.js']
         /*,
@@ -102,63 +103,69 @@ module.exports = {
             'preact-compat': 'preact-compat/dist/preact-compat'
         }
     },
+    optimization: {
+        namedModules: true, // NamedModulesPlugin()
+        splitChunks: {
+            // CommonsChunkPlugin()
+            /* chunks: 'all',
+            name: false */
+            minChunks: 2
+        },
+        noEmitOnErrors: true, // NoEmitOnErrorsPlugin
+        concatenateModules: true, //ModuleConcatenationPlugin
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: false,
+                uglifyOptions: {
+                    output: {
+                        comments: false
+                    },
+                    mangle: true,
+                    compress: {
+                        properties: true,
+                        keep_fargs: false,
+                        pure_getters: true,
+                        collapse_vars: true,
+                        warnings: false,
+                        inline: false,
+                        reduce_vars: false,
+                        sequences: true,
+                        dead_code: true,
+                        drop_debugger: true,
+                        comparisons: true,
+                        conditionals: true,
+                        evaluate: true,
+                        booleans: true,
+                        loops: true,
+                        unused: true,
+                        hoist_funs: true,
+                        if_return: true,
+                        join_vars: true,
+                        drop_console: false,
+                        pure_funcs: [
+                            'classCallCheck',
+                            '_classCallCheck',
+                            '_possibleConstructorReturn',
+                            'Object.freeze',
+                            'invariant',
+                            'warning'
+                        ]
+                    }
+                }
+            })
+        ]
+    },
     plugins: [
-        new CleanWebpackPlugin(['dist']),
         /* new ExtractTextPlugin("style.[hash].css"), */
-        new webpack.optimize.ModuleConcatenationPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            minChunks: 2,
-            children: true,
-            async: true
-        }),
+
         /* new BundleAnalyzerPlugin(), */
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            output: {
-                comments: false
-            },
-            mangle: true,
-            sourceMap: true,
-            compress: {
-                properties: true,
-                keep_fargs: false,
-                pure_getters: true,
-                collapse_vars: true,
-                warnings: false,
-                screw_ie8: true,
-                sequences: true,
-                dead_code: true,
-                drop_debugger: true,
-                comparisons: true,
-                conditionals: true,
-                evaluate: true,
-                booleans: true,
-                loops: true,
-                unused: true,
-                hoist_funs: true,
-                if_return: true,
-                join_vars: true,
-                cascade: true,
-                drop_console: false,
-                pure_funcs: [
-                    'classCallCheck',
-                    '_classCallCheck',
-                    '_possibleConstructorReturn',
-                    'Object.freeze',
-                    'invariant',
-                    'warning'
-                ]
-            }
-        }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             }
-        }),
-        new ScriptExtHtmlWebpackPlugin({
-            defer: /app/,
-            defer: /\.js$/
         }),
         new HtmlWebpackPlugin({
             template: './public/index.html',
@@ -173,6 +180,10 @@ module.exports = {
                 Prod: true
             }
         }),
+        new ScriptExtHtmlWebpackPlugin({
+            defer: /app/,
+            defer: /\.js$/
+        }),
         new CopyWebpackPlugin([
             {
                 from: 'public/robots.txt'
@@ -185,14 +196,15 @@ module.exports = {
             }
         ]),
         new OfflinePlugin({
+            appShell: '/',
+            responseStrategy: 'network-first',
             safeToUseOptionalCaches: true,
-            caches: {
-                main: ['*.js', 'index.html'],
-                additional: ['*.woff', '*.woff2'],
-                optional: [':rest:']
-            },
+            excludes: ['robots.txt', 'sitemap.xml', '.htaccess'],
+            caches: 'all',
+            externals: ['/'],
             ServiceWorker: {
-                events: true
+                events: true,
+                output: 'sworker.js'
             },
             AppCache: {
                 events: true
