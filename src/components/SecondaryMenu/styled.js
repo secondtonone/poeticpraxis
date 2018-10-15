@@ -14,12 +14,7 @@ const StyledSecondaryMenu = styled.div`
         width: 100%;
         padding: 16px 8px;
         background: ${(props) => props.theme.primaryColor};
-
         box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
-        ${(props) =>
-            props.theme.name === 'dark'
-                ? `border-bottom: 1px solid ${props.theme.grayColor}`
-                : ''};
     }
 `;
 

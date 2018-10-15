@@ -4,10 +4,6 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Bundle from '../components/Bundle';
 
-/* import loadRhythmic from './Rhythmic';
-import loadAbout from './About';
-import loadImagesEngine from './ImagesEngine'; */
-
 const About = (props) => (
     <Bundle load={import(/* webpackChunkName: "About" */ './About')}>
         {(About) => <About {...props} />}

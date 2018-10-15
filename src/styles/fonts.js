@@ -35,7 +35,7 @@ const fontFace = (name, fontWeight, font) => {
                 url('${require(`../fonts/${name}/${font}.ttf`)}') format('truetype') ;
             font-weight: ${fontWeight};
             font-style: normal;
-            font-display: optional;
+            font-display: fallback;
         }
     `;
 };

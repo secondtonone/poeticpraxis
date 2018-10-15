@@ -1,15 +1,17 @@
 import { h, Component } from 'preact';
 import Textarea from '../Textarea';
-import { randomize, hashFunction, fontReady } from '../../utils';
+import { hashFunction, fontReady } from '../../utils';
 
 import {
-    isLetter,
-    isPause,
-    isSpace,
-    isVowel,
-    isAccented,
-    makeListLinks
-} from '../../modules/rhythmic';
+    structure,
+    textAnalizator,
+    tagMaker,
+    makeCaesura,
+    makeAccent,
+    rhythmPresets
+} from './module';
+
+import { copy } from '../../modules/copying';
 
 import { FieldEditableArea } from '../../styles/components';
 
@@ -23,7 +25,9 @@ import {
     FakeField,
     AccentRelative,
     WorkField,
-    PaintField
+    PaintField,
+    TriangleElement,
+    CircleElement
 } from './styled';
 
 /* парсить по словам, сравнивать с предыдущим деревом */
@@ -33,13 +37,7 @@ export default class Workfield extends Component {
         super(props);
 
         this.state = {
-            strings: {},
-            orderStrings: [],
-            elements: {},
-            tags: [],
-            hashTable: {},
-            stringLinks: {},
-            wordLinks: {},
+            ...structure,
             field: {},
             fontSizeStyle: {
                 fontSize: 18
@@ -47,13 +45,16 @@ export default class Workfield extends Component {
             zoomIn: false
         };
 
-        this.strings = {};
-
-        this.caretPosition = 0;
-
-        this.symbolCounter = 0;
-
         this.timerLinting = 0;
+
+        this.accents = ['black', 'red', 'red_secondary', 'gray'];
+
+        this.decription = [
+            'Слабая доля',
+            'Сильная доля',
+            'Побочное ударение',
+            'Непроизносимый звук'
+        ];
     }
 
     componentDidMount() {
@@ -108,262 +109,6 @@ export default class Workfield extends Component {
         });
     };
 
-    tagMaker = (node, textAnalized) => {
-        const stringNodes = [...node];
-
-        let tags = [];
-
-        let symbols = [];
-
-        const { elements, strings } = textAnalized;
-
-        const symbolsSet = stringNodes.map((string) => {
-            const symbols = [...string.children];
-
-            strings[string.id].tag = {
-                left: string.offsetLeft,
-                top: string.offsetTop,
-                height: string.offsetHeight,
-                width: string.offsetWidth
-            };
-
-            return symbols;
-        });
-
-        symbolsSet.forEach((set) => {
-            symbols = [...symbols, ...set];
-        });
-
-        if (symbols.length) {
-            symbols.forEach((symbol) => {
-                const type = symbol.dataset.type;
-                if (
-                    type === 'black' ||
-                    type === 'red' ||
-                    type === 'red_secondary' ||
-                    type === 'gray' ||
-                    type === 'string-pause'
-                ) {
-                    const offsetLeft = symbol.parentNode.offsetLeft;
-                    const offsetTop = symbol.parentNode.offsetTop;
-
-                    elements[symbol.id].tag = {
-                        left: symbol.offsetLeft + offsetLeft,
-                        top: symbol.offsetTop + offsetTop,
-                        height: symbol.offsetHeight,
-                        width: symbol.offsetWidth
-                    };
-
-                    tags.push(elements[symbol.id]);
-                }
-            });
-        }
-
-        return {
-            elements,
-            strings,
-            tags
-        };
-    };
-    /* убрать знаки припенания, для выявления слов*/
-
-    /* str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');*/
-
-    /* let stringWords = string.match(/[a-zA-ZА-Яа-яёЁ]+/g) || [];
-
-        words = [...words, ...stringWords];*/
-    textAnalizator(text, stringsDictionary, wordsDictionary) {
-        const fieldStrings = text.split('\n');
-
-        let strings = {};
-
-        let elements = {};
-
-        let hashTable = {};
-
-        let interator = 0;
-
-        let wordLinks = {};
-
-        let stringLinks = {};
-
-        /* Строка */
-        const orderStrings = fieldStrings.map((string, index) => {
-            interator += index;
-
-            let idString = `s${index}${randomize()}`;
-
-            let vowel = [];
-
-            let soundGramma = [];
-
-            let words = [];
-
-            let tokens = string
-                .split(/(\s|[a-zA-ZА-Яа-яёЁ-]+|[\.,\/#!$%\^&\*;:{}=\-_`~()⋀])/)
-                .filter((n) => n);
-
-            let order = [];
-
-            let stringIndex = 0;
-
-            /* Слово */
-            tokens.forEach((token, index) => {
-                let type = 't';
-
-                let idToken = `t${index}${randomize()}`;
-
-                let accent = 0;
-
-                let accents = [];
-
-                let orderToken = [];
-
-                let hashTokenId = '';
-
-                if (isLetter(token)) {
-                    idToken = `w${index}${randomize()}`;
-
-                    type = 'w';
-
-                    /* Буквы */
-                    orderToken = [...token].map((char, index, array) => {
-                        hashTokenId = hashFunction(char, ++interator);
-
-                        const isLast = index === array.length - 1;
-
-                        let idSymbol = `c${index}${randomize()}`;
-
-                        let type = 'c';
-
-                        accent = 0;
-
-                        if (isVowel(char)) {
-                            idSymbol = `v${index}${randomize()}`;
-
-                            type = 'v';
-
-                            if (stringsDictionary) {
-                                accent =
-                                    isAccented(
-                                        string,
-                                        stringIndex,
-                                        stringsDictionary
-                                    ) ||
-                                    isAccented(token, index, wordsDictionary);
-                            }
-
-                            const idVowel = `${idString}${idToken}${idSymbol}`;
-
-                            vowel.push(idVowel);
-
-                            if (accent !== 3) {
-                                soundGramma.push(idVowel);
-                            }
-                        }
-
-                        idSymbol = `${idString}${idToken}${idSymbol}`;
-
-                        elements[idSymbol] = {
-                            isLast,
-                            type,
-                            char,
-                            accent,
-                            index,
-                            id: idSymbol,
-                            idString,
-                            idToken,
-                            stringIndex,
-                            hashTokenId
-                        };
-
-                        hashTable[hashTokenId] = {
-                            idSymbol
-                        };
-
-                        order.push(idSymbol);
-
-                        ++stringIndex;
-
-                        return idSymbol;
-                    });
-
-                    idToken = `${idString}${idToken}`;
-
-                    words.push(idToken);
-
-                    wordLinks = makeListLinks(token, idToken, wordLinks);
-
-                    elements[idToken] = {
-                        type,
-                        token,
-                        accent,
-                        accents,
-                        orderToken,
-                        id: idToken,
-                        idString
-                    };
-                } else {
-                    hashTokenId = hashFunction(token, ++interator);
-
-                    if (isSpace(token)) {
-                        type = 'sp';
-
-                        idToken = `sp${index}${randomize()}`;
-                    }
-
-                    if (isPause(token)) {
-                        type = 'p';
-
-                        idToken = `p${index}${randomize()}`;
-
-                        soundGramma.push(idToken);
-                    }
-
-                    idToken = `${idString}${idToken}`;
-
-                    elements[idToken] = {
-                        type,
-                        char: token,
-                        id: idToken,
-                        idString,
-                        hashTokenId
-                    };
-
-                    hashTable[hashTokenId] = {
-                        idToken
-                    };
-
-                    order.push(idToken);
-
-                    ++stringIndex;
-                }
-            });
-
-            stringLinks = makeListLinks(string, idString, stringLinks);
-
-            strings[idString] = {
-                order,
-                string,
-                words,
-                vowel,
-                soundGramma,
-                id: idString
-            };
-
-            return idString;
-        });
-
-        return {
-            strings,
-            orderStrings,
-            elements,
-            hashTable,
-            wordLinks,
-            stringLinks
-        };
-    }
-
     handleTextInput = (e) => {
         this.props.transmitState({
             text: e.target.value
@@ -375,7 +120,7 @@ export default class Workfield extends Component {
 
         let wordsDictionary = this.props.wordsDictionary || {};
 
-        let analizedText = this.textAnalizator(
+        let analizedText = textAnalizator(
             text,
             stringsDictionary,
             wordsDictionary
@@ -394,10 +139,9 @@ export default class Workfield extends Component {
         this.setStateAsync({
             ...analizedText
         }).then(() => {
-            let stringsLinted = this.tagMaker(
-                this.fakeField.children,
-                analizedText
-            );
+            const children = this.fakeField.children;
+
+            let stringsLinted = tagMaker(children, analizedText);
 
             this.setState({
                 ...stringsLinted
@@ -407,62 +151,16 @@ export default class Workfield extends Component {
     };
 
     makeCaesura = () => {
-        this.insertionToPosition('⋀', this.mainField);
+        makeCaesura(this.mainField, (text) => {
+            this.props.transmitState({
+                text
+            });
+        });
         this.mainField.focus();
     };
 
-    insertionToPosition = (str, textarea) => {
-        const value = textarea.value;
-        const before = value.substring(0, textarea.selectionStart);
-        const after = value.substring(textarea.selectionEnd, value.length);
-
-        const text = `${before}${str}${after}`;
-
-        this.textLinting(text);
-
-        this.props.transmitState({
-            text
-        });
-
-        this.setCursor(textarea, before.length + str.length);
-    };
-
-    setCursor = (elem, pos) => {
-        elem.focus();
-
-        setTimeout(() => {
-            if (elem.setSelectionRange) {
-                elem.setSelectionRange(pos, pos);
-            } else if (elem.createTextRange) {
-                const range = elem.createTextRange();
-                range.collapse(true);
-                range.moveEnd('character', pos);
-                range.moveStart('character', pos);
-                range.select();
-            }
-        }, 50);
-
-        this.caretPosition = pos;
-    };
-
     copyToClipboard = () => {
-        const field = this.fakeField;
-
-        let range = {};
-
-        if (document.selection) {
-            range = document.body.createTextRange();
-            range.moveToElementText(field);
-            range.select().createTextRange();
-            document.execCommand('Copy');
-            console.log('range');
-        } else if (window.getSelection) {
-            range = document.createRange();
-            range.selectNodeContents(field);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-            document.execCommand('Copy');
-        }
+        copy(this.fakeField);
     };
 
     getSelection = () => {
@@ -493,7 +191,7 @@ export default class Workfield extends Component {
 
     /* анализ строк */
     getSugesstions = (strings) => {
-        if(string) {
+        if (string) {
             return {
                 stroke: 'all',
                 rhythm: {
@@ -505,11 +203,48 @@ export default class Workfield extends Component {
     };
     /* применение */
     onSuggestion = (stroke, rhythm) => {
-        if(stroke === 'all') {
-
+        if (stroke === 'all') {
         } else {
-
         }
+    };
+
+    changeRhythmHandler = (stringId) => {
+        const strings = this.state.strings;
+        const string = strings[stringId];
+
+        if (string.rhythmPreset < rhythmPresets.length - 1) {
+            strings[stringId].rhythmPreset = string.rhythmPreset + 1;
+        } else {
+            strings[stringId].rhythmPreset = 0;
+        }
+
+        this.setStateAsync({
+            strings
+        }).then(() => {
+            const rhythmPresetIndex = this.state.strings[stringId].rhythmPreset;
+
+            const scheme = rhythmPresets[rhythmPresetIndex];
+
+            const elements = this.state.elements;
+
+            let indexAccented = scheme.accent - 1;
+
+            this.state.strings[stringId].soundGramma.forEach(
+                (signId, index) => {
+                    let accent = 0;
+
+                    if (index === indexAccented) {
+                        accent = 1;
+
+                        indexAccented = indexAccented + scheme.size;
+                    }
+
+                    if (elements[signId].accent !== accent) {
+                        this.accentHandler(signId, accent);
+                    }
+                }
+            );
+        });
     };
 
     changeZoomMode = (zoomIn) => {
@@ -521,146 +256,62 @@ export default class Workfield extends Component {
         });
     };
 
-    paintFieldHandler = (e) => {
-        e.preventDefault();
+    makeMarkingTags = (strings, orderStrings, elements) => {
+        let stringsOrders = [];
 
-        if (this.props.viewOnly || e.target.dataset.type !== 'v') {
-            return false;
-        }
+        let symbolsTags = {};
 
-        const signId = e.target.id;
+        orderStrings.forEach((id) => {
+            const string = strings[id];
 
-        let { elements, strings, stringLinks, wordLinks } = this.state;
-
-        let wordsDictionary = this.props.wordsDictionary || {};
-
-        let stringsDictionary = this.props.stringsDictionary || {};
-
-        const element = elements[signId];
-
-        const idWord = `${element.idString}${element.idToken}`;
-
-        const word = elements[idWord];
-
-        const wordLowerCased = word.token.toLowerCase();
-
-        let string = strings[element.idString];
-
-        const stringLowerCased = string.string.toLowerCase();
-
-        let accent = element.accent;
-
-        //let stringLinksTriggered = false;
-
-        if (accent < 3) {
-            ++accent;
-        } else {
-            accent = 0;
-        }
-
-        elements[signId].accent = accent;
-
-        /* Работа со словом */
-
-        const wordAccents = word.orderToken.map((id) => {
-            return {
-                type: elements[id].accent
-            };
+            stringsOrders = [...stringsOrders, ...string.order];
         });
 
-        wordsDictionary[wordLowerCased] = {
-            accents: wordAccents
-        };
+        stringsOrders.forEach((id) => {
+            const symbol = elements[id];
 
-        /* Работа со строкой */
-        const stringAccents = string.order.map((id) => {
-            return {
-                type: elements[id].accent
-            };
+            let char = symbol.char;
+
+            let tag = char;
+
+            if (symbol.type === 'v') {
+                tag = (
+                    <Accent
+                        data-type={this.accents[symbol.accent]}
+                        accent={this.accents[symbol.accent]}
+                        key={id}
+                        id={id}>
+                        {char}
+                    </Accent>
+                );
+            }
+            if (symbol.type === 'p') {
+                tag = (
+                    <StringPause key={id} id={id} data-type="string-pause">
+                        {char}
+                    </StringPause>
+                );
+            }
+            if (symbolsTags[symbol.idString]) {
+                symbolsTags[symbol.idString].push(tag);
+            } else {
+                symbolsTags[symbol.idString] = [tag];
+            }
         });
 
-        stringsDictionary[stringLowerCased] = {
-            accents: stringAccents
-        };
+        return orderStrings.map((id) => {
+            const symbols = symbolsTags[id];
 
-        const indexSoundGramma = string.soundGramma.indexOf(signId);        
-
-        if (accent === 3 && indexSoundGramma !== -1) {
-            strings[element.idString].soundGramma.splice(indexSoundGramma, 1);
-        } 
-        if (accent === 0 && indexSoundGramma === -1) {
-            strings[element.idString].soundGramma.push(signId);
-        }
-        /* баги*/
-
-        if (stringLinks[stringLowerCased]) {
-            stringLinks[stringLowerCased].forEach((idString) => {
-                if (strings[idString]) {
-                    let idElement =
-                        strings[idString].order[element.stringIndex];
-
-                    if (element.id !== idElement) {
-                        elements[idElement].accent =
-                            elements[element.id].accent;
-
-                        stringLinksTriggered = true;
-                    }
-                }
-            });
-        }
-
-        /* if(!stringLinksTriggered && wordLinks[wordLowerCased]) {
-            wordLinks[wordLowerCased].forEach( idWord => {
-
-                if(elements[idWord]) {
-
-                    let idElement = elements[idWord].orderToken[element.index];
-
-                    if(element.id != idElement) {
-                        elements[idElement].accent = elements[element.id].accent;
-                    }
-
-                }
-            });
-        }*/
-
-        this.setState({
-            elements,
-            strings
+            return (
+                <StringField key={id} id={id}>
+                    {symbols.length ? symbols : ' '}
+                </StringField>
+            );
         });
-
-        if (!this.props.readOnly) {
-            this.props.setWordsDictionary(wordsDictionary);
-
-            this.props.transmitState({
-                stringsDictionary
-            });
-        }
     };
 
-    render(
-        {
-            readOnly,
-            syllableOff,
-            stringNumberOff,
-            focusHandler,
-            text,
-            placeHolder
-        },
-        { strings, field, elements, orderStrings, tags, zoomIn }
-    ) {
-        const accents = ['black', 'red', 'red_secondary', 'gray'];
-
-        const decription = [
-            'Слабая доля',
-            'Сильная доля',
-            'Побочное ударение',
-            'Непроизносимый звук'
-        ];
-
-        let stringCounter = 0;
-
-        const renderedTags = tags.map((sign) => {
+    makeRenderedTags = (tags) => {
+        return tags.map((sign) => {
             const style = {
                 top: sign.tag.top,
                 left: sign.tag.left,
@@ -683,73 +334,59 @@ export default class Workfield extends Component {
 
             return (
                 <AccentRelative
-                    accent={accents[sign.accent]}
+                    accent={this.accents[sign.accent]}
                     key={sign.id}
                     id={sign.id}
                     style={style}
                     data-type={sign.type}
-                    title={decription[sign.accent]}
+                    title={this.decription[sign.accent]}
                 />
             );
         });
+    };
 
-        const markingTags = orderStrings.map((id) => {
-            const string = strings[id];
+    makeAccentSizeIdicator = (size, accent) => {
+        let scheme = [];
+        
+        for (let i = 1; i <= size; i++) {
+            if (i === accent) {
+                scheme.push(<TriangleElement />);
+            } else {
+                scheme.push(<CircleElement />);
+            }
+        }
 
-            let symbols = string.order.map((id) => {
-                const symbol = elements[id];
+        return scheme;
+    };
 
-                let char = symbol.char;
+    makeInfoTags = (strings, orderStrings, field, elements) => {
+        let stringCounter = 0;
 
-                if (symbol.type === 'v') {
-                    return (
-                        <Accent
-                            data-type={accents[symbol.accent]}
-                            accent={accents[symbol.accent]}
-                            key={id}
-                            id={id}>
-                            {char}
-                        </Accent>
-                    );
-                }
-                if (symbol.type === 'p') {
-                    return (
-                        <StringPause key={id} id={id} data-type="string-pause">
-                            {char}
-                        </StringPause>
-                    );
-                }
+        const dataTypeAQ = 'a/q';
 
-                return char;
-            });
+        return orderStrings.map((stringId) => {
+            const string = strings[stringId];
+            if (string.tag) {
+                const tag = string.tag;
 
-            return (
-                <StringField key={id} id={id}>
-                    {symbols.length ? symbols : ' '}
-                </StringField>
-            );
-        });
+                const size = rhythmPresets[string.rhythmPreset].size;
 
-        const infoTags = orderStrings.map((id) => {
-            if (strings[id].tag) {
-                const tag = strings[id].tag;
+                const accent = rhythmPresets[string.rhythmPreset].accent;
+
+                const vowels = string.vowel;
 
                 const delta = tag.height - field.lineHeight;
 
-                let vowelAccentCount = 0;
-
-                strings[id].vowel.forEach((id) => {
-                    if (
-                        elements[id].accent === 1 ||
-                        elements[id].accent === 2
-                    ) {
-                        ++vowelAccentCount;
-                    }
-                });
+                const vowelAccentCount = vowels.filter(
+                    (id) =>
+                        elements[id].accent === 1 || elements[id].accent === 2
+                ).length;
 
                 return [
-                    syllableOff || !strings[id].vowel.length ? null : (
+                    this.props.syllableOff || !vowels.length ? null : (
                         <Syllable
+                            id={stringId}
+                            data-type={dataTypeAQ}
                             key={`s-${tag.top}`}
                             style={{ top: tag.top + delta }}
                             title="Ударение/количество слогов">
@@ -758,10 +395,14 @@ export default class Workfield extends Component {
                                     {vowelAccentCount}
                                 </Syllable.Accent>
                             ) : null}
-                            {strings[id].soundGramma.length}
+                            {string.soundGramma.length}
+                            <Syllable.AccentType>
+                                {this.makeAccentSizeIdicator(size, accent)}
+                            </Syllable.AccentType>
                         </Syllable>
                     ),
-                    stringNumberOff || !strings[id].words.length ? null : (
+                    this.props.stringNumberOff ||
+                    !string.words.length ? null : (
                         <StringNumber
                             key={`n-${tag.top}`}
                             style={{ top: tag.top }}
@@ -772,6 +413,73 @@ export default class Workfield extends Component {
                 ];
             }
         });
+    };
+
+    accentHandler = (signId, accent) => {
+        let wordsDictionary = this.props.wordsDictionary || {};
+
+        let stringsDictionary = this.props.stringsDictionary || {};
+
+        let { elements, strings, stringLinks, wordLinks } = this.state;
+
+        const result = makeAccent({
+            signId,
+            elements,
+            strings,
+            stringLinks,
+            wordLinks,
+            wordsDictionary,
+            stringsDictionary,
+            accent
+        });
+
+        this.setState({
+            elements: result.elements,
+            strings: result.strings
+        });
+
+        if (!this.props.readOnly) {
+            this.props.setWordsDictionary(result.wordsDictionary);
+
+            this.props.transmitState({
+                stringsDictionary: result.stringsDictionary
+            });
+        }
+    };
+
+    paintFieldHandler = (e) => {
+        e.preventDefault();
+
+        if (this.props.viewOnly) {
+            return false;
+        }
+
+        if (e.target.dataset.type === 'v') {
+            this.accentHandler(e.target.id);
+        }
+        if (e.target.dataset.type === 'a/q') {
+            this.changeRhythmHandler(e.target.id);
+        }
+    };
+
+    render(
+        { readOnly, focusHandler, text, placeHolder },
+        { strings, field, elements, orderStrings, tags, zoomIn }
+    ) {
+        const renderedTags = this.makeRenderedTags(tags);
+
+        const marckupTags = this.makeMarkingTags(
+            strings,
+            orderStrings,
+            elements
+        );
+
+        const infoTags = this.makeInfoTags(
+            strings,
+            orderStrings,
+            field,
+            elements
+        );
 
         let props = {
             onInput: this.handleTextInput,
@@ -801,7 +509,7 @@ export default class Workfield extends Component {
                     innerRef={(ref) => {
                         this.fakeField = ref;
                     }}>
-                    {markingTags}
+                    {marckupTags}
                 </FakeField>
 
                 <PaintField

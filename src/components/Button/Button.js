@@ -124,7 +124,11 @@ const StyledButton = styled.button.attrs({ className: withElements })`
     &._black {
         color: ${theme.primaryWhite};
         fill: ${theme.primaryWhite};
-        background-color: ${theme.primaryBlack};
+        
+        ${(props) =>
+            props.theme.name === 'dark'
+                ? `background: ${props.theme.grayDarkColor};`
+        : `background-color: ${theme.primaryBlack};`} 
     }
 
     &._gray {

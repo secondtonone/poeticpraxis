@@ -27,8 +27,9 @@ const StyledMessageBox = styled.div`
     -webkit-font-smoothing: antialiased;
     ${(props) =>
         props.theme.name === 'dark'
-            ? `border: 1px solid ${props.theme.secondColor}`
-            : ''} @media (max-width: 600px) {
+        ? `background: ${props.theme.grayDarkColor}; color: ${props.theme.secondColor};`
+            : ''}  
+    @media (max-width: 600px) {
         bottom: 0;
         transform: translateY(
             ${(props) => (props.text ? `-${props.bottom}px` || 0 : '100px')}

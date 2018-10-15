@@ -133,7 +133,7 @@ const Text = styled.div`
     font-weight: 300;
     word-spacing: 6px;
     margin-bottom: 24px;
-    ${(props) => (props.isHidden? 'display: none;': '')}
+    ${(props) => (props.isHidden ? 'display: none;' : '')};
 `;
 
 Text.Title = styled.h1`
@@ -237,8 +237,9 @@ const DropdownList = styled.li`
     outline: none;
     ${(props) =>
         props.theme.name === 'dark'
-            ? `background: rgba(162, 162, 162, 0.1);`
-            : ''} &:focus {
+        ? `background: ${props.theme.grayDarkColor};`
+            : ''} 
+    &:focus {
         outline: none;
     }
 `;

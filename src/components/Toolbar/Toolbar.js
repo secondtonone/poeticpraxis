@@ -6,10 +6,13 @@ const StyledToolbar = styled.div`
     bottom: 0;
     padding: 16px;
     width: 100%;
-    background: ${(props) => props.theme.primaryColor};
     text-align: left;
     box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
     z-index: 1002;
+    ${(props) =>
+        props.theme.name === 'dark'
+            ? `background: ${props.theme.grayDarkColor};`
+        : `background-color: ${props.theme.primaryColor};`} 
 
     & button {
         margin: 0 16px;

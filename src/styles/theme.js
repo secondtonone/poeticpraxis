@@ -34,6 +34,7 @@ const dark = {
     secondColor: '#F9F8F7',
     accentColor: '#ea5d5a',
     grayColor: '#6d6c6c',
+    grayDarkColor: '#212121',
 
     mainFont: '"Montserrat", Verdana, sans-serif'
 };

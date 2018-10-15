@@ -82,6 +82,28 @@ const StringField = styled.div`
     position: relative;
     white-space: pre-wrap;
 `;
+const TriangleElement = styled.span`
+    &::after {
+        position: relative;
+        font-size: 10px;
+        color: ${(props) => props.theme.accentColor};
+        content: '\\25BC';
+        transform: rotate(0deg) scale(1.7);
+    }
+
+    pointer-events: none;
+`;
+
+const CircleElement = styled.span`
+    &::after {
+        position: relative;
+        font-size: 10px;
+        color: ${(props) => props.theme.secondColor};
+        content: '\\25CF';
+    }
+
+    pointer-events: none;
+`;
 
 const Syllable = styled.div`
     position: absolute;
@@ -92,6 +114,7 @@ const Syllable = styled.div`
     font-weight: 200;
     line-height: 50px;
     color: ${(props) => props.theme.secondColor};
+    cursor: pointer;
 
     @media (max-width: 880px) {
         right: -12px;
@@ -104,6 +127,7 @@ const Syllable = styled.div`
             position: relative;
             top: 10px;
             width: 100%;
+            letter-spacing: 3px;
             font-size: 12px;
             white-space: nowrap;
             color: ${theme.primaryGray};
@@ -119,7 +143,7 @@ const Syllable = styled.div`
 
 Syllable.Accent = styled.span`
     color: ${(props) => props.theme.accentColor};
-
+    pointer-events: none;
     &::after {
         content: '/';
         font-size: 14px;
@@ -127,6 +151,16 @@ Syllable.Accent = styled.span`
         line-height: 50px;
         color: ${(props) => props.theme.secondColor};
     }
+`;
+
+Syllable.AccentType = styled.div`
+    position: absolute;
+    bottom: -12px;
+    text-align: center;
+    left: 0;
+    right: 0;
+    font-size: 10px;
+    pointer-events: none;
 `;
 
 const StringNumber = styled.div`
@@ -310,6 +344,8 @@ export {
     StringPause,
     StringField,
     Syllable,
+    TriangleElement,
+    CircleElement,
     StringNumber,
     FakeField,
     AccentRelative,
