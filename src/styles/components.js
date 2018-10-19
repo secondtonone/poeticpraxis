@@ -158,7 +158,7 @@ const Link = styled.a`
     color: ${(props) => props.theme.accentColor};
 `;
 
-const Footer = styled.p`
+const Footer = styled.footer`
     font-family: ${theme.mainFont};
     line-height: 29px;
     font-size: 12px;

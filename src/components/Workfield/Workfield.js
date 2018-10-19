@@ -272,13 +272,21 @@ export default class Workfield extends Component {
 
             let char = symbol.char;
 
+            const idString = symbol.idString;
+
+            const accent = symbol.accent;
+
             let tag = char;
+
+            if (!symbolsTags[idString]) {
+                symbolsTags[idString] = [];
+            }
 
             if (symbol.type === 'v') {
                 tag = (
                     <Accent
-                        data-type={this.accents[symbol.accent]}
-                        accent={this.accents[symbol.accent]}
+                        data-type={this.accents[accent]}
+                        accent={this.accents[accent]}
                         key={id}
                         id={id}>
                         {char}
@@ -292,15 +300,12 @@ export default class Workfield extends Component {
                     </StringPause>
                 );
             }
-            if (symbolsTags[symbol.idString]) {
-                symbolsTags[symbol.idString].push(tag);
-            } else {
-                symbolsTags[symbol.idString] = [tag];
-            }
+
+            symbolsTags[idString].push(tag);
         });
 
         return orderStrings.map((id) => {
-            const symbols = symbolsTags[id];
+            const symbols = symbolsTags[id] || [];
 
             return (
                 <StringField key={id} id={id}>
@@ -347,7 +352,7 @@ export default class Workfield extends Component {
 
     makeAccentSizeIdicator = (size, accent) => {
         let scheme = [];
-        
+
         for (let i = 1; i <= size; i++) {
             if (i === accent) {
                 scheme.push(<TriangleElement />);

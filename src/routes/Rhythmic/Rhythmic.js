@@ -1,7 +1,8 @@
 import { h, Component } from 'preact';
-
+//import Tone from 'tone';
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
+import { getToneModule, Tone } from '../../modules/tone';
 
 import Workfield from '../../components/Workfield';
 import MessageBox from '../../components/MessageBox';
@@ -43,10 +44,19 @@ export default class Rhythmic extends Component {
         };
 
         this.mouseTrackingTimer = 0;
+
+        this.Tone = {};
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
+
+        getToneModule().then(() => {
+            const synth = new Tone.Synth().toMaster()
+
+            //play a middle 'C' for the duration of an 8th note
+            //synth.triggerAttackRelease('C4', '8n')
+        });
     }
 
     showMessage = (textMessage) => {

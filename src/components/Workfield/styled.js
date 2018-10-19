@@ -85,10 +85,9 @@ const StringField = styled.div`
 const TriangleElement = styled.span`
     &::after {
         position: relative;
-        font-size: 10px;
+        
         color: ${(props) => props.theme.accentColor};
         content: '\\25BC';
-        transform: rotate(0deg) scale(1.7);
     }
 
     pointer-events: none;
@@ -97,7 +96,7 @@ const TriangleElement = styled.span`
 const CircleElement = styled.span`
     &::after {
         position: relative;
-        font-size: 10px;
+        
         color: ${(props) => props.theme.secondColor};
         content: '\\25CF';
     }
@@ -159,7 +158,7 @@ Syllable.AccentType = styled.div`
     text-align: center;
     left: 0;
     right: 0;
-    font-size: 10px;
+    font-size: 9px;
     pointer-events: none;
 `;
 

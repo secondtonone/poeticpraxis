@@ -50,7 +50,7 @@ export default class Layout extends Component {
                         </InlineContainer>
                     </Header>
                     <MainContent>{children}</MainContent>
-                    <footer />
+                    
                 </Page>
             </ThemeProvider>
         );
