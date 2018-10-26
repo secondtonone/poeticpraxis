@@ -16,6 +16,17 @@ export function isVowel(char) {
  * @param {string} char
  * @returns {boolean}
  */
+export function vowelCount(word) {
+    const result = word.match(/[eyuioaуеыаоэёяию]/gi);
+    return result === null ? 0 : result.length;
+}
+/**
+ *
+ *
+ * @export
+ * @param {string} char
+ * @returns {boolean}
+ */
 export function isLetter(char) {
     return /[a-zA-ZА-Яа-яёЁ]$/.test(char);
 }
@@ -49,6 +60,11 @@ export function isSpace(char) {
 export function isPause(char) {
     return /⋀/g.test(char);
 }
+
+export function isAccentedByRegExp(rule, char) {
+    const regExp = new RegExp(rule);
+    return regExp.test(char) ? 1 : 0;
+}
 /**
  *
  * @export
@@ -57,12 +73,16 @@ export function isPause(char) {
  * @param {Objec} dictionary
  * @returns {number}
  */
-export function isAccented(token, index, dictionary) {
+export function isAccented(token, index, dictionary = {}) {
+    let element = isInDictionary(token, dictionary);
+
+    return element ? element.accents[index].type : 0;
+}
+
+function isInDictionary(token, dictionary = {}) {
     let lowerCased = token.toLowerCase();
 
-    return dictionary[lowerCased]
-        ? dictionary[lowerCased].accents[index].type
-        : 0;
+    return dictionary[lowerCased];
 }
 /**
  *
@@ -91,6 +111,18 @@ export function makeListLinks(token, idToken, list) {
 /* let stringWords = string.match(/[a-zA-ZА-Яа-яёЁ]+/g) || [];
 
         words = [...words, ...stringWords];*/
+
+function positionAccent(vowelCount) {
+    return Math.floor((vowelCount + 1) / 2);
+}
+
+function isAccentedByPosition(token, vowelCounter) {
+    const vowelNumber = vowelCount(token);
+
+    const suggestionPosAccent = positionAccent(vowelNumber);
+
+    return suggestionPosAccent === vowelCounter ? 1 : 0;
+}
 /**
  *
  *
@@ -154,6 +186,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
             if (isLetter(token)) {
                 idToken = `w${index}${randomize()}`;
 
+                let vowelCounter = 0;
+
                 type = 'w';
 
                 /* Буквы */
@@ -173,13 +207,22 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
                         type = 'v';
 
-                        if (stringsDictionary) {
+                        ++vowelCounter;
+
+                        if (
+                            isInDictionary(string, stringsDictionary) ||
+                            isInDictionary(token, wordsDictionary)
+                        ) {
                             accent =
                                 isAccented(
                                     string,
                                     stringIndex,
                                     stringsDictionary
                                 ) || isAccented(token, index, wordsDictionary);
+                        } else {
+                            accent =
+                                isAccentedByRegExp('ёЁ', char) ||
+                                isAccentedByPosition(token, vowelCounter);
                         }
 
                         const idVowel = `${idString}${idToken}${idSymbol}`;
@@ -188,6 +231,7 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
                         if (accent !== 3) {
                             soundGramma.push(idVowel);
+                            accents.push(idVowel);
                         }
                     }
 
@@ -207,7 +251,7 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                     };
 
                     hashTable[hashTokenId] = {
-                        idSymbol
+                        id: idSymbol
                     };
 
                     order.push(idSymbol);
@@ -260,7 +304,7 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                 };
 
                 hashTable[hashTokenId] = {
-                    idToken
+                    id: idToken
                 };
 
                 order.push(idToken);
@@ -507,11 +551,29 @@ export function makeAccent({
 
     const elementAccent = element.accent;
 
+    /* Удаление ударения */
+
+
+
+    if (elements[idWord].accents && elements[idWord].accents[0]) {
+        const element = elements[idWord].accents[0];
+
+        //elements[element].accent = 0;
+
+        elements[idWord].accents = [];
+    }
+
     /* Работа с ударением */
 
     elements[signId].accent = Number.isInteger(accent)
         ? accent
         : wordAccent(elementAccent);
+
+    if (elements[signId].accent === 1) {
+        elements[idWord].accents.push(signId);
+    }
+
+
 
     /* Работа со словом */
 

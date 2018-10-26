@@ -160,7 +160,7 @@ module.exports = {
     plugins: [
         /* new ExtractTextPlugin("style.[hash].css"), */
 
-        new BundleAnalyzerPlugin(),
+        /* new BundleAnalyzerPlugin(), */
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
@@ -196,6 +196,9 @@ module.exports = {
             },
             {
                 from: 'public/img/Sign.svg'
+            },
+            {
+                from: 'public/audio'
             }
         ]),
         new OfflinePlugin({
@@ -206,7 +209,7 @@ module.exports = {
             caches: 'all',
             externals: ['/', 'https://mc.yandex.ru/metrika/watch.js'],
             ServiceWorker: {
-                events: true ,
+                events: true,
                 output: 'sworker.js'
             },
             AppCache: {

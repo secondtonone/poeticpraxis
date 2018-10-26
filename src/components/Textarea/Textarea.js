@@ -52,9 +52,7 @@ export default class Textarea extends Component {
         if (this.delayHeightChange) {
             clearTimeout(this.delayHeightChange);
         }
-        this.delayHeightChange = delay(
-            () => this.heightChange(this.field));
-        
+        this.delayHeightChange = delay(() => this.heightChange(this.field));
     }
 
     componentWillUnmount() {
@@ -86,6 +84,7 @@ export default class Textarea extends Component {
         label,
         onFocus,
         onBlur,
+        onMouseMove,
         onKeyDown,
         onKeyUp,
         zoomIn
@@ -101,6 +100,7 @@ export default class Textarea extends Component {
                     name={id}
                     id={id}
                     onInput={onInput}
+                    onMouseMove={onMouseMove}
                     onMouseUp={onMouseUp}
                     onClick={onClick}
                     onFocus={onFocus}

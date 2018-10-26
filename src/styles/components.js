@@ -237,9 +237,8 @@ const DropdownList = styled.li`
     outline: none;
     ${(props) =>
         props.theme.name === 'dark'
-        ? `background: ${props.theme.grayDarkColor};`
-            : ''} 
-    &:focus {
+            ? `background: ${props.theme.grayDarkColor};`
+            : ''} &:focus {
         outline: none;
     }
 `;
@@ -255,6 +254,16 @@ DropdownList.ListItem = styled.ul`
 `;
 
 const SimpleTextarea = styled.textarea``;
+
+const HiddenTextarea = styled(SimpleTextarea)`
+    opacity: 0;
+    position: fixed;
+    top: -150px;
+    height: 1px;
+    border: 0;
+    z-index: -999;
+    left: 0;
+`;
 
 export {
     FieldEditableArea,
@@ -273,5 +282,6 @@ export {
     SimpleTextarea,
     List,
     InlineContainer,
-    MobileHiddenContainer
+    MobileHiddenContainer,
+    HiddenTextarea
 };

@@ -11,7 +11,7 @@ import {
     rhythmPresets
 } from './module';
 
-import { copy } from '../../modules/copying';
+import { copyFrom } from '../../modules/copying';
 
 import { FieldEditableArea } from '../../styles/components';
 
@@ -79,7 +79,7 @@ export default class Workfield extends Component {
         window.removeEventListener('resize', this.updateDimensions);
     }
 
-    componentWillReceiveProps(prevProps) {
+    componentWillUpdate(prevProps) {
         if (prevProps.text !== this.props.text) {
             if (this.timerLinting) {
                 clearTimeout(this.timerLinting);
@@ -90,6 +90,22 @@ export default class Workfield extends Component {
             }, 50);
         }
     }
+
+    shouldComponentUpdate(prevProps, nextState) {
+        /* if (
+            Object.keys(nextState.elements).length &&
+            JSON.stringify(this.state.elements) ===
+                JSON.stringify(nextState.elements)
+        ) {
+            console.log(this.state.elements);
+
+            return false;
+        } */
+    }
+
+    getData = () => {
+        return this.state;
+    };
 
     setStateAsync = (newState) => {
         return new Promise((resolve) => {
@@ -115,7 +131,7 @@ export default class Workfield extends Component {
         });
     };
 
-    textLinting = (text) => {
+    textLinting = async (text) => {
         let stringsDictionary = this.props.stringsDictionary || {};
 
         let wordsDictionary = this.props.wordsDictionary || {};
@@ -125,7 +141,6 @@ export default class Workfield extends Component {
             stringsDictionary,
             wordsDictionary
         );
-
         // this.setState({
         //     text,
         //     tag: {}
@@ -136,16 +151,16 @@ export default class Workfield extends Component {
         // }
 
         // this.timerLinting = setTimeout(() => {
-        this.setStateAsync({
+        await this.setStateAsync({
             ...analizedText
-        }).then(() => {
-            const children = this.fakeField.children;
+        });
 
-            let stringsLinted = tagMaker(children, analizedText);
+        const children = this.fakeField.children;
 
-            this.setState({
-                ...stringsLinted
-            });
+        let stringsLinted = tagMaker(children, analizedText);
+
+        this.setState({
+            ...stringsLinted
         });
         // }, 50);
     };
@@ -160,7 +175,7 @@ export default class Workfield extends Component {
     };
 
     copyToClipboard = () => {
-        copy(this.fakeField);
+        copyFrom(this.fakeField);
     };
 
     getSelection = () => {
@@ -208,7 +223,7 @@ export default class Workfield extends Component {
         }
     };
 
-    changeRhythmHandler = (stringId) => {
+    changeRhythmHandler = async (stringId) => {
         const strings = this.state.strings;
         const string = strings[stringId];
 
@@ -218,42 +233,40 @@ export default class Workfield extends Component {
             strings[stringId].rhythmPreset = 0;
         }
 
-        this.setStateAsync({
+        await this.setStateAsync({
             strings
-        }).then(() => {
-            const rhythmPresetIndex = this.state.strings[stringId].rhythmPreset;
+        });
 
-            const scheme = rhythmPresets[rhythmPresetIndex];
+        const rhythmPresetIndex = this.state.strings[stringId].rhythmPreset;
 
-            const elements = this.state.elements;
+        const scheme = rhythmPresets[rhythmPresetIndex];
 
-            let indexAccented = scheme.accent - 1;
+        const elements = this.state.elements;
 
-            this.state.strings[stringId].soundGramma.forEach(
-                (signId, index) => {
-                    let accent = 0;
+        let indexAccented = scheme.accent - 1;
 
-                    if (index === indexAccented) {
-                        accent = 1;
+        this.state.strings[stringId].soundGramma.forEach((signId, index) => {
+            let accent = 0;
 
-                        indexAccented = indexAccented + scheme.size;
-                    }
+            if (index === indexAccented) {
+                accent = 1;
 
-                    if (elements[signId].accent !== accent) {
-                        this.accentHandler(signId, accent);
-                    }
-                }
-            );
+                indexAccented = indexAccented + scheme.size;
+            }
+
+            if (elements[signId].accent !== accent) {
+                this.accentHandler(signId, accent);
+            }
         });
     };
 
-    changeZoomMode = (zoomIn) => {
-        this.setStateAsync({
+    changeZoomMode = async (zoomIn) => {
+        await this.setStateAsync({
             zoomIn
-        }).then(() => {
-            let text = this.props.text;
-            this.textLinting(text);
         });
+
+        const text = this.props.text;
+        this.textLinting(text);
     };
 
     makeMarkingTags = (strings, orderStrings, elements) => {
@@ -468,7 +481,7 @@ export default class Workfield extends Component {
     };
 
     render(
-        { readOnly, focusHandler, text, placeHolder },
+        { readOnly, focusHandler, text, placeHolder, onMouseMove },
         { strings, field, elements, orderStrings, tags, zoomIn }
     ) {
         const renderedTags = this.makeRenderedTags(tags);
@@ -493,6 +506,7 @@ export default class Workfield extends Component {
             getMeasure: this.getMeasureField,
             readOnly: readOnly,
             zoomIn: zoomIn,
+            onMouseMove: onMouseMove,
             onFocus: () => {
                 if (focusHandler) {
                     focusHandler(true);
@@ -500,7 +514,7 @@ export default class Workfield extends Component {
             },
             onBlur: () => {
                 if (focusHandler) {
-                    focusHandler(true);
+                    focusHandler(false);
                 }
             },
             placeHolder: placeHolder || ''

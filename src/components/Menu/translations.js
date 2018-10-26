@@ -1,6 +1,6 @@
 const ru = {
     menu: {
-        RHYTHMICS: 'Ритмика',
+        RHYTHMICS: 'Просодия',
         ENGINE: 'Машина образов',
         ABOUT: 'О проекте'
     }
@@ -8,7 +8,7 @@ const ru = {
 
 const en = {
     menu: {
-        RHYTHMICS: 'Rhythmic',
+        RHYTHMICS: 'Prosody',
         ENGINE: 'Images engine',
         ABOUT: 'About'
     }

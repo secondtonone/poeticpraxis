@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 
 const PORT = 9080;
@@ -105,7 +106,12 @@ module.exports = {
         new ScriptExtHtmlWebpackPlugin({
             defer: /app/,
             defer: /\.js$/
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: 'public/audio'
+            }
+        ])
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),

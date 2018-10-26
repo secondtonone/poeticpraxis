@@ -85,7 +85,7 @@ const StringField = styled.div`
 const TriangleElement = styled.span`
     &::after {
         position: relative;
-        
+
         color: ${(props) => props.theme.accentColor};
         content: '\\25BC';
     }
@@ -96,7 +96,7 @@ const TriangleElement = styled.span`
 const CircleElement = styled.span`
     &::after {
         position: relative;
-        
+
         color: ${(props) => props.theme.secondColor};
         content: '\\25CF';
     }
@@ -120,7 +120,7 @@ const Syllable = styled.div`
     }
 
     @media (max-width: 600px) {
-        right: -20px;
+        right: -17px;
 
         &::before {
             position: relative;
@@ -160,6 +160,10 @@ Syllable.AccentType = styled.div`
     right: 0;
     font-size: 9px;
     pointer-events: none;
+
+    @media (max-width: 600px) {
+        left: auto; 
+    }
 `;
 
 const StringNumber = styled.div`
@@ -194,7 +198,8 @@ const FakeField = styled.div`
     opacity: 0;
     background-color: ${theme.secondWhite};
     color: #5d5c5c;
-    ${field} &:focus {
+    ${field} 
+    &:focus {
         outline: none;
     }
 

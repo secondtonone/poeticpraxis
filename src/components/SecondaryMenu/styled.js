@@ -18,6 +18,16 @@ const StyledSecondaryMenu = styled.div`
     }
 `;
 
+const LogoImage = styled.img`
+    height: 24px;
+    display: none;
+
+    @media (max-width: 600px) {
+        display: block;
+        margin-left: 16px;
+    }
+`;
+
 const StateSelect = styled.div`
     width: 140px;
     display: none;
@@ -85,8 +95,8 @@ const Container = styled.div`
     }
 
     @media (max-width: 600px) {
-        display: block;
+        display: flex;
     }
 `;
 
-export { Menu, Item, StateSelect, StyledSecondaryMenu, Container };
+export { Menu, Item, StateSelect, StyledSecondaryMenu, Container, LogoImage };

@@ -3,7 +3,12 @@ const ru = {
         RHYTHMICS: 'Напишите или вставьте текст'
     },
     messages: {
-        COPIED: 'Текст скопирован в буфер.'
+        COPIED: 'Текст скопирован в буфер.',
+        WRONG: 'Проверьте ссылку. Неверные параметры.'
+    },
+    rhythmicMenu: {
+        RHYTHMICS: 'Ритмика',
+        MELODY: 'Мелодия'
     }
 };
 
@@ -12,7 +17,12 @@ const en = {
         RHYTHMICS: 'Write or paste text'
     },
     messages: {
-        COPIED: 'Text copied to clipboard.'
+        COPIED: 'Text copied to clipboard.',
+        WRONG: 'Wrong parameters. Check the link.'
+    },
+    rhythmicMenu: {
+        RHYTHMICS: 'Rhythmics',
+        MELODY: 'Melody'
     }
 };
 

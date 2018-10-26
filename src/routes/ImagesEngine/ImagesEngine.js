@@ -10,6 +10,8 @@ import {
     List
 } from '../../styles/components';
 
+import Settings from '../../components/Settings';
+
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
 
@@ -39,30 +41,12 @@ export default class ImagesEngine extends Component {
             sharedText: '',
             actualHeight: window.innerHeight,
             initHeight: window.innerHeight,
-            views: [
-                {
-                    disabled: false
-                },
-                {
-                    disabled: true
-                }
-            ]
+            isDisabledWordsview: !props.engineState.result.length
         };
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
-
-        let { views } = this.state;
-        const { result } = this.props.engineState;
-
-        if (result.length) {
-            views[1].disabled = false;
-
-            this.setState({
-                views
-            });
-        }
 
         window.addEventListener('resize', this.updateDimensions);
     }
@@ -110,9 +94,9 @@ export default class ImagesEngine extends Component {
 
         const result = imaged(words, wordsNumber);
 
-        let { views } = this.state;
+        let { isDisabledWordsview } = this.state;
 
-        views[1].disabled = false;
+        isDisabledWordsview = false;
 
         this.toTheTop();
 
@@ -121,7 +105,7 @@ export default class ImagesEngine extends Component {
         this.changeView('words');
 
         this.setState({
-            views
+            isDisabledWordsview
         });
 
         this.props.setEngineState({
@@ -223,10 +207,16 @@ export default class ImagesEngine extends Component {
     render(
         {
             setEngineState,
-            engineState: { result, text, pinned, wordsNumber, currentView },
+            engineState: {
+                result,
+                text,
+                pinned,
+                wordsNumber,
+                currentView = 'material'
+            },
             lang = 'ru'
         },
-        { textMessage, views, actualHeight, initHeight }
+        { textMessage, isDisabledWordsview, actualHeight, initHeight }
     ) {
         const props = {
             onInput: this.handleTextInput,
@@ -258,7 +248,7 @@ export default class ImagesEngine extends Component {
                         <div>{translations[lang].engineMenu['MATERIAL']}</div>
                     </div>
                 ),
-                disabled: views[0].disabled
+                disabled: false
             },
             {
                 value: 'words',
@@ -270,7 +260,7 @@ export default class ImagesEngine extends Component {
                         <div>{translations[lang].engineMenu['WORDS']}</div>
                     </div>
                 ),
-                disabled: views[1].disabled
+                disabled: isDisabledWordsview
             }
         ];
 
@@ -292,6 +282,7 @@ export default class ImagesEngine extends Component {
                             <Delete _middle />
                         </Button>
                     )}
+                    <Settings />
                 </SecondaryMenu>
 
                 {!(actualHeight * 1.3 < initHeight) && (
