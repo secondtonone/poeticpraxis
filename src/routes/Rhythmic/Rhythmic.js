@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
-import { getShortLink, getLongLink, sharing } from '../../modules/sharing';
+import { getLongLink, sharing } from '../../modules/sharing';
 
 import Workfield from '../../components/Workfield';
 import MessageBox from '../../components/MessageBox';
@@ -46,7 +46,8 @@ export default class Rhythmic extends Component {
             isEditable: true,
             isDevice: isTouchDevice(),
             isToolbarHidden: true,
-            currentView: 'rhythmic'
+            currentView: 'rhythmic',
+            rhytmicState: {}
         };
 
         this.mouseTrackingTimer = 0;
@@ -144,9 +145,11 @@ export default class Rhythmic extends Component {
         this.workfield.changeZoomMode(zoomIn);
     };
 
-    /* getChildData = (data) => {
-        this.setState(data);
-    }; */
+    getDataFromWorkfield = (rhytmicState) => {
+        this.setState({
+            rhytmicState
+        });
+    };
 
     focusHandler = (isFocused) => {
         const isEditable = this.state.isEditable;
@@ -212,10 +215,7 @@ export default class Rhythmic extends Component {
         {
             setRhytmicState,
             setWordsDictionary,
-            rhythmicState: {
-                text,
-                stringsDictionary
-            },
+            rhythmicState: { text, stringsDictionary },
             wordsDictionary,
             lang = 'ru'
         },
@@ -227,7 +227,8 @@ export default class Rhythmic extends Component {
             isFocused,
             isToolbarHidden,
             isDevice,
-            currentView
+            currentView,
+            rhytmicState
         }
     ) {
         const secondMenu = [
@@ -329,6 +330,7 @@ export default class Rhythmic extends Component {
                                     setWordsDictionary={setWordsDictionary}
                                     wordsDictionary={wordsDictionary}
                                     stringDictionary={stringsDictionary}
+                                    toParent={this.getDataFromWorkfield}
                                     placeHolder={`${
                                         translations[lang].placeholders[
                                             'RHYTHMICS'
@@ -405,10 +407,7 @@ export default class Rhythmic extends Component {
                     )}
                     {currentView === 'melody' && (
                         <List _animated>
-                            <Melody
-                                lang={lang}
-                                getData={this.workfield.getData}
-                            />
+                            <Melody lang={lang} rhytmicState={rhytmicState} />
                         </List>
                     )}
                 </LeftedLayout>

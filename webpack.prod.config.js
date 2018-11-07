@@ -119,6 +119,7 @@ module.exports = {
                 parallel: true,
                 sourceMap: false,
                 uglifyOptions: {
+                    parallel: true,
                     output: {
                         comments: false
                     },

@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import imaged from '../../modules/imaged';
+import { copying } from '../../modules/copying';
 
 import {
     FieldEditableArea,
@@ -23,11 +24,12 @@ import ArrowBack from '../../components/IconSVG/ArrowBack';
 import Widgets from '../../components/IconSVG/Widgets';
 import Delete from '../../components/IconSVG/Delete';
 import CheckCircle from '../../components/IconSVG/CheckCircle';
+import ContentCopy from '../../components/IconSVG/ContentCopy';
 import Subject from '../../components/IconSVG/Subject';
 import PlaylistAddCheck from '../../components/IconSVG/PlaylistAddCheck';
 import SecondaryMenu from '../../components/SecondaryMenu';
 
-import { MainSelect, FieldClearButton } from './styled';
+import { ButtonContainer } from './styled';
 import MessageBox from '../../components/MessageBox';
 
 export default class ImagesEngine extends Component {
@@ -204,6 +206,10 @@ export default class ImagesEngine extends Component {
         }, 100);
     };
 
+    copyToClipboard = () => {
+        copying(this.props.engineState.pinned.join('\n'));
+    };
+
     render(
         {
             setEngineState,
@@ -343,13 +349,26 @@ export default class ImagesEngine extends Component {
                                     </Hint>
                                 )}
                                 {pinned.length ? (
-                                    <Container margin="8px 0 0">
+                                    <ButtonContainer>
                                         <Button
                                             _flat
                                             _transparent
-                                            _long
+                                            type="button"
+                                            margin="8px 8px"
+                                            onClick={this.copyToClipboard}>
+                                            {
+                                                translations[lang].matchList[
+                                                    'COPY'
+                                                ]
+                                            }{' '}
+                                            <ContentCopy _small />
+                                        </Button>
+                                        <Button
+                                            _flat
+                                            _transparent
                                             _light-gray
                                             type="button"
+                                            margin="8px 8px"
                                             onClick={this.toRhythmic}>
                                             {
                                                 translations[lang].matchList[
@@ -358,7 +377,7 @@ export default class ImagesEngine extends Component {
                                             }{' '}
                                             <ArrowBack _small _rotate-left />
                                         </Button>
-                                    </Container>
+                                    </ButtonContainer>
                                 ) : null}
                             </Container>
 

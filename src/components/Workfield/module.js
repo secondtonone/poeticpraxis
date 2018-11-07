@@ -148,7 +148,13 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
     let stringLinks = {};
 
     /* Строка */
-    const orderStrings = fieldStrings.map((string, index) => {
+    let orderStrings = [];
+
+    const fieldStringsLength = fieldStrings.length;
+
+    for (let index = 0; index < fieldStringsLength; index++) {
+        const string = fieldStrings[index];
+
         interator += index;
 
         let idString = `s${index}${randomize()}`;
@@ -168,9 +174,12 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
         let order = [];
 
         let stringIndex = 0;
-
         /* Слово */
-        tokens.forEach((token, index) => {
+        const tokensLength = tokens.length;
+
+        for (let index = 0; index < tokensLength; index++) {
+            const token = tokens[index];
+
             let type = 't';
 
             let idToken = `t${index}${randomize()}`;
@@ -178,8 +187,6 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
             let accent = 0;
 
             let accents = [];
-
-            let orderToken = [];
 
             let hashTokenId = '';
 
@@ -191,7 +198,17 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                 type = 'w';
 
                 /* Буквы */
-                orderToken = [...token].map((char, index, array) => {
+                const letters = [...token];
+
+                const lettersLength = letters.length;
+
+                let orderToken = [];
+
+                for (let index = 0; index < lettersLength; index++) {
+                    const char = letters[index];
+
+                    const array = letters;
+
                     hashTokenId = hashFunction(char, ++interator);
 
                     const isLast = index === array.length - 1;
@@ -258,8 +275,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
                     ++stringIndex;
 
-                    return idSymbol;
-                });
+                    orderToken.push(idSymbol);
+                }
 
                 idToken = `${idString}${idToken}`;
 
@@ -311,7 +328,7 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
                 ++stringIndex;
             }
-        });
+        }
 
         stringLinks = makeListLinks(string, idString, stringLinks);
 
@@ -327,8 +344,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
             id: idString
         };
 
-        return idString;
-    });
+        orderStrings.push(idString);
+    }
 
     return {
         strings,
@@ -356,7 +373,13 @@ export function tagMaker(node, textAnalized) {
 
     const { elements, strings } = textAnalized;
 
-    const symbolsSet = stringNodes.map((string) => {
+    let symbolsSet = [];
+
+    const stringNodesLength = stringNodes.length;
+
+    for (let i = 0; i < stringNodesLength; i++) {
+        const string = stringNodes[i];
+
         const symbols = [...string.children];
 
         strings[string.id].tag = {
@@ -366,15 +389,23 @@ export function tagMaker(node, textAnalized) {
             width: string.offsetWidth
         };
 
-        return symbols;
-    });
+        symbolsSet.push(symbols);
+    }
 
-    symbolsSet.forEach((set) => {
+    const symbolsSetLength = symbolsSet.length;
+
+    for (let i = 0; i < symbolsSetLength; i++) {
+        const set = symbolsSet[i];
+
         symbols = [...symbols, ...set];
-    });
+    }
 
-    if (symbols.length) {
-        symbols.forEach((symbol) => {
+    const symbolsLength = symbols.length;
+
+    if (symbolsLength) {
+        for (let i = 0; i < symbolsLength; i++) {
+            const symbol = symbols[i];
+
             const type = symbol.dataset.type;
             if (
                 type === 'black' ||
@@ -395,7 +426,7 @@ export function tagMaker(node, textAnalized) {
 
                 tags.push(elements[symbol.id]);
             }
-        });
+        }
     }
 
     return {
@@ -465,7 +496,11 @@ function updateElementsByStringLink({
     stringLink,
     strings
 }) {
-    stringLink.forEach((idString) => {
+    const stringLinkLength = stringLink.length;
+
+    for (let i = 0; i < stringLinkLength; i++) {
+        const idString = stringLink[i];
+
         if (strings[idString]) {
             let idElement = strings[idString].order[element.stringIndex];
 
@@ -475,7 +510,7 @@ function updateElementsByStringLink({
                 stringLinksTriggered = true;
             }
         }
-    });
+    }
 
     return elements;
 }
@@ -484,11 +519,17 @@ function updateWordsDictionary(idWord, wordsDictionary, elements) {
     const word = elements[idWord];
     const wordLowerCased = word.token.toLowerCase();
 
-    const wordAccents = word.orderToken.map((id) => {
-        return {
+    let wordAccents = [];
+
+    const wordOrderTokenLength = word.orderToken.length;
+
+    for (let i = 0; i < wordOrderTokenLength; i++) {
+        const id = word.orderToken[i];
+
+        wordAccents.push({
             type: elements[id].accent
-        };
-    });
+        });
+    }
 
     wordsDictionary[wordLowerCased] = {
         accents: wordAccents
@@ -499,11 +540,17 @@ function updateWordsDictionary(idWord, wordsDictionary, elements) {
 function updateStringsDictionary(string, stringsDictionary, elements) {
     const stringLowerCased = string.string.toLowerCase();
 
-    const stringAccents = string.order.map((id) => {
-        return {
+    let stringAccents = [];
+
+    const stringOrderLength = string.order.length;
+
+    for (let i = 0; i < stringOrderLength; i++) {
+        const id = string.order[i];
+
+        stringAccents.push({
             type: elements[id].accent
-        };
-    });
+        });
+    }
 
     stringsDictionary[stringLowerCased] = {
         accents: stringAccents
@@ -553,8 +600,6 @@ export function makeAccent({
 
     /* Удаление ударения */
 
-
-
     if (elements[idWord].accents && elements[idWord].accents[0]) {
         const element = elements[idWord].accents[0];
 
@@ -572,8 +617,6 @@ export function makeAccent({
     if (elements[signId].accent === 1) {
         elements[idWord].accents.push(signId);
     }
-
-
 
     /* Работа со словом */
 

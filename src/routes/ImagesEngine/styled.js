@@ -51,4 +51,9 @@ const FieldClearButton = styled(Button)`
     }
 `;
 
-export { MainSelect, FieldClearButton };
+const ButtonContainer = styled.div`
+    margin: 16px 0 0;
+    display: flex;
+    justify-content: flex-end;
+`;
+export { MainSelect, FieldClearButton, ButtonContainer };

@@ -11,9 +11,16 @@ import {
 
 import Options from '../Options';
 
-import Logo from '../../../public/img/Sign.svg';
+import Logo from '../../../public/img/Logo.svg';
+import LogoWhite from '../../../public/img/Logo-white.svg';
 
-export default function SecondaryMenu({ children, items, handler, current }) {
+export default function SecondaryMenu({
+    children,
+    items,
+    handler,
+    current,
+    variant = 'light'
+}) {
     return (
         <StyledSecondaryMenu>
             {items ? (
@@ -44,7 +51,10 @@ export default function SecondaryMenu({ children, items, handler, current }) {
                     </Menu>
                 </div>
             ) : (
-                <LogoImage src={Logo} alt="Logo" />
+                <LogoImage
+                    src={variant === 'light' ? Logo : LogoWhite}
+                    alt="Logo"
+                />
             )}
             <Container>{children}</Container>
         </StyledSecondaryMenu>

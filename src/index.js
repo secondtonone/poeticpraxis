@@ -1,7 +1,7 @@
 import { h, render } from 'preact';
 import { AppContainer } from 'react-hot-loader';
 
-import './fonts/fonts.css';
+import '../public/fonts/fonts.css';
 
 import store from './store';
 

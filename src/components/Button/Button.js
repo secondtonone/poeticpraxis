@@ -128,7 +128,7 @@ const StyledButton = styled.button.attrs({ className: withElements })`
         ${(props) =>
             props.theme.name === 'dark'
                 ? `background: ${props.theme.grayDarkColor};`
-        : `background-color: ${theme.primaryBlack};`} 
+                : `background-color: ${theme.primaryBlack};`} 
     }
 
     &._gray {
@@ -184,6 +184,8 @@ const StyledButton = styled.button.attrs({ className: withElements })`
     &._animated-up {
         ${AnimationUp};
     }
+
+    margin: ${(props) => (props.margin ? props.margin : 0)};
 `;
 
 function Button(props) {

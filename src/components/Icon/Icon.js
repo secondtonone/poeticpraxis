@@ -7,7 +7,7 @@ const StyledIcon = styled.i.attrs({ className: withElements })`
     font-weight: normal;
     font-style: normal;
     font-size: 24px; /* Preferred icon size */
-    vertical-align: text-bottom;
+    vertical-align: inherit;
     line-height: 0.9;
     text-transform: none;
     letter-spacing: normal;

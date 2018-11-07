@@ -20,7 +20,7 @@ export function copyFrom(field) {
 }
 
 export function makeTextarea(value) {
-    let textArea = document.createElement('div');
+    let textArea = document.createElement('pre');
     let id = 'textAreaForCopy';
 
     textArea.id = id;

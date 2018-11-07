@@ -12,7 +12,8 @@ const ru = {
         PAIRS: 'Сочетания',
         PAIRS_HINT: ['Нажмите снова на', 'чтобы получить новые сочетаиния'],
         SEE_RHYTHM: 'Посмотреть ритм',
-        RETURN: 'Вернуться наверх'
+        RETURN: 'Вернуться наверх',
+        COPY: 'Копировать'
     },
     messages: {
         PAIR_ADDED: 'Словосочетание добавлено.',
@@ -34,7 +35,8 @@ const en = {
         PAIRS: 'Pairs',
         PAIRS_HINT: ['Click on', 'to get more pairs'],
         SEE_RHYTHM: 'See rhythm',
-        RETURN: 'Return'
+        RETURN: 'Return',
+        COPY: 'Copy'
     },
     messages: {
         PAIR_ADDED: 'A pair is added.',

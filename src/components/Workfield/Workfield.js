@@ -103,8 +103,11 @@ export default class Workfield extends Component {
         } */
     }
 
-    getData = () => {
-        return this.state;
+    giveDataToParent = () => {
+        if (this.props.toParent) {
+            const { strings, elements, orderStrings } = this.state;
+            this.props.toParent({ strings, elements, orderStrings });
+        }
     };
 
     setStateAsync = (newState) => {
@@ -162,6 +165,8 @@ export default class Workfield extends Component {
         this.setState({
             ...stringsLinted
         });
+
+        this.giveDataToParent();
         // }, 50);
     };
 
@@ -237,6 +242,8 @@ export default class Workfield extends Component {
             strings
         });
 
+        this.giveDataToParent();
+
         const rhythmPresetIndex = this.state.strings[stringId].rhythmPreset;
 
         const scheme = rhythmPresets[rhythmPresetIndex];
@@ -245,7 +252,13 @@ export default class Workfield extends Component {
 
         let indexAccented = scheme.accent - 1;
 
-        this.state.strings[stringId].soundGramma.forEach((signId, index) => {
+        const soundGramma = this.state.strings[stringId].soundGramma;
+
+        const soundGrammaLength = soundGramma.length;
+
+        for (let index = 0; index < soundGrammaLength; index++) {
+            const signId = [index];
+
             let accent = 0;
 
             if (index === indexAccented) {
@@ -257,7 +270,7 @@ export default class Workfield extends Component {
             if (elements[signId].accent !== accent) {
                 this.accentHandler(signId, accent);
             }
-        });
+        }
     };
 
     changeZoomMode = async (zoomIn) => {
@@ -274,13 +287,23 @@ export default class Workfield extends Component {
 
         let symbolsTags = {};
 
-        orderStrings.forEach((id) => {
+        let markingTags = [];
+
+        const orderStringsLength = orderStrings.length;
+
+        for (let index = 0; index < orderStringsLength; index++) {
+            const id = orderStrings[index];
+
             const string = strings[id];
 
             stringsOrders = [...stringsOrders, ...string.order];
-        });
+        }
 
-        stringsOrders.forEach((id) => {
+        const stringsOrdersLength = stringsOrders.length;
+
+        for (let index = 0; index < stringsOrdersLength; index++) {
+            const id = stringsOrders[index];
+
             const symbol = elements[id];
 
             let char = symbol.char;
@@ -315,21 +338,31 @@ export default class Workfield extends Component {
             }
 
             symbolsTags[idString].push(tag);
-        });
+        }
 
-        return orderStrings.map((id) => {
+        for (let index = 0; index < orderStringsLength; index++) {
+            const id = orderStrings[index];
+
             const symbols = symbolsTags[id] || [];
 
-            return (
+            markingTags.push(
                 <StringField key={id} id={id}>
                     {symbols.length ? symbols : ' '}
                 </StringField>
             );
-        });
+        }
+
+        return markingTags;
     };
 
     makeRenderedTags = (tags) => {
-        return tags.map((sign) => {
+        const renderedTags = [];
+
+        const tagsLength = tags.length;
+
+        for (let index = 0; index < tagsLength; index++) {
+            const sign = tags[index];
+
             const style = {
                 top: sign.tag.top,
                 left: sign.tag.left,
@@ -338,7 +371,7 @@ export default class Workfield extends Component {
             };
 
             if (sign.type === 'p') {
-                return (
+                renderedTags.push(
                     <StringPauseRelative
                         key={sign.id}
                         id={sign.id}
@@ -350,7 +383,7 @@ export default class Workfield extends Component {
                 );
             }
 
-            return (
+            renderedTags.push(
                 <AccentRelative
                     accent={this.accents[sign.accent]}
                     key={sign.id}
@@ -360,7 +393,9 @@ export default class Workfield extends Component {
                     title={this.decription[sign.accent]}
                 />
             );
-        });
+        }
+
+        return renderedTags;
     };
 
     makeAccentSizeIdicator = (size, accent) => {
@@ -378,11 +413,17 @@ export default class Workfield extends Component {
     };
 
     makeInfoTags = (strings, orderStrings, field, elements) => {
+        let infoTags = [];
+
         let stringCounter = 0;
 
         const dataTypeAQ = 'a/q';
 
-        return orderStrings.map((stringId) => {
+        const orderStringsLength = orderStrings.length;
+
+        for (let index = 0; index < orderStringsLength; index++) {
+            const stringId = orderStrings[index];
+
             const string = strings[stringId];
             if (string.tag) {
                 const tag = string.tag;
@@ -400,7 +441,7 @@ export default class Workfield extends Component {
                         elements[id].accent === 1 || elements[id].accent === 2
                 ).length;
 
-                return [
+                infoTags.push([
                     this.props.syllableOff || !vowels.length ? null : (
                         <Syllable
                             id={stringId}
@@ -428,9 +469,11 @@ export default class Workfield extends Component {
                             {++stringCounter}
                         </StringNumber>
                     )
-                ];
+                ]);
             }
-        });
+        }
+
+        return infoTags;
     };
 
     accentHandler = (signId, accent) => {
@@ -455,6 +498,8 @@ export default class Workfield extends Component {
             elements: result.elements,
             strings: result.strings
         });
+
+        this.giveDataToParent();
 
         if (!this.props.readOnly) {
             this.props.setWordsDictionary(result.wordsDictionary);

@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 import { PageHeader, Logo, ContentField } from './styled';
 
-import LogoPic from './assets/Logo.svg';
-import LogoPicWhite from './assets/Logo-white.svg';
+import LogoPic from '../../../public/img/Logo.svg';
+import LogoPicWhite from '../../../public/img/Logo-white.svg';
 
 export default class Header extends Component {
     constructor(props) {

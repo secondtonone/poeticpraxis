@@ -9,11 +9,10 @@ const StyledToolbar = styled.div`
     text-align: left;
     box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
     z-index: 1002;
-    ${(props) =>
-        props.theme.name === 'dark'
-            ? `background: ${props.theme.grayDarkColor};`
-        : `background-color: ${props.theme.primaryColor};`} 
-
+    background-color:${(props) =>
+            props.theme.name === 'dark'
+                ? props.theme.grayDarkColor
+                : props.theme.primaryColor};
     & button {
         margin: 0 16px;
     }

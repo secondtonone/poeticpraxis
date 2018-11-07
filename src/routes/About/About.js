@@ -19,14 +19,14 @@ export default class About extends Component {
         window.scrollTo(0, 0);
     }
 
-    render({ lang = 'ru' }) {
+    render({ lang = 'ru', variant = 'light' }) {
         const isRusLang = lang === 'ru';
 
         const { text, stringsDictionary } = examples[lang];
 
         return (
             <section>
-                <SecondaryMenu>
+                <SecondaryMenu variant={variant}>
                     <Settings />
                 </SecondaryMenu>
 
