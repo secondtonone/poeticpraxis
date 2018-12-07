@@ -127,7 +127,7 @@ const Span = styled.span`
 
 const Text = styled.div`
     font-family: ${theme.mainFont};
-    line-height: 29px;
+    line-height: 1.8;
     font-size: 18px;
     letter-spacing: 0px;
     font-weight: 300;
@@ -142,7 +142,7 @@ Text.Title = styled.h1`
     font-size: 22px;
     letter-spacing: 0px;
     font-weight: 400;
-    margin-bottom: 18px;
+    margin: 36px 0 18px 0;
 `;
 
 Text.Wrapper = styled.div`

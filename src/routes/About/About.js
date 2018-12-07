@@ -15,11 +15,19 @@ import ContentCopy from '../../components/IconSVG/ContentCopy';
 import { Text, Link, Footer, List, Span } from '../../styles/components';
 
 export default class About extends Component {
+    state = { isHiddenPayment: false };
+
     componentDidMount() {
         window.scrollTo(0, 0);
     }
 
-    render({ lang = 'ru', variant = 'light' }) {
+    togglePayment = () => {
+        this.setState({
+            isHiddenPayment: !this.state.isHiddenPayment
+        });
+    };
+
+    render({ lang = 'ru', variant = 'light' }, { isHiddenPayment }) {
         const isRusLang = lang === 'ru';
 
         const { text, stringsDictionary } = examples[lang];
@@ -44,21 +52,46 @@ export default class About extends Component {
                     </Text>
                     <Text isHidden={!isRusLang}>
                         Блог в Яндекс Дзен:{' '}
-                        <Link href="https://zen.yandex.ru/id/5acdd7635991d30775549af1">
+                        <Link
+                            target="_blank"
+                            href="https://zen.yandex.ru/id/5acdd7635991d30775549af1">
                             Поэтическая практика
                         </Link>
-                    </Text>
-                    <Text isHidden={!isRusLang}>
+                        <br />
                         Канал проекта в Telegram:{' '}
-                        <Link href="https://t.me/poeticpraxis">
+                        <Link target="_blank" href="https://t.me/poeticpraxis">
                             @poeticpraxis
                         </Link>
-                    </Text>
-                    <Text isHidden={!isRusLang}>
+                        <br />
                         Сообщество в VK:{' '}
-                        <Link href="https://vk.com/poeticpraxis">
+                        <Link
+                            target="_blank"
+                            href="https://vk.com/poeticpraxis">
                             vk.com/poeticpraxis
                         </Link>
+                        <br />
+                        <Button
+                            _flat
+                            type="button"
+                            margin="16px 0"
+                            onClick={this.togglePayment}>
+                            {!isHiddenPayment
+                                ? 'поддержать проект'
+                                : 'В следующий раз 😅'}
+                        </Button>
+                        <br />
+                        {isHiddenPayment && (
+                            <Text>
+                                <iframe
+                                    src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0&targets-hint=&default-sum=2&button-text=11&payment-type-choice=on&hint=&successURL=&quickpay=shop&account=410014951905022"
+                                    width="300"
+                                    height="220"
+                                    frameborder="0"
+                                    allowtransparency="true"
+                                    scrolling="no"
+                                />
+                            </Text>
+                        )}
                     </Text>
                     <Text.Title id="images-engine">
                         {isRusLang
@@ -84,7 +117,9 @@ export default class About extends Component {
                     <Text isHidden={isRusLang}>
                         New technologies give us new possibilities and
                         instruments. "Images engine", created by russian poet{' '}
-                        <Link href="https://en.wikipedia.org/wiki/Sergei_Yesenin">
+                        <Link
+                            target="_blank"
+                            href="https://en.wikipedia.org/wiki/Sergei_Yesenin">
                             S.A. Yesenin
                         </Link>{' '}
                         , make from any words random pairs. It gives us
@@ -96,8 +131,10 @@ export default class About extends Component {
                     <Text isHidden={!isRusLang}>
                         Работает она очень просто. Напишите слова или вставьте
                         текст на странице{' '}
-                        <Link href="/images-engine">МАШИНА ОБРАЗОВ</Link> и
-                        нажмите на кнопку{' '}
+                        <Link target="_blank" href="/images-engine">
+                            МАШИНА ОБРАЗОВ
+                        </Link>{' '}
+                        и нажмите на кнопку{' '}
                         <Button _rounded _transparent type="button">
                             <Widgets _small />
                         </Button>
@@ -108,8 +145,10 @@ export default class About extends Component {
                     </Text>
                     <Text isHidden={isRusLang}>
                         How it works? Write words or paste text on the page{' '}
-                        <Link href="/images-engine">IMAGES ENGINE</Link> and
-                        push{' '}
+                        <Link target="_blank" href="/images-engine">
+                            IMAGES ENGINE
+                        </Link>{' '}
+                        and push{' '}
                         <Button _rounded _transparent type="button">
                             <Widgets _small />
                         </Button>
@@ -119,7 +158,10 @@ export default class About extends Component {
                     </Text>
                     <Text isHidden={!isRusLang}>
                         Все выбранные сочетания можно перенести в{' '}
-                        <Link href="/rhythmic">ПРОСОДИЮ</Link>, нажимая на{' '}
+                        <Link target="_blank" href="/rhythmic">
+                            ПРОСОДИЮ
+                        </Link>
+                        , нажимая на{' '}
                         <Button _flat _transparent type="button">
                             Посмотреть ритм <ArrowBack _small _rotate-left />
                         </Button>
@@ -127,7 +169,10 @@ export default class About extends Component {
                     </Text>
                     <Text isHidden={isRusLang}>
                         All favorite pairs you can transpose in{' '}
-                        <Link href="/rhythmic">PROSODY</Link>, by{' '}
+                        <Link target="_blank" href="/rhythmic">
+                            PROSODY
+                        </Link>
+                        , by{' '}
                         <Button _flat _transparent type="button">
                             See rhythm <ArrowBack _small _rotate-left />
                         </Button>{' '}
@@ -140,17 +185,21 @@ export default class About extends Component {
                         Ритм стихотворения - немаловажный аспект. Но ритм
                         существует не только в стихах, его можно встретить и в
                         ритмической прозе. На странице{' '}
-                        <Link href="/rhythmic">ПРОСОДИЯ</Link> можно исследовать
-                        текст. Редактор обозначает гласные буквы, но
-                        исследователь сам ставит акценты нажатием на букву.
-                        Попробуйте продолжить ниже:
+                        <Link target="_blank" href="/rhythmic">
+                            ПРОСОДИЯ
+                        </Link>{' '}
+                        можно исследовать текст. Редактор обозначает гласные
+                        буквы, но исследователь сам ставит акценты нажатием на
+                        букву. Попробуйте продолжить ниже:
                     </Text>
                     <Text isHidden={isRusLang}>
                         Rhythm in poetry - non-trivial aspect. On the page{' '}
-                        <Link href="/rhythmic">PROSODY</Link> you can research
-                        text. Editor marks syllables, but researcher marks
-                        stressed syllables yourself by clicking on letters. Try
-                        to continue it below:
+                        <Link target="_blank" href="/rhythmic">
+                            PROSODY
+                        </Link>{' '}
+                        you can research text. Editor marks syllables, but
+                        researcher marks stressed syllables yourself by clicking
+                        on letters. Try to continue it below:
                     </Text>
                     <Text.Wrapper>
                         <Workfield
@@ -205,7 +254,7 @@ export default class About extends Component {
                         instrument in your researching, for your creation.
                     </Text>
                     <Text.Title>
-                        {isRusLang ? 'Что дальше?' : 'What next?'}
+                        {isRusLang ? 'Что дальше?' : 'So, what next?'}
                     </Text.Title>
                     <Text isHidden={!isRusLang}>
                         К инструментам время от времени добавляются новые
@@ -217,23 +266,16 @@ export default class About extends Component {
                         give new opportunities. Just go research and create!
                     </Text>
                     <Footer>
-                        &copy; Макс А. Ю. 2016 - {new Date().getFullYear()}
+                        &copy;{' '}
+                        <Link
+                            target="_blank"
+                            href="https://vk.com/write-165098979">
+                            Макс А. Ю.
+                        </Link>{' '}
+                        2016 - {new Date().getFullYear()}
                     </Footer>
                 </List>
             </section>
         );
     }
 }
-
-/* Когда наступит время */
-/* <Text>
-    Если сайт для вас был полезен, можете его поддержать:
-    <iframe
-        src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0&targets-hint=&default-sum=&button-text=12&payment-type-choice=on&hint=&successURL=&quickpay=shop&account=410014951905022"
-        width="100%"
-        height="220"
-        frameborder="0"
-        allowtransparency="true"
-        scrolling="no"
-    />
-</Text> */

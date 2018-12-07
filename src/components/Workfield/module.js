@@ -1,4 +1,6 @@
 import { randomize, hashFunction } from '../../utils';
+
+const vowelsList = 'eyuioaуеыаоэёяиюäöüéàèùâêîôûïüÿìíòóúęąєў';
 /**
  *
  *
@@ -7,7 +9,8 @@ import { randomize, hashFunction } from '../../utils';
  * @returns {boolean}
  */
 export function isVowel(char) {
-    return /^[eyuioaуеыаоэёяию]$/.test(char.toLowerCase());
+    const vowels = new RegExp(`^[${vowelsList}]$`);
+    return vowels.test(char.toLowerCase());
 }
 /**
  *
@@ -17,7 +20,8 @@ export function isVowel(char) {
  * @returns {boolean}
  */
 export function vowelCount(word) {
-    const result = word.match(/[eyuioaуеыаоэёяию]/gi);
+    const vowels = new RegExp(`[${vowelsList}]`, 'gi');
+    const result = word.match(vowels);
     return result === null ? 0 : result.length;
 }
 /**
@@ -28,7 +32,9 @@ export function vowelCount(word) {
  * @returns {boolean}
  */
 export function isLetter(char) {
-    return /[a-zA-ZА-Яа-яёЁ]$/.test(char);
+    return /[a-zA-ZА-Яа-яёäöüéàèùâêîôûïüÿìíòóúęąєўЁÄÖÜÉÀÈÙÂÊÎÔÛÏÜŸÌÍÒÓÚĘĄЄЎ]$/.test(
+        char
+    );
 }
 /**
  *
@@ -189,7 +195,7 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
             let accents = [];
 
             let hashTokenId = '';
-
+            /* символ */
             if (isLetter(token)) {
                 idToken = `w${index}${randomize()}`;
 
@@ -230,12 +236,13 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                             isInDictionary(string, stringsDictionary) ||
                             isInDictionary(token, wordsDictionary)
                         ) {
-                            accent =
-                                isAccented(
-                                    string,
-                                    stringIndex,
-                                    stringsDictionary
-                                ) || isAccented(token, index, wordsDictionary);
+                            accent = isInDictionary(string, stringsDictionary)
+                                ? isAccented(
+                                      string,
+                                      stringIndex,
+                                      stringsDictionary
+                                  )
+                                : isAccented(token, index, wordsDictionary);
                         } else {
                             accent =
                                 isAccentedByRegExp('ёЁ', char) ||
@@ -296,21 +303,21 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
             } else {
                 hashTokenId = hashFunction(token, ++interator);
 
+                idToken = `${idString}${idToken}`;
+
                 if (isSpace(token)) {
                     type = 'sp';
 
-                    idToken = `sp${index}${randomize()}`;
+                    idToken = `${idString}${type}${index}${randomize()}`;
                 }
 
                 if (isPause(token)) {
                     type = 'p';
 
-                    idToken = `p${index}${randomize()}`;
+                    idToken = `${idString}${type}${index}${randomize()}`;
 
                     soundGramma.push(idToken);
                 }
-
-                idToken = `${idString}${idToken}`;
 
                 elements[idToken] = {
                     type,

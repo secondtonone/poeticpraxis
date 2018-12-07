@@ -257,7 +257,7 @@ export default class Workfield extends Component {
         const soundGrammaLength = soundGramma.length;
 
         for (let index = 0; index < soundGrammaLength; index++) {
-            const signId = [index];
+            const signId = soundGramma[index];
 
             let accent = 0;
 

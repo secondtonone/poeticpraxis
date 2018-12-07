@@ -5,31 +5,33 @@ import '../public/fonts/fonts.css';
 
 import store from './store';
 
-import runtime from 'offline-plugin/runtime';
-
 import analyticsInit from './modules/analytics';
 import { delay } from './utils';
 
 import App from './containers/App';
 
 if (process.env.NODE_ENV === 'development') {
-    require('preact/devtools');
+    import('preact/devtools');
 }
 
 if (process.env.NODE_ENV === 'production') {
-    runtime.install({
-        // When an update is ready, tell ServiceWorker to take control immediately:
-        onUpdateReady() {
-            console.log('update ready');
-            runtime.applyUpdate();
-        },
+    (async () => {
+        const runtime = await import('offline-plugin/runtime');
 
-        // Reload to get the new version:
-        onUpdated() {
-            console.log('updated');
-            location.reload();
-        }
-    });
+        runtime.install({
+            // When an update is ready, tell ServiceWorker to take control immediately:
+            onUpdateReady() {
+                console.log('update ready');
+                runtime.applyUpdate();
+            },
+
+            // Reload to get the new version:
+            onUpdated() {
+                console.log('updated');
+                location.reload();
+            }
+        });
+    })();
 }
 
 const run = (Component) => {

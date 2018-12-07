@@ -217,7 +217,8 @@ export default class Rhythmic extends Component {
             setWordsDictionary,
             rhythmicState: { text, stringsDictionary },
             wordsDictionary,
-            lang = 'ru'
+            lang = 'ru',
+            variant = 'light'
         },
         {
             renderCaesuraButtonStyle,
@@ -272,32 +273,29 @@ export default class Rhythmic extends Component {
                 <LeftedLayout>
                     {currentView === 'rhythmic' && (
                         <div>
-                            {isDevice &&
-                                isFocused && (
-                                    <StringPauseButtonMobile
-                                        _rounded
-                                        _white
-                                        _big
-                                        type="button"
-                                        onClick={this.makeCaesura}
-                                        title="Цезура">
-                                        <KeyboardCapslock _big />
-                                    </StringPauseButtonMobile>
-                                )}
-                            {isDevice &&
-                                !isFocused &&
-                                isToolbarHidden && (
-                                    <ToolbarButton
-                                        type="button"
-                                        _rounded
-                                        _main
-                                        _black
-                                        _animated-up
-                                        onClick={this.triggerToolbar}
-                                        title="Инструменты">
-                                        <ViewDay _big />
-                                    </ToolbarButton>
-                                )}
+                            {isDevice && isFocused && (
+                                <StringPauseButtonMobile
+                                    _rounded
+                                    _white
+                                    _big
+                                    type="button"
+                                    onClick={this.makeCaesura}
+                                    title="Цезура">
+                                    <KeyboardCapslock _big />
+                                </StringPauseButtonMobile>
+                            )}
+                            {isDevice && !isFocused && isToolbarHidden && (
+                                <ToolbarButton
+                                    type="button"
+                                    _rounded
+                                    _main
+                                    _black
+                                    _animated-up
+                                    onClick={this.triggerToolbar}
+                                    title="Инструменты">
+                                    <ViewDay _big />
+                                </ToolbarButton>
+                            )}
                             <List _animated>
                                 {!isDevice && (
                                     <CopyButton
@@ -329,7 +327,7 @@ export default class Rhythmic extends Component {
                                     focusHandler={this.focusHandler}
                                     setWordsDictionary={setWordsDictionary}
                                     wordsDictionary={wordsDictionary}
-                                    stringDictionary={stringsDictionary}
+                                    stringsDictionary={stringsDictionary}
                                     toParent={this.getDataFromWorkfield}
                                     placeHolder={`${
                                         translations[lang].placeholders[
@@ -407,7 +405,11 @@ export default class Rhythmic extends Component {
                     )}
                     {currentView === 'melody' && (
                         <List _animated>
-                            <Melody lang={lang} rhytmicState={rhytmicState} />
+                            <Melody
+                                lang={lang}
+                                variant={variant}
+                                rhytmicState={rhytmicState}
+                            />
                         </List>
                     )}
                 </LeftedLayout>

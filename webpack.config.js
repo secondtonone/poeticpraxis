@@ -54,7 +54,7 @@ module.exports = {
                 use: ['ejs-loader?variable=data']
             }, */
             {
-                test: /\.(png|jpg|jpeg|gif)$/,
+                test: /\.(png|jpg|jpeg|gif|mp3|ogg)$/,
                 use: ['file-loader']
             },
             {
@@ -105,7 +105,8 @@ module.exports = {
         }),
         new ScriptExtHtmlWebpackPlugin({
             defer: /app/,
-            defer: /\.js$/
+            defer: /\.js$/,
+            preload: /\.mp3$/
         }),
         new CopyWebpackPlugin([
             {

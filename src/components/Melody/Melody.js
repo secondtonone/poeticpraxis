@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 
 import { translations } from './translations';
 
+import theme from '../../styles/theme';
+
 import {
     getToneModule,
     Tone,
@@ -10,15 +12,13 @@ import {
     mapLetterNote
 } from '../../modules/tone';
 
-import Button from '../../components/Button';
+import { recorder, setUpRecorder } from '../../modules/mediaRecorder';
+
 import Loader from '../../components/Loader';
-import Range from '../../components/Range';
+import Canvas from '../../components/Canvas';
+import Player from '../../components/Player';
 
-import { Container, LoaderConatiner } from './styled';
-
-import PlayIcon from '../../components/IconSVG/PlayIcon';
-import ReplayIcon from '../../components/IconSVG/ReplayIcon';
-import PauseIcon from '../../components/IconSVG/PauseIcon';
+import { LoaderConatiner, LinkConatiner, DownloadLink } from './styled';
 
 export default class Melody extends Component {
     constructor(props) {
@@ -26,15 +26,32 @@ export default class Melody extends Component {
 
         this.state = {
             completeLoading: false,
-            isPlaying: false,
             progress: 0,
-            bpm: 80
+            bpm: 80,
+            music: [],
+            recorded: false
         };
 
+        this.verticalOffset = 100;
+
+        this.containerWidth = 666;
+
         this.sliderTimer = null;
+
+        this.canvas = null;
+
+        this.canvasContainer = null;
+
+        this.canvasTimer = null;
+
+        this.downloadableMelody = null;
+
+        this.currentNote = 0;
     }
 
     async componentDidMount() {
+        window.scrollTo(0, 0);
+
         if (!Tone) {
             await getToneModule();
         }
@@ -45,94 +62,113 @@ export default class Melody extends Component {
             Instrument.toMaster();
         }
 
+        setUpRecorder(Instrument, (result) => {
+            this.setState({
+                recorded: true
+            });
+            this.downloadableMelody = result;
+        });
+
         this.setState({
             completeLoading: true
         });
 
-        this.setUp();
+        this.setUpPlayer();
 
-        this.makeLetterGramma();
+        this.makeLetterGramma(2);
+
+        this.canvasTimer = requestAnimationFrame(this.drawNotes);
     }
 
-    setUp = () => {
+    setUpPlayer = () => {
         Tone.Transport.loopEnd = 1;
         Tone.Transport.loop = true;
 
         Tone.Transport.bpm.value = parseInt(this.state.bpm);
     };
 
-    makeLetterGramma = () => {
+    makeLetterGramma = (notesCount) => {
         let music = [];
         const { strings, elements, orderStrings } = this.props.rhytmicState;
 
         let time = 0;
 
-        orderStrings.forEach((stringId) => {
-            strings[stringId].order.forEach((tokenId) => {
+        orderStrings.forEach((stringId, index) => {
+            strings[stringId].soundGramma.forEach((tokenId) => {
                 let duration = 0.1;
+                let vowelNotes = [];
+
+                if (elements[tokenId].type === 'p') {
+                    time = time + duration;
+                }
                 if (elements[tokenId].type === 'v') {
+                    const isAccented = elements[tokenId].accent === 1;
                     const char = elements[tokenId].char.toLowerCase();
 
                     const notes = mapLetterNote[char];
 
-                    if (elements[tokenId].accent === 1) {
+                    if (isAccented) {
                         duration = 0.15;
-                    }
 
-                    notes.forEach((note) => {
-                        music.push({
-                            note,
-                            time: time.toFixed(1),
+                        vowelNotes.push({
+                            note: notes.tone,
                             duration
                         });
+                    }
+
+                    notes.main.forEach((note, index) => {
+                        if (index < notesCount) {
+                            vowelNotes.push({
+                                note,
+                                duration,
+                                notation: Tone.Frequency(note, 'hz').toNote()
+                            });
+                        }
                     });
 
-                    time = time + 0.2;
+                    music.push({
+                        string: stringId,
+                        isAccented,
+                        char: char,
+                        time: time.toFixed(2),
+                        vowelNotes,
+                        index
+                    });
+
+                    time = time + duration;
                 }
             });
         });
 
-        /* Tone.Transport.schedule((time) => {
-            Instrument.triggerAttackRelease('659.26hz', '0.1', time);
-        }, 0);
-        Tone.Transport.schedule((time) => {
-            Instrument.triggerAttackRelease('F4', '0.15', time);
-        }, '0.2');
+        this.setState({
+            music
+        });
 
-        Tone.Transport.schedule((time) => {
-            Instrument.triggerAttackRelease('A4', '0.1', time);
-        }, '0.45');
+        Tone.Transport.loopEnd = Math.round(time + 0.1);
 
-        Tone.Transport.schedule((time) => {
-            Instrument.triggerAttackRelease('E4', '0.1', time);
-        }, '0.65'); */
+        let part = new Tone.Part((time, notes) => {
+            const vowelNotes = notes.vowelNotes;
+            this.currentNote = notes.index;
 
-        /* music = [
-            { time: 0, note: '659.26hz', duration: '0.1' },
-            { time: 0.4, note: 'F4', duration: '0.15' },
-            { time: 0.8, note: 'A4', duration: '0.1' },
-            { time: 2, note: 'E4', duration: '0.1' }
-        ]; */
-        
-        Tone.Transport.loopEnd = Math.round(time + 1);
-
-        let part = new Tone.Part((time, note) => {
-            Instrument.triggerAttackRelease(note.note, note.duration, time);
-        }, music).start(0);
+            vowelNotes.forEach((note) => {
+                Instrument.triggerAttackRelease(
+                    note.note,
+                    note.duration,
+                    time.toFixed(2)
+                );
+            });
+        }, music).start('+0.1');
     };
 
     componentWillUnmount() {
-        if (this.state.isPlaying) {
-            this.stop();
-        }
+        cancelAnimationFrame(this.canvasTimer);
     }
 
     play = () => {
-        this.setState({
-            isPlaying: true
-        });
         Tone.Transport.start();
+        recorder.start();
 
+        this.canvasTimer = requestAnimationFrame(this.drawNotes);
         this.sliderTimer = requestAnimationFrame(this.calculateProgress);
     };
 
@@ -149,11 +185,8 @@ export default class Melody extends Component {
 
     stop = () => {
         cancelAnimationFrame(this.sliderTimer);
-
-        this.setState({
-            isPlaying: false
-        });
-
+        cancelAnimationFrame(this.canvasTimer);
+        recorder.stop();
         Tone.Transport.stop();
     };
 
@@ -165,75 +198,186 @@ export default class Melody extends Component {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     };
 
-    repeat = () => {
-        this.stop();
-        this.play();
+    drawNotes = () => {
+        const ctx = this.canvas.getContext('2d');
+
+        const music = this.state.music;
+
+        const canvasWidth = this.canvas.offsetWidth;
+
+        let verticalOffset = this.verticalOffset;
+
+        ctx.textAlign = 'center';
+        ctx.font = '18px Montserrat';
+        ctx.fillStyle = theme[this.props.variant].secondColor;
+
+        let horizontal = 0;
+
+        let vertical = 0;
+
+        const drawNote = (note, index) => {
+            let notes = '';
+            let frequents = '';
+            let string = note.string;
+
+            note.vowelNotes.forEach((note) => {
+                if (note.notation) {
+                    notes = `${notes}${note.notation}`;
+                    frequents = `${frequents}  ${note.note}hz`;
+                }
+            });
+
+            const char = note.char;
+
+            const isAccented = note.isAccented;
+
+            if (
+                horizontal >= canvasWidth - verticalOffset ||
+                (lastString && !(string === lastString))
+            ) {
+                vertical = vertical + verticalOffset;
+                horizontal = 0;
+            }
+
+            this.drawCell({
+                ctx,
+                note: { notes, frequents, isAccented, char },
+                horizontal,
+                vertical
+            });
+
+            lastString = string;
+
+            horizontal = horizontal + verticalOffset;
+        };
+
+        const currentNote = music[this.currentNote];
+
+        console.log(currentNote);
+
+        // this.drawCell({
+        //     ctx,
+        //     note: { notes, frequents, isAccented, char },
+        //     horizontal,
+        //     vertical
+        // });
+
+        drawNote(currentNote);
+
+        vertical = vertical + verticalOffset;
+
+        let lastString = '';
+
+        music.forEach(drawNote);
+
+        cancelAnimationFrame(this.canvasTimer);
+        this.canvasTimer = requestAnimationFrame(this.drawNotes);
     };
 
-    render({ lang = 'ru' }, { completeLoading, isPlaying, bpm, progress }) {
-        if (!completeLoading) {
-            return (
-                <LoaderConatiner>
-                    <Loader />
-                </LoaderConatiner>
-            );
+    drawCell = ({
+        ctx,
+        note: { isAccented, char, frequents, notes },
+        horizontal,
+        vertical
+    }) => {
+        vertical = vertical + 20;
+        if (isAccented) {
+            ctx.fillStyle = theme[this.props.variant].accentColor;
         }
+        ctx.fillText(char, horizontal + 60, vertical);
+        ctx.font = '10px Montserrat';
+        ctx.fillStyle = theme[this.props.variant].grayColor;
+        //ctx.fillText('Т', horizontal + 50, vertical);
+        ctx.font = '20px Montserrat';
+        ctx.fillStyle = theme[this.props.variant].secondColor;
+        vertical = vertical + 20;
+        ctx.fillText(notes, horizontal + 60, vertical);
+        ctx.font = '10px Montserrat';
+        ctx.fillStyle = theme[this.props.variant].grayColor;
+        vertical = vertical + 12;
+        ctx.fillText(frequents, horizontal + 60, vertical);
+        ctx.font = '18px Montserrat';
+        ctx.fillStyle = theme[this.props.variant].secondColor;
+    };
 
+    getHeightCanvas = () => {
+        const { strings, orderStrings } = this.props.rhytmicState;
+
+        let height = 0;
+
+        let width =
+            window.innerWidth <= this.containerWidth
+                ? window.innerWidth
+                : this.containerWidth;
+
+        orderStrings.forEach((stringId) => {
+            height =
+                height +
+                Math.ceil((strings[stringId].soundGramma.length * 90) / width) *
+                    this.verticalOffset;
+        });
+
+        return height;
+    };
+
+    downloadNote = (e) => {
+        e.target.href = this.canvas.toDataURL('image/jpg');
+    };
+
+    downloadMelody = (e) => {
+        e.target.href = this.downloadableMelody;
+    };
+
+    render(
+        { lang = 'ru', variant },
+        { completeLoading, bpm, progress, recorded }
+    ) {
         return (
-            <div>
-                <Container>
-                    <Button
-                        _rounded
-                        _transparent
-                        disabled={!completeLoading}
-                        type="button"
-                        onClick={this.repeat}
-                        title="Играть заново">
-                        <ReplayIcon _big />
-                    </Button>
-                    {!isPlaying && (
-                        <Button
-                            _rounded
-                            _transparent
-                            disabled={!completeLoading}
-                            type="button"
-                            onClick={this.play}
-                            title="Играть">
-                            <PlayIcon _big />
-                        </Button>
-                    )}
-                    {isPlaying && (
-                        <Button
-                            _rounded
-                            _transparent
-                            disabled={!completeLoading}
-                            type="button"
-                            onClick={this.stop}
-                            title="Стоп">
-                            <PauseIcon _big />
-                        </Button>
-                    )}
+            <div
+                ref={(ref) => {
+                    this.canvasContainer = ref;
+                }}>
+                {completeLoading ? (
                     <div>
-                        BPM
-                        <Range
-                            type="range"
-                            value={bpm}
-                            min="20"
-                            max="200"
-                            onChange={this.setBPM}
+                        <Player
+                            lang={lang}
+                            play={this.play}
+                            stop={this.stop}
+                            progress={progress}
+                            bpm={bpm}
+                            setBPM={this.setBPM}
                         />
+                        <LinkConatiner>
+                            <DownloadLink
+                                download={'notes'}
+                                href=""
+                                onClick={this.downloadNote}>
+                                Скачать ноты
+                            </DownloadLink>
+
+                            {recorded && (
+                                <DownloadLink
+                                    download={'melody'}
+                                    href=""
+                                    onClick={this.downloadMelody}>
+                                    Скачать мелодию
+                                </DownloadLink>
+                            )}
+                        </LinkConatiner>
                     </div>
-                </Container>
-                <div>
-                    <Range
-                        hideThumb
-                        type="range"
-                        value={progress}
-                        min="0"
-                        max="100"
-                        disabled
-                    />
-                </div>
+                ) : (
+                    <LoaderConatiner>
+                        <Loader />
+                    </LoaderConatiner>
+                )}
+
+                <Canvas
+                    background={theme[variant].primaryColor}
+                    getRef={(ref) => {
+                        this.canvas = ref;
+                    }}
+                    height={this.getHeightCanvas()}
+                />
             </div>
         );
     }
