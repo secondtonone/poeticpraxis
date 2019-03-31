@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -55,9 +55,9 @@ NavMenu.Title = styled.div`
 
 const activeClassName = 'menu__item_active';
 
-const StyledNavLink = styled(NavLink).attrs({
+const StyledNavLink = styled(NavLink).attrs( () => ({
     activeClassName
-})`
+}))`
     color: ${(props) => props.theme.secondColor};
     fill: ${(props) => props.theme.secondColor};
 

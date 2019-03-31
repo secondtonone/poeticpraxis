@@ -1,6 +1,7 @@
-import { h, Component } from 'preact';
+import React from 'react';
+import { hot } from 'react-hot-loader/root';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'preact-redux';
+import { Provider } from 'react-redux';
 
 import Routes from '../routes';
 
@@ -12,4 +13,4 @@ const App = ({ store }) => (
     </Provider>
 );
 
-export default App;
+export default hot(App);

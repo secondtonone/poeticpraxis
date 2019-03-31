@@ -1,4 +1,4 @@
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 import { setEngineState, sharingText } from './ImagesEngineActions';
 import { changeTheme } from '../../components/Layout/LayoutActions';
 

@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 
 import { MainContent, Page } from './styled';
 import { ThemeProvider } from 'styled-components';
@@ -37,7 +37,11 @@ export default class Layout extends Component {
         }
     }
 
-    render({ children, variant, lang }) {
+    render() {
+        const {
+            children, variant, lang
+        } = this.props;
+                
         return (
             <ThemeProvider theme={theme[variant]}>
                 <Page _animated>
@@ -50,7 +54,6 @@ export default class Layout extends Component {
                         </InlineContainer>
                     </Header>
                     <MainContent>{children}</MainContent>
-                    
                 </Page>
             </ThemeProvider>
         );

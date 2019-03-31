@@ -26,7 +26,8 @@ export const StyledMatchList = styled.ul`
 StyledMatchList.Item = styled.li`
     position: relative;
     padding: 8px 8px 8px 54px;
-    width: 50%;
+    width: ${(props) =>
+        props.compact ? '50%' : '100%'};
     display: inline-block;
 
 

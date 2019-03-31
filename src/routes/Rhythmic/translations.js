@@ -4,7 +4,10 @@ const ru = {
     },
     messages: {
         COPIED: 'Текст скопирован в буфер.',
-        WRONG: 'Проверьте ссылку. Неверные параметры.'
+        WRONG: 'Проверьте ссылку. Неверные параметры.',
+        HOW_WORKS: 'Как это работает?',
+        LEARN_MORE: 'Узнать больше.',
+        LINK_COPIED: 'Ссылка скопирована в буфер.'
     },
     rhythmicMenu: {
         RHYTHMICS: 'Ритмика',
@@ -18,7 +21,10 @@ const en = {
     },
     messages: {
         COPIED: 'Text copied to clipboard.',
-        WRONG: 'Wrong parameters. Check the link.'
+        WRONG: 'Wrong parameters. Check the link.',
+        HOW_WORKS: 'How it works?',
+        LEARN_MORE: 'Learn more.',
+        LINK_COPIED: 'Link copied to clipboard.'
     },
     rhythmicMenu: {
         RHYTHMICS: 'Rhythmics',

@@ -11,7 +11,7 @@ const MainContent = styled.main`
     }
 `;
 
-const Page = styled.div.attrs({ className: withElements })`
+const Page = styled.div.attrs((props) => ({ className: withElements(props) }))`
     position: absolute;
     top: 0;
     z-index: 1000;

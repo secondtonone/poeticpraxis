@@ -179,7 +179,7 @@ const FieldLabel = styled.label`
     ${(props) => (props.isHidden ? Hidden : '')};
 `;
 
-const List = styled.div.attrs({ className: withElements })`
+const List = styled.div.attrs((props) => ({ className: withElements(props) }))`
     position: relative;
     padding: 32px 64px 80px;
     max-width: 794px;
@@ -265,6 +265,12 @@ const HiddenTextarea = styled(SimpleTextarea)`
     left: 0;
 `;
 
+const SimplList = styled.ul``;
+
+SimplList.Item = styled.li`
+    padding: 10px 0 0;
+`;
+
 export {
     FieldEditableArea,
     DropdownList,
@@ -283,5 +289,6 @@ export {
     List,
     InlineContainer,
     MobileHiddenContainer,
-    HiddenTextarea
+    HiddenTextarea,
+    SimplList
 };

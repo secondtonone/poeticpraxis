@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React from 'react';
 import styled from 'styled-components';
 
 import theme from '../../styles/theme';
@@ -6,7 +6,9 @@ import { AnimationUp } from '../../styles/components';
 import { withElements } from '../../styles/helpers';
 import { hexToRgb } from '../../utils';
 
-const StyledButton = styled.button.attrs({ className: withElements })`
+const StyledButton = styled.button.attrs((props) => ({
+    className: withElements(props)
+}))`
     &._rounded {
         background-color: /* ${(props) =>
             props.theme.primaryColor} */ transparent;
@@ -146,7 +148,7 @@ const StyledButton = styled.button.attrs({ className: withElements })`
     &._light-gray {
         color: ${(props) => props.theme.secondColor};
         fill: ${(props) => props.theme.secondColor};
-        background-color: rgba(162, 162, 162, 0.1);
+        background-color: ${(props) => props.theme.lightGray};
     }
 
     &._long {
@@ -180,6 +182,10 @@ const StyledButton = styled.button.attrs({ className: withElements })`
     &._white-icon {
         color: ${theme.primaryWhite};
         fill: ${theme.primaryWhite};
+    }
+    &._black-icon {
+        color: ${theme.secondWhite};
+        fill: ${theme.secondWhite};
     }
     &._animated-up {
         ${AnimationUp};

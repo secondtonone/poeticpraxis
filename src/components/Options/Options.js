@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import theme from '../../styles/theme';
@@ -9,7 +9,6 @@ import ArrowDropDown from '../IconSVG/ArrowDropDown';
 const Label = styled.label`
     color: ${(props) => props.theme.secondColor};
 `;
-
 
 const Container = styled.div`
     position: relative;
@@ -69,7 +68,9 @@ class Options extends Component {
         });
     };
 
-    render(props, state) {
+    render() {
+        const props = this.props;
+        const state = this.state;
         return (
             <Container
                 className={props.className}
@@ -80,7 +81,7 @@ class Options extends Component {
                     this.toggleDropdown();
                 }}>
                 {props.label && (
-                    <Label for={props.id} class="input-container_label">
+                    <Label htmlFor={props.id} class="input-container_label">
                         {props.label}
                     </Label>
                 )}
@@ -100,10 +101,11 @@ class Options extends Component {
                 </StyledSelect>
                 {state.isOpen && (
                     <DropdownList>
-                        {props.options.map((option) => {
+                        {props.options.map((option, index) => {
                             if (!option.disabled) {
                                 return (
                                     <DropdownList.ListItem
+                                        key={`opt-${index}`}
                                         active={option.value === props.value}
                                         onMouseDown={(e) => {
                                             props.onChange(option.value);

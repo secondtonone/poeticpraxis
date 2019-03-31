@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Icon from '../Icon';
 
-export default class Widgets extends Component {
+export default class DownloadIcon extends Component {
     render(props) {
         return (
             <Icon {...props}>
@@ -10,7 +10,7 @@ export default class Widgets extends Component {
                     width="24"
                     height="24"
                     viewBox="0 0 24 24">
-                    <path d="M13 13v8h8v-8h-8zM3 21h8v-8H3v8zM3 3v8h8V3H3zm13.66-1.31L11 7.34 16.66 13l5.66-5.66-5.66-5.65z" />
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
                     <path d="M0 0h24v24H0z" fill="none" />
                 </svg>
             </Icon>

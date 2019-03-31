@@ -1,24 +1,27 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 
 import { translations } from './translations';
 
 import theme from '../../styles/theme';
 
-import {
-    getToneModule,
-    Tone,
-    getInstrument,
-    Instrument,
-    mapLetterNote
-} from '../../modules/tone';
-
+import { Tone, Instrument, mapLetterNote } from '../../modules/tone';
+import { drawNotes } from '../../modules/drawing';
 import { recorder, setUpRecorder } from '../../modules/mediaRecorder';
 
-import Loader from '../../components/Loader';
-import Canvas from '../../components/Canvas';
-import Player from '../../components/Player';
+import Loader from '../Loader';
+import Canvas from '../Canvas';
+import Player from '../Player';
+import Button from '../Button';
+import Info from '../Info';
+import DownloadIcon from '../IconSVG/DownloadIcon';
 
-import { LoaderConatiner, LinkConatiner, DownloadLink } from './styled';
+import {
+    LoaderConatiner,
+    LinkConatiner,
+    DownloadLink,
+    Container,
+    Title
+} from './styled';
 
 export default class Melody extends Component {
     constructor(props) {
@@ -29,7 +32,8 @@ export default class Melody extends Component {
             progress: 0,
             bpm: 80,
             music: [],
-            recorded: false
+            recorded: false,
+            recording: false
         };
 
         this.verticalOffset = 100;
@@ -42,32 +46,45 @@ export default class Melody extends Component {
 
         this.canvasContainer = null;
 
-        this.canvasTimer = null;
-
         this.downloadableMelody = null;
 
-        this.currentNote = 0;
+        this.ctx = null;
+
+        this.linkGetNotes = null;
+
+        this.linkGetMelody = null;
     }
 
     async componentDidMount() {
         window.scrollTo(0, 0);
 
-        if (!Tone) {
-            await getToneModule();
-        }
+        const canvasWidth = this.canvas.offsetWidth;
 
-        if (!Instrument) {
-            await getInstrument('piano');
+        let verticalOffset = this.verticalOffset;
 
+        const {
+            variant,
+            rhytmicState: { strings, elements, orderStrings }
+        } = this.props;
+
+        if (Instrument) {
             Instrument.toMaster();
         }
 
-        setUpRecorder(Instrument, (result) => {
-            this.setState({
-                recorded: true
-            });
-            this.downloadableMelody = result;
-        });
+        setUpRecorder(
+            Instrument,
+            () => {
+                this.setState({
+                    recording: true
+                });
+            },
+            (result) => {
+                this.setState({
+                    recorded: true
+                });
+                this.downloadableMelody = result;
+            }
+        );
 
         this.setState({
             completeLoading: true
@@ -75,9 +92,32 @@ export default class Melody extends Component {
 
         this.setUpPlayer();
 
-        this.makeLetterGramma(2);
+        const { music, time } = this.makeLetterGramma({
+            notesCount: 2,
+            strings,
+            elements,
+            orderStrings
+        });
 
-        this.canvasTimer = requestAnimationFrame(this.drawNotes);
+        this.setState({
+            music
+        });
+
+        Tone.Transport.loopEnd = Math.round(time + 0.5);
+
+        new Tone.Part(this.partCallback, music).start('+0.1');
+
+        this.ctx = this.canvas.getContext('2d');
+
+        drawNotes({
+            ctx: this.ctx,
+            music,
+            variant,
+            canvasWidth,
+            verticalOffset
+        });
+
+        console.log(this.state.music);
     }
 
     setUpPlayer = () => {
@@ -87,13 +127,36 @@ export default class Melody extends Component {
         Tone.Transport.bpm.value = parseInt(this.state.bpm);
     };
 
-    makeLetterGramma = (notesCount) => {
+    partCallback = (time, notes) => {
+        const vowelNotes = notes.vowelNotes;
+        const { music, recorded, recording } = this.state;
+        const lastSoundIndex = music[music.length - 1].index;
+
+        if (!notes.index && recorder && !recording) {
+            recorder.start();
+        }
+
+        vowelNotes.forEach((note) => {
+            Instrument.triggerAttackRelease(
+                note.note,
+                note.duration,
+                time.toFixed(2)
+            );
+        });
+
+        if (notes.index === lastSoundIndex && recorder && !recorded) {
+            recorder.stop();
+        }
+    };
+
+    makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
         let music = [];
-        const { strings, elements, orderStrings } = this.props.rhytmicState;
 
         let time = 0;
 
-        orderStrings.forEach((stringId, index) => {
+        let index = 0;
+
+        orderStrings.forEach((stringId) => {
             strings[stringId].soundGramma.forEach((tokenId) => {
                 let duration = 0.1;
                 let vowelNotes = [];
@@ -108,7 +171,7 @@ export default class Melody extends Component {
                     const notes = mapLetterNote[char];
 
                     if (isAccented) {
-                        duration = 0.15;
+                        duration = 0.3;
 
                         vowelNotes.push({
                             note: notes.tone,
@@ -135,40 +198,23 @@ export default class Melody extends Component {
                         index
                     });
 
+                    ++index;
+
                     time = time + duration;
                 }
             });
         });
 
-        this.setState({
-            music
-        });
-
-        Tone.Transport.loopEnd = Math.round(time + 0.1);
-
-        let part = new Tone.Part((time, notes) => {
-            const vowelNotes = notes.vowelNotes;
-            this.currentNote = notes.index;
-
-            vowelNotes.forEach((note) => {
-                Instrument.triggerAttackRelease(
-                    note.note,
-                    note.duration,
-                    time.toFixed(2)
-                );
-            });
-        }, music).start('+0.1');
+        return { music, time };
     };
 
     componentWillUnmount() {
-        cancelAnimationFrame(this.canvasTimer);
+        cancelAnimationFrame(this.sliderTimer);
     }
 
     play = () => {
         Tone.Transport.start();
-        recorder.start();
 
-        this.canvasTimer = requestAnimationFrame(this.drawNotes);
         this.sliderTimer = requestAnimationFrame(this.calculateProgress);
     };
 
@@ -179,14 +225,12 @@ export default class Melody extends Component {
                 100
             ).toFixed(2)
         });
-
         this.sliderTimer = requestAnimationFrame(this.calculateProgress);
     };
 
     stop = () => {
         cancelAnimationFrame(this.sliderTimer);
-        cancelAnimationFrame(this.canvasTimer);
-        recorder.stop();
+
         Tone.Transport.stop();
     };
 
@@ -198,106 +242,11 @@ export default class Melody extends Component {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     };
 
-    drawNotes = () => {
-        const ctx = this.canvas.getContext('2d');
-
-        const music = this.state.music;
-
-        const canvasWidth = this.canvas.offsetWidth;
-
-        let verticalOffset = this.verticalOffset;
-
-        ctx.textAlign = 'center';
-        ctx.font = '18px Montserrat';
-        ctx.fillStyle = theme[this.props.variant].secondColor;
-
-        let horizontal = 0;
-
-        let vertical = 0;
-
-        const drawNote = (note, index) => {
-            let notes = '';
-            let frequents = '';
-            let string = note.string;
-
-            note.vowelNotes.forEach((note) => {
-                if (note.notation) {
-                    notes = `${notes}${note.notation}`;
-                    frequents = `${frequents}  ${note.note}hz`;
-                }
-            });
-
-            const char = note.char;
-
-            const isAccented = note.isAccented;
-
-            if (
-                horizontal >= canvasWidth - verticalOffset ||
-                (lastString && !(string === lastString))
-            ) {
-                vertical = vertical + verticalOffset;
-                horizontal = 0;
-            }
-
-            this.drawCell({
-                ctx,
-                note: { notes, frequents, isAccented, char },
-                horizontal,
-                vertical
-            });
-
-            lastString = string;
-
-            horizontal = horizontal + verticalOffset;
-        };
-
-        const currentNote = music[this.currentNote];
-
-        console.log(currentNote);
-
-        // this.drawCell({
-        //     ctx,
-        //     note: { notes, frequents, isAccented, char },
-        //     horizontal,
-        //     vertical
-        // });
-
-        drawNote(currentNote);
-
-        vertical = vertical + verticalOffset;
-
-        let lastString = '';
-
-        music.forEach(drawNote);
-
-        cancelAnimationFrame(this.canvasTimer);
-        this.canvasTimer = requestAnimationFrame(this.drawNotes);
-    };
-
-    drawCell = ({
-        ctx,
-        note: { isAccented, char, frequents, notes },
-        horizontal,
-        vertical
-    }) => {
-        vertical = vertical + 20;
-        if (isAccented) {
-            ctx.fillStyle = theme[this.props.variant].accentColor;
-        }
-        ctx.fillText(char, horizontal + 60, vertical);
-        ctx.font = '10px Montserrat';
-        ctx.fillStyle = theme[this.props.variant].grayColor;
-        //ctx.fillText('Т', horizontal + 50, vertical);
-        ctx.font = '20px Montserrat';
-        ctx.fillStyle = theme[this.props.variant].secondColor;
-        vertical = vertical + 20;
-        ctx.fillText(notes, horizontal + 60, vertical);
-        ctx.font = '10px Montserrat';
-        ctx.fillStyle = theme[this.props.variant].grayColor;
-        vertical = vertical + 12;
-        ctx.fillText(frequents, horizontal + 60, vertical);
-        ctx.font = '18px Montserrat';
-        ctx.fillStyle = theme[this.props.variant].secondColor;
+    createNewCtx = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = this.canvas.width;
+        canvas.height = this.canvas.height;
+        return canvas.getContext('2d');
     };
 
     getHeightCanvas = () => {
@@ -313,7 +262,11 @@ export default class Melody extends Component {
         orderStrings.forEach((stringId) => {
             height =
                 height +
-                Math.ceil((strings[stringId].soundGramma.length * 90) / width) *
+                Math.ceil(
+                    (strings[stringId].soundGramma.length * 90 +
+                        this.verticalOffset) /
+                        width
+                ) *
                     this.verticalOffset;
         });
 
@@ -321,17 +274,18 @@ export default class Melody extends Component {
     };
 
     downloadNote = (e) => {
-        e.target.href = this.canvas.toDataURL('image/jpg');
+        this.linkGetNotes.href = this.canvas.toDataURL('image/jpg');
     };
 
     downloadMelody = (e) => {
         e.target.href = this.downloadableMelody;
     };
 
-    render(
-        { lang = 'ru', variant },
-        { completeLoading, bpm, progress, recorded }
-    ) {
+    render() {
+
+        const { lang = 'ru', variant } = this.props;
+        const { completeLoading, bpm, progress, recorded } = this.state;
+
         return (
             <div
                 ref={(ref) => {
@@ -339,30 +293,56 @@ export default class Melody extends Component {
                 }}>
                 {completeLoading ? (
                     <div>
-                        <Player
-                            lang={lang}
-                            play={this.play}
-                            stop={this.stop}
-                            progress={progress}
-                            bpm={bpm}
-                            setBPM={this.setBPM}
-                        />
-                        <LinkConatiner>
-                            <DownloadLink
-                                download={'notes'}
-                                href=""
-                                onClick={this.downloadNote}>
-                                Скачать ноты
-                            </DownloadLink>
+                        {!recorded && (
+                            <Info>{translations[lang].INFO_RECORDING}</Info>
+                        )}
+                        <Container>
+                            <Player
+                                lang={lang}
+                                play={this.play}
+                                stop={this.stop}
+                                progress={progress}
+                                bpm={bpm}
+                                setBPM={this.setBPM}
+                            />
 
-                            {recorded && (
+                            <Button
+                                _rounded
+                                _transparent
+                                disabled={!recorded}
+                                type="button">
                                 <DownloadLink
                                     download={'melody'}
-                                    href=""
+                                    ref={(ref) => {
+                                        this.linkGetMelody = ref;
+                                    }}
+                                    disabled={!recorded}
+                                    href="#"
                                     onClick={this.downloadMelody}>
-                                    Скачать мелодию
+                                    <DownloadIcon _big />
                                 </DownloadLink>
-                            )}
+                            </Button>
+                        </Container>
+                        <LinkConatiner>
+                            <Title>{translations[lang].NOTES}</Title>
+                            <DownloadLink
+                                download={'notes'}
+                                ref={(ref) => {
+                                    this.linkGetNotes = ref;
+                                }}
+                                href="#"
+                                onClick={(e) => {
+                                    this.downloadNote();
+                                }}>
+                                <Button
+                                    _flat
+                                    _transparent
+                                    _light-gray
+                                    type="button"
+                                    margin="8px 8px">
+                                    {translations[lang].SAVE}{' '}
+                                </Button>
+                            </DownloadLink>
                         </LinkConatiner>
                     </div>
                 ) : (

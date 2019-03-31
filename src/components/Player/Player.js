@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { translations } from './translations';
@@ -13,6 +13,10 @@ import PauseIcon from '../IconSVG/PauseIcon';
 const Container = styled.div`
     display: flex;
     justify-content: space-between;
+`;
+
+const PlayerContainer = styled.div`
+    width: 100%
 `;
 
 export default class Player extends Component {
@@ -53,9 +57,12 @@ export default class Player extends Component {
         this.play();
     };
 
-    render({ lang = 'ru', bpm, progress, setBPM }, { isPlaying }) {
+    render() {
+        const { lang = 'ru', bpm, progress, setBPM } = this.props;
+        const { isPlaying } = this.state;
+        
         return (
-            <div>
+            <PlayerContainer>
                 <Container>
                     <div>
                         <Button
@@ -108,7 +115,7 @@ export default class Player extends Component {
                         disabled
                     />
                 </div>
-            </div>
+            </PlayerContainer>
         );
     }
 }

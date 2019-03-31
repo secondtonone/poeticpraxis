@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const stretch = keyframes`
@@ -35,25 +35,23 @@ const Rect = styled.div`
     animation: ${stretch} ${(props) => props.delay}s infinite ease-in-out;
 `;
 
-class Loader extends Component {
-    render(props) {
-        return (
-            <Container>
-                <Rect delay={1} />
-                <Rect delay={0.5} />
-                <Rect delay={0.4} />
-                <Rect delay={0.6} />
-                <Rect delay={1.2} />
-                <Rect delay={0.3} />
-                <Rect delay={1.5} />
-                <Rect delay={0.7} />
-                <Rect delay={0.9} />
-                <Rect delay={1.2} />
-                <Rect delay={1.4} />
-                <Rect delay={0.3} />
-            </Container>
-        );
-    }
-}
+const Loader = () => {
+    return (
+        <Container>
+            <Rect delay={1} />
+            <Rect delay={0.5} />
+            <Rect delay={0.4} />
+            <Rect delay={0.6} />
+            <Rect delay={1.2} />
+            <Rect delay={0.3} />
+            <Rect delay={1.5} />
+            <Rect delay={0.7} />
+            <Rect delay={0.9} />
+            <Rect delay={1.2} />
+            <Rect delay={1.4} />
+            <Rect delay={0.3} />
+        </Container>
+    );
+};
 
 export default Loader;

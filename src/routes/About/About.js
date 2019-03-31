@@ -1,6 +1,7 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 
 import examples from './examples';
+import { scrollToAnchor } from '../../utils';
 
 import Workfield from '../../components/Workfield';
 import Button from '../../components/Button';
@@ -11,14 +12,24 @@ import ArrowBack from '../../components/IconSVG/ArrowBack';
 import Widgets from '../../components/IconSVG/Widgets';
 import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
 import ContentCopy from '../../components/IconSVG/ContentCopy';
+import MicIcon from '../../components/IconSVG/Mic';
 
-import { Text, Link, Footer, List, Span } from '../../styles/components';
+import {
+    Text,
+    Link,
+    Footer,
+    List,
+    Span,
+    SimplList
+} from '../../styles/components';
 
 export default class About extends Component {
     state = { isHiddenPayment: false };
 
     componentDidMount() {
         window.scrollTo(0, 0);
+
+        scrollToAnchor();
     }
 
     togglePayment = () => {
@@ -27,7 +38,9 @@ export default class About extends Component {
         });
     };
 
-    render({ lang = 'ru', variant = 'light' }, { isHiddenPayment }) {
+    render() {
+        const { lang = 'ru', variant = 'light' } = this.props;
+        const { isHiddenPayment } = this.state;
         const isRusLang = lang === 'ru';
 
         const { text, stringsDictionary } = examples[lang];
@@ -39,16 +52,24 @@ export default class About extends Component {
                 </SecondaryMenu>
 
                 <List _animated>
-                    <Text.Title>POETIC PRAXIS?</Text.Title>
+                    <Text.Title>ЧТО СКРЫТО ЗА СЛОВАМИ?</Text.Title>
                     <Text isHidden={!isRusLang}>
                         POETIC PRAXIS{' '}
                         <Span textTransform="uppercase">
                             (Ποιητικός Πράξις)
                         </Span>{' '}
-                        - это проект, созданный для поэтической практики.
+                        - проект, созданный как раз для того чтобы это узнать, для поэтической практики.
                     </Text>
                     <Text isHidden={isRusLang}>
                         It's a project, made for poetic practice.
+                    </Text>
+                    <Text isHidden={isRusLang}>
+                        On Reddit:{' '}
+                        <Link
+                            target="_blank"
+                            href="https://www.reddit.com/r/poeticpraxis/">
+                            r/poeticpraxis
+                        </Link>
                     </Text>
                     <Text isHidden={!isRusLang}>
                         Блог в Яндекс Дзен:{' '}
@@ -86,7 +107,7 @@ export default class About extends Component {
                                     src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0&targets-hint=&default-sum=2&button-text=11&payment-type-choice=on&hint=&successURL=&quickpay=shop&account=410014951905022"
                                     width="300"
                                     height="220"
-                                    frameborder="0"
+                                    frameBorder="0"
                                     allowtransparency="true"
                                     scrolling="no"
                                 />
@@ -99,7 +120,7 @@ export default class About extends Component {
                             : 'Images engine or montage method'}
                     </Text.Title>
                     <Text isHidden={!isRusLang}>
-                        Новые технологии дарят нам новые возможности и
+                        {/* Новые технологии дарят нам новые возможности и
                         инструменты. "Машина образов", изобретённая С. А.
                         Есениным, позволяет из любого набора слов, составлять
                         случайные пары, получая неожиданные образы. Для лучшего
@@ -112,7 +133,43 @@ export default class About extends Component {
                         переписки, отрывка из книги, а может даже из
                         стихотворений? А из нескольких? Или слов ваших друзей.
                         Смешивая ваши нарративы, вам стоит узнать, что из этого
-                        выйдет. Без бумаги и ножниц. Быстро и сколько угодно.
+                        выйдет. Без бумаги и ножниц. Быстро и сколько угодно. */}
+                        "Машина образов", изобретённая С. А. Есениным, позволяет
+                        из любого набора слов, составлять случайные пары,
+                        получая неожиданные образы. Как её использовать?
+                    </Text>
+                    <Text isHidden={!isRusLang}>
+                        <SimplList>
+                            <SimplList.Item>
+                                1. Введите слова, которые приходят вам на ум или
+                                вашим друзьям (лучше существиетльные и
+                                приглагательные). Возможен и голосовой ввод по
+                                кнопке{' '}
+                                <Button _rounded _transparent type="button">
+                                    <MicIcon _small />
+                                </Button>
+                                .
+                            </SimplList.Item>
+                            <SimplList.Item>
+                                2. Нажмите на кнопку{' '}
+                                <Button _rounded _transparent type="button">
+                                    <Widgets _small />
+                                </Button>
+                                .
+                            </SimplList.Item>
+                            <SimplList.Item>
+                                3. Выберите из списка сочетания, которые вам
+                                понравились.
+                            </SimplList.Item>
+                            <SimplList.Item>
+                                4. Выбранные можно сразу же редактировать,
+                                дополняя их своими мыслями.
+                            </SimplList.Item>
+                            <SimplList.Item>
+                                5. Повторите п. 2, чтобы получить новые
+                                сочетания, уже выбранные вами сочетания сохраняются.
+                            </SimplList.Item>
+                        </SimplList>
                     </Text>
                     <Text isHidden={isRusLang}>
                         New technologies give us new possibilities and
@@ -128,7 +185,7 @@ export default class About extends Component {
                         with random texts, articles, excerpts from books, poems
                         or with your friends. Without paper and scissors.
                     </Text>
-                    <Text isHidden={!isRusLang}>
+                    {/* <Text isHidden={!isRusLang}>
                         Работает она очень просто. Напишите слова или вставьте
                         текст на странице{' '}
                         <Link target="_blank" href="/images-engine">
@@ -155,17 +212,17 @@ export default class About extends Component {
                         button. After, you see pairs of words. You can add
                         intresting pairs to favorites. You can try again get
                         another pairs, but pairs in favorites will be stayed.
-                    </Text>
+                    </Text> */}
                     <Text isHidden={!isRusLang}>
-                        Все выбранные сочетания можно перенести в{' '}
+                        Все выбранные сочетания можно перенести в раздел{' '}
                         <Link target="_blank" href="/rhythmic">
-                            ПРОСОДИЮ
+                            ПРОСОДИЯ
                         </Link>
                         , нажимая на{' '}
                         <Button _flat _transparent type="button">
                             Посмотреть ритм <ArrowBack _small _rotate-left />
-                        </Button>
-                        .
+                        </Button>{' '}
+                        или скопировать их.
                     </Text>
                     <Text isHidden={isRusLang}>
                         All favorite pairs you can transpose in{' '}
@@ -179,7 +236,7 @@ export default class About extends Component {
                         button, to see their rhythm.
                     </Text>
                     <Text.Title id="rhythmic">
-                        {isRusLang ? 'Ритмика' : 'Rhythm'}
+                        {isRusLang ? 'Музыка слов' : 'Music of words'}
                     </Text.Title>
                     <Text isHidden={!isRusLang}>
                         Ритм стихотворения - немаловажный аспект. Но ритм
@@ -267,9 +324,7 @@ export default class About extends Component {
                     </Text>
                     <Footer>
                         &copy;{' '}
-                        <Link
-                            target="_blank"
-                            href="https://vk.com/write-165098979">
+                        <Link href="mailto:thearchitect@poeticpraxis.ru">
                             Макс А. Ю.
                         </Link>{' '}
                         2016 - {new Date().getFullYear()}

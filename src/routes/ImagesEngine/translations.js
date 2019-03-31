@@ -17,7 +17,9 @@ const ru = {
     },
     messages: {
         PAIR_ADDED: 'Словосочетание добавлено.',
-        PAIRS_READY: 'Словосочетания составлены.'
+        PAIRS_READY: 'Словосочетания составлены.',
+        HOW_WORKS: 'Как это работает?',
+        LEARN_MORE: 'Узнать больше.'
     }
 };
 
@@ -40,7 +42,9 @@ const en = {
     },
     messages: {
         PAIR_ADDED: 'A pair is added.',
-        PAIRS_READY: 'Pairs are ready.'
+        PAIRS_READY: 'Pairs are ready.',
+        HOW_WORKS: 'How it works?',
+        LEARN_MORE: 'Learn more.'
     }
 };
 

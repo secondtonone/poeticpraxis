@@ -1,10 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
 
 const PORT = 9080;
 
@@ -24,7 +22,7 @@ module.exports = {
         rules: [
             {
                 test: /.js?$/,
-                use: ['babel-loader'],
+                use: ['babel-loader', 'eslint-loader'],
                 exclude: /node_modules/
             },
             {
@@ -49,10 +47,6 @@ module.exports = {
                     }
                 ]
             },
-            /* {
-                test: /\.ejs$/,
-                use: ['ejs-loader?variable=data']
-            }, */
             {
                 test: /\.(png|jpg|jpeg|gif|mp3|ogg)$/,
                 use: ['file-loader']
@@ -70,9 +64,9 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.json'],
         alias: {
-            react: 'preact-compat',
+            /* react: 'preact-compat',
             'react-dom': 'preact-compat',
-            'preact-compat': 'preact-compat/dist/preact-compat'
+            'preact-compat': 'preact-compat/dist/preact-compat' */
         }
     },
     optimization: {

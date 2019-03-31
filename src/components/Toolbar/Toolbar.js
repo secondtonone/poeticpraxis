@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const StyledToolbar = styled.div`
@@ -25,7 +25,8 @@ export default class Toolbar extends Component {
         super(props);
     }
 
-    render({ children, isHidden, color }) {
+    render() {
+        const { children, isHidden, color } = this.props;
         return (
             <StyledToolbar isHidden={isHidden} color={color}>
                 {children}

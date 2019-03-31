@@ -1,5 +1,6 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import { PageHeader, Logo, ContentField } from './styled';
+import { isTouchDevice } from '../../utils';
 
 import LogoPic from '../../../public/img/Logo.svg';
 import LogoPicWhite from '../../../public/img/Logo-white.svg';
@@ -28,9 +29,11 @@ export default class Header extends Component {
         });
     };
 
-    render({ children, variant }, { actualHeight, initHeight }) {
+    render() {
+        const { children, variant } = this.props;
+        const { actualHeight, initHeight } = this.state;
         return (
-            <PageHeader hidden={actualHeight < initHeight}>
+            <PageHeader hidden={isTouchDevice() && actualHeight < initHeight}>
                 <Logo href="/" alt="POETIC PRAXIS" title="POETIC PRAXIS">
                     <img
                         src={variant === 'light' ? LogoPic : LogoPicWhite}

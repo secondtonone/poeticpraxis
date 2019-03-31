@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import { randomize, delay } from '../../utils';
 
 import { FieldLabel, SimpleTextarea } from '../../styles/components';
@@ -30,9 +30,7 @@ export default class Textarea extends Component {
         //const width = this.field.clientWidth;
         const height = this.field.clientHeight;
         const offset = this.field.offsetHeight - height;
-        let lineHeight = window.getComputedStyle(this.field, null).lineHeight;
-
-        lineHeight = parseInt(lineHeight, 10);
+        const lineHeight = parseInt(window.getComputedStyle(this.field, null).lineHeight, 10) || 0;
 
         const field = {
             //width,
@@ -72,28 +70,31 @@ export default class Textarea extends Component {
         this.field.focus();
     };
 
-    render({
-        Textarea = SimpleTextarea,
-        value,
-        onMouseUp,
-        onInput,
-        onClick,
-        readOnly,
-        className,
-        placeHolder,
-        label,
-        onFocus,
-        onBlur,
-        onMouseMove,
-        onKeyDown,
-        onKeyUp,
-        zoomIn
-    }) {
+    render() {
+        const {
+            Textarea = SimpleTextarea,
+            value,
+            onMouseUp,
+            onInput,
+            onClick,
+            readOnly,
+            className,
+            placeHolder,
+            label,
+            onFocus,
+            onBlur,
+            onMouseMove,
+            onKeyDown,
+            onKeyUp,
+            zoomIn,
+            onChange
+        } = this.props;
+
         const id = `i${randomize()}`;
 
         return (
             <div>
-                <FieldLabel for={id} isHidden={!(label && value)}>
+                <FieldLabel htmlFor={id} isHidden={!(label && value)}>
                     {label}
                 </FieldLabel>
                 <Textarea
@@ -110,8 +111,9 @@ export default class Textarea extends Component {
                     zoomIn={zoomIn}
                     value={value}
                     className={className}
-                    innerRef={(ref) => (this.field = ref)}
+                    ref={(ref) => (this.field = ref)}
                     readOnly={readOnly}
+                    onChange={onChange ? onChange: ()=>{}}
                     placeholder={placeHolder}
                     aria-label="workfield"
                 />

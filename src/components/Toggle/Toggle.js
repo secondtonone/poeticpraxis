@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import theme from '../../styles/theme';
@@ -31,9 +31,9 @@ const Label = styled.label`
     &::before {
         left: 1px;
         width: 34px;
-        height: 16px;
+        height: 14px;
         background-color: ${(props) => props.theme.grayColor};
-        border-radius: 8px;
+        border-radius: 7px;
     }
     &::after {
         left: 0;
@@ -41,8 +41,8 @@ const Label = styled.label`
         height: 20px;
         background-color: #fafafa;
         border-radius: 50%;
-        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14),
-            0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
+        border: 1px solid ${(props) => props.theme.grayColor};
+        box-sizing: border-box;
     }
 `;
 
@@ -66,16 +66,18 @@ const Input = styled.input`
         -ms-transform: translate(80%, -50%);
         -webkit-transform: translate(80%, -50%);
         transform: translate(80%, -50%);
+        border: 1px solid ${(props) => props.theme.primaryColor};
     }
 `;
 
 class Toggle extends Component {
-    render({ onChange, checked, ...props }) {
+    render() {
+        const { onChange, checked, ...props } = this.props;
         const id = `tog${randomize()}`;
         return (
             <Container onClick={onChange}>
-                <Input type="checkbox" id={id} checked={checked} {...props} />
-                <Label for={id} />
+                <Input type="checkbox" id={id} onChange={() => {}} checked={checked} {...props} />
+                <Label htmlFor={id} />
             </Container>
         );
     }

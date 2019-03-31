@@ -14,6 +14,7 @@ const light = {
     secondColor: '#181311',
     accentColor: '#DE2420',
     grayColor: '#d6d6d6',
+    lightGray: 'rgba(162, 162, 162, 0.1)',
 
     mainFont: '"Montserrat", Verdana, sans-serif'
 };
@@ -35,6 +36,7 @@ const dark = {
     accentColor: '#ea5d5a',
     grayColor: '#6d6c6c',
     grayDarkColor: '#212121',
+    lightGray: 'rgba(162, 162, 162, 0.1)',
 
     mainFont: '"Montserrat", Verdana, sans-serif'
 };

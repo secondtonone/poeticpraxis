@@ -82,7 +82,7 @@ export function isAccentedByRegExp(rule, char) {
 export function isAccented(token, index, dictionary = {}) {
     let element = isInDictionary(token, dictionary);
 
-    return element ? element.accents[index].type : 0;
+    return element /* && element.accents[index] */ ? element.accents[index].type : 0;
 }
 
 function isInDictionary(token, dictionary = {}) {
@@ -324,7 +324,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                     char: token,
                     id: idToken,
                     idString,
-                    hashTokenId
+                    hashTokenId,
+                    accent
                 };
 
                 hashTable[hashTokenId] = {
@@ -574,7 +575,7 @@ function makeSoundGramma(signId, string, accent) {
     if (accent === 3 && indexSoundGramma !== -1) {
         soundGramma.splice(indexSoundGramma, 1);
     }
-    if (accent === 0 && indexSoundGramma === -1) {
+    if (accent < 3 && indexSoundGramma === -1) {
         soundGramma.push(signId);
     }
 

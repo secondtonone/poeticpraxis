@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const StyledMessageBox = styled.div`
@@ -41,7 +41,8 @@ const StyledMessageBox = styled.div`
 `;
 
 export default class MessageBox extends Component {
-    render({ text, bottom }) {
+    render() {
+        const { text, bottom } = this.props;
         return (
             <StyledMessageBox bottom={bottom} text={text}>
                 {text}

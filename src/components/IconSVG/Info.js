@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import Icon from '../Icon';
 
 export default class Info extends Component {
@@ -13,7 +13,7 @@ export default class Info extends Component {
                     width="24px"
                     height="24px"
                     viewBox="0 0 24 24"
-                    enable-background="new 0 0 24 24">
+                    enableBackground="new 0 0 24 24">
                     <g id="Bounding_Boxes">
                         <g id="ui_x5F_spec_x5F_header_copy_3" display="none" />
                         <path fill="none" d="M0,0h24v24H0V0z" />

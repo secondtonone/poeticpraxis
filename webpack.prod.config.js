@@ -1,25 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 
-module.exports = {
+const config = {
     mode: 'production',
     entry: {
         app: ['./src/index.js']
-        /*,
-                vendor: [
-                    'preact',
-                    'react-router-dom',
-                    'redux',
-                    'preact-redux'
-                ]*/
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -30,7 +23,7 @@ module.exports = {
         rules: [
             {
                 test: /.js?$/,
-                use: ['babel-loader'],
+                use: ['babel-loader', 'eslint-loader'],
                 exclude: /node_modules/
             },
             {
@@ -46,29 +39,6 @@ module.exports = {
                         }
                     }
                 ]
-                /*                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [
-                        {
-                            loader: "css-loader",
-                            options: {
-                                minimize: true
-                            }
-                        },
-                        {
-                            loader: "sass-loader"
-                        },
-                        {
-                            loader: "sass-resources-loader",
-                            options: {
-                                resources: [
-                                    "./src/scss/_variables.scss",
-                                    "./src/scss/_mixins.scss"
-                                ]
-                            }
-                        }
-                    ]
-                }) */
             },
             {
                 test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
@@ -96,20 +66,26 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js', '.json'],
+        extensions: [
+            '.js',
+            '.json'
+        ] /* ,
         alias: {
             react: 'preact-compat',
             'react-dom': 'preact-compat',
             'preact-compat': 'preact-compat/dist/preact-compat'
         }
+    */
     },
     optimization: {
         namedModules: true, // NamedModulesPlugin()
+        runtimeChunk: true, 
         splitChunks: {
             // CommonsChunkPlugin()
             /* chunks: 'all',
             name: false */
-            minChunks: 2
+            minChunks: 2,
+            chunks: 'async'
         },
         noEmitOnErrors: true, // NoEmitOnErrorsPlugin
         concatenateModules: true, //ModuleConcatenationPlugin
@@ -159,14 +135,9 @@ module.exports = {
         ]
     },
     plugins: [
-        /* new ExtractTextPlugin("style.[hash].css"), */
-
-        /* new BundleAnalyzerPlugin(), */
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
+            'process.env.NODE_ENV': JSON.stringify('production')
         }),
         new HtmlWebpackPlugin({
             template: './public/index.html',
@@ -219,3 +190,9 @@ module.exports = {
         })
     ]
 };
+
+if (process.env.ANALIZE) {
+    config.plugins.push(new BundleAnalyzerPlugin());
+}
+
+module.exports = config;

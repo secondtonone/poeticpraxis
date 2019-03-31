@@ -1,21 +1,11 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
+
 import imaged from '../../modules/imaged';
 import { copying } from '../../modules/copying';
-
-import {
-    FieldEditableArea,
-    Hint,
-    SecondaryTitle,
-    LeftedLayout,
-    Container,
-    List
-} from '../../styles/components';
-
-import Settings from '../../components/Settings';
-
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
 
+import Settings from '../../components/Settings';
 import Recorder from '../../components/Recorder';
 import MatchList from '../../components/MatchList';
 import Textarea from '../../components/Textarea';
@@ -28,9 +18,20 @@ import ContentCopy from '../../components/IconSVG/ContentCopy';
 import Subject from '../../components/IconSVG/Subject';
 import PlaylistAddCheck from '../../components/IconSVG/PlaylistAddCheck';
 import SecondaryMenu from '../../components/SecondaryMenu';
+import Info from '../../components/Info';
+import MessageBox from '../../components/MessageBox';
+
+import {
+    FieldEditableArea,
+    Hint,
+    SecondaryTitle,
+    LeftedLayout,
+    Container,
+    List,
+    Link
+} from '../../styles/components';
 
 import { ButtonContainer } from './styled';
-import MessageBox from '../../components/MessageBox';
 
 export default class ImagesEngine extends Component {
     constructor(props) {
@@ -146,6 +147,16 @@ export default class ImagesEngine extends Component {
         });
     };
 
+    changePin = (index, value) => {
+        let { pinned } = this.props.engineState;
+
+        pinned[index] = value;
+
+        this.props.setEngineState({
+            pinned
+        });
+    };
+
     showMessage = (textMessage) => {
         this.setState({
             textMessage
@@ -210,8 +221,8 @@ export default class ImagesEngine extends Component {
         copying(this.props.engineState.pinned.join('\n'));
     };
 
-    render(
-        {
+    render() {
+        const {
             setEngineState,
             engineState: {
                 result,
@@ -221,9 +232,15 @@ export default class ImagesEngine extends Component {
                 currentView = 'material'
             },
             lang = 'ru'
-        },
-        { textMessage, isDisabledWordsview, actualHeight, initHeight }
-    ) {
+        } = this.props;
+
+        const {
+            textMessage,
+            isDisabledWordsview,
+            actualHeight,
+            initHeight
+        } = this.state;
+
         const props = {
             onInput: this.handleTextInput,
             value: text,
@@ -271,7 +288,7 @@ export default class ImagesEngine extends Component {
         ];
 
         return (
-            <section class="images-engine">
+            <section>
                 <SecondaryMenu
                     items={secondMenu}
                     handler={this.changeView}
@@ -305,9 +322,26 @@ export default class ImagesEngine extends Component {
                 )}
 
                 <LeftedLayout>
+                    {!text && (
+                        <Info>
+                            {
+                                translations[this.props.lang].messages[
+                                    'HOW_WORKS'
+                                ]
+                            }{' '}
+                            <Link href="/about#images-engine">
+                                {
+                                    translations[this.props.lang].messages[
+                                        'LEARN_MORE'
+                                    ]
+                                }
+                            </Link>
+                        </Info>
+                    )}
+
                     {currentView === 'material' && (
                         <List _animated>
-                            <div class="work-field">
+                            <div>
                                 <Textarea {...props} />
                             </div>
                             {!isTouchDevice() && (
@@ -334,6 +368,7 @@ export default class ImagesEngine extends Component {
                                     handler={this.deleteMatch}
                                     list={pinned}
                                     type={'cancel'}
+                                    changeItem={this.changePin}
                                 />
 
                                 {pinned.length ? null : (
@@ -404,6 +439,7 @@ export default class ImagesEngine extends Component {
                                     handler={this.pinMatch}
                                     list={result}
                                     type={'add'}
+                                    compact
                                 />
 
                                 {result.length > 30 ? (

@@ -9,18 +9,16 @@
     <link rel="icon" href="<%= require('./img/Signx48.png') %>">
     <link rel="icon" sizes="192x192" href="<%= require('./img/Signx192.png') %>">
 
-    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-
     <link rel="manifest" href="<%= require('./manifest.webmanifest') %>">
-    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="indie-catalog">
 
 
     <title>POETIC PRAXIS</title>
     
-    <link rel="alternate" hreflang="ru" href="https://poeticpraxis.ru/" />
+    <link rel="alternate" hreflang="ru" href="https://poeticpraxis.ru/about?lang=ru" />
+    <link rel="alternate" hreflang="ru" href="https://poeticpraxis.ru/rhythmic?lang=ru" />
     <link rel="alternate" hreflang="en" href="https://poeticpraxis.ru/about?lang=en" />
     <link rel="alternate" hreflang="x-default" href="https://poeticpraxis.ru/about?lang=en" />
 
@@ -52,6 +50,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="indie-catalog">
     <link rel="apple-touch-icon" href="<%= require('./img/Signx192.png') %>">
+
+    
     
     <script type="application/ld+json">
         {
@@ -69,7 +69,9 @@
             }
         }
     </script>
+
     <%= require('../src/prerender.js').default().styles %>
+    
 </head>
 
 <body>

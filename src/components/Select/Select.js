@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import theme from '../../styles/theme';
@@ -69,18 +69,17 @@ function Select(props) {
                 <ArrowDropDown />
             </IconContainer>
             <StyledSelect
-                innerRef={(ref) => (select = ref)}
+                ref={(ref) => (select = ref)}
                 name={props.id}
                 size={props.size}
                 weight={props.weight}
-                class="input-container_select"
                 id={props.id}
                 value={props.value}
                 onChange={props.onChange}>
-                {props.options.map((option) => {
+                {props.options.map((option, index) => {
                     if (!option.disabled) {
                         return (
-                            <option value={option.value}>{option.title}</option>
+                            <option key={`sopt-${index}`} value={option.value}>{option.title}</option>
                         );
                     }
                 })}

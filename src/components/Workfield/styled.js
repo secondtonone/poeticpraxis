@@ -282,7 +282,7 @@ const AccentRelative = styled.span`
                 props.accent
             );
         }
-    }};
+    }}
 `;
 
 const Accent = styled.span`
@@ -314,7 +314,7 @@ const Accent = styled.span`
                     color: ${theme.grayColor};
                     `;
         }
-    }};
+    }}
 `;
 
 const PaintField = styled.div`
@@ -339,7 +339,7 @@ const PaintField = styled.div`
                     top: 29px;
                 }`;
         }
-    }};
+    }}
 `;
 
 export {

@@ -1,24 +1,28 @@
-import { h, Component } from 'preact';
+import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
 import Layout from '../components/Layout';
 import Bundle from '../components/Bundle';
 
 const About = (props) => (
-    <Bundle load={import(/* webpackChunkName: "About" */ './About')}>
-        {(About) => <About {...props} />}
+    <Bundle load={() => import(/* webpackChunkName: "About" */ './About')}>
+        {(Component) => (Component === null ? null : <Component {...props} />)}
     </Bundle>
 );
 
 const Rhythmic = (props) => (
-    <Bundle load={import(/* webpackChunkName: "Rhythmic" */ './Rhythmic')}>
-        {(Rhythmic) => <Rhythmic {...props} />}
+    <Bundle
+        load={() => import(/* webpackChunkName: "Rhythmic" */ './Rhythmic')}>
+        {(Component) => (Component === null ? null : <Component {...props} />)}
     </Bundle>
 );
 
 const ImagesEngine = (props) => (
-    <Bundle load={import(/* webpackChunkName: "ImagesEngine" */ './ImagesEngine')}>
-        {(ImagesEngine) => <ImagesEngine {...props} />}
+    <Bundle
+        load={() =>
+            import(/* webpackChunkName: "ImagesEngine" */ './ImagesEngine')
+        }>
+        {(Component) => (Component === null ? null : <Component {...props} />)}
     </Bundle>
 );
 

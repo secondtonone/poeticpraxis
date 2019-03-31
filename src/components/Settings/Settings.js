@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 
 import Button from '../Button';
 import Toggle from '../Toggle';
@@ -47,11 +47,13 @@ export default class Settings extends Component {
         });
     };
 
-    render({ variant, changeTheme, lang = 'ru', changeLang }, state) {
+    render() {
         const langOptions = [
             { title: 'Русский', value: 'ru' },
             { title: 'English', value: 'en' }
         ];
+
+        const { variant, changeTheme, lang = 'ru', changeLang } = this.props;
 
         return (
             <SettingsContainer>
@@ -65,7 +67,7 @@ export default class Settings extends Component {
                     }}>
                     <SettingsIcon _middle />
                 </Button>
-                {state.isOpen && (
+                {this.state.isOpen && (
                     <DropdownList
                         side="right"
                         top="32px"
@@ -73,7 +75,7 @@ export default class Settings extends Component {
                         onBlur={() => {
                             this.manualToggleDropdown(false);
                         }}
-                        innerRef={(el) => (this.dropdown = el)}>
+                        ref={(el) => (this.dropdown = el)}>
                         <DropdownList.ListItem>
                             <InlineContainer vertical="middle">
                                 {translations[lang].settings['NIGHT_MODE']}

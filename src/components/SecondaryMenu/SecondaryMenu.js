@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 
 import {
     Menu,
@@ -33,9 +33,10 @@ export default function SecondaryMenu({
                         />
                     </StateSelect>
                     <Menu>
-                        {items.map((item) => {
+                        {items.map((item, index) => {
                             return (
                                 <Item
+                                    key={`item-${index}`}
                                     onClick={() => {
                                         if (item.disabled) {
                                             return false;

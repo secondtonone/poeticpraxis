@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import Recognition from '../../modules/recognition';
 
 import Button from '../Button';
@@ -43,12 +43,14 @@ export default class Recorder extends Component {
         this.recognition.toggle();
     };
 
-    render({ text, transmitState, showMessage, ...props }, { isRecording, isSupporting }) {
+    render() {
+        const { isRecording, isSupporting } = this.state;
+
         if (!isSupporting) {
             return null;
         }
         return (
-            <Button _accent={isRecording} onClick={this.toggle} {...props}>
+            <Button _accent={isRecording} onClick={this.toggle} {...this.props}>
                 <MicIcon _middle />
             </Button>
         );

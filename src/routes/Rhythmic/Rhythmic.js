@@ -1,7 +1,19 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
+
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
-import { getLongLink, sharing } from '../../modules/sharing';
+import {
+    getLongLink,
+    sharing,
+    encodeDictionary,
+    linkToStateDecode
+} from '../../modules/sharing';
+import {
+    getToneModule,
+    Tone,
+    getInstrument,
+    Instrument
+} from '../../modules/tone';
 
 import Workfield from '../../components/Workfield';
 import MessageBox from '../../components/MessageBox';
@@ -22,14 +34,16 @@ import ArrowBack from '../../components/IconSVG/ArrowBack';
 import MelodyIcon from '../../components/IconSVG/Melody';
 import RhythmIcon from '../../components/IconSVG/RhythmIcon';
 import ShareIcon from '../../components/IconSVG/Share';
+import Info from '../../components/Info';
 
-import { List, LeftedLayout } from '../../styles/components';
+import { List, LeftedLayout, Link } from '../../styles/components';
 
 import {
     StringPauseButton,
     StringPauseButtonMobile,
     CopyButton,
-    ToolbarButton
+    ToolbarButton,
+    ButtonContainer
 } from './styled';
 
 export default class Rhythmic extends Component {
@@ -53,35 +67,45 @@ export default class Rhythmic extends Component {
         this.mouseTrackingTimer = 0;
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         window.scrollTo(0, 0);
 
         if (URLSearchParams) {
             const searchParams = new URLSearchParams(location.search);
 
-            let sharedText = searchParams.get('shared');
+            let shared = searchParams.get('shared');
 
-            if (searchParams.get('shared')) {
-                try {
-                    sharedText = JSON.parse(sharedText);
+            linkToStateDecode(
+                shared,
+                ({ text, stringsDictionary }) => {
+                    stringsDictionary = {
+                        ...this.props.rhythmicState.stringsDictionary,
+                        ...stringsDictionary
+                    };
 
-                    const text = sharedText.text || '';
-                    /* const stringsDictionary =
-                        sharedText.stringsDictionary || {}; */
-
-                    if (text) {
-                        this.props.setRhytmicState({
-                            text /* ,
-                            stringsDictionary */
-                        });
-                    }
-                } catch (error) {
+                    this.props.setRhytmicState({
+                        text,
+                        stringsDictionary
+                    });
+                },
+                () => {
                     this.showMessage(
                         translations[this.props.lang].messages['WRONG']
                     );
                 }
-            }
+            );
         }
+        /* для преждевременной загрузки звуков */
+        try {
+            if (!Tone) {
+                await getToneModule();
+            }
+
+            if (!Instrument) {
+                getInstrument('piano');
+                //getInstrument('poly');
+            }
+        } catch (e) {}
     }
 
     changeView = (currentView) => {
@@ -173,22 +197,16 @@ export default class Rhythmic extends Component {
     shareWithLink = () => {
         const { text, stringsDictionary } = this.props.rhythmicState;
 
-        const sharedText = JSON.stringify({
-            text /* ,
-            stringsDictionary */
-        });
+        const sharedText = JSON.stringify([
+            text,
+            encodeDictionary({ text, stringsDictionary })
+        ]);
 
         let link = getLongLink(sharedText);
 
-        /* try {
-            link = await getShortLink(sharedText);
-        } catch (error) {
-            link = getLongLink(sharedText);
-        } */
-
         sharing(link);
 
-        this.showMessage(translations[this.props.lang].messages['COPIED']);
+        this.showMessage(translations[this.props.lang].messages['LINK_COPIED']);
     };
 
     mouseTracking = (e) => {
@@ -211,16 +229,17 @@ export default class Rhythmic extends Component {
         }, 100);
     };
 
-    render(
-        {
+    render() {
+        const {
             setRhytmicState,
             setWordsDictionary,
             rhythmicState: { text, stringsDictionary },
             wordsDictionary,
             lang = 'ru',
             variant = 'light'
-        },
-        {
+        } = this.props;
+
+        const {
             renderCaesuraButtonStyle,
             textMessage,
             zoomIn,
@@ -230,8 +249,8 @@ export default class Rhythmic extends Component {
             isDevice,
             currentView,
             rhytmicState
-        }
-    ) {
+        } = this.state;
+
         const secondMenu = [
             {
                 value: 'rhythmic',
@@ -271,6 +290,14 @@ export default class Rhythmic extends Component {
                     <Settings />
                 </SecondaryMenu>
                 <LeftedLayout>
+                    {!Object.keys(wordsDictionary).length && (
+                        <Info>
+                            {translations[lang].messages['HOW_WORKS']}{' '}
+                            <Link href="/about#rhythmic">
+                                {translations[lang].messages['LEARN_MORE']}
+                            </Link>
+                        </Info>
+                    )}
                     {currentView === 'rhythmic' && (
                         <div>
                             {isDevice && isFocused && (
@@ -298,15 +325,24 @@ export default class Rhythmic extends Component {
                             )}
                             <List _animated>
                                 {!isDevice && (
-                                    <CopyButton
-                                        _rounded
-                                        _top-centred
-                                        type="button"
-                                        disabled={!text}
-                                        onClick={this.copyToClipboard}
-                                        title="Копировать в текстовый редактор">
-                                        <ContentCopy _small />
-                                    </CopyButton>
+                                    <ButtonContainer>
+                                        <CopyButton
+                                            _rounded
+                                            type="button"
+                                            disabled={!text}
+                                            onClick={this.copyToClipboard}
+                                            title="Копировать в текстовый редактор">
+                                            <ContentCopy _small />
+                                        </CopyButton>
+                                        <CopyButton
+                                            _rounded
+                                            type="button"
+                                            disabled={!text}
+                                            onClick={this.shareWithLink}
+                                            title="Поделиться">
+                                            <ShareIcon _small />
+                                        </CopyButton>
+                                    </ButtonContainer>
                                 )}
 
                                 <StringPauseButton

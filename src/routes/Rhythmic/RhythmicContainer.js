@@ -1,4 +1,4 @@
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 import { setRhytmicState, setWordsDictionary } from './RhythmicActions';
 
 import Rhythmic from './Rhythmic';

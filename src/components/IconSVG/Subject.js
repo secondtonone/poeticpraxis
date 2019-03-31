@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import Icon from '../Icon';
 
 export default class Subject extends Component {

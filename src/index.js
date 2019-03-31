@@ -1,5 +1,5 @@
-import { h, render } from 'preact';
-import { AppContainer } from 'react-hot-loader';
+import React from 'react';
+import { render } from 'react-dom';
 
 import '../public/fonts/fonts.css';
 
@@ -10,11 +10,18 @@ import { delay } from './utils';
 
 import App from './containers/App';
 
-if (process.env.NODE_ENV === 'development') {
-    import('preact/devtools');
-}
+const DEV = process.env.NODE_ENV === 'development';
 
-if (process.env.NODE_ENV === 'production') {
+const run = (Component) => {
+    const rootElement =
+        process.env.NODE_ENV === 'production'
+            ? document.getElementById('app')
+            : document.body.lastElementChild;
+
+    render(<Component store={store} />, rootElement);
+};
+
+if (!DEV) {
     (async () => {
         const runtime = await import('offline-plugin/runtime');
 
@@ -34,27 +41,10 @@ if (process.env.NODE_ENV === 'production') {
     })();
 }
 
-const run = (Component) => {
-    let rootElement =
-        process.env.NODE_ENV === 'production'
-            ? document.getElementById('app')
-            : document.body.lastElementChild;
-
-    render(
-        <AppContainer>
-            <Component store={store} />
-        </AppContainer>,
-        document.body,
-        rootElement
-    );
-};
 
 run(App);
 
-if (module.hot) {
-    module.hot.accept();
-}
 
-if (process.env.NODE_ENV === 'production') {
+if (!DEV) {
     delay(() => analyticsInit('yandex'));
 }

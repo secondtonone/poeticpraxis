@@ -1,18 +1,20 @@
-import { h } from 'preact';
-import renderToString from 'preact-render-to-string';
-import { ServerStyleSheet, injectGlobal } from 'styled-components';
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { ServerStyleSheet } from 'styled-components';
 
-import styles from './styles';
+
 
 import store from './store';
 
 import App from './containers/AppPrerender';
 
-injectGlobal`${styles}`;
 
 if (typeof window === 'undefined') {
     global.window = {
-        screen: {}
+        screen: {},
+        document: {
+            documentElement:{}
+        }
     };
 }
 

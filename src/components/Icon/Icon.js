@@ -1,9 +1,11 @@
-import { h, Component } from 'preact';
+import React from 'react';
 import styled from 'styled-components';
 
 import { withElements } from '../../styles/helpers';
 
-const StyledIcon = styled.i.attrs({ className: withElements })`
+const StyledIcon = styled.i.attrs((props) => ({
+    className: withElements(props)
+}))`
     font-weight: normal;
     font-style: normal;
     font-size: 24px; /* Preferred icon size */
@@ -83,10 +85,8 @@ const StyledIcon = styled.i.attrs({ className: withElements })`
     ${(props) => props.rules};
 `;
 
-class Icon extends Component {
-    render(props) {
-        return <StyledIcon {...props} />;
-    }
-}
+const Icon = (props) => {
+    return <StyledIcon {...props} />;
+};
 
 export default Icon;

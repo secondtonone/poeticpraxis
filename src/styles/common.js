@@ -1,8 +1,8 @@
 import theme from './theme';
 import { loaded, whited } from './animations';
+import { css } from 'styled-components';
 
-
-export default `
+export default css`
 body {
     padding: 0;
     margin: 0;

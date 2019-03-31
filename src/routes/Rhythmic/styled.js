@@ -50,11 +50,20 @@ const CopyButton = styled(Button)`
     ${AnimationUp};
 `;
 
+const ButtonContainer = styled.div`
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: flex;
+    width: 100px;
+    justify-content: space-between;
+`;
+
 const CopyButtonMobile = styled(Button)``;
 
-const ToolbarButton = styled(Button)`
-    
-`;
+const ToolbarButton = styled(Button)``;
 
 export {
     ChangeModeButton,
@@ -62,5 +71,6 @@ export {
     StringPauseButtonMobile,
     CopyButton,
     CopyButtonMobile,
-    ToolbarButton
+    ToolbarButton,
+    ButtonContainer
 };

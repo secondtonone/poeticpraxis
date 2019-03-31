@@ -50,8 +50,8 @@ table {
     border-spacing: 0;
 }
 
-ol,
-ul {
+
+ul, ol {
     list-style: none;
 }
 

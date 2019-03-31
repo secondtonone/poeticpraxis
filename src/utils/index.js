@@ -1,5 +1,5 @@
 export function isTouchDevice() {
-    return 'ontouchstart' in document.documentElement;
+    return 'ontouchstart' in window.document.documentElement;
 }
 
 export function isDaytime() {
@@ -54,4 +54,14 @@ export function hexToRgb(hex) {
 
 export function delay(fn, ms = 0) {
     return setTimeout(fn, ms);
+}
+
+export function scrollToAnchor() {
+    const urlHash = window.decodeURIComponent(window.location.hash);
+    const hashParts = urlHash.split('#');
+
+    if (hashParts.length > 1) {
+        const hash = hashParts.slice(-1)[0];
+        document.querySelector(`#${hash}`).scrollIntoView();
+    }
 }

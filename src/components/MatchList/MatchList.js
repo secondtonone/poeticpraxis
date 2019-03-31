@@ -1,19 +1,25 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 
 import { randomize } from '../../utils';
 
 import { StyledMatchList } from './styled';
 
+import InlineInput from '../../components/InlineInput';
+
 import Cancel from '../../components/IconSVG/Cancel';
 import CheckCircle from '../../components/IconSVG/CheckCircle';
 
 export default class MatchList extends Component {
-    render({ handler, list, type }) {
+    render() {
+        const { handler, list, type, changeItem, compact } = this.props;
         return (
-            <StyledMatchList onClick={handler}>
+            <StyledMatchList>
                 {list.map((match, index) => {
+                    const value = Array.isArray(match)
+                        ? match.join(' ')
+                        : match;
                     return (
-                        <StyledMatchList.Item key={`p${randomize()}`}>
+                        <StyledMatchList.Item key={`p${randomize()}`} compact={compact}>
                             <StyledMatchList.PinButton
                                 _rounded
                                 _transparent
@@ -21,6 +27,7 @@ export default class MatchList extends Component {
                                 _gray
                                 pinned={type === 'cancel'}
                                 type="button"
+                                onClick={handler}
                                 title={
                                     type === 'cancel' ? 'Удалить' : 'Выбрать'
                                 }
@@ -31,7 +38,16 @@ export default class MatchList extends Component {
                                     <CheckCircle _middle data-index={index} />
                                 )}
                             </StyledMatchList.PinButton>
-                            {Array.isArray(match) ? match.join(' ') : match}
+                            {changeItem ? (
+                                <InlineInput
+                                    value={value}
+                                    onChange={(value) => {
+                                        changeItem(index, value);
+                                    }}
+                                />
+                            ) : (
+                                value
+                            )}
                         </StyledMatchList.Item>
                     );
                 })}

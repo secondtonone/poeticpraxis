@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import React, { Component } from 'react';
 import Textarea from '../Textarea';
 import { hashFunction, fontReady } from '../../utils';
 
@@ -38,7 +38,11 @@ export default class Workfield extends Component {
 
         this.state = {
             ...structure,
-            field: {},
+            field: {
+                height: 0,
+                offset: 0,
+                lineHeight: 0
+            },
             fontSizeStyle: {
                 fontSize: 18
             },
@@ -79,20 +83,20 @@ export default class Workfield extends Component {
         window.removeEventListener('resize', this.updateDimensions);
     }
 
-    componentWillUpdate(prevProps) {
-        if (prevProps.text !== this.props.text) {
+    componentWillUpdate(nextProps) {
+        if (nextProps.text !== this.props.text) {
             if (this.timerLinting) {
                 clearTimeout(this.timerLinting);
             }
 
             this.timerLinting = setTimeout(() => {
-                this.textLinting(prevProps.text);
+                this.textLinting(nextProps.text);
             }, 50);
         }
     }
 
-    shouldComponentUpdate(prevProps, nextState) {
-        /* if (
+    /* shouldComponentUpdate(prevProps, nextState) {
+        if (
             Object.keys(nextState.elements).length &&
             JSON.stringify(this.state.elements) ===
                 JSON.stringify(nextState.elements)
@@ -100,8 +104,8 @@ export default class Workfield extends Component {
             console.log(this.state.elements);
 
             return false;
-        } */
-    }
+        }
+    } */
 
     giveDataToParent = () => {
         if (this.props.toParent) {
@@ -323,7 +327,7 @@ export default class Workfield extends Component {
                     <Accent
                         data-type={this.accents[accent]}
                         accent={this.accents[accent]}
-                        key={id}
+                        key={`a-${id}`}
                         id={id}>
                         {char}
                     </Accent>
@@ -331,7 +335,10 @@ export default class Workfield extends Component {
             }
             if (symbol.type === 'p') {
                 tag = (
-                    <StringPause key={id} id={id} data-type="string-pause">
+                    <StringPause
+                        key={`sp-${id}`}
+                        id={id}
+                        data-type="string-pause">
                         {char}
                     </StringPause>
                 );
@@ -346,7 +353,7 @@ export default class Workfield extends Component {
             const symbols = symbolsTags[id] || [];
 
             markingTags.push(
-                <StringField key={id} id={id}>
+                <StringField key={`st-${id}`} id={id}>
                     {symbols.length ? symbols : ' '}
                 </StringField>
             );
@@ -359,6 +366,8 @@ export default class Workfield extends Component {
         const renderedTags = [];
 
         const tagsLength = tags.length;
+
+        const wordId = '';
 
         for (let index = 0; index < tagsLength; index++) {
             const sign = tags[index];
@@ -373,7 +382,7 @@ export default class Workfield extends Component {
             if (sign.type === 'p') {
                 renderedTags.push(
                     <StringPauseRelative
-                        key={sign.id}
+                        key={`spr-${sign.id}`}
                         id={sign.id}
                         style={style}
                         data-type={sign.type}
@@ -386,7 +395,7 @@ export default class Workfield extends Component {
             renderedTags.push(
                 <AccentRelative
                     accent={this.accents[sign.accent]}
-                    key={sign.id}
+                    key={`acr-${sign.id}`}
                     id={sign.id}
                     style={style}
                     data-type={sign.type}
@@ -403,16 +412,16 @@ export default class Workfield extends Component {
 
         for (let i = 1; i <= size; i++) {
             if (i === accent) {
-                scheme.push(<TriangleElement />);
+                scheme.push(<TriangleElement key={`tr-${i}`} />);
             } else {
-                scheme.push(<CircleElement />);
+                scheme.push(<CircleElement key={`cl-${i}`} />);
             }
         }
 
         return scheme;
     };
 
-    makeInfoTags = (strings, orderStrings, field, elements) => {
+    makeInfoTags = (strings, orderStrings, lineHeight = 0, elements) => {
         let infoTags = [];
 
         let stringCounter = 0;
@@ -434,7 +443,7 @@ export default class Workfield extends Component {
 
                 const vowels = string.vowel;
 
-                const delta = tag.height - field.lineHeight;
+                const delta = tag.height - lineHeight;
 
                 const vowelAccentCount = vowels.filter(
                     (id) =>
@@ -525,10 +534,23 @@ export default class Workfield extends Component {
         }
     };
 
-    render(
-        { readOnly, focusHandler, text, placeHolder, onMouseMove },
-        { strings, field, elements, orderStrings, tags, zoomIn }
-    ) {
+    render() {
+        const {
+            readOnly,
+            focusHandler,
+            text,
+            placeHolder,
+            onMouseMove
+        } = this.props;
+        const {
+            strings,
+            field,
+            elements,
+            orderStrings,
+            tags,
+            zoomIn
+        } = this.state;
+
         const renderedTags = this.makeRenderedTags(tags);
 
         const marckupTags = this.makeMarkingTags(
@@ -540,7 +562,7 @@ export default class Workfield extends Component {
         const infoTags = this.makeInfoTags(
             strings,
             orderStrings,
-            field,
+            field.lineHeight,
             elements
         );
 
@@ -565,12 +587,13 @@ export default class Workfield extends Component {
             placeHolder: placeHolder || ''
         };
 
+        
         return (
             <WorkField>
                 <FakeField
                     data-id-comp="fakeField"
                     zoomIn={zoomIn}
-                    innerRef={(ref) => {
+                    ref={(ref) => {
                         this.fakeField = ref;
                     }}>
                     {marckupTags}

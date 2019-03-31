@@ -1,4 +1,4 @@
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import Layout from './Layout';
 import { changeTheme, changeLang } from '../../components/Layout/LayoutActions';
