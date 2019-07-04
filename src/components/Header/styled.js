@@ -3,18 +3,23 @@ import { hexToRgb } from '../../utils';
 
 const PageHeader = styled.header`
     position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     z-index: 1001;
     width: 100%;
     background: linear-gradient(
         rgba(${(props) => hexToRgb(props.theme.primaryColor).join(',')}, 0.9),
         rgba(${(props) => hexToRgb(props.theme.primaryColor).join(',')}, 0.1)
     );
-    padding: 8px;
+    padding: 0 16px;
     transform: translateY(0);
     transition: transform 0.5s ease-in;
 
     @media (max-width: 600px) {
         position: fixed;
+        display: block;
+        padding: 8px;
         bottom: 0;
         background: linear-gradient(
             rgba(
@@ -30,17 +35,15 @@ const PageHeader = styled.header`
 
         ${(props) => props.hidden && `transform: translateY(120%);`};
     }
-
-    @media (max-width: 320px) {
-        padding: 8px;
-    }
 `;
 
-const Logo = styled.a`
+const Logo = styled.img`
     display: block;
-    width: 200px;
-    height: 100%;
-    padding: 16px;
+    height: ${(props) => (props.height ? `${props.height}px` : '100%')};
+`;
+
+const Block = styled.div`
+    display: block;
 
     @media (max-width: 600px) {
         display: none;
@@ -48,9 +51,7 @@ const Logo = styled.a`
 `;
 
 const ContentField = styled.div`
-    position: absolute;
-    top: 16px;
-    right: 16px;
+    position: relative;
 
     @media (max-width: 600px) {
         position: relative;
@@ -60,4 +61,4 @@ const ContentField = styled.div`
     }
 `;
 
-export { PageHeader, Logo, ContentField };
+export { PageHeader, ContentField, Logo, Block };

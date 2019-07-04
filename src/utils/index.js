@@ -65,3 +65,7 @@ export function scrollToAnchor() {
         document.querySelector(`#${hash}`).scrollIntoView();
     }
 }
+
+export function maxMatchMedia(value) {
+    return window.matchMedia(`(max-width: ${value}px)`).matches;
+}

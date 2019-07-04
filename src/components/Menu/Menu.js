@@ -21,11 +21,6 @@ export default class Menu extends Component {
                 url: 'rhythmic',
                 title: translations[lang].menu['RHYTHMICS'],
                 icon: <ChangeHistory />
-            },
-            {
-                url: 'about',
-                title: translations[lang].menu['ABOUT'],
-                icon: <Info />
             }
         ];
 

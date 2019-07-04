@@ -16,7 +16,7 @@ const StyledButton = styled.button.attrs((props) => ({
         color: ${(props) => props.theme.secondColor};
         fill: ${(props) => props.theme.secondColor};
         height: 40px;
-        width: 40px;
+        width: ${(props) => (props.width ? props.width : '40px')};
         border: 0;
         border-radius: 50%;
         cursor: pointer;
@@ -60,6 +60,47 @@ const StyledButton = styled.button.attrs((props) => ({
         height: 36px;
         line-height: 36px;
         padding: 0 10px;
+        text-transform: uppercase;
+        vertical-align: sub;
+    }
+
+    &._action--outlined {
+        font-family: ${theme.mainFont};
+        text-decoration: none;
+        color: ${(props) => props.theme.accentColor};
+        fill: ${(props) => props.theme.accentColor};
+        background-color: transparent;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        font-weight: 400;
+        border-radius: 6px;
+        border: 1px solid ${(props) => props.theme.accentColor};
+        width: ${(props) => (props.width ? props.width : 'auto')};
+        display: inline-block;
+        font-size: ${(props) => (props.size ? `${props.size}px` : '24px')};
+        padding: ${(props) => (props.size ? `${props.size}px` : '24px')};
+        text-transform: uppercase;
+        vertical-align: sub;
+    }
+
+    &._action {
+        font-family: ${theme.mainFont};
+        text-decoration: none;
+        color: ${theme.primaryWhite};
+        fill: ${theme.primaryWhite};
+        background-color: ${(props) => props.theme.accentColor};
+        box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        font-weight: 400;
+        border-radius: ${(props) =>
+            props.size ? `${props.size * 1.5}px` : '36px'};
+        width: ${(props) => (props.width ? props.width : 'auto')};
+        display: inline-block;
+        font-size: ${(props) => (props.size ? `${props.size}px` : '24px')};
+        padding: ${(props) => (props.size ? `${props.size}px` : '24px')};
         text-transform: uppercase;
         vertical-align: sub;
     }

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Button from '../Button';
 import Toggle from '../Toggle';
 import Select from '../Select';
-import SettingsIcon from '../IconSVG/Settings';
+import MoreVert from '../IconSVG/MoreVert';
 import { SettingsContainer } from './styled';
 import { DropdownList, InlineContainer } from '../../styles/components';
 
@@ -65,7 +65,7 @@ export default class Settings extends Component {
                         e.preventDefault();
                         this.toggleDropdown();
                     }}>
-                    <SettingsIcon _middle />
+                    <MoreVert _middle />
                 </Button>
                 {this.state.isOpen && (
                     <DropdownList
@@ -102,7 +102,8 @@ export default class Settings extends Component {
                                     options={langOptions}
                                     onChange={(e) => {
                                         changeLang(e.target.value);
-                                        document.documentElement.lang = e.target.value;
+                                        document.documentElement.lang =
+                                            e.target.value;
                                     }}
                                 />
                             </InlineContainer>

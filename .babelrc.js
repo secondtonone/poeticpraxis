@@ -8,6 +8,7 @@ module.exports = {
                     browsers: ['last 3 versions']
                 },
                 useBuiltIns: 'usage',
+                corejs: 3,
                 modules: false
             }
         ]

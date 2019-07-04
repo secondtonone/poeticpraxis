@@ -2,7 +2,7 @@ const ru = {
     menu: {
         RHYTHMICS: 'Просодия',
         ENGINE: 'Машина образов',
-        ABOUT: 'О проекте'
+        ABOUT: 'Главная'
     }
 };
 
@@ -10,7 +10,7 @@ const en = {
     menu: {
         RHYTHMICS: 'Prosody',
         ENGINE: 'Images engine',
-        ABOUT: 'About'
+        ABOUT: 'Main'
     }
 };
 

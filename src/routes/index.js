@@ -29,10 +29,9 @@ const ImagesEngine = (props) => (
 export default () => (
     <Layout>
         <Switch>
-            <Route exact path="/" render={() => <Redirect to="/about" />} />
             <Route path="/images-engine" component={ImagesEngine} />
             <Route path="/rhythmic" component={Rhythmic} />
-            <Route path="/about" component={About} />
+            <Route path="/" component={About} />
             <Redirect path="*" to="/" />
         </Switch>
     </Layout>

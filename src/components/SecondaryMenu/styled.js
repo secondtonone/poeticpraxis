@@ -4,6 +4,7 @@ import theme from '../../styles/theme';
 
 const StyledSecondaryMenu = styled.div`
     position: fixed;
+    display: flex;
     top: 180px;
     left: 0;
     width: 100px;

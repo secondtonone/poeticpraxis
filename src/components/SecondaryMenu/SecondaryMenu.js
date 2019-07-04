@@ -9,6 +9,8 @@ import {
     LogoImage
 } from './styled';
 
+import { LogoLink } from '../../styles/components';
+
 import Options from '../Options';
 
 import Logo from '../../../public/img/Logo.svg';
@@ -23,6 +25,12 @@ export default function SecondaryMenu({
 }) {
     return (
         <StyledSecondaryMenu>
+            <LogoLink to="/">
+                <LogoImage
+                    src={variant === 'light' ? Logo : LogoWhite}
+                    alt="Logo"
+                />
+            </LogoLink>
             {items ? (
                 <div>
                     <StateSelect>
@@ -51,12 +59,7 @@ export default function SecondaryMenu({
                         })}
                     </Menu>
                 </div>
-            ) : (
-                <LogoImage
-                    src={variant === 'light' ? Logo : LogoWhite}
-                    alt="Logo"
-                />
-            )}
+            ) : null}
             <Container>{children}</Container>
         </StyledSecondaryMenu>
     );

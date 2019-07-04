@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 import theme from './theme';
 import { show, upAlt, up } from './animations';
@@ -14,6 +15,16 @@ const Hidden = css`
     padding: 0;
     position: absolute;
     width: 1px;
+`;
+
+const Flex = styled.div`
+    display: flex;
+    width: ${(props) => (props.width ? `${props.width}px` : '100%')};
+    height: ${(props) => (props.height ? `${props.height}px` : '100%')};
+    flex-direction: ${(props) => (props.direction ? props.direction : 'row')};
+    justify-content: ${(props) => (props.justify ? props.justify : 'center')};
+    align-items: ${(props) => (props.align ? props.align : 'center')};
+    margin: ${(props) => (props.margin ? props.margin : 0)};
 `;
 
 const FieldEditableArea = styled.textarea`
@@ -94,9 +105,15 @@ const AnimationUp = css`
 `;
 
 const Container = styled.div`
-    position: relative;
+    width: ${(props) => (props.width ? props.width : '100%')};
+    position: ${(props) => (props.position ? props.position : 'relative')};
     margin: ${(props) => (props.margin ? props.margin : 0)};
     padding: ${(props) => (props.padding ? props.padding : 0)};
+    z-index: ${(props) => (props.zIndex ? props.zIndex : 0)};
+    top: ${(props) => (props.top ? props.top : 'auto')};
+    bottom: ${(props) => (props.bottom ? props.bottom : 'auto')};
+    left: ${(props) => (props.left ? props.left : 'auto')};
+    right: ${(props) => (props.right ? props.right : 'auto')};
 `;
 
 const InlineContainer = styled.div`
@@ -127,12 +144,14 @@ const Span = styled.span`
 
 const Text = styled.div`
     font-family: ${theme.mainFont};
-    line-height: 1.8;
-    font-size: 18px;
-    letter-spacing: 0px;
-    font-weight: 300;
+    line-height: ${(props) => (props.lineHeight ? props.lineHeight : '1.7')};
+    font-size: ${(props) => (props.size ? `${props.size}px` : '18px')};
+    letter-spacing: ${(props) =>
+        props.spacing ? `${props.spacing}px` : '0px'};
+    font-weight: ${(props) => (props.weight ? props.weight : '300')};
     word-spacing: 6px;
-    margin-bottom: 24px;
+    margin-bottom: ${(props) => (props.mb ? `${props.mb}px` : '18px')};
+    text-align: ${(props) => (props.align ? props.align : 'left')};
     ${(props) => (props.isHidden ? 'display: none;' : '')};
 `;
 
@@ -142,7 +161,7 @@ Text.Title = styled.h1`
     font-size: 22px;
     letter-spacing: 0px;
     font-weight: 400;
-    margin: 36px 0 18px 0;
+    margin: 56px 0 16px 0;
 `;
 
 Text.Wrapper = styled.div`
@@ -158,14 +177,18 @@ const Link = styled.a`
     color: ${(props) => props.theme.accentColor};
 `;
 
+const LogoLink = styled(NavLink)`
+    display: inline-block;
+`;
+
 const Footer = styled.footer`
     font-family: ${theme.mainFont};
     line-height: 29px;
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0px;
     font-weight: 300;
     word-spacing: 3px;
-    margin-top: 18px;
+    margin-top: 200px;
     text-align: center;
 `;
 
@@ -271,6 +294,26 @@ SimplList.Item = styled.li`
     padding: 10px 0 0;
 `;
 
+const LandingContainer = styled.div`
+    margin: -168px 0 0;
+
+    @media (max-width: 600px) {
+        margin: 0;
+    }
+`;
+
+const TextAccent = styled.span`
+    color: ${(props) => props.theme.accentColor};
+`;
+
+const TextMinor = styled.span`
+    color: ${(props) => props.theme.grayColor};
+`;
+
+const Strong = styled.span`
+    font-weight: 400;
+`;
+
 export {
     FieldEditableArea,
     DropdownList,
@@ -290,5 +333,11 @@ export {
     InlineContainer,
     MobileHiddenContainer,
     HiddenTextarea,
-    SimplList
+    SimplList,
+    Flex,
+    LandingContainer,
+    TextAccent,
+    Strong,
+    TextMinor,
+    LogoLink
 };

@@ -534,6 +534,14 @@ export default class Workfield extends Component {
         }
     };
 
+    paintFieldDoubleClickHandler = (e) => {
+        e.preventDefault();
+
+        if (e.target.dataset.type === 'v') {
+            this.accentHandler(e.target.id, 0);
+        }
+    };
+
     render() {
         const {
             readOnly,
@@ -587,7 +595,6 @@ export default class Workfield extends Component {
             placeHolder: placeHolder || ''
         };
 
-        
         return (
             <WorkField>
                 <FakeField
@@ -602,6 +609,7 @@ export default class Workfield extends Component {
                 <PaintField
                     data-id-comp="paintField"
                     zoomIn={zoomIn}
+                    onDoubleClick={this.paintFieldDoubleClickHandler}
                     onClick={this.paintFieldHandler}>
                     {renderedTags}
                     {infoTags}

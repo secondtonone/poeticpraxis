@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { PageHeader, Logo, ContentField } from './styled';
+import { PageHeader, ContentField, Logo, Block } from './styled';
+import { LogoLink } from '../../styles/components';
 import { isTouchDevice } from '../../utils';
 
 import LogoPic from '../../../public/img/Logo.svg';
@@ -34,13 +35,15 @@ export default class Header extends Component {
         const { actualHeight, initHeight } = this.state;
         return (
             <PageHeader hidden={isTouchDevice() && actualHeight < initHeight}>
-                <Logo href="/" alt="POETIC PRAXIS" title="POETIC PRAXIS">
-                    <img
-                        src={variant === 'light' ? LogoPic : LogoPicWhite}
-                        alt="Logo"
-                        height="32"
-                    />
-                </Logo>
+                <Block>
+                    <LogoLink to="/">
+                        <Logo
+                            src={variant === 'light' ? LogoPic : LogoPicWhite}
+                            alt="Logo"
+                            height="32"
+                        />
+                    </LogoLink>
+                </Block>
                 <ContentField>{children}</ContentField>
             </PageHeader>
         );
