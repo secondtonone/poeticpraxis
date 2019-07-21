@@ -1,20 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import {
     Menu,
     Item,
-    StateSelect,
     StyledSecondaryMenu,
     Container,
-    LogoImage
+    LogoContainer
 } from './styled';
 
-import { LogoLink } from '../../styles/components';
-
-import Options from '../Options';
-
-import Logo from '../../../public/img/Logo.svg';
-import LogoWhite from '../../../public/img/Logo-white.svg';
+import Logo from '../Logo';
 
 export default function SecondaryMenu({
     children,
@@ -23,27 +17,19 @@ export default function SecondaryMenu({
     current,
     variant = 'light'
 }) {
+    const countTab = items.length;
     return (
         <StyledSecondaryMenu>
-            <LogoLink to="/">
-                <LogoImage
-                    src={variant === 'light' ? Logo : LogoWhite}
-                    alt="Logo"
-                />
-            </LogoLink>
+            <LogoContainer>
+                <Logo variant={variant} />
+            </LogoContainer>
             {items ? (
                 <div>
-                    <StateSelect>
-                        <Options
-                            value={current}
-                            onChange={(value) => handler(value)}
-                            options={items}
-                        />
-                    </StateSelect>
                     <Menu>
                         {items.map((item, index) => {
                             return (
                                 <Item
+                                    count={countTab}
                                     key={`item-${index}`}
                                     onClick={() => {
                                         if (item.disabled) {

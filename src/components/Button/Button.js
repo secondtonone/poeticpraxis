@@ -146,7 +146,7 @@ const StyledButton = styled.button.attrs((props) => ({
         }
 
         @media (max-width: 600px) {
-            bottom: 108px;
+            bottom: 68px;
             right: 16px;
         }
     }

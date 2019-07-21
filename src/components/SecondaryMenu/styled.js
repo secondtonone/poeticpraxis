@@ -13,17 +13,17 @@ const StyledSecondaryMenu = styled.div`
     @media (max-width: 600px) {
         top: 0;
         width: 100%;
-        padding: 16px 8px;
-        background-color:${(props) =>
-        props.theme.name === 'dark'
-            ? props.theme.grayDarkColor
-            : props.theme.primaryColor};
+        padding: 16px 8px 0;
+        flex-direction: column;
+        background-color: ${(props) =>
+            props.theme.name === 'dark'
+                ? props.theme.grayDarkColor
+                : props.theme.primaryColor};
         box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
     }
 `;
 
-const LogoImage = styled.img`
-    height: 24px;
+const LogoContainer = styled.div`
     display: none;
 
     @media (max-width: 600px) {
@@ -33,11 +33,6 @@ const LogoImage = styled.img`
 `;
 
 const StateSelect = styled.div`
-    width: 140px;
-    display: none;
-    font-size: ${(props) => props.size || '16px'};
-    font-weight: ${(props) => props.weight || 300};
-
     @media (max-width: 600px) {
         display: block;
     }
@@ -55,13 +50,19 @@ const Menu = styled.ul`
     line-height: 16px;
 
     @media (max-width: 600px) {
-        display: none;
+        display: flex;
+        font-size: 14px;
     }
 `;
 
 const Item = styled.li`
     display: block;
     padding: 16px;
+    box-sizing: border-box;
+    width: ${(props) =>
+        props.count === 2
+            ? `50%`
+            : '33%'};
     color: ${(props) => {
         if (props.active) {
             return props.theme.accentColor;
@@ -85,6 +86,13 @@ const Item = styled.li`
 
         return props.theme.secondColor;
     }};
+
+    @media (max-width: 600px) {
+        border-bottom: ${(props) =>
+            props.active
+                ? `2px solid ${props.theme.accentColor}`
+                : '2px solid transparent'};
+    }
 `;
 
 const Container = styled.div`
@@ -103,4 +111,11 @@ const Container = styled.div`
     }
 `;
 
-export { Menu, Item, StateSelect, StyledSecondaryMenu, Container, LogoImage };
+export {
+    Menu,
+    Item,
+    StateSelect,
+    StyledSecondaryMenu,
+    Container,
+    LogoContainer
+};

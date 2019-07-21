@@ -6,6 +6,8 @@ export default css`
 body {
     padding: 0;
     margin: 0;
+    left: 0;
+    right: 0;
     color: ${theme.primaryBlack};
     font-family: ${theme.mainFont};
     font-weight: 400;

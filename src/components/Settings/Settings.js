@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 
 import Button from '../Button';
-import Toggle from '../Toggle';
-import Select from '../Select';
-import MoreVert from '../IconSVG/MoreVert';
-import { SettingsContainer } from './styled';
-import { DropdownList, InlineContainer } from '../../styles/components';
-
-import { translations } from './translations';
+import LangChanger from '../LangChanger';
+import ThemeTumbler from '../ThemeTumbler';
+import SettingsIcon from '../IconSVG/Settings';
+import { DropdownList, Container } from '../../styles/components';
 
 export default class Settings extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isOpen: false
+            isOpen: this.props.isOpen || false
         };
 
         this.dropdown = null;
@@ -48,15 +45,8 @@ export default class Settings extends Component {
     };
 
     render() {
-        const langOptions = [
-            { title: 'Русский', value: 'ru' },
-            { title: 'English', value: 'en' }
-        ];
-
-        const { variant, changeTheme, lang = 'ru', changeLang } = this.props;
-
         return (
-            <SettingsContainer>
+            <Container>
                 <Button
                     _rounded
                     _flat
@@ -65,7 +55,7 @@ export default class Settings extends Component {
                         e.preventDefault();
                         this.toggleDropdown();
                     }}>
-                    <MoreVert _middle />
+                    <SettingsIcon _middle />
                 </Button>
                 {this.state.isOpen && (
                     <DropdownList
@@ -77,40 +67,18 @@ export default class Settings extends Component {
                         }}
                         ref={(el) => (this.dropdown = el)}>
                         <DropdownList.ListItem>
-                            <InlineContainer vertical="middle">
-                                {translations[lang].settings['NIGHT_MODE']}
-                            </InlineContainer>
-                            <InlineContainer vertical="middle">
-                                <Toggle
-                                    checked={variant === 'dark'}
-                                    onChange={() => {
-                                        changeTheme();
-                                        this.dropdown.focus();
-                                    }}
-                                />
-                            </InlineContainer>
+                            <ThemeTumbler
+                                onChange={() => {
+                                    this.dropdown.focus();
+                                }}
+                            />
                         </DropdownList.ListItem>
                         <DropdownList.ListItem>
-                            <InlineContainer vertical="middle">
-                                {translations[lang].settings['LANG']}
-                            </InlineContainer>
-                            <InlineContainer vertical="middle">
-                                <Select
-                                    weight="400"
-                                    id="lang"
-                                    value={lang}
-                                    options={langOptions}
-                                    onChange={(e) => {
-                                        changeLang(e.target.value);
-                                        document.documentElement.lang =
-                                            e.target.value;
-                                    }}
-                                />
-                            </InlineContainer>
+                            <LangChanger />
                         </DropdownList.ListItem>
                     </DropdownList>
                 )}
-            </SettingsContainer>
+            </Container>
         );
     }
 }

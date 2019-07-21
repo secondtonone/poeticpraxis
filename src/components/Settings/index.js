@@ -1,3 +1,3 @@
-import Settings from './SettingsContainer';
+import Settings from './Settings';
 
 export default Settings;

@@ -31,7 +31,7 @@ export default () => (
         <Switch>
             <Route path="/images-engine" component={ImagesEngine} />
             <Route path="/rhythmic" component={Rhythmic} />
-            <Route path="/" component={About} />
+            <Route path="/" exact component={About} />
             <Redirect path="*" to="/" />
         </Switch>
     </Layout>

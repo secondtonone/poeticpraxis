@@ -5,7 +5,6 @@ import { copying } from '../../modules/copying';
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
 
-import Settings from '../../components/Settings';
 import Recorder from '../../components/Recorder';
 import MatchList from '../../components/MatchList';
 import Textarea from '../../components/Textarea';
@@ -305,7 +304,6 @@ export default class ImagesEngine extends Component {
                             <Delete _middle />
                         </Button>
                     )}
-                    <Settings />
                 </SecondaryMenu>
 
                 {!(actualHeight * 1.3 < initHeight) && (

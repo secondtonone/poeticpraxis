@@ -52,6 +52,7 @@ const Block = styled.div`
 
 const ContentField = styled.div`
     position: relative;
+    display: flex;
 
     @media (max-width: 600px) {
         position: relative;

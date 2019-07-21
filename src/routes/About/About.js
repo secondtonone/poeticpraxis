@@ -6,27 +6,19 @@ import { scrollToAnchor, maxMatchMedia } from '../../utils';
 import Workfield from '../../components/Workfield';
 import Button from '../../components/Button';
 import SecondaryMenu from '../../components/SecondaryMenu';
-import Settings from '../../components/Settings';
-
-import ArrowBack from '../../components/IconSVG/ArrowBack';
-import Widgets from '../../components/IconSVG/Widgets';
-import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
-import ContentCopy from '../../components/IconSVG/ContentCopy';
-import MicIcon from '../../components/IconSVG/Mic';
+import Logo from '../../components/Logo';
 
 import {
     Text,
     Link,
     Footer,
-    List,
-    Span,
-    SimplList,
     Flex,
     LandingContainer,
     TextAccent,
     Container,
     Strong,
-    TextMinor
+    TextMinor,
+    DesctopHiddenContainer
 } from '../../styles/components';
 
 export default class About extends Component {
@@ -76,11 +68,13 @@ export default class About extends Component {
 
         return (
             <section>
-                <SecondaryMenu variant={variant}>
-                    <Settings />
-                </SecondaryMenu>
                 <LandingContainer>
                     <Flex direction="column" height={screenHeight}>
+                        <DesctopHiddenContainer>
+                            <Flex direction="column" margin="16px 0 0">
+                                <Logo height={36} />
+                            </Flex>
+                        </DesctopHiddenContainer>
                         <Flex direction="column">
                             <Text
                                 size={mediaQuery ? 60 : 128}

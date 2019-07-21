@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
@@ -79,7 +80,7 @@ const config = {
     },
     optimization: {
         namedModules: true, // NamedModulesPlugin()
-        runtimeChunk: true, 
+        runtimeChunk: true,
         splitChunks: {
             // CommonsChunkPlugin()
             /* chunks: 'all',
@@ -90,11 +91,11 @@ const config = {
         noEmitOnErrors: true, // NoEmitOnErrorsPlugin
         concatenateModules: true, //ModuleConcatenationPlugin
         minimizer: [
-            new UglifyJsPlugin({
+            new TerserPlugin({
                 cache: true,
                 parallel: true,
                 sourceMap: false,
-                uglifyOptions: {
+                terserOptions: {
                     parallel: true,
                     output: {
                         comments: false

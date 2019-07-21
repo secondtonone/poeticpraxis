@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { PageHeader, ContentField, Logo, Block } from './styled';
-import { LogoLink } from '../../styles/components';
+import {
+    LogoLink,
+    HoveredElement,
+    ShowOnHover,
+    HideOnHover,
+    Flex
+} from '../../styles/components';
 import { isTouchDevice } from '../../utils';
+import { translations } from './translations';
 
 import LogoPic from '../../../public/img/Logo.svg';
 import LogoPicWhite from '../../../public/img/Logo-white.svg';
@@ -31,19 +38,30 @@ export default class Header extends Component {
     };
 
     render() {
-        const { children, variant } = this.props;
+        const { children, variant, lang = 'ru' } = this.props;
         const { actualHeight, initHeight } = this.state;
         return (
             <PageHeader hidden={isTouchDevice() && actualHeight < initHeight}>
-                <Block>
-                    <LogoLink to="/">
-                        <Logo
-                            src={variant === 'light' ? LogoPic : LogoPicWhite}
-                            alt="Logo"
-                            height="32"
-                        />
-                    </LogoLink>
-                </Block>
+                <HoveredElement>
+                    <Block>
+                        <LogoLink to="/">
+                            <HideOnHover>
+                                <Logo
+                                    src={
+                                        variant === 'light'
+                                            ? LogoPic
+                                            : LogoPicWhite
+                                    }
+                                    alt="Logo"
+                                    height="32"
+                                />
+                            </HideOnHover>
+                            <ShowOnHover>
+                                <Flex height="32">{translations[lang].menu['ABOUT']}</Flex>
+                            </ShowOnHover>
+                        </LogoLink>
+                    </Block>
+                </HoveredElement>
                 <ContentField>{children}</ContentField>
             </PageHeader>
         );

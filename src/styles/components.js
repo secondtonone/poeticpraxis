@@ -81,7 +81,7 @@ const LeftedLayout = styled.div`
     margin-left: 100px;
 
     @media (max-width: 600px) {
-        padding: 64px 0 0;
+        padding: 128px 0 0;
         margin: 0;
     }
 `;
@@ -106,7 +106,9 @@ const AnimationUp = css`
 
 const Container = styled.div`
     width: ${(props) => (props.width ? props.width : '100%')};
+    display: ${(props) => (props.display ? props.display : 'block')};
     position: ${(props) => (props.position ? props.position : 'relative')};
+    height: ${(props) => (props.height ? `${props.height}px` : '100%')};
     margin: ${(props) => (props.margin ? props.margin : 0)};
     padding: ${(props) => (props.padding ? props.padding : 0)};
     z-index: ${(props) => (props.zIndex ? props.zIndex : 0)};
@@ -126,8 +128,17 @@ const InlineContainer = styled.div`
 `;
 
 const MobileHiddenContainer = styled.div`
+    display: inline-block;
+    padding: 16px 0 0;
     @media (max-width: 600px) {
         display: none;
+    }
+`;
+
+const DesctopHiddenContainer = styled.div`
+    display: none;
+    @media (max-width: 600px) {
+        display: block;
     }
 `;
 
@@ -288,6 +299,44 @@ const HiddenTextarea = styled(SimpleTextarea)`
     left: 0;
 `;
 
+const ShowOnHover = styled.div`
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+`;
+
+const HideOnHover = styled.div`
+    display: block;
+    opacity: 1;
+    transition: opacity 0.5s;
+    pointer-events: none;
+`;
+
+const HoveredElement = styled.div`
+    &:hover ${ShowOnHover} {
+        display: block;
+        opacity: 1;
+    }
+
+    &:hover ${HideOnHover} {
+        display: none;
+        opacity: 0;
+    }
+`;
+
+const Backdrop = styled.div`
+    position: fixed;
+    height: 100vh;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: ${(props) =>
+        props.theme.name === 'dark'
+            ? 'rgba(0, 0, 0, 0.7)'
+            : 'rgba(255, 255, 255, 0.7)'};
+`;
+
 const SimplList = styled.ul``;
 
 SimplList.Item = styled.li`
@@ -315,6 +364,7 @@ const Strong = styled.span`
 `;
 
 export {
+    Backdrop,
     FieldEditableArea,
     DropdownList,
     SecondaryTitle,
@@ -339,5 +389,9 @@ export {
     TextAccent,
     Strong,
     TextMinor,
-    LogoLink
+    LogoLink,
+    HoveredElement,
+    ShowOnHover,
+    HideOnHover,
+    DesctopHiddenContainer
 };

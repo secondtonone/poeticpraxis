@@ -72,11 +72,14 @@ const Input = styled.input`
 
 class Toggle extends Component {
     render() {
-        const { onChange, checked, ...props } = this.props;
         const id = `tog${randomize()}`;
         return (
-            <Container onClick={onChange}>
-                <Input type="checkbox" id={id} onChange={() => {}} checked={checked} {...props} />
+            <Container>
+                <Input
+                    type="checkbox"
+                    id={id}
+                    {...this.props}
+                />
                 <Label htmlFor={id} />
             </Container>
         );

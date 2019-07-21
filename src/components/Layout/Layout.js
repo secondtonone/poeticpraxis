@@ -38,20 +38,16 @@ export default class Layout extends Component {
     }
 
     render() {
-        const {
-            children, variant, lang
-        } = this.props;
-                
+        const { children, variant, lang } = this.props;
+
         return (
             <ThemeProvider theme={theme[variant]}>
                 <Page _animated>
-                    <Header variant={variant}>
+                    <Header variant={variant} lang={lang}>
                         <Menu inline lang={lang} />
-                        <InlineContainer>
-                            <MobileHiddenContainer>
-                                <Settings />
-                            </MobileHiddenContainer>
-                        </InlineContainer>
+                        <MobileHiddenContainer>
+                            <Settings />
+                        </MobileHiddenContainer>
                     </Header>
                     <MainContent>{children}</MainContent>
                 </Page>

@@ -20,7 +20,6 @@ import MessageBox from '../../components/MessageBox';
 import Button from '../../components/Button';
 import Toolbar from '../../components/Toolbar';
 import SecondaryMenu from '../../components/SecondaryMenu';
-import Settings from '../../components/Settings';
 import Melody from '../../components/Melody';
 
 import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
@@ -286,9 +285,7 @@ export default class Rhythmic extends Component {
                 <SecondaryMenu
                     items={secondMenu}
                     handler={this.changeView}
-                    current={currentView}>
-                    <Settings />
-                </SecondaryMenu>
+                    current={currentView} />
                 <LeftedLayout>
                     {!Object.keys(wordsDictionary).length && (
                         <Info>
