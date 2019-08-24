@@ -13,10 +13,17 @@ import { isDaytime, userLang } from '../../utils';
 import Menu from '../Menu';
 import Header from '../Header';
 import Settings from '../Settings';
+import LangChanger from '../LangChanger';
+import ThemeTumbler from '../ThemeTumbler';
 
 export default class Layout extends Component {
     componentDidMount() {
-        if (isDaytime()) {
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+            .matches;
+
+        if (isDarkMode) {
+            this.props.changeTheme('dark');
+        } else if (isDaytime()) {
             this.props.changeTheme('light');
         } else {
             this.props.changeTheme('dark');
@@ -43,12 +50,18 @@ export default class Layout extends Component {
         return (
             <ThemeProvider theme={theme[variant]}>
                 <Page _animated>
-                    <Header variant={variant} lang={lang}>
-                        <Menu inline lang={lang} />
-                        <MobileHiddenContainer>
-                            <Settings />
-                        </MobileHiddenContainer>
-                    </Header>
+                    <Header
+                        variant={variant}
+                        lang={lang}
+                        children={(props) => (
+                            <Menu
+                                inline
+                                lang={lang}
+                                onToggle={props.toggleHeaderZIndex}
+                                items={[<ThemeTumbler />, <LangChanger />]}
+                            />
+                        )}
+                    />
                     <MainContent>{children}</MainContent>
                 </Page>
             </ThemeProvider>

@@ -80,13 +80,17 @@ const config = {
     },
     optimization: {
         namedModules: true, // NamedModulesPlugin()
-        runtimeChunk: true,
+        runtimeChunk: 'single',
         splitChunks: {
-            // CommonsChunkPlugin()
-            /* chunks: 'all',
-            name: false */
-            minChunks: 2,
-            chunks: 'async'
+            /* minChunks: 2, */
+            chunks: 'all',
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                }
+            }
         },
         noEmitOnErrors: true, // NoEmitOnErrorsPlugin
         concatenateModules: true, //ModuleConcatenationPlugin
@@ -102,34 +106,8 @@ const config = {
                     },
                     mangle: true,
                     compress: {
-                        properties: true,
                         keep_fargs: false,
-                        pure_getters: true,
-                        collapse_vars: true,
-                        warnings: false,
-                        inline: false,
-                        reduce_vars: false,
-                        sequences: true,
-                        dead_code: true,
-                        drop_debugger: true,
-                        comparisons: true,
-                        conditionals: true,
-                        evaluate: true,
-                        booleans: true,
-                        loops: true,
-                        unused: true,
-                        hoist_funs: true,
-                        if_return: true,
-                        join_vars: true,
-                        drop_console: false,
-                        pure_funcs: [
-                            'classCallCheck',
-                            '_classCallCheck',
-                            '_possibleConstructorReturn',
-                            'Object.freeze',
-                            'invariant',
-                            'warning'
-                        ]
+                        hoist_funs: true
                     }
                 }
             })

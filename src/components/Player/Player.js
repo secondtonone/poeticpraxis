@@ -16,7 +16,11 @@ const Container = styled.div`
 `;
 
 const PlayerContainer = styled.div`
-    width: 100%
+    width: 100%;
+
+    @media (max-width: 600px) {
+        width: auto;
+    }
 `;
 
 export default class Player extends Component {
@@ -60,7 +64,7 @@ export default class Player extends Component {
     render() {
         const { lang = 'ru', bpm, progress, setBPM } = this.props;
         const { isPlaying } = this.state;
-        
+
         return (
             <PlayerContainer>
                 <Container>

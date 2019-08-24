@@ -28,7 +28,7 @@
         "@babel/preset-stage-0": "^7.0.0",
         "babel-eslint": "^7.0.0",
         "babel-loader": "^8.0.6",
-        "babel-plugin-styled-components": "^1.10.2",
+        "babel-plugin-styled-components": "^1.10.6",
         "bundle-loader": "^0.5.5",
         "compression": "^1.7.0",
         "copy-webpack-plugin": "^4.5.2",

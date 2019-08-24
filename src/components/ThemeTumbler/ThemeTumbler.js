@@ -1,16 +1,36 @@
 import React from 'react';
 
 import Toggle from '../Toggle';
-import { Flex } from '../../styles/components';
+import { Flex, Mirrored } from '../../styles/components';
 
 import { translations } from './translations';
 
+import Button from '../Button';
+import BrightnessIcon from '../IconSVG/Brightness';
+import Sunny from '../IconSVG/Sunny';
+
 const ThemeTumbler = ({ variant, changeTheme, onChange, lang = 'ru' }) => {
     return (
-        <Flex justify="space-between">
-            {translations[lang].settings['NIGHT_MODE']}
+        <Flex justify="center">
+            <Button
+                type="button"
+                _rounded
+                _transparent
+                _fit
+                onClick={() => {
+                    changeTheme();
+                    if (onChange) {
+                        onChange();
+                    }
+                }}>
+                {variant === 'light' ? (
+                    <BrightnessIcon _small />
+                ) : (
+                    <Sunny _small />
+                )}
+            </Button>
 
-            <Toggle
+            {/* <Toggle
                 checked={variant === 'dark'}
                 onChange={() => {
                     changeTheme();
@@ -18,7 +38,7 @@ const ThemeTumbler = ({ variant, changeTheme, onChange, lang = 'ru' }) => {
                         onChange();
                     }
                 }}
-            />
+            /> */}
         </Flex>
     );
 };

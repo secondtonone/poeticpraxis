@@ -29,7 +29,7 @@ export const Title = styled.h1`
 `;
 
 export const DownloadLink = styled(Link)`
-    margin: 0 24px;
+    margin: ${(props) => props.margin ? props.margin : '0'};
     display: flex;
     display: flex;
     align-items: flex-end;

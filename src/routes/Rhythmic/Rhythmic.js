@@ -18,7 +18,6 @@ import {
 import Workfield from '../../components/Workfield';
 import MessageBox from '../../components/MessageBox';
 import Button from '../../components/Button';
-import Toolbar from '../../components/Toolbar';
 import SecondaryMenu from '../../components/SecondaryMenu';
 import Melody from '../../components/Melody';
 
@@ -28,20 +27,17 @@ import ZoomInIcon from '../../components/IconSVG/ZoomIn';
 import ZoomOut from '../../components/IconSVG/ZoomOut';
 import Lock from '../../components/IconSVG/Lock';
 import LockOpen from '../../components/IconSVG/LockOpen';
-import ViewDay from '../../components/IconSVG/ViewDay';
-import ArrowBack from '../../components/IconSVG/ArrowBack';
 import MelodyIcon from '../../components/IconSVG/Melody';
 import RhythmIcon from '../../components/IconSVG/RhythmIcon';
 import ShareIcon from '../../components/IconSVG/Share';
 import Info from '../../components/Info';
 
-import { List, LeftedLayout, Link } from '../../styles/components';
+import { List, LeftedLayout, Link, ActionBar } from '../../styles/components';
 
 import {
     StringPauseButton,
     StringPauseButtonMobile,
     CopyButton,
-    ToolbarButton,
     ButtonContainer
 } from './styled';
 
@@ -250,6 +246,8 @@ export default class Rhythmic extends Component {
             rhytmicState
         } = this.state;
 
+        const isFirstTime = wordsDictionary? !Object.keys(wordsDictionary).length : true;
+
         const secondMenu = [
             {
                 value: 'rhythmic',
@@ -281,13 +279,62 @@ export default class Rhythmic extends Component {
 
         return (
             <section>
-                <MessageBox text={textMessage} bottom={216} />
+                <MessageBox text={textMessage} bottom={120} />
                 <SecondaryMenu
                     items={secondMenu}
                     handler={this.changeView}
-                    current={currentView} />
+                    current={currentView}
+                />
+                {isDevice && !isFocused && (
+                    <ActionBar>
+                        <Button
+                            _rounded
+                            _transparent
+                            type="button"
+                            disabled={!text}
+                            onClick={this.copyToClipboard}
+                            title="Копировать в текстовый редактор">
+                            <ContentCopy _big />
+                        </Button>
+                        <Button
+                            _rounded
+                            _transparent
+                            type="button"
+                            disabled={!text}
+                            onClick={this.shareWithLink}
+                            title="Поделиться">
+                            <ShareIcon _big />
+                        </Button>
+
+                        <Button
+                            type="button"
+                            _rounded
+                            _transparent
+                            onClick={() => {
+                                if (isEditable) {
+                                    this.changeMode();
+                                }
+                                this.changeZoomMode();
+                            }}
+                            title={zoomIn ? 'Уменьшить' : 'Увеличить'}>
+                            {zoomIn ? <ZoomOut _big /> : <ZoomInIcon _big />}
+                        </Button>
+
+                        <Button
+                            type="button"
+                            _rounded
+                            _transparent
+                            disabled={!text}
+                            onClick={this.changeMode}
+                            title={
+                                isEditable ? 'Блокировать' : 'Разблокировать'
+                            }>
+                            {isEditable ? <Lock _big /> : <LockOpen _big />}
+                        </Button>
+                    </ActionBar>
+                )}
                 <LeftedLayout>
-                    {!Object.keys(wordsDictionary).length && (
+                    {isFirstTime && (
                         <Info>
                             {translations[lang].messages['HOW_WORKS']}{' '}
                             <Link href="/about#rhythmic">
@@ -308,18 +355,7 @@ export default class Rhythmic extends Component {
                                     <KeyboardCapslock _big />
                                 </StringPauseButtonMobile>
                             )}
-                            {isDevice && !isFocused && isToolbarHidden && (
-                                <ToolbarButton
-                                    type="button"
-                                    _rounded
-                                    _main
-                                    _black
-                                    _animated-up
-                                    onClick={this.triggerToolbar}
-                                    title="Инструменты">
-                                    <ViewDay _big />
-                                </ToolbarButton>
-                            )}
+
                             <List _animated>
                                 {!isDevice && (
                                     <ButtonContainer>
@@ -372,68 +408,6 @@ export default class Rhythmic extends Component {
                                     }}
                                 />
                             </List>
-
-                            <Toolbar isHidden={isToolbarHidden}>
-                                <Button
-                                    _rounded
-                                    _transparent
-                                    type="button"
-                                    onClick={this.triggerToolbar}
-                                    title="Закрыть">
-                                    <ArrowBack _big />
-                                </Button>
-                                <Button
-                                    type="button"
-                                    _rounded
-                                    _transparent
-                                    disabled={!text}
-                                    onClick={this.changeMode}
-                                    title={
-                                        isEditable
-                                            ? 'Блокировать'
-                                            : 'Разблокировать'
-                                    }>
-                                    {isEditable ? (
-                                        <Lock _big />
-                                    ) : (
-                                        <LockOpen _big />
-                                    )}
-                                </Button>
-                                {!isEditable && (
-                                    <Button
-                                        type="button"
-                                        _rounded
-                                        _transparent
-                                        onClick={this.changeZoomMode}
-                                        title={
-                                            zoomIn ? 'Уменьшить' : 'Увеличить'
-                                        }>
-                                        {zoomIn ? (
-                                            <ZoomOut _big />
-                                        ) : (
-                                            <ZoomInIcon _big />
-                                        )}
-                                    </Button>
-                                )}
-                                <Button
-                                    _rounded
-                                    _transparent
-                                    type="button"
-                                    disabled={!text}
-                                    onClick={this.copyToClipboard}
-                                    title="Копировать в текстовый редактор">
-                                    <ContentCopy _big />
-                                </Button>
-                                <Button
-                                    _rounded
-                                    _transparent
-                                    type="button"
-                                    disabled={!text}
-                                    onClick={this.shareWithLink}
-                                    title="Поделиться">
-                                    <ShareIcon _big />
-                                </Button>
-                            </Toolbar>
                         </div>
                     )}
                     {currentView === 'melody' && (
@@ -450,3 +424,85 @@ export default class Rhythmic extends Component {
         );
     }
 }
+
+/* 
+    {isDevice && !isFocused && isToolbarHidden && (
+        <Button
+            type="button"
+            _rounded
+            _main
+            _black
+            _centred
+            _animated-up
+            onClick={this.triggerToolbar}
+            title="Инструменты">
+            <ViewDay _big />
+        </Button>
+    )}
+*/
+/* <Toolbar
+    closeButton={
+        <Button
+            type="button"
+            _rounded
+            _black
+            _main
+            _animated-up
+            onClick={this.triggerToolbar}
+            title="Инструменты">
+            <ArrowBack _big />
+        </Button>
+    }
+    isHidden={isToolbarHidden}>
+    <Button
+        type="button"
+        _rounded
+        _transparent
+        disabled={!text}
+        onClick={this.changeMode}
+        title={
+            isEditable
+                ? 'Блокировать'
+                : 'Разблокировать'
+        }>
+        {isEditable ? (
+            <Lock _big />
+        ) : (
+            <LockOpen _big />
+        )}
+    </Button>
+    {!isEditable && (
+        <Button
+            type="button"
+            _rounded
+            _transparent
+            onClick={this.changeZoomMode}
+            title={
+                zoomIn ? 'Уменьшить' : 'Увеличить'
+            }>
+            {zoomIn ? (
+                <ZoomOut _big />
+            ) : (
+                <ZoomInIcon _big />
+            )}
+        </Button>
+    )}
+    <Button
+        _rounded
+        _transparent
+        type="button"
+        disabled={!text}
+        onClick={this.copyToClipboard}
+        title="Копировать в текстовый редактор">
+        <ContentCopy _big />
+    </Button>
+    <Button
+        _rounded
+        _transparent
+        type="button"
+        disabled={!text}
+        onClick={this.shareWithLink}
+        title="Поделиться">
+        <ShareIcon _big />
+    </Button>
+</Toolbar> */

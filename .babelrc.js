@@ -5,16 +5,20 @@ module.exports = {
             '@babel/env',
             {
                 targets: {
-                    browsers: ['last 3 versions']
+                    browsers: ['last 2 versions']
                 },
                 useBuiltIns: 'usage',
-                corejs: 3,
-                modules: false
+                corejs: 3
             }
         ]
     ],
     plugins: [
-        'babel-plugin-styled-components',
+        [
+            'babel-plugin-styled-components',
+            {
+                pure: true
+            }
+        ],
         'react-hot-loader/babel',
         '@babel/plugin-transform-runtime',
         '@babel/plugin-syntax-dynamic-import',

@@ -12,7 +12,7 @@ const Label = styled.label`
     display: inline-block;
     cursor: pointer;
     font-weight: 300;
-    padding: 16px 18px;
+    padding: 10px 18px;
     text-align: left;
 
     &::before,
@@ -48,6 +48,8 @@ const Label = styled.label`
 
 const Container = styled.div`
     position: relative;
+    line-height: 0;
+    margin-left: 8px;
 `;
 
 const Input = styled.input`
@@ -75,11 +77,7 @@ class Toggle extends Component {
         const id = `tog${randomize()}`;
         return (
             <Container>
-                <Input
-                    type="checkbox"
-                    id={id}
-                    {...this.props}
-                />
+                <Input type="checkbox" id={id} {...this.props} />
                 <Label htmlFor={id} />
             </Container>
         );

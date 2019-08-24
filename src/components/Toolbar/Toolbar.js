@@ -9,15 +9,17 @@ const StyledToolbar = styled.div`
     text-align: left;
     box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
     z-index: 1002;
-    background-color:${(props) =>
-            props.theme.name === 'dark'
-                ? props.theme.grayDarkColor
-                : props.theme.primaryColor};
-    & button {
-        margin: 0 16px;
-    }
-
+    background-color: ${(props) =>
+        props.theme.name === 'dark'
+            ? props.theme.grayDarkColor
+            : props.theme.primaryColor};
     display: ${(props) => (props.isHidden ? 'none' : 'block')};
+`;
+
+const ButtonContainer = styled.div`
+    & button {
+        margin-right: 16px;
+    }
 `;
 
 export default class Toolbar extends Component {
@@ -26,10 +28,11 @@ export default class Toolbar extends Component {
     }
 
     render() {
-        const { children, isHidden, color } = this.props;
+        const { children, isHidden, closeButton, color } = this.props;
         return (
             <StyledToolbar isHidden={isHidden} color={color}>
-                {children}
+                {closeButton}
+                <ButtonContainer>{children}</ButtonContainer>
             </StyledToolbar>
         );
     }

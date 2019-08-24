@@ -16,6 +16,7 @@ const NavMenuBar = styled.div`
 
 const NavMenu = styled.ul`
     list-style: none;
+    display: flex;
 
     @media (max-width: 600px) {
         display: none;
@@ -42,7 +43,7 @@ const MobileNavMenu = styled.ul`
         z-index: 1003;
         left: 0;
         bottom: 0;
-        padding: 16px 64px;
+        padding: 16px 64px 0;
         display: block;
         float: none;
         text-align: center;
@@ -65,6 +66,10 @@ NavMenu.Item = styled.li`
     line-height: 32px;
     color: ${(props) => props.theme.secondColor};
     fill: ${(props) => props.theme.secondColor};
+
+    &:last-child {
+        padding-right: 0;
+    }
 
     @media (max-width: 600px) {
         padding: 16px 8px;

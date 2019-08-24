@@ -37,7 +37,7 @@ const StringPauseButtonMobile = styled(Button)`
     height: 64px;
 
     @media (min-width: 320px) and (max-width: 1024px) and (orientation: portrait) {
-        bottom: 128px;
+        bottom: 32px;
     }
 
     ${AnimationUp};
@@ -63,14 +63,11 @@ const ButtonContainer = styled.div`
 
 const CopyButtonMobile = styled(Button)``;
 
-const ToolbarButton = styled(Button)``;
-
 export {
     ChangeModeButton,
     StringPauseButton,
     StringPauseButtonMobile,
     CopyButton,
     CopyButtonMobile,
-    ToolbarButton,
     ButtonContainer
 };

@@ -14,9 +14,8 @@ import ChangeHistory from '../../components/IconSVG/ChangeHistory';
 import Burger from '../../components/IconSVG/Burger';
 import Close from '../../components/IconSVG/Close';
 import Button from '../Button';
-import LangChanger from '../LangChanger';
-import ThemeTumbler from '../ThemeTumbler';
-import { Backdrop } from '../../styles/components';
+
+import { Backdrop, Flex, Container } from '../../styles/components';
 
 export default class Menu extends Component {
     state = {
@@ -25,13 +24,14 @@ export default class Menu extends Component {
 
     toggleMenu = () => {
         document.body.style.position = !this.state.isMenuHidden ? '' : 'fixed';
+        this.props.onToggle();
         this.setState({
             isMenuHidden: !this.state.isMenuHidden
         });
     };
 
     render() {
-        const { inline, lang = 'ru' } = this.props;
+        const { inline, items, lang = 'ru' } = this.props;
 
         const menu = [
             {
@@ -56,6 +56,10 @@ export default class Menu extends Component {
                     </RouterNavLink>
                 </NavMenu.Item>
             );
+        });
+
+        const menuItems = items.map((item, index) => {
+            return <NavMenu.Item key={`item-${index}`}>{item}</NavMenu.Item>;
         });
 
         return (
@@ -83,11 +87,15 @@ export default class Menu extends Component {
                                 </NavMenu.Item>
                                 {navMenu}
                                 <NavMenu.Item>
-                                    <LangChanger />
+                                    <Flex justify="space-between">
+                                        {items.map((item, index) => (
+                                            <Container width="40%" key={`item-${index}`}>
+                                                {item}
+                                            </Container>
+                                        ))}
+                                    </Flex>
                                 </NavMenu.Item>
-                                <NavMenu.Item>
-                                    <ThemeTumbler />
-                                </NavMenu.Item>
+
                                 <NavMenu.Item>
                                     <Button
                                         _rounded
@@ -101,7 +109,10 @@ export default class Menu extends Component {
                         </Backdrop>
                     ) : null}
                 </NavMenuBar>
-                <NavMenu>{navMenu}</NavMenu>
+                <NavMenu>
+                    {navMenu}
+                    {menuItems}
+                </NavMenu>
             </NavBar>
         );
     }

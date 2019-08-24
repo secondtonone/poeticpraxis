@@ -30,8 +30,8 @@ const StyledButton = styled.button.attrs((props) => ({
     }
 
     &._small {
-        height: 28px;
-        width: 28px;
+        height: 24px;
+        width: 24px;
     }
 
     &._middle {
@@ -42,6 +42,11 @@ const StyledButton = styled.button.attrs((props) => ({
     &._big {
         width: 64px;
         height: 64px;
+    }
+
+    &._fit {
+        height: auto;
+        width: auto;
     }
 
     &._flat {
@@ -135,7 +140,7 @@ const StyledButton = styled.button.attrs((props) => ({
         color: ${theme.primaryWhite};
         fill: ${theme.primaryWhite};
         background-color: ${(props) => props.theme.accentColor};
-        z-index: 100;
+        z-index: 1009;
 
         &:disabled {
             color: ${(props) => props.theme.grayColor};
@@ -146,8 +151,19 @@ const StyledButton = styled.button.attrs((props) => ({
         }
 
         @media (max-width: 600px) {
-            bottom: 68px;
+            bottom: 36px;
             right: 16px;
+        }
+    }
+
+    &._centred {
+
+        @media (max-width: 600px) {
+            bottom: 24px;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+            z-index: 1010;
         }
     }
 

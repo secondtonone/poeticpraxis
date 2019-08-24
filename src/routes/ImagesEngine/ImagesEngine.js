@@ -27,7 +27,8 @@ import {
     LeftedLayout,
     Container,
     List,
-    Link
+    Link,
+    ActionBar
 } from '../../styles/components';
 
 import { ButtonContainer } from './styled';
@@ -286,17 +287,20 @@ export default class ImagesEngine extends Component {
             }
         ];
 
+        const hideWithKeyboard = !(actualHeight * 1.3 < initHeight);
+
         return (
             <section>
                 <SecondaryMenu
                     items={secondMenu}
                     handler={this.changeView}
-                    current={currentView}>
+                    current={currentView}
+                />
+                {hideWithKeyboard && <ActionBar>
                     {currentView === 'material' && (
                         <Button
                             _rounded
                             _transparent
-                            _small
                             disabled={!text.length}
                             type="button"
                             onClick={this.clearInput}
@@ -304,13 +308,14 @@ export default class ImagesEngine extends Component {
                             <Delete _middle />
                         </Button>
                     )}
-                </SecondaryMenu>
+                </ActionBar>}
 
-                {!(actualHeight * 1.3 < initHeight) && (
+                {hideWithKeyboard && (
                     <Button
                         _rounded
                         _main
                         _animated-up
+                        _centred
                         type="button"
                         onClick={this.getResult}
                         disabled={!text}
@@ -462,7 +467,7 @@ export default class ImagesEngine extends Component {
                         </List>
                     )}
                 </LeftedLayout>
-                <MessageBox text={textMessage} bottom={190} />
+                <MessageBox text={textMessage} bottom={104} />
             </section>
         );
     }

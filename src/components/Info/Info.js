@@ -13,7 +13,8 @@ const StyledBox = styled.div`
     max-width: 730px;
 
     @media (max-width: 600px) {
-        margin: 32px 24px;
+        margin: 32px 0;
+        line-height: 1.6;
     }
 `;
 

@@ -32,7 +32,7 @@ body {
     right: 0;
     overflow: hidden;
     font-size: 15em;
-    font-family: font-family: ${theme.mainFont};
+    font-family: ${theme.mainFont};
     word-break: break-all;
     font-weight: 500;
     text-align: center;
@@ -155,5 +155,4 @@ textarea {
         opacity: 0;
         transition: opacity 0.3s ease;
     }
-}
-`;
+}`

@@ -51,6 +51,9 @@ export default class Workfield extends Component {
 
         this.timerLinting = 0;
 
+        this.timerPaintFieldHandler = 0;
+        this.preventPaintFieldHandler = false;
+
         this.accents = ['black', 'red', 'red_secondary', 'gray'];
 
         this.decription = [
@@ -395,6 +398,7 @@ export default class Workfield extends Component {
             renderedTags.push(
                 <AccentRelative
                     accent={this.accents[sign.accent]}
+                    data-accent={this.accents[sign.accent]}
                     key={`acr-${sign.id}`}
                     id={sign.id}
                     style={style}
@@ -520,25 +524,96 @@ export default class Workfield extends Component {
     };
 
     paintFieldHandler = (e) => {
+        e.persist();
         e.preventDefault();
 
         if (this.props.viewOnly) {
             return false;
         }
 
-        if (e.target.dataset.type === 'v') {
-            this.accentHandler(e.target.id);
+        this.timerPaintFieldHandler = setTimeout(() => {
+            if (!this.preventPaintFieldHandler) {
+                switch (e.target.dataset.type) {
+                case 'v':
+                    this.accentHandler(e.target.id);
+                    break;
+                case 'a/q':
+                    this.changeRhythmHandler(e.target.id);
+                    break;
+                }
+            }
+            this.preventPaintFieldHandler = false;
+        }, 200);
+    };
+
+    doubleClickPaintFieldHandler = (e) => {
+        e.preventDefault();
+
+        if (this.props.viewOnly) {
+            return false;
         }
-        if (e.target.dataset.type === 'a/q') {
-            this.changeRhythmHandler(e.target.id);
+
+        clearTimeout(this.timerPaintFieldHandler);
+        this.preventPaintFieldHandler = true;
+
+        switch (e.target.dataset.accent) {
+        case this.accents[0]:
+            this.changeAccentInWord(e.target.id);
+            break;
+        default:
+            this.accentHandler(e.target.id, 0);
+            break;
         }
     };
 
-    paintFieldDoubleClickHandler = (e) => {
-        e.preventDefault();
+    changeAccentInWord = (idSymbol) => {
+        let wordsDictionary = this.props.wordsDictionary || {};
 
-        if (e.target.dataset.type === 'v') {
-            this.accentHandler(e.target.id, 0);
+        let stringsDictionary = this.props.stringsDictionary || {};
+
+        let { elements, strings, stringLinks, wordLinks } = this.state;
+
+        const idWord = elements[idSymbol].idToken;
+        const idString = elements[idSymbol].idString;
+        const accentsIds = elements[`${idString}${idWord}`].orderToken.filter(
+            (token) => token.includes('v')
+        );
+
+        let result = {};
+
+        accentsIds.forEach((signId) => {
+            let accent = 0;
+
+            if (idSymbol === signId) {
+                accent = 1;
+            }
+
+            result = makeAccent({
+                signId,
+                elements: result.elements || elements,
+                strings: result.strings || strings,
+                stringLinks,
+                wordLinks,
+                wordsDictionary: result.wordsDictionary || wordsDictionary,
+                stringsDictionary:
+                    result.stringsDictionary || stringsDictionary,
+                accent
+            });
+        });
+
+        this.setState({
+            elements: result.elements,
+            strings: result.strings
+        });
+
+        this.giveDataToParent();
+
+        if (!this.props.readOnly) {
+            this.props.setWordsDictionary(result.wordsDictionary);
+
+            this.props.transmitState({
+                stringsDictionary: result.stringsDictionary
+            });
         }
     };
 
@@ -595,6 +670,8 @@ export default class Workfield extends Component {
             placeHolder: placeHolder || ''
         };
 
+        console.log(this.state.strings);
+        
         return (
             <WorkField>
                 <FakeField
@@ -609,8 +686,8 @@ export default class Workfield extends Component {
                 <PaintField
                     data-id-comp="paintField"
                     zoomIn={zoomIn}
-                    onDoubleClick={this.paintFieldDoubleClickHandler}
-                    onClick={this.paintFieldHandler}>
+                    onClick={this.paintFieldHandler}
+                    onDoubleClick={this.doubleClickPaintFieldHandler}>
                     {renderedTags}
                     {infoTags}
                 </PaintField>

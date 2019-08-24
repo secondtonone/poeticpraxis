@@ -11,7 +11,7 @@ const Label = styled.label`
 
 const Container = styled.div`
     position: relative;
-    padding: 4px 28px 4px 8px;
+    padding: 0 28px 0 8px;
     font-family: ${theme.mainFont};
     font-size: ${(props) => props.size || '16px'};
     font-weight: ${(props) => props.weight || 300};
@@ -29,7 +29,6 @@ const StyledSelect = styled.select`
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin-left: 8px;
     color: ${(props) => props.theme.secondColor};
     font-family: ${theme.mainFont};
     font-size: ${(props) => props.size || '16px'};
@@ -45,7 +44,7 @@ const StyledSelect = styled.select`
 const IconContainer = styled.div`
     position: absolute;
     right: 0;
-    top: 4px;
+    top: 0;
     z-index: 1;
 `;
 

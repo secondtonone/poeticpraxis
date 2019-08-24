@@ -128,8 +128,7 @@ const InlineContainer = styled.div`
 `;
 
 const MobileHiddenContainer = styled.div`
-    display: inline-block;
-    padding: 16px 0 0;
+    display: flex;
     @media (max-width: 600px) {
         display: none;
     }
@@ -190,6 +189,7 @@ const Link = styled.a`
 
 const LogoLink = styled(NavLink)`
     display: inline-block;
+    color: ${(props) => props.theme.secondColor};
 `;
 
 const Footer = styled.footer`
@@ -265,7 +265,7 @@ const DropdownList = styled.li`
     margin: 0;
     padding: 0;
     width: 100%;
-    min-width: 252px;
+    min-width: 150px;
     box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.1);
     max-height: 200px;
     outline: none;
@@ -325,6 +325,22 @@ const HoveredElement = styled.div`
     }
 `;
 
+const ActionBar = styled.div`
+    display: none;
+
+    & button {
+        margin-left: 16px;
+    }
+
+    @media (max-width: 600px) {
+        display: flex;
+        position: fixed;
+        bottom: 8px;
+        right: 8px;
+        z-index: 1002;
+    }
+`;
+
 const Backdrop = styled.div`
     position: fixed;
     height: 100vh;
@@ -351,6 +367,10 @@ const LandingContainer = styled.div`
     }
 `;
 
+const Mirrored = styled.span`
+    transform: scale(-1, 0);
+`;
+
 const TextAccent = styled.span`
     color: ${(props) => props.theme.accentColor};
 `;
@@ -361,6 +381,12 @@ const TextMinor = styled.span`
 
 const Strong = styled.span`
     font-weight: 400;
+`;
+
+const HiddenSelect = styled.select`
+    width: 0;
+    height: 0;
+    outline: none;
 `;
 
 export {
@@ -393,5 +419,8 @@ export {
     HoveredElement,
     ShowOnHover,
     HideOnHover,
-    DesctopHiddenContainer
+    DesctopHiddenContainer,
+    ActionBar,
+    Mirrored,
+    HiddenSelect
 };

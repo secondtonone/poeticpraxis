@@ -4,9 +4,10 @@ import { translations } from './translations';
 
 import theme from '../../styles/theme';
 
-import { Tone, Instrument, mapLetterNote } from '../../modules/tone';
+import { Tone, Instrument } from '../../modules/tone';
 import { drawNotes } from '../../modules/drawing';
 import { recorder, setUpRecorder } from '../../modules/mediaRecorder';
+import { makeLetterGramma } from '../../modules/melodic';
 
 import Loader from '../Loader';
 import Canvas from '../Canvas';
@@ -15,11 +16,12 @@ import Button from '../Button';
 import Info from '../Info';
 import DownloadIcon from '../IconSVG/DownloadIcon';
 
+import { Flex } from '../../styles/components';
+
 import {
     LoaderConatiner,
     LinkConatiner,
     DownloadLink,
-    Container,
     Title
 } from './styled';
 
@@ -92,7 +94,7 @@ export default class Melody extends Component {
 
         this.setUpPlayer();
 
-        const { music, time } = this.makeLetterGramma({
+        const { music, time } = makeLetterGramma({
             notesCount: 2,
             strings,
             elements,
@@ -147,65 +149,6 @@ export default class Melody extends Component {
         if (notes.index === lastSoundIndex && recorder && !recorded) {
             recorder.stop();
         }
-    };
-
-    makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
-        let music = [];
-
-        let time = 0;
-
-        let index = 0;
-
-        orderStrings.forEach((stringId) => {
-            strings[stringId].soundGramma.forEach((tokenId) => {
-                let duration = 0.1;
-                let vowelNotes = [];
-
-                if (elements[tokenId].type === 'p') {
-                    time = time + duration;
-                }
-                if (elements[tokenId].type === 'v') {
-                    const isAccented = elements[tokenId].accent === 1;
-                    const char = elements[tokenId].char.toLowerCase();
-
-                    const notes = mapLetterNote[char];
-
-                    if (isAccented) {
-                        duration = 0.3;
-
-                        vowelNotes.push({
-                            note: notes.tone,
-                            duration
-                        });
-                    }
-
-                    notes.main.forEach((note, index) => {
-                        if (index < notesCount) {
-                            vowelNotes.push({
-                                note,
-                                duration,
-                                notation: Tone.Frequency(note, 'hz').toNote()
-                            });
-                        }
-                    });
-
-                    music.push({
-                        string: stringId,
-                        isAccented,
-                        char: char,
-                        time: time.toFixed(2),
-                        vowelNotes,
-                        index
-                    });
-
-                    ++index;
-
-                    time = time + duration;
-                }
-            });
-        });
-
-        return { music, time };
     };
 
     componentWillUnmount() {
@@ -282,7 +225,6 @@ export default class Melody extends Component {
     };
 
     render() {
-
         const { lang = 'ru', variant } = this.props;
         const { completeLoading, bpm, progress, recorded } = this.state;
 
@@ -296,7 +238,7 @@ export default class Melody extends Component {
                         {!recorded && (
                             <Info>{translations[lang].INFO_RECORDING}</Info>
                         )}
-                        <Container>
+                        <Flex justify="space-between">
                             <Player
                                 lang={lang}
                                 play={this.play}
@@ -322,10 +264,11 @@ export default class Melody extends Component {
                                     <DownloadIcon _big />
                                 </DownloadLink>
                             </Button>
-                        </Container>
+                        </Flex>
                         <LinkConatiner>
                             <Title>{translations[lang].NOTES}</Title>
                             <DownloadLink
+                                margin="0 24px"
                                 download={'notes'}
                                 ref={(ref) => {
                                     this.linkGetNotes = ref;

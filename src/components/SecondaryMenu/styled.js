@@ -28,7 +28,7 @@ const LogoContainer = styled.div`
 
     @media (max-width: 600px) {
         display: block;
-        margin-left: 16px;
+        margin: 0 auto;
     }
 `;
 
@@ -59,10 +59,7 @@ const Item = styled.li`
     display: block;
     padding: 16px;
     box-sizing: border-box;
-    width: ${(props) =>
-        props.count === 2
-            ? `50%`
-            : '33%'};
+
     color: ${(props) => {
         if (props.active) {
             return props.theme.accentColor;
@@ -88,6 +85,7 @@ const Item = styled.li`
     }};
 
     @media (max-width: 600px) {
+        width: ${(props) => (props.count === 2 ? `50%` : '33%')};
         border-bottom: ${(props) =>
             props.active
                 ? `2px solid ${props.theme.accentColor}`

@@ -1,13 +1,9 @@
-const ru = {
-    settings: {
-        LANG: 'Язык'
-    }
+const ru = {    
+    LANG: 'Язык'
 };
 
 const en = {
-    settings: {
-        LANG: 'Language'
-    }
+    LANG: 'Language'
 };
 
 const translations = {

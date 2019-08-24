@@ -66,7 +66,14 @@ export function isSpace(char) {
 export function isPause(char) {
     return /⋀/g.test(char);
 }
-
+/**
+ *
+ *
+ * @export
+ * @param {RegExp} rule
+ * @param {string} char
+ * @returns {number}
+ */
 export function isAccentedByRegExp(rule, char) {
     const regExp = new RegExp(rule);
     return regExp.test(char) ? 1 : 0;
@@ -76,15 +83,22 @@ export function isAccentedByRegExp(rule, char) {
  * @export
  * @param {string} token
  * @param {number} index
- * @param {Objec} dictionary
+ * @param {{[word: string]: any}} dictionary
  * @returns {number}
  */
 export function isAccented(token, index, dictionary = {}) {
     let element = isInDictionary(token, dictionary);
 
-    return element /* && element.accents[index] */ ? element.accents[index].type : 0;
+    return element /* && element.accents[index] */
+        ? element.accents[index].type
+        : 0;
 }
-
+/**
+ *
+ * @param {string} token
+ * @param {{[word: string]: any} | {}} dictionary
+ * @returns {boolean}
+ */
 function isInDictionary(token, dictionary = {}) {
     let lowerCased = token.toLowerCase();
 
@@ -129,9 +143,44 @@ function isAccentedByPosition(token, vowelCounter) {
 
     return suggestionPosAccent === vowelCounter ? 1 : 0;
 }
+
+function stringOnSteps(string = [], totalAccents = 0, elements = {}) {
+    const isAccented = (id) =>
+        id ? elements[id].accent === 1 || elements[id].accent === 2 : false;
+
+    const whichStep = (index, step = 2) => {
+        if (string[index + step] && !isAccented(string[index + step])) {
+            return whichStep(index, step + 1);
+        }
+        return step;
+    };
+
+    const elementCount = string.length;
+
+    let steps = [];
+
+    let step = [];
+
+    let defaultStep = Math.floor(elementCount / totalAccents);
+
+    for (let index = 0; index < elementCount; index++) {
+        const element = string[index];
+
+        if (isAccented(element)) {
+            defaultStep = whichStep(index, defaultStep);
+        }
+
+        step.push(element);
+
+        if (step.length >= defaultStep || index === elementCount - 1) {
+            steps.push(step);
+            step = [];
+        }
+    }
+
+    return steps;
+}
 /**
- *
- *
  * @export
  * @param {string} text
  * @param {Object} stringsDictionary
@@ -170,6 +219,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
         let soundGramma = [];
 
         let rhythmPreset = 0;
+
+        let totalStringAccents = [];
 
         let words = [];
 
@@ -254,6 +305,13 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                         vowel.push(idVowel);
 
                         if (accent !== 3) {
+                            /* if (!soundGramma.length) {
+                                const step = [idVowel];
+                                soundGramma.push(step);
+                            } else {
+                                soundGramma[soundGramma.length-1].push(idVowel);
+                            } 
+                            */
                             soundGramma.push(idVowel);
                             accents.push(idVowel);
                         }
@@ -342,11 +400,29 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
         rhythmPreset = rhythmDetection(soundGramma, elements);
 
+        totalStringAccents = soundGramma.filter(
+            (idElemet) =>
+                elements[idElemet].accent === 1 ||
+                elements[idElemet].accent === 2
+        );
+
+        try {
+            const meter = stringOnSteps(
+                soundGramma,
+                totalStringAccents.length,
+                elements
+            );
+            console.log(meter);
+        } catch (error) {
+            console.info(error);
+        }
+
         strings[idString] = {
             order,
             string,
             words,
             vowel,
+            totalStringAccents,
             soundGramma,
             rhythmPreset,
             id: idString
@@ -609,7 +685,7 @@ export function makeAccent({
     /* Удаление ударения */
 
     if (elements[idWord].accents && elements[idWord].accents[0]) {
-        const element = elements[idWord].accents[0];
+        //const element = elements[idWord].accents[0];
 
         //elements[element].accent = 0;
 
@@ -644,6 +720,13 @@ export function makeAccent({
         signId,
         string,
         elementAccent
+    );
+
+    /* Работа с количеством ударений */
+
+    strings[idString].totalStringAccents = strings[idString].soundGramma.filter(
+        (idElemet) =>
+            elements[idElemet].accent === 1 || elements[idElemet].accent === 2
     );
 
     /* баги*/
@@ -681,7 +764,12 @@ export function makeAccent({
         stringsDictionary
     };
 }
-
+/**
+ * @typedef {{size: 1 | 2 | 3, accent: 0 | 1 | 2 | 3 }} RhythmPreset
+ */
+/**
+ * @type {Array<RhythmPreset>}
+ */
 export const rhythmPresets = [
     {
         size: 2,
@@ -709,6 +797,58 @@ export const rhythmPresets = [
     }
 ];
 
+/**
+ * @typedef {string} idString - has format 's02874'
+ * @typedef {string} idWord - has format 's02874w09528'
+ * @typedef {string} idWordToken - has format 'w09528'
+ * @typedef {string} idVowel - has format 's02874w09528v11213'
+ * @typedef {string} idConsonant - has format 's02874w09528c47855'
+ * @typedef {string} idSpace - has format 's02874sp34205'
+ * @typedef {string} idSymbol - has format 's02874t57503'
+ * @typedef {string} idPauseSymbol - has format 's02874p34205'
+ * @typedef {idWord | idVowel | idConsonant | idSpace | idSymbol | idPauseSymbol} idElement - all elements
+ * @typedef {{height: number, left: number, top: number, width: number}} Tag - painted element's position
+ */
+/**
+ * @typedef {{accent: number, idString: idString}} CoreElement - core element props
+ */
+/**
+ * @typedef {CoreElement & {id: idSpace | idSymbol, char: string, hashTokenId: number, type: 'sp' | 't'}} SymbolElement - non-letters
+ */
+/**
+ * @typedef {SymbolElement & {id: idPauseSymbol, type: 'p', tag: Tag}} PauseElement - pause element
+ */
+/**
+ * @typedef {CoreElement & {id: idWord, type: 'w', accents: idVowel[], orderToken: (idVowel | idConsonant)[], token: string}} WordElement - word element
+ */
+/**
+ * @typedef {SymbolElement & {id: idConsonant, type: 'c', idToken: idWordToken, index: number, isLast: boolean, stringIndex: number}} CLettetElement - consonat letter
+ */
+/**
+ * @typedef {CLettetElement & {id: idVowel, type: 'v', tag: Tag}} VLettetElement - vowel letter
+ */
+/**
+ * @typedef {{[idElement: string]: SymbolElement | PauseElement | WordElement | CLettetElement | VLettetElement}} Elements - struct all elements
+ */
+/**
+ * @typedef {VLettetElement | PauseElement} Tags - painted elements
+ */
+/**
+ * @typedef {{[word: string]: idWord[]}} WordLinks - glosary word links with word elements
+ */
+/**
+ * @typedef {{[rhymeString: string]: idString[]}} StringLinks - string links with string elements
+ */
+/**
+ * @typedef {{[hash: number]: {id: idElement | idString}}} HashTable - hash links with elements
+ */
+/**
+ * @typedef {{[idString: string]: {id: idString, order: idElement[], soundGramma: string[], string: string, tag: Tag, vowel: string[], words: string[], totalStringAccents: string[], rhythmPresets: RhythmPreset }}} Strings - string elements
+ */
+
+/**
+ * @type {{strings: Strings, orderStrings: string[], elements: Elements, tags: Tags[], hashTable: HashTable, stringLinks: StringLinks, wordLinks: WordLinks}} - data model of app
+ */
 export const structure = {
     strings: {},
     orderStrings: [],

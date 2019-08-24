@@ -19,7 +19,8 @@ export default class Header extends Component {
 
         this.state = {
             actualHeight: window.innerHeight,
-            initHeight: window.innerHeight
+            initHeight: window.innerHeight,
+            headerZIndex: 1001
         };
     }
 
@@ -37,11 +38,19 @@ export default class Header extends Component {
         });
     };
 
+    toggleHeaderZIndex = () => {
+        this.setState({
+            headerZIndex: this.state.headerZIndex === 1001 ? 2009 : 1001
+        });
+    };
+
     render() {
         const { children, variant, lang = 'ru' } = this.props;
-        const { actualHeight, initHeight } = this.state;
+        const { actualHeight, initHeight, headerZIndex } = this.state;
         return (
-            <PageHeader hidden={isTouchDevice() && actualHeight < initHeight}>
+            <PageHeader
+                hidden={isTouchDevice() && actualHeight < initHeight}
+                zIndex={headerZIndex}>
                 <HoveredElement>
                     <Block>
                         <LogoLink to="/">
@@ -57,12 +66,16 @@ export default class Header extends Component {
                                 />
                             </HideOnHover>
                             <ShowOnHover>
-                                <Flex height="32">{translations[lang].menu['ABOUT']}</Flex>
+                                <Flex height="32">
+                                    {translations[lang].menu['ABOUT']}
+                                </Flex>
                             </ShowOnHover>
                         </LogoLink>
                     </Block>
                 </HoveredElement>
-                <ContentField>{children}</ContentField>
+                <ContentField>
+                    {children({ toggleHeaderZIndex: this.toggleHeaderZIndex })}
+                </ContentField>
             </PageHeader>
         );
     }
