@@ -150,6 +150,9 @@ const config = {
             },
             {
                 from: 'public/audio'
+            },
+            {
+                from: 'public/dictionary'
             }
         ]),
         new OfflinePlugin({

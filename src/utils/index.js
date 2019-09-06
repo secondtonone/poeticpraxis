@@ -69,3 +69,38 @@ export function scrollToAnchor() {
 export function maxMatchMedia(value) {
     return window.matchMedia(`(max-width: ${value}px)`).matches;
 }
+
+export function findCommon(arr) {
+    var max = 1,
+        m = [],
+        val = arr[0],
+        i,
+        x;
+
+    for (i = 0; i < arr.length; i++) {
+        // x = arr[i++];
+        x = arr[i];
+        if (m[x]) {
+            ++m[x] > max && ((max = m[i]), (val = x));
+        } else {
+            m[x] = 1;
+        }
+    }
+    return val;
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function randomGenerator(max = 0, count = 1) {
+    let valueArray = [];
+
+    for (let i = 0; i < count; i++) {
+        valueArray.push(getRandomInt(0, max));
+    }
+
+    return valueArray;
+}

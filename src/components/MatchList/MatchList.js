@@ -19,7 +19,7 @@ export default class MatchList extends Component {
                         ? match.join(' ')
                         : match;
                     return (
-                        <StyledMatchList.Item key={`p${randomize()}`} compact={compact}>
+                        <StyledMatchList.Item key={`p${randomize()}-${index}`} compact={compact}>
                             <StyledMatchList.PinButton
                                 _rounded
                                 _transparent

@@ -105,6 +105,9 @@ module.exports = {
         new CopyWebpackPlugin([
             {
                 from: 'public/audio'
+            },
+            {
+                from: 'public/dictionary'
             }
         ])
     ],

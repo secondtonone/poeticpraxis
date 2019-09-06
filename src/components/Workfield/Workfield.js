@@ -670,8 +670,6 @@ export default class Workfield extends Component {
             placeHolder: placeHolder || ''
         };
 
-        console.log(this.state.strings);
-        
         return (
             <WorkField>
                 <FakeField

@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 
-import {
-    NavBar,
-    NavMenu,
-    RouterNavLink,
-    NavMenuBar,
-    MobileNavMenu
-} from './styled';
+import { NavBar, NavMenu, NavMenuBar, MobileNavMenu } from './styled';
 
 import { translations } from './translations';
-import Widgets from '../../components/IconSVG/Widgets';
-import ChangeHistory from '../../components/IconSVG/ChangeHistory';
-import Burger from '../../components/IconSVG/Burger';
-import Close from '../../components/IconSVG/Close';
+import Widgets from '../IconSVG/Widgets';
+
+import ChangeHistory from '../IconSVG/ChangeHistory';
+import Burger from '../IconSVG/Burger';
+import Close from '../IconSVG/Close';
+
 import Button from '../Button';
+import RouteLink from '../RouteLink';
 
 import { Backdrop, Flex, Container } from '../../styles/components';
 
@@ -46,14 +43,22 @@ export default class Menu extends Component {
             }
         ];
 
+        const navMenuDevice = menu.map((item, index) => {
+            return (
+                <NavMenu.Item key={`menu-${index}`}>
+                    <RouteLink to={`/${item.url}`} onClick={this.toggleMenu}>
+                        <NavMenu.Title>{item.title}</NavMenu.Title>
+                    </RouteLink>
+                </NavMenu.Item>
+            );
+        });
+
         const navMenu = menu.map((item, index) => {
             return (
                 <NavMenu.Item key={`menu-${index}`}>
-                    <RouterNavLink
-                        to={`/${item.url}`}
-                        onClick={this.toggleMenu}>
+                    <RouteLink to={`/${item.url}`}>
                         <NavMenu.Title>{item.title}</NavMenu.Title>
-                    </RouterNavLink>
+                    </RouteLink>
                 </NavMenu.Item>
             );
         });
@@ -76,20 +81,22 @@ export default class Menu extends Component {
                         <Backdrop>
                             <MobileNavMenu>
                                 <NavMenu.Item>
-                                    <RouterNavLink
+                                    <RouteLink
                                         to={'/'}
                                         exact
                                         onClick={this.toggleMenu}>
                                         <NavMenu.Title>
                                             {translations[lang].menu['ABOUT']}
                                         </NavMenu.Title>
-                                    </RouterNavLink>
+                                    </RouteLink>
                                 </NavMenu.Item>
-                                {navMenu}
+                                {navMenuDevice}
                                 <NavMenu.Item>
                                     <Flex justify="space-between">
                                         {items.map((item, index) => (
-                                            <Container width="40%" key={`item-${index}`}>
+                                            <Container
+                                                width="40%"
+                                                key={`item-${index}`}>
                                                 {item}
                                             </Container>
                                         ))}

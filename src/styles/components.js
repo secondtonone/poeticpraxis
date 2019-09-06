@@ -1,10 +1,8 @@
 import styled, { css } from 'styled-components';
-import { NavLink } from 'react-router-dom';
 
 import theme from './theme';
 import { show, upAlt, up } from './animations';
 import { withElements } from './helpers';
-import { hexToRgb } from '../utils';
 
 const Hidden = css`
     border: 0;
@@ -187,11 +185,6 @@ const Link = styled.a`
     color: ${(props) => props.theme.accentColor};
 `;
 
-const LogoLink = styled(NavLink)`
-    display: inline-block;
-    color: ${(props) => props.theme.secondColor};
-`;
-
 const Footer = styled.footer`
     font-family: ${theme.mainFont};
     line-height: 29px;
@@ -256,7 +249,7 @@ const List = styled.div.attrs((props) => ({ className: withElements(props) }))`
     }
 `;
 
-const DropdownList = styled.li`
+const DropdownList = styled.ul`
     position: absolute;
     top: ${(props) => props.top || '-3px'};
     ${(props) => props.side || 'left'}: 8px;
@@ -277,7 +270,7 @@ const DropdownList = styled.li`
     }
 `;
 
-DropdownList.ListItem = styled.ul`
+DropdownList.ListItem = styled.li`
     margin: 0;
     padding: 16px;
     display: flex;
@@ -415,7 +408,6 @@ export {
     TextAccent,
     Strong,
     TextMinor,
-    LogoLink,
     HoveredElement,
     ShowOnHover,
     HideOnHover,

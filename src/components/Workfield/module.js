@@ -1,4 +1,4 @@
-import { randomize, hashFunction } from '../../utils';
+import { randomize, hashFunction, findCommon } from '../../utils';
 
 const vowelsList = 'eyuioaуеыаоэёяиюäöüéàèùâêîôûïüÿìíòóúęąєў';
 /**
@@ -218,6 +218,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
         let soundGramma = [];
 
+        let steps = [];
+
         let rhythmPreset = 0;
 
         let totalStringAccents = [];
@@ -398,24 +400,15 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
         stringLinks = makeListLinks(string, idString, stringLinks);
 
-        rhythmPreset = rhythmDetection(soundGramma, elements);
-
         totalStringAccents = soundGramma.filter(
             (idElemet) =>
                 elements[idElemet].accent === 1 ||
                 elements[idElemet].accent === 2
         );
 
-        try {
-            const meter = stringOnSteps(
-                soundGramma,
-                totalStringAccents.length,
-                elements
-            );
-            console.log(meter);
-        } catch (error) {
-            console.info(error);
-        }
+        steps = stringOnSteps(soundGramma, totalStringAccents.length, elements);
+
+        rhythmPreset = rhythmDetection(steps, elements);
 
         strings[idString] = {
             order,
@@ -424,6 +417,7 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
             vowel,
             totalStringAccents,
             soundGramma,
+            steps,
             rhythmPreset,
             id: idString
         };
@@ -554,17 +548,39 @@ function setCursor(elem, pos) {
     }, 50);
 }
 
-function rhythmDetection(soundGramma, elements) {
-    let rhythmPreset = 0;
-
-    /* soundGramma.forEach((elementId, index) => {
-        if (index === 0) {
-            
+function rhythmDetection(steps, elements) {
+    let rhythmPresetHelper = {
+        '2': {
+            '0': 1,
+            '1': 2
+        },
+        '3': {
+            '0': 3,
+            '1': 4,
+            '2': 5
         }
-    }); */
+    };
 
-    return rhythmPreset;
+    const stringPresetRhythm = steps.map((step) => {
+        const stepLength = step.length;
+
+        if (rhythmPresetHelper[stepLength]) {
+            const meter = rhythmPresetHelper[stepLength];
+            const accent = step.findIndex(
+                (elementId) =>
+                    elements[elementId].accent === 1 ||
+                    elements[elementId].accent === 2
+            );
+
+            return meter[accent];
+        }
+
+        return 0;
+    });
+
+    return findCommon(stringPresetRhythm) || 0;
 }
+
 function wordAccent(accent) {
     if (accent < 3) {
         ++accent;

@@ -1,6 +1,6 @@
 const ru = {
     engineMenu: {
-        WORDS: 'Слова',
+        WORDS: 'Пары',
         MATERIAL: 'Материал'
     },
     placeholders: {
@@ -25,7 +25,7 @@ const ru = {
 
 const en = {
     engineMenu: {
-        WORDS: 'Words',
+        WORDS: 'Pairs',
         MATERIAL: 'Material'
     },
     placeholders: {

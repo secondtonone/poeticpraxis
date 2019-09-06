@@ -6,7 +6,7 @@ const ru = {
 
 const en = {
     menu: {
-        ABOUT: 'MAIN'
+        ABOUT: 'HOME'
     }
 };
 

@@ -95,7 +95,7 @@ export default class Melody extends Component {
         this.setUpPlayer();
 
         const { music, time } = makeLetterGramma({
-            notesCount: 2,
+            notesCount: 1,/* 2 */
             strings,
             elements,
             orderStrings
@@ -119,7 +119,6 @@ export default class Melody extends Component {
             verticalOffset
         });
 
-        console.log(this.state.music);
     }
 
     setUpPlayer = () => {
@@ -235,9 +234,9 @@ export default class Melody extends Component {
                 }}>
                 {completeLoading ? (
                     <div>
-                        {!recorded && (
+                        {/* !recorded && (
                             <Info>{translations[lang].INFO_RECORDING}</Info>
-                        )}
+                        ) */}
                         <Flex justify="space-between">
                             <Player
                                 lang={lang}
@@ -248,7 +247,7 @@ export default class Melody extends Component {
                                 setBPM={this.setBPM}
                             />
 
-                            <Button
+                            {/* <Button
                                 _rounded
                                 _transparent
                                 disabled={!recorded}
@@ -263,7 +262,7 @@ export default class Melody extends Component {
                                     onClick={this.downloadMelody}>
                                     <DownloadIcon _big />
                                 </DownloadLink>
-                            </Button>
+                                </Button> */}
                         </Flex>
                         <LinkConatiner>
                             <Title>{translations[lang].NOTES}</Title>

@@ -107,7 +107,7 @@ export default class About extends Component {
                         </Flex>
                     </Flex>
                 </LandingContainer>
-                <Flex direction="column" margin="50px 0 0">
+                <Flex direction="column" margin="50px 0 0" id="images-engine">
                     <Flex
                         direction={mediaQuery ? 'column' : 'row'}
                         align="flex-start">
@@ -119,7 +119,6 @@ export default class About extends Component {
                                     : '27px 50px 0 0'
                             }>
                             <Text
-                                isHidden={!isRusLang}
                                 size={mediaQuery ? 64 : 128}
                                 lineHeight={mediaQuery ? 0.7 : 0.4}
                                 align={mediaQuery ? 'left' : 'right'}
@@ -156,13 +155,19 @@ export default class About extends Component {
                                 неожиданные образы<TextMinor>(3)</TextMinor>.
                             </Text>
                             <Text isHidden={isRusLang}>
-                                Прием монтажа. Изменяя порядок кадров, сцен,
-                                можно изменить и смысл повествования, то же и со
-                                словами. "Машина образов", изобретённая С. А.
-                                Есенинsм, позволяет из любого набора слов
-                                <TextMinor>(1)</TextMinor>, составлять случайные
-                                пары<TextMinor>(2)</TextMinor>, получая
-                                неожиданные образы<TextMinor>(3)</TextMinor>.
+                                Reception editing changes the order of frames,
+                                thereby changing the meaning of the story, the
+                                same with words. The “Machine of Images”
+                                (invented by{' '}
+                                <Link
+                                    href="https://en.wikipedia.org/wiki/Sergei_Yesenin"
+                                    target="_blank">
+                                    S. A. Yesenin
+                                </Link>
+                                ) allows you to make random pairs{' '}
+                                <TextMinor>(2)</TextMinor> from any set of words{' '}
+                                <TextMinor>(1)</TextMinor>, resulting in
+                                unexpected images <TextMinor>(3)</TextMinor>.
                             </Text>
                         </Container>
                     </Flex>
@@ -186,6 +191,11 @@ export default class About extends Component {
                                 конструктор день фон вязь вода отражение архитип
                                 троица зеркала таблетка синь глубина алогизм
                                 алтарь
+                            </Text>
+                            <Text isHidden={isRusLang} align="right">
+                                constructor day background ligature water
+                                reflection archetype trinity mirrors tablet blue
+                                depth illogism altar
                             </Text>
                         </Container>
                         <Container
@@ -211,6 +221,15 @@ export default class About extends Component {
                                 отражение <br />
                                 фон вязь
                             </Text>
+                            <Text isHidden={isRusLang} align="center">
+                                <Strong>mirror depth</Strong> <br /> blue tablet{' '}
+                                <br />
+                                <Strong>constructor illogism</Strong> <br />
+                                archetype trinity <br />
+                                <Strong>altar day</Strong> <br /> water
+                                reflection <br />
+                                background ligature
+                            </Text>
                         </Container>
                         <Container
                             padding={mediaQuery ? '25px 50px 0' : '5% 2% 0'}
@@ -232,6 +251,13 @@ export default class About extends Component {
                                 жертву на <Strong>алтарь</Strong> прожорливого{' '}
                                 <Strong>дня</Strong>
                             </Text>
+                            <Text isHidden={isRusLang}>
+                                silent <Strong>depths of mirrors</Strong> <br />{' '}
+                                collect the life -{' '}
+                                <Strong>illogical constructor</Strong> <br />
+                                sacrificed on the <Strong>altar</Strong> of a
+                                gluttonous <Strong>day</Strong>
+                            </Text>
                         </Container>
                     </Flex>
                     <Container padding="5% 0 0">
@@ -249,12 +275,11 @@ export default class About extends Component {
                     </Container>
                 </Flex>
 
-                <Flex direction="column" margin="150px 0 0">
+                <Flex direction="column" margin="150px 0 0" id="rhythmic">
                     <Container
                         width={mediaQuery ? '100%' : '70%'}
                         padding={mediaQuery ? '0 50px 0' : '9px 0 50px'}>
                         <Text
-                            isHidden={!isRusLang}
                             size={mediaQuery ? 64 : 128}
                             lineHeight={mediaQuery ? 0.7 : 0.4}
                             align={mediaQuery ? 'left' : 'right'}
@@ -295,12 +320,13 @@ export default class About extends Component {
                                 ритмичсекий рисунок стихотвроения и прослушайте:
                             </Text>
                             <Text isHidden={isRusLang} align="right">
-                                Человеческая речь похожа на музыку. Но смысл
-                                слов мешает нам её услышать. Это хорошо можно
-                                понять, если послушать иностранную речь. А что
-                                если звуки букв заменить музыкальными звуками.
-                                Чтобы это узнать, продолжите обозначать
-                                ритмичсекий рисунок стихотвроения и прослушайте:
+                                Human speech is like a music. But the meaning of
+                                the words prevents us from hearing it. This can
+                                be well understood if you listen to a foreign
+                                speech. But what if the sounds of letters are
+                                replaced by musical sounds. To find out,
+                                continue to outline the rhythmic pattern of the
+                                poem and listen to:
                             </Text>
                         </Container>
                         <Container
@@ -338,7 +364,6 @@ export default class About extends Component {
                     justify="flex-start">
                     <Container padding="9px 0 25px">
                         <Text
-                            isHidden={!isRusLang}
                             size={mediaQuery ? 64 : 128}
                             lineHeight="0.7"
                             align="center"
@@ -346,42 +371,61 @@ export default class About extends Component {
                             POETIC
                             <TextAccent>PRAXIS</TextAccent>
                         </Text>
-                        <Text size={14} align="center">
+                        <Text isHidden={!isRusLang} size={14} align="center">
                             проект, созданный чтобы узнать, что скрыто за
                             словами -
                             <br />
                             для поэтической практики.
                         </Text>
+                        <Text isHidden={isRusLang} size={14} align="center">
+                            the project created to find out what is hidden
+                            behind words -
+                            <br />
+                            for poetic practice.
+                        </Text>
                     </Container>
                     <Flex direction="column" justify="flex-start" height="100">
-                        Подписаться:
+                        {isRusLang ? 'Подписаться:' : 'Subscribe:'}
                         <Flex
                             direction={mediaQuery ? 'column' : 'row'}
                             justify="space-evenly"
                             width="300">
-                            <Link
-                                target="_blank"
-                                href="tg://resolve?domain=poeticpraxis">
-                                TELEGRAM
-                            </Link>
-                            <Link
-                                target="_blank"
-                                href="https://vk.com/poeticpraxis">
-                                ВКОНТАКТЕ
-                            </Link>
+                            {isRusLang && (
+                                <Link
+                                    target="_blank"
+                                    href="tg://resolve?domain=poeticpraxis">
+                                    TELEGRAM
+                                </Link>
+                            )}
+                            {isRusLang && (
+                                <Link
+                                    target="_blank"
+                                    href="https://vk.com/poeticpraxis">
+                                    ВКОНТАКТЕ
+                                </Link>
+                            )}
+                            {!isRusLang && (
+                                <Link
+                                    target="_blank"
+                                    href="https://www.reddit.com/r/poeticpraxis/">
+                                    REDDIT
+                                </Link>
+                            )}
                         </Flex>
                     </Flex>
-                    <Button
-                        _action--outlined
-                        width="300px"
-                        size={16}
-                        type="button"
-                        margin="24px 0"
-                        onClick={this.togglePayment}>
-                        {!isHiddenPayment
-                            ? 'поддержать проект'
-                            : 'В следующий раз 😅'}
-                    </Button>
+                    {isRusLang && (
+                        <Button
+                            _action--outlined
+                            width="300px"
+                            size={16}
+                            type="button"
+                            margin="24px 0"
+                            onClick={this.togglePayment}>
+                            {!isHiddenPayment
+                                ? 'поддержать проект'
+                                : 'В следующий раз 😅'}
+                        </Button>
+                    )}
                     <br />
                     <Text isHidden={!isHiddenPayment}>
                         <iframe
@@ -396,11 +440,13 @@ export default class About extends Component {
                 </Flex>
 
                 <Footer>
-                    &copy;{' '}
+                    &copy; 2016 - {new Date().getFullYear()} POETIC PRAXIS
+                    {' ▴ '}
                     <Link href="mailto:thearchitect@poeticpraxis.ru">
-                        Макс А. Ю.
+                        {isRusLang
+                            ? `Помощь и предложения`
+                            : `Help and suggestions`}
                     </Link>{' '}
-                    2016 - {new Date().getFullYear()}
                 </Footer>
             </section>
         );

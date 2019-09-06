@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+
 import { PageHeader, ContentField, Logo, Block } from './styled';
 import {
-    LogoLink,
     HoveredElement,
     ShowOnHover,
     HideOnHover,
@@ -9,6 +9,8 @@ import {
 } from '../../styles/components';
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
+
+import RouteLink from '../RouteLink';
 
 import LogoPic from '../../../public/img/Logo.svg';
 import LogoPicWhite from '../../../public/img/Logo-white.svg';
@@ -53,7 +55,7 @@ export default class Header extends Component {
                 zIndex={headerZIndex}>
                 <HoveredElement>
                     <Block>
-                        <LogoLink to="/">
+                        <RouteLink to="/" exact>
                             <HideOnHover>
                                 <Logo
                                     src={
@@ -70,7 +72,7 @@ export default class Header extends Component {
                                     {translations[lang].menu['ABOUT']}
                                 </Flex>
                             </ShowOnHover>
-                        </LogoLink>
+                        </RouteLink>
                     </Block>
                 </HoveredElement>
                 <ContentField>

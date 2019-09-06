@@ -5,7 +5,7 @@ const ru = {
     REPEAT: 'Повтор',
     INFO_RECORDING: 'Чтобы скачать мелодию прослушайте её полностью.',
     DOWNLOAD: 'Скачать',
-    NOTES: 'Букноты',
+    NOTES: 'Ноты',
     SAVE: 'Сохранить'
 };
 
@@ -16,7 +16,7 @@ const en = {
     REPEAT: 'Repeat',
     INFO_RECORDING: 'For downloading melody, listen to it completely.',
     DOWNLOAD: 'Download',
-    NOTES: 'Letnotes',
+    NOTES: 'Notes',
     SAVE: 'Save'
 };
 

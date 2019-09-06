@@ -5,7 +5,7 @@
     return [a, b];
 } */
 
-function chunkArray(arr, chunkSize){
+function chunkArray(arr, chunkSize) {
     var results = [];
 
     while (arr.length) {
@@ -41,7 +41,16 @@ function shuffle(a) {
     return zip(splitAt(words.length/2, shuffle(words)));
 }*/
 
-export default function imaged(words, chunkSize = 2) {
+export function imaged(words, chunkSize = 2) {
+    return chunkArray(shuffle(shuffle(words)), chunkSize);
+}
 
-    return chunkArray(shuffle(shuffle(words)),chunkSize);
+export function stringToWords(text = '') {
+    text = text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ'-]+/g);
+
+    return text
+        ? text.filter((n) => {
+            return /[^'-]/g.test(n);
+        }) || []
+        : [];
 }

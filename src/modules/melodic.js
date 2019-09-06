@@ -1,11 +1,6 @@
 import { Tone, mapLetterNote } from './tone';
 
-const makeLetterGramma = ({
-    notesCount,
-    strings,
-    elements,
-    orderStrings
-}) => {
+const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
     let music = [];
 
     let time = 0;
@@ -13,14 +8,20 @@ const makeLetterGramma = ({
     let index = 0;
 
     orderStrings.forEach((stringId) => {
-        strings[stringId].soundGramma.forEach((tokenId) => {
-            let duration = 0.1;
+        let soundGramma = [];
+
+        strings[stringId].steps.forEach((step) => {
+            soundGramma = [...soundGramma, ...step, 'p'];
+        });
+
+        soundGramma.forEach((tokenId) => {
+            let duration = 0.3;
             let vowelNotes = [];
 
-            if (elements[tokenId].type === 'p') {
+            if (tokenId === 'p' || elements[tokenId].type === 'p') {
                 time = time + duration;
-            }
-            if (elements[tokenId].type === 'v') {
+            } else if (elements[tokenId].type === 'v') {
+                duration = 0.1;
                 const isAccented = elements[tokenId].accent === 1;
                 const char = elements[tokenId].char.toLowerCase();
 

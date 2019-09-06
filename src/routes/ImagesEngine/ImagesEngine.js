@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import imaged from '../../modules/imaged';
+import { imaged, stringToWords } from '../../modules/imaged';
 import { copying } from '../../modules/copying';
+import { getWords } from '../../modules/dictionary';
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
 
@@ -16,6 +17,7 @@ import CheckCircle from '../../components/IconSVG/CheckCircle';
 import ContentCopy from '../../components/IconSVG/ContentCopy';
 import Subject from '../../components/IconSVG/Subject';
 import PlaylistAddCheck from '../../components/IconSVG/PlaylistAddCheck';
+import WordsIcon from '../../components/IconSVG/Words';
 import SecondaryMenu from '../../components/SecondaryMenu';
 import Info from '../../components/Info';
 import MessageBox from '../../components/MessageBox';
@@ -31,7 +33,7 @@ import {
     ActionBar
 } from '../../styles/components';
 
-import { ButtonContainer } from './styled';
+import { ButtonContainer, ButtonCentredContainer } from './styled';
 
 export default class ImagesEngine extends Component {
     constructor(props) {
@@ -39,7 +41,7 @@ export default class ImagesEngine extends Component {
 
         this.state = {
             textMessage: '',
-            words: [],
+            words: stringToWords(props.engineState.text),
             field: {},
             sharedText: '',
             actualHeight: window.innerHeight,
@@ -58,6 +60,16 @@ export default class ImagesEngine extends Component {
         window.removeEventListener('resize', this.updateDimensions);
     }
 
+    getWords = async () => {
+        const prevText = this.props.engineState.text;
+        const wordsLength = this.state.words.length;
+
+        const text = await getWords(prevText, wordsLength);
+
+        this.props.setEngineState({
+            text
+        });
+    };
     updateDimensions = () => {
         this.setState({
             actualHeight: window.innerHeight
@@ -69,6 +81,10 @@ export default class ImagesEngine extends Component {
 
         this.props.setEngineState({
             text
+        });
+
+        this.setState({
+            words: stringToWords(text)
         });
     };
 
@@ -87,13 +103,8 @@ export default class ImagesEngine extends Component {
     getResult = () => {
         /*let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ\-]+/g) || [];*/
         const { text, wordsNumber } = this.props.engineState;
-        let words =
-            text
-                .toLowerCase()
-                .match(/[a-zA-ZА-Яа-яёЁ'-]+/g)
-                .filter((n) => {
-                    return /[^'-]/g.test(n);
-                }) || [];
+
+        let words = stringToWords(text);
 
         const result = imaged(words, wordsNumber);
 
@@ -186,12 +197,14 @@ export default class ImagesEngine extends Component {
     };
 
     clearInput = () => {
-        let text = '';
-
         this.toTheTop();
 
         this.props.setEngineState({
-            text
+            text: ''
+        });
+
+        this.setState({
+            words: []
         });
     };
 
@@ -249,17 +262,6 @@ export default class ImagesEngine extends Component {
             placeHolder: `${translations[lang].placeholders['ENGINE']}...`
         };
 
-        // const wordNumberSelectOptions = [
-        //     {
-        //         value: 2,
-        //         title: '2'
-        //     },
-        //     {
-        //         value: 3,
-        //         title: '3'
-        //     }
-        // ];
-
         const secondMenu = [
             {
                 value: 'material',
@@ -289,6 +291,8 @@ export default class ImagesEngine extends Component {
 
         const hideWithKeyboard = !(actualHeight * 1.3 < initHeight);
 
+        const isDevice = isTouchDevice();
+
         return (
             <section>
                 <SecondaryMenu
@@ -296,19 +300,31 @@ export default class ImagesEngine extends Component {
                     handler={this.changeView}
                     current={currentView}
                 />
-                {hideWithKeyboard && <ActionBar>
-                    {currentView === 'material' && (
-                        <Button
-                            _rounded
-                            _transparent
-                            disabled={!text.length}
-                            type="button"
-                            onClick={this.clearInput}
-                            title="Стереть текст">
-                            <Delete _middle />
-                        </Button>
-                    )}
-                </ActionBar>}
+                {hideWithKeyboard && (
+                    <ActionBar>
+                        {currentView === 'material' && (
+                            <Button
+                                _rounded
+                                _transparent
+                                disabled={!text.length}
+                                type="button"
+                                onClick={this.clearInput}
+                                title="Стереть текст">
+                                <Delete _middle />
+                            </Button>
+                        )}
+                        {currentView === 'material' && lang === 'ru' && (
+                            <Button
+                                _rounded
+                                _transparent
+                                type="button"
+                                onClick={this.getWords}
+                                title="Получить слова">
+                                <WordsIcon _middle />
+                            </Button>
+                        )}
+                    </ActionBar>
+                )}
 
                 {hideWithKeyboard && (
                     <Button
@@ -344,19 +360,30 @@ export default class ImagesEngine extends Component {
 
                     {currentView === 'material' && (
                         <List _animated>
+                            {!isDevice && (
+                                <ButtonCentredContainer>
+                                    <Recorder
+                                        _rounded
+                                        title="Запись"
+                                        text={text}
+                                        transmitState={setEngineState}
+                                        showMessage={this.showMessage}
+                                    />
+                                    {lang === 'ru' && (
+                                        <Button
+                                            _rounded
+                                            _transparent
+                                            type="button"
+                                            onClick={this.getWords}
+                                            title="Получить слова">
+                                            <WordsIcon _middle />
+                                        </Button>
+                                    )}
+                                </ButtonCentredContainer>
+                            )}
                             <div>
                                 <Textarea {...props} />
                             </div>
-                            {!isTouchDevice() && (
-                                <Recorder
-                                    _rounded
-                                    _top-centred
-                                    title="Запись"
-                                    text={text}
-                                    transmitState={setEngineState}
-                                    showMessage={this.showMessage}
-                                />
-                            )}
                         </List>
                     )}
 
