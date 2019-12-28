@@ -4,6 +4,7 @@ const ru = {
     },
     messages: {
         COPIED: 'Текст скопирован в буфер.',
+        NET: 'Проверьте подключение к интернету.',
         WRONG: 'Проверьте ссылку. Неверные параметры.',
         HOW_WORKS: 'Как это работает?',
         LEARN_MORE: 'Узнать больше.',
@@ -21,6 +22,7 @@ const en = {
     },
     messages: {
         COPIED: 'Text copied to clipboard.',
+        NET: 'Check your connection',
         WRONG: 'Wrong parameters. Check the link.',
         HOW_WORKS: 'How it works?',
         LEARN_MORE: 'Learn more.',

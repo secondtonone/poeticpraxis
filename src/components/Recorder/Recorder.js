@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Recognition from '../../modules/recognition';
+import { translations } from './translations';
 
 import Button from '../Button';
 import MicIcon from '../IconSVG/Mic';
@@ -45,13 +46,15 @@ export default class Recorder extends Component {
 
     render() {
         const { isRecording, isSupporting } = this.state;
+        const { lang = 'ru'} = this.props;
 
         if (!isSupporting) {
             return null;
         }
         return (
-            <Button _accent={isRecording} onClick={this.toggle} {...this.props}>
-                <MicIcon _middle />
+            <Button _flat _transparent _accent={isRecording} onClick={this.toggle} {...this.props}>
+                <MicIcon _small padding="0 8px 0 0" />{' '}
+                {isRecording ? translations[lang].OFF : translations[lang].ON}
             </Button>
         );
     }

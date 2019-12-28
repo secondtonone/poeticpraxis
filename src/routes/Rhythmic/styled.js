@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import theme from '../../styles/theme';
+
 import { AnimationShow, AnimationUp } from '../../styles/components';
 
 import Button from '../../components/Button';
@@ -12,12 +14,12 @@ const ChangeModeButton = styled(Button)`
     }
 `;
 
-const StringPauseButton = styled(Button)`
+const StringPauseButton = styled.div`
     position: absolute;
     left: -20px;
-    top: 0;
+    top: 32px;
     transform: translateY(0);
-    transition: transform 0.2s ease-out;
+    transition: transform 0.5s ease-out;
 
     @media (max-width: 880px) {
         display: none;
@@ -32,7 +34,7 @@ const StringPauseButtonMobile = styled(Button)`
     right: 32px;
     left: auto;
     top: auto;
-    z-index: 100;
+    z-index: 1002;
     width: 64px;
     height: 64px;
 
@@ -63,11 +65,69 @@ const ButtonContainer = styled.div`
 
 const CopyButtonMobile = styled(Button)``;
 
+const accentMixin = (color, accent) => {
+    return `
+        position: relative;
+
+        &::after {
+            position: relative;
+            right: 0;
+            margin: 0 auto;
+            width: 100%;
+            font-size: 19px;
+            height: 0;
+            text-align: center;
+            color: ${color};
+
+            ${
+                accent == 'black' || accent == 'gray'
+                    ? `content: '\\25CF';
+                        top: 0;`
+                    : `content: '\\25BC';
+                transform: rotate(0deg) scale(1.7);
+                top: 0;`
+            }
+        }
+
+        &:hover::before {
+            content: '';
+            position: relative;
+            left: 0;
+            right: 0;
+            top: 0;
+            margin: 0 auto;
+            width: 100%;
+            height: 1px;
+            border-bottom: 1px solid ${color};
+        }
+    `;
+};
+
+const AccentRelative = styled.span`
+    ${(props) => {
+        if (props.accent === 'red' || props.accent === 'red_secondary') {
+            return accentMixin(
+                props.accent === 'red'
+                    ? props.theme.accentColor
+                    : theme.secondRed,
+                props.accent
+            );
+        }
+        if (props.accent === 'black') {
+            return accentMixin(props.theme.secondColor, props.accent);
+        }
+        if (props.accent === 'gray') {
+            return accentMixin(props.theme.grayColor, props.accent);
+        }
+    }}
+`;
+
 export {
     ChangeModeButton,
     StringPauseButton,
     StringPauseButtonMobile,
     CopyButton,
     CopyButtonMobile,
-    ButtonContainer
+    ButtonContainer,
+    AccentRelative
 };

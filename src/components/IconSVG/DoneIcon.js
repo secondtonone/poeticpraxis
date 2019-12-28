@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Icon from '../Icon';
 
 export default class DoneIcon extends Component {
-    render(props) {
+    render() {
         return (
-            <Icon {...props}>
+            <Icon {...this.props}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

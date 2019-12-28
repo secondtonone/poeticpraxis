@@ -3,9 +3,9 @@ import Icon from '../Icon';
 
 
 export default class Brightness extends Component {
-    render(props) {
+    render() {
         return (
-            <Icon {...props} >
+            <Icon {...this.props} >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                         <g id="sharp-brightness_2-24px" transform="translate(8.000000, 10.000000) scale(-1, 1) translate(-8.000000, -10.000000) translate(-4.000000, 0)">

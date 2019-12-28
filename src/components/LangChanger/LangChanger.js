@@ -27,7 +27,7 @@ const LangChanger = ({ lang = 'ru', changeLang, texted = false }) => {
                 <Dropdown
                     title={
                         <Button type="button" _rounded _transparent _fit>
-                            <LangIcon _small />
+                            <LangIcon _middle />
                         </Button>
                     }
                     options={langOptions}
@@ -37,7 +37,7 @@ const LangChanger = ({ lang = 'ru', changeLang, texted = false }) => {
             ) : (
                 <Button type="button" _rounded _transparent _fit>
                     <label htmlFor="lang">
-                        <LangIcon _small />
+                        <LangIcon _middle />
                         <HiddenSelect
                             id="lang"
                             value={lang}

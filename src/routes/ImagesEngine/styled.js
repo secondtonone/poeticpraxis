@@ -54,7 +54,11 @@ const FieldClearButton = styled(Button)`
 const ButtonContainer = styled.div`
     margin: 16px 0 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+
+    @media (max-width: 600px) {
+        flex-direction: column-reverse;
+    }
 `;
 
 const ButtonCentredContainer = styled.div`
@@ -64,7 +68,7 @@ const ButtonCentredContainer = styled.div`
     right: 0;
     margin: 0 auto;
     display: flex;
-    width: 100px;
+    width: 300px;
     justify-content: space-between;
 `;
 

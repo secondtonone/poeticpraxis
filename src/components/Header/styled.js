@@ -39,6 +39,7 @@ const PageHeader = styled.header`
 
 const Logo = styled.img`
     display: block;
+    position: relative;
     height: ${(props) => (props.height ? `${props.height}px` : '100%')};
 `;
 

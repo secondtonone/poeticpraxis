@@ -32,7 +32,7 @@ export default class Melody extends Component {
         this.state = {
             completeLoading: false,
             progress: 0,
-            bpm: 80,
+            bpm: 120,
             music: [],
             recorded: false,
             recording: false
@@ -66,7 +66,7 @@ export default class Melody extends Component {
 
         const {
             variant,
-            rhytmicState: { strings, elements, orderStrings }
+            rhythmicState: { strings, elements, orderStrings }
         } = this.props;
 
         if (Instrument) {
@@ -105,7 +105,7 @@ export default class Melody extends Component {
             music
         });
 
-        Tone.Transport.loopEnd = Math.round(time + 0.5);
+        Tone.Transport.loopEnd = time;//Math.round(time + 0.5);
 
         new Tone.Part(this.partCallback, music).start('+0.1');
 
@@ -133,21 +133,27 @@ export default class Melody extends Component {
         const { music, recorded, recording } = this.state;
         const lastSoundIndex = music[music.length - 1].index;
 
-        if (!notes.index && recorder && !recording) {
+        /* if (!notes.index && recorder && !recording) {
             recorder.start();
-        }
+        } */
+
+        Instrument.volume.value = Math.floor(notes.isAccented ? 4 : 0);
+
+        console.log(notes, Instrument.volume.value);
 
         vowelNotes.forEach((note) => {
+            
             Instrument.triggerAttackRelease(
                 note.note,
                 note.duration,
-                time.toFixed(2)
+                //time.toFixed(2)
+                time
             );
         });
 
-        if (notes.index === lastSoundIndex && recorder && !recorded) {
+        /* if (notes.index === lastSoundIndex && recorder && !recorded) {
             recorder.stop();
-        }
+        } */
     };
 
     componentWillUnmount() {
@@ -192,7 +198,7 @@ export default class Melody extends Component {
     };
 
     getHeightCanvas = () => {
-        const { strings, orderStrings } = this.props.rhytmicState;
+        const { strings, orderStrings } = this.props.rhythmicState;
 
         let height = 0;
 

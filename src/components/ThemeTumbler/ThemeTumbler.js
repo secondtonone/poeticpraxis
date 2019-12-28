@@ -24,9 +24,9 @@ const ThemeTumbler = ({ variant, changeTheme, onChange, lang = 'ru' }) => {
                     }
                 }}>
                 {variant === 'light' ? (
-                    <BrightnessIcon _small />
+                    <BrightnessIcon _middle />
                 ) : (
-                    <Sunny _small />
+                    <Sunny _middle />
                 )}
             </Button>
 

@@ -8,7 +8,7 @@ const ru = {
     },
     matchList: {
         FAVORITES: 'Выбранныe',
-        FAVOR_HINT: 'Выберите сочетание нажав на',
+        FAVOR_HINT: 'Выберите словосочетания',
         PAIRS: 'Сочетания',
         PAIRS_HINT: ['Нажмите снова на', 'чтобы получить новые сочетаиния'],
         SEE_RHYTHM: 'Посмотреть ритм',
@@ -18,8 +18,10 @@ const ru = {
     messages: {
         PAIR_ADDED: 'Словосочетание добавлено.',
         PAIRS_READY: 'Словосочетания составлены.',
+        PAIRS_COPIED: 'Пары скопированы',
         HOW_WORKS: 'Как это работает?',
-        LEARN_MORE: 'Узнать больше.'
+        LEARN_MORE: 'Узнать больше.',
+        CLICK_MORE: 'Нажмите еще раз.'
     }
 };
 
@@ -43,8 +45,10 @@ const en = {
     messages: {
         PAIR_ADDED: 'A pair is added.',
         PAIRS_READY: 'Pairs are ready.',
+        PAIRS_COPIED: 'Pairs copied',
         HOW_WORKS: 'How it works?',
-        LEARN_MORE: 'Learn more.'
+        LEARN_MORE: 'Learn more.',
+        CLICK_MORE: 'Click one more time'
     }
 };
 

@@ -61,12 +61,37 @@ const StyledButton = styled.button.attrs((props) => ({
         border: none;
         font-weight: 500;
         border-radius: 2px;
-        display: inline-block;
+        display: flex;
+        align-items: center;
         height: 36px;
         line-height: 36px;
         padding: 0 10px;
         text-transform: uppercase;
-        vertical-align: sub;
+    }
+
+    &._main {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        width: 64px;
+        height: 64px;
+        color: ${theme.primaryWhite};
+        fill: ${theme.primaryWhite};
+        background-color: ${(props) => props.theme.accentColor};
+        z-index: 1009;
+
+        &:disabled {
+            color: ${(props) => props.theme.grayColor};
+            fill: ${(props) => props.theme.grayColor};
+            background-color: transparent;
+            cursor: default;
+            box-shadow: 2px 1px 10px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            bottom: 36px;
+            right: 16px;
+        }
     }
 
     &._action--outlined {
@@ -131,30 +156,7 @@ const StyledButton = styled.button.attrs((props) => ({
         fill: ${theme.primaryBlack};
     }
 
-    &._main {
-        position: fixed;
-        bottom: 32px;
-        right: 32px;
-        width: 64px;
-        height: 64px;
-        color: ${theme.primaryWhite};
-        fill: ${theme.primaryWhite};
-        background-color: ${(props) => props.theme.accentColor};
-        z-index: 1009;
-
-        &:disabled {
-            color: ${(props) => props.theme.grayColor};
-            fill: ${(props) => props.theme.grayColor};
-            background-color: transparent;
-            cursor: default;
-            box-shadow: 2px 1px 10px 0px rgba(0, 0, 0, 0.1);
-        }
-
-        @media (max-width: 600px) {
-            bottom: 36px;
-            right: 16px;
-        }
-    }
+    
 
     &._centred {
 

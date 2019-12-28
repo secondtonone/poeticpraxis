@@ -57,6 +57,10 @@ const config = {
                 use: ['file-loader']
             },
             {
+                test: /\.worker\.js$/,
+                use: { loader: 'worker-loader' }
+            },
+            {
                 test: /\.webmanifest$/,
                 include: /public/,
                 loader: [

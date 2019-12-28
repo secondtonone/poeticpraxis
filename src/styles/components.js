@@ -377,9 +377,25 @@ const Strong = styled.span`
 `;
 
 const HiddenSelect = styled.select`
-    width: 0;
-    height: 0;
+    opacity: 0;
     outline: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+`;
+
+const BetaSign = styled.div`
+    position: relative;
+
+    &::after {
+        position: absolute;
+        right: -8px;
+        top: -5px;
+        content: '\\03B2';
+        color: ${(props) => props.theme.secondColor};
+        font-size: 12px;
+    }
 `;
 
 export {
@@ -414,5 +430,6 @@ export {
     DesctopHiddenContainer,
     ActionBar,
     Mirrored,
-    HiddenSelect
+    HiddenSelect,
+    BetaSign
 };

@@ -3,20 +3,29 @@ import React, { Component } from 'react';
 import { MainContent, Page } from './styled';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../styles/theme';
-import {
-    MobileHiddenContainer,
-    InlineContainer
-} from '../../styles/components';
 
 import { isDaytime, userLang } from '../../utils';
 
 import Menu from '../Menu';
 import Header from '../Header';
-import Settings from '../Settings';
 import LangChanger from '../LangChanger';
 import ThemeTumbler from '../ThemeTumbler';
 
 export default class Layout extends Component {
+    changeThemeColor = () => {
+        const metaThemeColor = document.querySelector('meta[name=theme-color]');
+        metaThemeColor.setAttribute(
+            'content',
+            theme[this.props.variant].primaryColor
+        );
+    };
+
+    componentDidUpdate(prevProps) {
+        if (this.props.variant !== prevProps.variant) {
+            this.changeThemeColor();
+        }
+    }
+
     componentDidMount() {
         const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
             .matches;
@@ -28,6 +37,8 @@ export default class Layout extends Component {
         } else {
             this.props.changeTheme('dark');
         }
+
+        this.changeThemeColor();
 
         let isLangEn = false;
 

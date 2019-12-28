@@ -19,6 +19,7 @@ const StyledIcon = styled.i.attrs((props) => ({
     transform-origin: center;
     display: inline-block;
     pointer-events: none;
+    padding: ${(props) => (props.padding ? props.padding : 0)};
 
     & svg {
         height: 24px;

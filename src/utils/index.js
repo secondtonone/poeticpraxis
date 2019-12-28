@@ -104,3 +104,11 @@ export function randomGenerator(max = 0, count = 1) {
 
     return valueArray;
 }
+
+
+export function getDaysFromNow(from) {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const now = new Date();
+
+    return Math.round(Math.abs((from - now) / oneDay));
+}

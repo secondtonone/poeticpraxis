@@ -10,6 +10,8 @@ import {
 
 import Logo from '../Logo';
 
+import {BetaSign} from '../../styles/components';
+
 export default function SecondaryMenu({
     children,
     items,
@@ -21,7 +23,9 @@ export default function SecondaryMenu({
     return (
         <StyledSecondaryMenu>
             <LogoContainer>
-                <Logo variant={variant} />
+                <BetaSign>
+                    <Logo variant={variant} />
+                </BetaSign>
             </LogoContainer>
             {items ? (
                 <div>

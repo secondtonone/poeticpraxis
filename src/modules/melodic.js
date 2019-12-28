@@ -1,9 +1,12 @@
 import { Tone, mapLetterNote } from './tone';
 
+const timeNotation = (time) =>
+    `${Math.floor(time.length / 2)}m${time.length % 2 ? '+2n' : ''}`;
+
 const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
     let music = [];
 
-    let time = 0;
+    let time = [];
 
     let index = 0;
 
@@ -11,29 +14,26 @@ const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
         let soundGramma = [];
 
         strings[stringId].steps.forEach((step) => {
-            soundGramma = [...soundGramma, ...step, 'p'];
+            soundGramma = [...soundGramma, ...step];
         });
 
+        soundGramma = soundGramma.concat(['p','p']);
+
         soundGramma.forEach((tokenId) => {
-            let duration = 0.3;
+            let duration = '2n';
             let vowelNotes = [];
 
             if (tokenId === 'p' || elements[tokenId].type === 'p') {
-                time = time + duration;
+                time.push(duration);
             } else if (elements[tokenId].type === 'v') {
-                duration = 0.1;
+                duration = '2n';
                 const isAccented = elements[tokenId].accent === 1;
                 const char = elements[tokenId].char.toLowerCase();
 
                 const notes = mapLetterNote[char];
 
                 if (isAccented) {
-                    duration = 0.3;
-
-                    vowelNotes.push({
-                        note: notes.tone,
-                        duration
-                    });
+                    //duration = 0.75;
                 }
 
                 notes.main.forEach((note, index) => {
@@ -50,19 +50,19 @@ const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
                     string: stringId,
                     isAccented,
                     char: char,
-                    time: time.toFixed(2),
+                    time: timeNotation(time), //time.toFixed(2),
                     vowelNotes,
                     index
                 });
 
                 ++index;
 
-                time = time + duration;
+                time.push(duration);
             }
         });
     });
-
-    return { music, time };
+    
+    return { music, time: timeNotation(time) };
 };
 
 export { makeLetterGramma };

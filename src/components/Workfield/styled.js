@@ -114,6 +114,7 @@ const Syllable = styled.div`
     line-height: 50px;
     color: ${(props) => props.theme.secondColor};
     cursor: pointer;
+    user-select: none;
 
     @media (max-width: 880px) {
         right: -12px;
@@ -162,7 +163,7 @@ Syllable.AccentType = styled.div`
     pointer-events: none;
 
     @media (max-width: 600px) {
-        left: auto; 
+        left: auto;
     }
 `;
 
@@ -177,6 +178,7 @@ const StringNumber = styled.div`
     width: 10px;
     color: rgb(216, 216, 216);
     cursor: help;
+    user-select: none;
 `;
 
 const FieldEditable = styled.div`
@@ -198,7 +200,7 @@ const FakeField = styled.div`
     opacity: 0;
     background-color: ${theme.secondWhite};
     color: #5d5c5c;
-    ${field} 
+    ${field}
     &:focus {
         outline: none;
     }

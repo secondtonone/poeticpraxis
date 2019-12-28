@@ -48,9 +48,27 @@ export default class ImagesEngine extends Component {
             initHeight: window.innerHeight,
             isDisabledWordsview: !props.engineState.result.length
         };
+
+        this.clearCount = false;
     }
 
+    changeTitle = () => {
+        document.title = `POETIC PRAXIS | ${
+            this.props.lang === 'ru' ? 'МАШИНА ОБРАЗОВ' : 'EMAGES ENGINE'
+        }${
+            this.props.engineState.text
+                ? ` - ${this.props.engineState.text.substring(0, 30)}...`
+                : ''
+        }`;
+    };
+    componentDidUpdate(prevProps) {
+        if (this.props.lang !== prevProps.lang) {
+            this.changeTitle();
+        }
+    }
     componentDidMount() {
+        this.changeTitle();
+
         window.scrollTo(0, 0);
 
         window.addEventListener('resize', this.updateDimensions);
@@ -61,14 +79,18 @@ export default class ImagesEngine extends Component {
     }
 
     getWords = async () => {
-        const prevText = this.props.engineState.text;
-        const wordsLength = this.state.words.length;
+        try {
+            const prevText = this.props.engineState.text;
+            const wordsLength = this.state.words.length;
 
-        const text = await getWords(prevText, wordsLength);
+            const text = await getWords(prevText, wordsLength);
 
-        this.props.setEngineState({
-            text
-        });
+            this.props.setEngineState({
+                text
+            });
+        } catch (error) {
+            this.showMessage('Слова не хотят подбираться, попробуйте снова.');
+        }
     };
     updateDimensions = () => {
         this.setState({
@@ -196,16 +218,24 @@ export default class ImagesEngine extends Component {
         });
     };
 
-    clearInput = () => {
-        this.toTheTop();
+    clearInput = (e) => {
+        if (!this.clearCount) {
+            this.clearCount = true;
+            this.showMessage(
+                translations[this.props.lang].messages['CLICK_MORE']
+            );
+        } else {
+            this.clearCount = false;
+            this.toTheTop();
 
-        this.props.setEngineState({
-            text: ''
-        });
+            this.props.setEngineState({
+                text: ''
+            });
 
-        this.setState({
-            words: []
-        });
+            this.setState({
+                words: []
+            });
+        }
     };
 
     toRhythmic = () => {
@@ -232,6 +262,9 @@ export default class ImagesEngine extends Component {
 
     copyToClipboard = () => {
         copying(this.props.engineState.pinned.join('\n'));
+        this.showMessage(
+            translations[this.props.lang].messages['PAIRS_COPIED']
+        );
     };
 
     render() {
@@ -364,6 +397,7 @@ export default class ImagesEngine extends Component {
                                 <ButtonCentredContainer>
                                     <Recorder
                                         _rounded
+                                        lang={lang}
                                         title="Запись"
                                         text={text}
                                         transmitState={setEngineState}
@@ -371,12 +405,16 @@ export default class ImagesEngine extends Component {
                                     />
                                     {lang === 'ru' && (
                                         <Button
-                                            _rounded
+                                            _flat
                                             _transparent
                                             type="button"
                                             onClick={this.getWords}
                                             title="Получить слова">
-                                            <WordsIcon _middle />
+                                            <WordsIcon
+                                                _small
+                                                padding="0 8px 0 0"
+                                            />
+                                            Получить слова
                                         </Button>
                                     )}
                                 </ButtonCentredContainer>
@@ -407,10 +445,7 @@ export default class ImagesEngine extends Component {
                                             translations[lang].matchList[
                                                 'FAVOR_HINT'
                                             ]
-                                        }{' '}
-                                        <Button _flat _transparent>
-                                            <CheckCircle _small />
-                                        </Button>
+                                        }
                                     </Hint>
                                 )}
                                 {pinned.length ? (
@@ -426,7 +461,10 @@ export default class ImagesEngine extends Component {
                                                     'COPY'
                                                 ]
                                             }{' '}
-                                            <ContentCopy _small />
+                                            <ContentCopy
+                                                _small
+                                                padding="0 0 0 8px"
+                                            />
                                         </Button>
                                         <Button
                                             _flat
@@ -440,7 +478,11 @@ export default class ImagesEngine extends Component {
                                                     'SEE_RHYTHM'
                                                 ]
                                             }{' '}
-                                            <ArrowBack _small _rotate-left />
+                                            <ArrowBack
+                                                _small
+                                                _rotate-left
+                                                padding="0 8px 0 0"
+                                            />
                                         </Button>
                                     </ButtonContainer>
                                 ) : null}
@@ -499,21 +541,3 @@ export default class ImagesEngine extends Component {
         );
     }
 }
-
-/* <FieldClearButton
-    _rounded
-    _top-centred
-    disabled={!text.length}
-    type="button"
-    onClick={this.clearInput}
-    title="Стереть текст">
-    <Delete _small />
-</FieldClearButton> */
-
-/* <MainSelect
-    label="Словосочетание из:"
-    id="wordNumber"
-    value={wordsNumber}
-    onChange={this.setWordsNumber}
-    options={wordNumberSelectOptions}
-/> */

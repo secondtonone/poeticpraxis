@@ -5,7 +5,8 @@ import {
     HoveredElement,
     ShowOnHover,
     HideOnHover,
-    Flex
+    Flex,
+    BetaSign
 } from '../../styles/components';
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
@@ -57,15 +58,17 @@ export default class Header extends Component {
                     <Block>
                         <RouteLink to="/" exact>
                             <HideOnHover>
-                                <Logo
-                                    src={
-                                        variant === 'light'
-                                            ? LogoPic
-                                            : LogoPicWhite
-                                    }
-                                    alt="Logo"
-                                    height="32"
-                                />
+                                <BetaSign>
+                                    <Logo
+                                        src={
+                                            variant === 'light'
+                                                ? LogoPic
+                                                : LogoPicWhite
+                                        }
+                                        alt="Logo"
+                                        height="32"
+                                    />
+                                </BetaSign>
                             </HideOnHover>
                             <ShowOnHover>
                                 <Flex height="32">

@@ -41,14 +41,28 @@ const MobileNavMenu = styled.ul`
         z-index: 1003;
         left: 0;
         bottom: 0;
-        padding: 16px 64px 0;
+        padding: 24px 64px 0;
         display: block;
         float: none;
         text-align: center;
         width: 100%;
-        overflow-x: scroll;
+        overflow-x: hidden;
         overflow-y: hidden;
         white-space: nowrap;
+        transition: transform 0.1s ease-out;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 0;
+            right: 0;
+            border-radius: 4px;
+            width: 24px;
+            height: 4px;
+            margin: 0 auto;
+            background: ${(props) => props.theme.primaryGray};
+        }
     }
 `;
 

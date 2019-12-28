@@ -7,7 +7,6 @@ import Widgets from '../IconSVG/Widgets';
 
 import ChangeHistory from '../IconSVG/ChangeHistory';
 import Burger from '../IconSVG/Burger';
-import Close from '../IconSVG/Close';
 
 import Button from '../Button';
 import RouteLink from '../RouteLink';
@@ -19,12 +18,51 @@ export default class Menu extends Component {
         isMenuHidden: true
     };
 
+    initialY = 0;
+    deltaY = 0;
+    mobileNavMenu = null;
+
     toggleMenu = () => {
         document.body.style.position = !this.state.isMenuHidden ? '' : 'fixed';
+        document.body.style.overflowY = !this.state.isMenuHidden ? 'auto' : 'hidden';
+
         this.props.onToggle();
         this.setState({
             isMenuHidden: !this.state.isMenuHidden
         });
+    };
+
+    onTouchToggle = (e) => {
+
+        if (e.type === 'touchstart') {
+            this.initialY = e.touches[0].clientY;
+        }
+
+        if (
+            e.type === 'touchend' &&
+            this.deltaY > 0 &&
+            !this.state.isMenuHidden
+        ) {
+            this.deltaY = 0;
+            this.toggleMenu();
+        }
+    };
+
+    onTouchMove = (e) => {
+
+        this.deltaY = e.touches[0].clientY - this.initialY;
+
+        this.mobileNavMenu.style.transform = `translateY(${
+            this.deltaY < 0 ? 0 : this.deltaY
+        }px)`;
+
+        if (
+            this.deltaY > this.mobileNavMenu.offsetHeight * 0.85 &&
+            !this.state.isMenuHidden
+        ) {
+            this.deltaY = 0;
+            this.toggleMenu();
+        }
     };
 
     render() {
@@ -79,7 +117,13 @@ export default class Menu extends Component {
                     </Button>
                     {!this.state.isMenuHidden ? (
                         <Backdrop>
-                            <MobileNavMenu>
+                            <MobileNavMenu
+                                ref={(ref) => {
+                                    this.mobileNavMenu = ref;
+                                }}
+                                onTouchMove={this.onTouchMove}
+                                onTouchStart={this.onTouchToggle}
+                                onTouchEnd={this.onTouchToggle}>
                                 <NavMenu.Item>
                                     <RouteLink
                                         to={'/'}
@@ -91,6 +135,7 @@ export default class Menu extends Component {
                                     </RouteLink>
                                 </NavMenu.Item>
                                 {navMenuDevice}
+                                <NavMenu.Item />
                                 <NavMenu.Item>
                                     <Flex justify="space-between">
                                         {items.map((item, index) => (
@@ -103,15 +148,15 @@ export default class Menu extends Component {
                                     </Flex>
                                 </NavMenu.Item>
 
-                                <NavMenu.Item>
-                                    <Button
-                                        _rounded
-                                        _flat
-                                        _transparent
-                                        onClick={this.toggleMenu}>
-                                        <Close />
-                                    </Button>
-                                </NavMenu.Item>
+                                {/* <NavMenu.Item>
+                                        <Button
+                                            _rounded
+                                            _flat
+                                            _transparent
+                                            onClick={this.toggleMenu}>
+                                            <Close />
+                                        </Button>
+                                    </NavMenu.Item> */}
                             </MobileNavMenu>
                         </Backdrop>
                     ) : null}

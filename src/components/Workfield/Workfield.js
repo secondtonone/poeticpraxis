@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Textarea from '../Textarea';
 import { hashFunction, fontReady } from '../../utils';
+import AnalizeWorker from 'worker-loader!./analize-worker';
 
 import {
     structure,
@@ -30,6 +31,8 @@ import {
     CircleElement
 } from './styled';
 
+import { translations } from './translations';
+
 /* парсить по словам, сравнивать с предыдущим деревом */
 
 export default class Workfield extends Component {
@@ -54,20 +57,20 @@ export default class Workfield extends Component {
         this.timerPaintFieldHandler = 0;
         this.preventPaintFieldHandler = false;
 
-        this.accents = ['black', 'red', 'red_secondary', 'gray'];
+        this.textAnalizingWorker = null;
+        this.tagsWorker = null;
 
-        this.decription = [
-            'Слабая доля',
-            'Сильная доля',
-            'Побочное ударение',
-            'Непроизносимый звук'
-        ];
+        this.accents = ['black', 'red', 'red_secondary', 'gray'];
     }
 
     componentDidMount() {
         this.mainField = this.textarea.field;
 
         let text = this.props.text;
+
+        if (window.Worker) {
+            this.textAnalizingWorker = new AnalizeWorker();
+        }
 
         if (Array.isArray(text)) {
             text = text.join('\n');
@@ -84,6 +87,9 @@ export default class Workfield extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.updateDimensions);
+        if (this.textAnalizingWorker) {
+            this.textAnalizingWorker.terminate();
+        }
     }
 
     componentWillUpdate(nextProps) {
@@ -109,7 +115,19 @@ export default class Workfield extends Component {
             return false;
         }
     } */
+    getAnalizedText = ({ text, stringsDictionary, wordsDictionary }) =>
+        new Promise((resolve, reject) => {
+            this.textAnalizingWorker.postMessage({
+                text,
+                stringsDictionary,
+                wordsDictionary
+            });
 
+            this.textAnalizingWorker.onmessage = function(e) {
+                let analizedText = e.data;
+                resolve(analizedText);
+            };
+        });
     giveDataToParent = () => {
         if (this.props.toParent) {
             const { strings, elements, orderStrings } = this.state;
@@ -146,21 +164,22 @@ export default class Workfield extends Component {
 
         let wordsDictionary = this.props.wordsDictionary || {};
 
-        let analizedText = textAnalizator(
-            text,
-            stringsDictionary,
-            wordsDictionary
-        );
-        // this.setState({
-        //     text,
-        //     tag: {}
-        // });
+        let analizedText = {};
 
-        // if (this.timerLinting) {
-        //     clearTimeout(this.timerLinting);
-        // }
+        if (this.textAnalizingWorker) {
+            analizedText = await this.getAnalizedText({
+                text,
+                stringsDictionary,
+                wordsDictionary
+            });
+        } else {
+            analizedText = textAnalizator(
+                text,
+                stringsDictionary,
+                wordsDictionary
+            );
+        }
 
-        // this.timerLinting = setTimeout(() => {
         await this.setStateAsync({
             ...analizedText
         });
@@ -174,7 +193,6 @@ export default class Workfield extends Component {
         });
 
         this.giveDataToParent();
-        // }, 50);
     };
 
     makeCaesura = () => {
@@ -229,12 +247,6 @@ export default class Workfield extends Component {
         }
     };
     /* применение */
-    onSuggestion = (stroke, rhythm) => {
-        if (stroke === 'all') {
-        } else {
-        }
-    };
-
     changeRhythmHandler = async (stringId) => {
         const strings = this.state.strings;
         const string = strings[stringId];
@@ -372,6 +384,11 @@ export default class Workfield extends Component {
 
         const wordId = '';
 
+        const translation =
+            translations[this.props.lang ? this.props.lang : 'ru'];
+
+        const decription = Object.values(translation);
+
         for (let index = 0; index < tagsLength; index++) {
             const sign = tags[index];
 
@@ -389,7 +406,7 @@ export default class Workfield extends Component {
                         id={sign.id}
                         style={style}
                         data-type={sign.type}
-                        title="Однодольная пауза">
+                        title={translation.PAUSE}>
                         &#8896;
                     </StringPauseRelative>
                 );
@@ -403,7 +420,7 @@ export default class Workfield extends Component {
                     id={sign.id}
                     style={style}
                     data-type={sign.type}
-                    title={this.decription[sign.accent]}
+                    title={decription[sign.accent]}
                 />
             );
         }
@@ -617,6 +634,14 @@ export default class Workfield extends Component {
         }
     };
 
+    fakeFieldRef = (ref) => {
+        this.fakeField = ref;
+    };
+
+    textareaRef = (ref) => {
+        this.textarea = ref;
+    };
+
     render() {
         const {
             readOnly,
@@ -675,9 +700,7 @@ export default class Workfield extends Component {
                 <FakeField
                     data-id-comp="fakeField"
                     zoomIn={zoomIn}
-                    ref={(ref) => {
-                        this.fakeField = ref;
-                    }}>
+                    ref={this.fakeFieldRef}>
                     {marckupTags}
                 </FakeField>
 
@@ -689,12 +712,7 @@ export default class Workfield extends Component {
                     {renderedTags}
                     {infoTags}
                 </PaintField>
-                <Textarea
-                    {...props}
-                    ref={(ref) => {
-                        this.textarea = ref;
-                    }}
-                />
+                <Textarea {...props} ref={this.textareaRef} />
             </WorkField>
         );
     }

@@ -17,10 +17,6 @@ const Container = styled.div`
 
 const PlayerContainer = styled.div`
     width: 100%;
-
-    @media (max-width: 600px) {
-        width: auto;
-    }
 `;
 
 export default class Player extends Component {
@@ -69,14 +65,6 @@ export default class Player extends Component {
             <PlayerContainer>
                 <Container>
                     <div>
-                        <Button
-                            _rounded
-                            _transparent
-                            type="button"
-                            onClick={this.repeat}
-                            title={translations[lang].REPEAT}>
-                            <ReplayIcon _big />
-                        </Button>
                         {!isPlaying && (
                             <Button
                                 _rounded
@@ -97,6 +85,14 @@ export default class Player extends Component {
                                 <PauseIcon _big />
                             </Button>
                         )}
+                        <Button
+                            _rounded
+                            _transparent
+                            type="button"
+                            onClick={this.repeat}
+                            title={translations[lang].REPEAT}>
+                            <ReplayIcon _big />
+                        </Button>
                     </div>
                     <div>
                         {translations[lang].TEMPO}

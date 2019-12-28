@@ -10,7 +10,7 @@ const en = {
     menu: {
         RHYTHMICS: 'Prosody',
         ENGINE: 'Images engine',
-        ABOUT: 'Main'
+        ABOUT: 'Home'
     }
 };
 

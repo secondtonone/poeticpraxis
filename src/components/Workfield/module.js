@@ -1,5 +1,6 @@
 import { randomize, hashFunction, findCommon } from '../../utils';
 
+
 const vowelsList = 'eyuioaуеыаоэёяиюäöüéàèùâêîôûïüÿìíòóúęąєў';
 /**
  *
@@ -434,6 +435,22 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
         stringLinks
     };
 }
+
+export const getAnalizedText = () =>
+    new Promise((resolve, reject) => {
+        const processing = new Worker();
+
+        processing.postMessage({
+            text,
+            stringsDictionary,
+            wordsDictionary
+        });
+
+        processing.onmessage = function(e) {
+            let analizedText = e.data;
+            resolve(analizedText);
+        };
+    });
 /**
  *
  *

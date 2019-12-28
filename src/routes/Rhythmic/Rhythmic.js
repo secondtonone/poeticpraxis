@@ -2,18 +2,22 @@ import React, { Component } from 'react';
 
 import { isTouchDevice } from '../../utils';
 import { translations } from './translations';
+
 import {
     getLongLink,
     sharing,
     encodeDictionary,
     linkToStateDecode
 } from '../../modules/sharing';
+
 import {
     getToneModule,
     Tone,
     getInstrument,
     Instrument
 } from '../../modules/tone';
+
+import Help from './Help';
 
 import Workfield from '../../components/Workfield';
 import MessageBox from '../../components/MessageBox';
@@ -30,9 +34,12 @@ import LockOpen from '../../components/IconSVG/LockOpen';
 import MelodyIcon from '../../components/IconSVG/Melody';
 import RhythmIcon from '../../components/IconSVG/RhythmIcon';
 import ShareIcon from '../../components/IconSVG/Share';
-import Info from '../../components/Info';
 
-import { List, LeftedLayout, Link, ActionBar } from '../../styles/components';
+import {
+    List,
+    LeftedLayout,
+    ActionBar
+} from '../../styles/components';
 
 import {
     StringPauseButton,
@@ -46,49 +53,42 @@ export default class Rhythmic extends Component {
         super(props);
 
         this.state = {
-            renderCaesuraButtonStyle: {
-                top: 64
-            },
             textMessage: '',
             zoomIn: false,
             isFocused: false,
             isEditable: true,
             isDevice: isTouchDevice(),
-            isToolbarHidden: true,
             currentView: 'rhythmic',
-            rhytmicState: {}
+            rhythmicState: {},
+            isHelpInfoHidden: false
         };
 
         this.mouseTrackingTimer = 0;
+        this.stringPauseButton = null;
+        this.sectionElement = null;
     }
 
+    changeTitle = () => {
+        document.title = `POETIC PRAXIS | ${
+            this.props.lang === 'ru' ? 'ПРОСОДИЯ' : 'PROSODY'
+        }${
+            this.props.rhythmicState.text
+                ? ` - ${this.props.rhythmicState.text.substring(0, 30)}...`
+                : ''
+        }`;
+    };
+    componentDidUpdate(prevProps) {
+        if (this.props.lang !== prevProps.lang) {
+            this.changeTitle();
+        }
+    }
     async componentDidMount() {
+        this.changeTitle();
+
         window.scrollTo(0, 0);
 
         if (URLSearchParams) {
-            const searchParams = new URLSearchParams(location.search);
-
-            let shared = searchParams.get('shared');
-
-            linkToStateDecode(
-                shared,
-                ({ text, stringsDictionary }) => {
-                    stringsDictionary = {
-                        ...this.props.rhythmicState.stringsDictionary,
-                        ...stringsDictionary
-                    };
-
-                    this.props.setRhytmicState({
-                        text,
-                        stringsDictionary
-                    });
-                },
-                () => {
-                    this.showMessage(
-                        translations[this.props.lang].messages['WRONG']
-                    );
-                }
-            );
+            this.getShared();
         }
         /* для преждевременной загрузки звуков */
         try {
@@ -100,8 +100,36 @@ export default class Rhythmic extends Component {
                 getInstrument('piano');
                 //getInstrument('poly');
             }
-        } catch (e) {}
+        } catch (e) {
+            this.showMessage(translations[this.props.lang].messages['NET']);
+        }
     }
+
+    getShared = () => {
+        const searchParams = new URLSearchParams(location.search);
+
+        let shared = searchParams.get('shared');
+
+        linkToStateDecode(
+            shared,
+            ({ text, stringsDictionary }) => {
+                stringsDictionary = {
+                    ...this.props.rhythmicState.stringsDictionary,
+                    ...stringsDictionary
+                };
+
+                this.props.setRhytmicState({
+                    text,
+                    stringsDictionary
+                });
+            },
+            () => {
+                this.showMessage(
+                    translations[this.props.lang].messages['WRONG']
+                );
+            }
+        );
+    };
 
     changeView = (currentView) => {
         this.setState({
@@ -164,9 +192,9 @@ export default class Rhythmic extends Component {
         this.workfield.changeZoomMode(zoomIn);
     };
 
-    getDataFromWorkfield = (rhytmicState) => {
+    getDataFromWorkfield = (rhythmicState) => {
         this.setState({
-            rhytmicState
+            rhythmicState
         });
     };
 
@@ -208,22 +236,29 @@ export default class Rhythmic extends Component {
         if (this.mouseTrackingTimer) {
             window.clearTimeout(this.mouseTrackingTimer);
         }
+        const gap = this.sectionElement ? this.sectionElement.offsetTop : 168;
 
         let transform = `translateY(${
-            e.pageY - 194 < 0 ? 0 : Math.floor(e.pageY - 194)
+            e.pageY - gap < 0 ? 0 : Math.floor(e.pageY - gap - 48)
         }px)`;
 
-        const renderCaesuraButtonStyle = {
-            transform
-        };
-
         this.mouseTrackingTimer = setTimeout(() => {
-            this.setState({
-                renderCaesuraButtonStyle
-            });
-        }, 100);
+            if (this.stringPauseButton) {
+                this.stringPauseButton.style.transform = transform;
+            }
+        }, 150);
     };
 
+    zoomHandler = () => {
+        if (this.state.isEditable) {
+            this.changeMode();
+        }
+        this.changeZoomMode();
+    };
+
+    workfieldRef = (ref) => {
+        this.workfield = ref;
+    };
     render() {
         const {
             setRhytmicState,
@@ -235,7 +270,6 @@ export default class Rhythmic extends Component {
         } = this.props;
 
         const {
-            renderCaesuraButtonStyle,
             textMessage,
             zoomIn,
             isEditable,
@@ -243,10 +277,8 @@ export default class Rhythmic extends Component {
             isToolbarHidden,
             isDevice,
             currentView,
-            rhytmicState
+            rhythmicState
         } = this.state;
-
-        const isFirstTime = wordsDictionary? !Object.keys(wordsDictionary).length : true;
 
         const secondMenu = [
             {
@@ -285,7 +317,7 @@ export default class Rhythmic extends Component {
                     handler={this.changeView}
                     current={currentView}
                 />
-                {isDevice && !isFocused && (
+                {currentView === 'rhythmic' && isDevice && !isFocused && (
                     <ActionBar>
                         <Button
                             _rounded
@@ -294,7 +326,7 @@ export default class Rhythmic extends Component {
                             disabled={!text}
                             onClick={this.copyToClipboard}
                             title="Копировать в текстовый редактор">
-                            <ContentCopy _big />
+                            <ContentCopy _middle />
                         </Button>
                         <Button
                             _rounded
@@ -310,12 +342,7 @@ export default class Rhythmic extends Component {
                             type="button"
                             _rounded
                             _transparent
-                            onClick={() => {
-                                if (isEditable) {
-                                    this.changeMode();
-                                }
-                                this.changeZoomMode();
-                            }}
+                            onClick={this.zoomHandler}
                             title={zoomIn ? 'Уменьшить' : 'Увеличить'}>
                             {zoomIn ? <ZoomOut _big /> : <ZoomInIcon _big />}
                         </Button>
@@ -334,14 +361,7 @@ export default class Rhythmic extends Component {
                     </ActionBar>
                 )}
                 <LeftedLayout>
-                    {isFirstTime && (
-                        <Info>
-                            {translations[lang].messages['HOW_WORKS']}{' '}
-                            <Link href="/about#rhythmic">
-                                {translations[lang].messages['LEARN_MORE']}
-                            </Link>
-                        </Info>
-                    )}
+                    <Help lang={lang} />
                     {currentView === 'rhythmic' && (
                         <div>
                             {isDevice && isFocused && (
@@ -356,7 +376,9 @@ export default class Rhythmic extends Component {
                                 </StringPauseButtonMobile>
                             )}
 
-                            <List _animated>
+                            <List
+                                _animated
+                                ref={(ref) => (this.sectionElement = ref)}>
                                 {!isDevice && (
                                     <ButtonContainer>
                                         <CopyButton
@@ -365,7 +387,7 @@ export default class Rhythmic extends Component {
                                             disabled={!text}
                                             onClick={this.copyToClipboard}
                                             title="Копировать в текстовый редактор">
-                                            <ContentCopy _small />
+                                            <ContentCopy _middle />
                                         </CopyButton>
                                         <CopyButton
                                             _rounded
@@ -373,19 +395,23 @@ export default class Rhythmic extends Component {
                                             disabled={!text}
                                             onClick={this.shareWithLink}
                                             title="Поделиться">
-                                            <ShareIcon _small />
+                                            <ShareIcon _middle />
                                         </CopyButton>
                                     </ButtonContainer>
                                 )}
 
                                 <StringPauseButton
-                                    _rounded
-                                    _middle
-                                    type="button"
-                                    onClick={this.makeCaesura}
-                                    style={renderCaesuraButtonStyle}
-                                    title="Поставить паузу">
-                                    <KeyboardCapslock />
+                                    ref={(ref) =>
+                                        (this.stringPauseButton = ref)
+                                    }>
+                                    <Button
+                                        _rounded
+                                        _middle
+                                        type="button"
+                                        onClick={this.makeCaesura}
+                                        title="Поставить паузу">
+                                        <KeyboardCapslock />
+                                    </Button>
                                 </StringPauseButton>
 
                                 <Workfield
@@ -398,14 +424,13 @@ export default class Rhythmic extends Component {
                                     wordsDictionary={wordsDictionary}
                                     stringsDictionary={stringsDictionary}
                                     toParent={this.getDataFromWorkfield}
+                                    lang={lang}
                                     placeHolder={`${
                                         translations[lang].placeholders[
                                             'RHYTHMICS'
                                         ]
                                     }...`}
-                                    ref={(ref) => {
-                                        this.workfield = ref;
-                                    }}
+                                    ref={this.workfieldRef}
                                 />
                             </List>
                         </div>
@@ -415,7 +440,7 @@ export default class Rhythmic extends Component {
                             <Melody
                                 lang={lang}
                                 variant={variant}
-                                rhytmicState={rhytmicState}
+                                rhythmicState={rhythmicState}
                             />
                         </List>
                     )}
@@ -424,85 +449,3 @@ export default class Rhythmic extends Component {
         );
     }
 }
-
-/* 
-    {isDevice && !isFocused && isToolbarHidden && (
-        <Button
-            type="button"
-            _rounded
-            _main
-            _black
-            _centred
-            _animated-up
-            onClick={this.triggerToolbar}
-            title="Инструменты">
-            <ViewDay _big />
-        </Button>
-    )}
-*/
-/* <Toolbar
-    closeButton={
-        <Button
-            type="button"
-            _rounded
-            _black
-            _main
-            _animated-up
-            onClick={this.triggerToolbar}
-            title="Инструменты">
-            <ArrowBack _big />
-        </Button>
-    }
-    isHidden={isToolbarHidden}>
-    <Button
-        type="button"
-        _rounded
-        _transparent
-        disabled={!text}
-        onClick={this.changeMode}
-        title={
-            isEditable
-                ? 'Блокировать'
-                : 'Разблокировать'
-        }>
-        {isEditable ? (
-            <Lock _big />
-        ) : (
-            <LockOpen _big />
-        )}
-    </Button>
-    {!isEditable && (
-        <Button
-            type="button"
-            _rounded
-            _transparent
-            onClick={this.changeZoomMode}
-            title={
-                zoomIn ? 'Уменьшить' : 'Увеличить'
-            }>
-            {zoomIn ? (
-                <ZoomOut _big />
-            ) : (
-                <ZoomInIcon _big />
-            )}
-        </Button>
-    )}
-    <Button
-        _rounded
-        _transparent
-        type="button"
-        disabled={!text}
-        onClick={this.copyToClipboard}
-        title="Копировать в текстовый редактор">
-        <ContentCopy _big />
-    </Button>
-    <Button
-        _rounded
-        _transparent
-        type="button"
-        disabled={!text}
-        onClick={this.shareWithLink}
-        title="Поделиться">
-        <ShareIcon _big />
-    </Button>
-</Toolbar> */

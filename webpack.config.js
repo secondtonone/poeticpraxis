@@ -16,7 +16,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: '[name].[hash].js'
+        filename: '[name].[hash].js',
+        globalObject: 'this'
     },
     module: {
         rules: [
@@ -50,6 +51,10 @@ module.exports = {
             {
                 test: /\.(png|jpg|jpeg|gif|mp3|ogg)$/,
                 use: ['file-loader']
+            },
+            {
+                test: /\.worker\.js$/,
+                use: { loader: 'worker-loader' }
             },
             {
                 test: /\.webmanifest$/,
