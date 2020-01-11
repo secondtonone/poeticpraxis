@@ -86,7 +86,7 @@ export default class About extends Component {
         return (
             <section>
                 <LandingContainer>
-                    <Flex direction="column" height={screenHeight}>
+                    <Flex direction="column" height={`${screenHeight}px`}>
                         <DesctopHiddenContainer>
                             <Flex direction="column" margin="16px 0 0">
                                 <BetaSign>
@@ -399,12 +399,12 @@ export default class About extends Component {
                             for poetic practice.
                         </Text>
                     </Container>
-                    <Flex direction="column" justify="flex-start" height="100">
+                    <Flex direction="column" justify="flex-start" height="100px">
                         {isRusLang ? 'Подписаться:' : 'Subscribe:'}
                         <Flex
                             direction={mediaQuery ? 'column' : 'row'}
                             justify="space-evenly"
-                            width="300">
+                            width="300px">
                             {isRusLang && (
                                 <Link
                                     target="_blank"

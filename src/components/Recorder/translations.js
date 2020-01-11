@@ -1,11 +1,11 @@
 const ru = {
-    ON: 'Включить',
+    ON: 'Диктовать слова',
     OFF: 'Выключить',
 };
 
 const en = {
-    ON: 'On',
-    OFF: 'Off',
+    ON: 'Mic On',
+    OFF: 'Mic Off',
 };
 
 const translations = {

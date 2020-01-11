@@ -32,7 +32,7 @@ export default class Melody extends Component {
         this.state = {
             completeLoading: false,
             progress: 0,
-            bpm: 120,
+            bpm: 72,
             music: [],
             recorded: false,
             recording: false
@@ -101,11 +101,14 @@ export default class Melody extends Component {
             orderStrings
         });
 
+        console.log(music, time);
+        
+
         this.setState({
             music
         });
 
-        Tone.Transport.loopEnd = time;//Math.round(time + 0.5);
+        Tone.Transport.loopEnd = Math.round(time + 0.5);
 
         new Tone.Part(this.partCallback, music).start('+0.1');
 
@@ -130,8 +133,8 @@ export default class Melody extends Component {
 
     partCallback = (time, notes) => {
         const vowelNotes = notes.vowelNotes;
-        const { music, recorded, recording } = this.state;
-        const lastSoundIndex = music[music.length - 1].index;
+        const { music/* , recorded, recording  */} = this.state;
+        /* const lastSoundIndex = music[music.length - 1].index; */
 
         /* if (!notes.index && recorder && !recording) {
             recorder.start();
@@ -146,8 +149,7 @@ export default class Melody extends Component {
             Instrument.triggerAttackRelease(
                 note.note,
                 note.duration,
-                //time.toFixed(2)
-                time
+                time.toFixed(2)
             );
         });
 

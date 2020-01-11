@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { randomize } from '../../utils';
+import { Input, InputButton } from './styled';
 
-import { Container, Input, InputButton } from './styled';
+import { Container } from '../../styles/components';
 
 import DoneIcon from '../IconSVG/DoneIcon';
 import EditIcon from '../IconSVG/EditIcon';
@@ -46,7 +46,7 @@ export default class InlineInput extends Component {
     render() {
         const { value, isEdit, onHover } = this.state;
         return (
-            <Container onMouseEnter={this.onHover(true)} onMouseLeave={this.onHover(false)}>
+            <Container display="flex" onMouseEnter={this.onHover(true)} onMouseLeave={this.onHover(false)}>
                 {!isEdit ? (
                     <span>{value}</span>
                 ) : (

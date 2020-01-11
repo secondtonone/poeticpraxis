@@ -28,12 +28,13 @@ import {
     SecondaryTitle,
     LeftedLayout,
     Container,
+    Flex,
     List,
     Link,
     ActionBar
 } from '../../styles/components';
 
-import { ButtonContainer, ButtonCentredContainer } from './styled';
+import { ButtonContainer } from './styled';
 
 export default class ImagesEngine extends Component {
     constructor(props) {
@@ -394,30 +395,38 @@ export default class ImagesEngine extends Component {
                     {currentView === 'material' && (
                         <List _animated>
                             {!isDevice && (
-                                <ButtonCentredContainer>
-                                    <Recorder
-                                        _rounded
-                                        lang={lang}
-                                        title="Запись"
-                                        text={text}
-                                        transmitState={setEngineState}
-                                        showMessage={this.showMessage}
-                                    />
-                                    {lang === 'ru' && (
-                                        <Button
-                                            _flat
-                                            _transparent
-                                            type="button"
-                                            onClick={this.getWords}
-                                            title="Получить слова">
-                                            <WordsIcon
-                                                _small
-                                                padding="0 8px 0 0"
-                                            />
-                                            Получить слова
-                                        </Button>
-                                    )}
-                                </ButtonCentredContainer>
+                                <Container
+                                    width="330px"
+                                    margin="0 auto">
+                                    <Flex
+                                        justify={
+                                            lang === 'ru'
+                                                ? 'space-between'
+                                                : 'center'
+                                        }>
+                                        <Recorder
+                                            lang={lang}
+                                            title="Запись"
+                                            text={text}
+                                            transmitState={setEngineState}
+                                            showMessage={this.showMessage}
+                                        />
+                                        {lang === 'ru' && (
+                                            <Button
+                                                _flat
+                                                _transparent
+                                                type="button"
+                                                onClick={this.getWords}
+                                                title="Получить слова">
+                                                <WordsIcon
+                                                    _small
+                                                    padding="0 8px 0 0"
+                                                />
+                                                Получить слова
+                                            </Button>
+                                        )}
+                                    </Flex>
+                                </Container>
                             )}
                             <div>
                                 <Textarea {...props} />

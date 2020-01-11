@@ -3,11 +3,6 @@ import styled from 'styled-components';
 import Button from '../../components/Button';
 import theme from '../../styles/theme';
 
-export const Container = styled.div`
-    position: relative;
-    display: flex;
-`;
-
 export const Input = styled.input`
     font-family: ${theme.mainFont};
     color: ${(props) => props.theme.secondColor};

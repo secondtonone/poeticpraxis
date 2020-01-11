@@ -31,7 +31,7 @@ body {
     left: 0;
     right: 0;
     overflow: hidden;
-    font-size: 15em;
+    font-size: 10em;
     font-family: ${theme.mainFont};
     word-break: break-all;
     font-weight: 500;

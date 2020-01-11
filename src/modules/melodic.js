@@ -1,12 +1,20 @@
 import { Tone, mapLetterNote } from './tone';
-
-const timeNotation = (time) =>
-    `${Math.floor(time.length / 2)}m${time.length % 2 ? '+2n' : ''}`;
-
+/* длительность двух строк - 3.5
+*  в строках 15 гласных на одну 0.23с = 230мс
+*  120 бпм 1/4 ноты в минуту
+*/
+const stepSoundMultiply = (step, elements) => {
+    return step.map((tokenId) => {
+        return {
+            tokenId,
+            sound: elements[tokenId].accent === 1 ? 4 : 0
+        };
+    });
+};
 const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
     let music = [];
 
-    let time = [];
+    let time = 0;
 
     let index = 0;
 
@@ -14,19 +22,22 @@ const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
         let soundGramma = [];
 
         strings[stringId].steps.forEach((step) => {
-            soundGramma = [...soundGramma, ...step];
+            const modded = stepSoundMultiply(step, elements);
+            soundGramma = [...soundGramma, ...modded];
         });
 
-        soundGramma = soundGramma.concat(['p','p']);
+        console.log(soundGramma);
+        
 
-        soundGramma.forEach((tokenId) => {
-            let duration = '2n';
+        soundGramma = soundGramma.concat([{ tokenId: 'p' }, { tokenId: 'p' }]);
+
+        soundGramma.forEach(({tokenId, sound}) => {
+            let duration = 0.38;
             let vowelNotes = [];
 
             if (tokenId === 'p' || elements[tokenId].type === 'p') {
-                time.push(duration);
+                time += duration;
             } else if (elements[tokenId].type === 'v') {
-                duration = '2n';
                 const isAccented = elements[tokenId].accent === 1;
                 const char = elements[tokenId].char.toLowerCase();
 
@@ -45,24 +56,24 @@ const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
                         });
                     }
                 });
-
                 music.push({
                     string: stringId,
                     isAccented,
                     char: char,
-                    time: timeNotation(time), //time.toFixed(2),
+                    time: time.toFixed(2),
+                    sound,
                     vowelNotes,
                     index
                 });
 
                 ++index;
 
-                time.push(duration);
+                time += duration;
             }
         });
     });
     
-    return { music, time: timeNotation(time) };
+    return { music, time};
 };
 
 export { makeLetterGramma };

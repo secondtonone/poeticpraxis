@@ -71,7 +71,7 @@ export default class Header extends Component {
                                 </BetaSign>
                             </HideOnHover>
                             <ShowOnHover>
-                                <Flex height="32">
+                                <Flex height="32px">
                                     {translations[lang].menu['ABOUT']}
                                 </Flex>
                             </ShowOnHover>

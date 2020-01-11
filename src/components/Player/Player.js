@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 
 import { translations } from './translations';
 
@@ -10,14 +9,7 @@ import PlayIcon from '../IconSVG/PlayIcon';
 import ReplayIcon from '../IconSVG/ReplayIcon';
 import PauseIcon from '../IconSVG/PauseIcon';
 
-const Container = styled.div`
-    display: flex;
-    justify-content: space-between;
-`;
-
-const PlayerContainer = styled.div`
-    width: 100%;
-`;
+import { Flex, Container } from '../../styles/components';
 
 export default class Player extends Component {
     constructor(props) {
@@ -62,8 +54,8 @@ export default class Player extends Component {
         const { isPlaying } = this.state;
 
         return (
-            <PlayerContainer>
-                <Container>
+            <Container>
+                <Flex justify="space-between">
                     <div>
                         {!isPlaying && (
                             <Button
@@ -104,7 +96,7 @@ export default class Player extends Component {
                             onChange={setBPM}
                         />
                     </div>
-                </Container>
+                </Flex>
                 <div>
                     <Range
                         hideThumb
@@ -115,7 +107,7 @@ export default class Player extends Component {
                         disabled
                     />
                 </div>
-            </PlayerContainer>
+            </Container>
         );
     }
 }

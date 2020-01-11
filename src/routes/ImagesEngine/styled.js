@@ -61,20 +61,8 @@ const ButtonContainer = styled.div`
     }
 `;
 
-const ButtonCentredContainer = styled.div`
-    position: absolute;
-    top: -20px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    display: flex;
-    width: 300px;
-    justify-content: space-between;
-`;
-
 export {
     MainSelect,
     FieldClearButton,
-    ButtonContainer,
-    ButtonCentredContainer
+    ButtonContainer
 };
