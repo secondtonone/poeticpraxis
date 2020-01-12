@@ -71,16 +71,12 @@ const config = {
         ]
     },
     resolve: {
-        extensions: [
-            '.js',
-            '.json'
-        ] /* ,
+        extensions: ['.js', '.json'],
         alias: {
-            react: 'preact-compat',
-            'react-dom': 'preact-compat',
-            'preact-compat': 'preact-compat/dist/preact-compat'
+            react: 'preact/compat',
+            'react-dom/test-utils': 'preact/test-utils',
+            'react-dom': 'preact/compat'
         }
-    */
     },
     optimization: {
         namedModules: true, // NamedModulesPlugin()

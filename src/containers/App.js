@@ -1,5 +1,5 @@
-import React from 'react';
-import { hot } from 'react-hot-loader/root';
+import { h } from 'preact';
+//import { hot } from 'react-hot-loader/root';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -13,4 +13,5 @@ const App = ({ store }) => (
     </Provider>
 );
 
-export default hot(App);
+//export default hot(App);
+export default App;

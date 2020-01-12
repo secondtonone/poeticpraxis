@@ -10,7 +10,7 @@ module.exports = {
     mode: 'development',
     devtool: 'eval',
     entry: {
-        app: ['react-hot-loader/patch', './src/index.js']
+        app: [/* 'react-hot-loader/patch', */ './src/index.js']
         /* vendor: ["preact", "react-router-dom", "redux", "preact-redux"] */
     },
     output: {
@@ -69,9 +69,9 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.json'],
         alias: {
-            /* react: 'preact-compat',
-            'react-dom': 'preact-compat',
-            'preact-compat': 'preact-compat/dist/preact-compat' */
+            react: 'preact/compat',
+            'react-dom/test-utils': 'preact/test-utils',
+            'react-dom': 'preact/compat'
         }
     },
     optimization: {
@@ -83,7 +83,7 @@ module.exports = {
         noEmitOnErrors: true
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+        /* new webpack.HotModuleReplacementPlugin(), */
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('development')
@@ -118,7 +118,7 @@ module.exports = {
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),
-        hot: true,
+        hot: false,
         port: PORT,
         historyApiFallback: true,
         publicPath: '/'

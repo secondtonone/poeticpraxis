@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import { render } from 'react-dom';
 
 import '../public/fonts/fonts.css';

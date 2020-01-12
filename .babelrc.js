@@ -22,12 +22,13 @@ module.exports = {
         'react-hot-loader/babel',
         '@babel/plugin-transform-runtime',
         '@babel/plugin-syntax-dynamic-import',
-        '@babel/plugin-proposal-class-properties' /* ,
+        '@babel/plugin-proposal-class-properties',
         [
             '@babel/plugin-transform-react-jsx',
             {
-                pragma: 'h'
+                pragma: 'h',
+                pragmaFrag: 'Fragment'
             }
-        ] */
+        ]
     ]
 };

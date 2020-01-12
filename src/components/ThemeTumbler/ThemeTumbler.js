@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 
 import Toggle from '../Toggle';
 import { Flex, Mirrored } from '../../styles/components';

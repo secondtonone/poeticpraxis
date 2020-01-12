@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { h, Component } from 'preact';
 
 import { imaged, stringToWords } from '../../modules/imaged';
 import { copying } from '../../modules/copying';

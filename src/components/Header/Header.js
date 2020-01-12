@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { h, Component } from 'preact';
 
 import { PageHeader, ContentField, Logo, Block } from './styled';
 import {

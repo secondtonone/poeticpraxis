@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { h, Component } from 'preact';
 import { randomize, delay } from '../../utils';
 
 import { FieldLabel, SimpleTextarea } from '../../styles/components';

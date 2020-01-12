@@ -1,5 +1,7 @@
-import React from 'react';
-import { renderToString } from 'react-dom/server';
+/* import { h } from 'preact'; */
+/* import { renderToString } from 'react-dom/server';*/
+import { h } from 'preact';
+import render from 'preact-render-to-string';
 import { ServerStyleSheet } from 'styled-components';
 
 
@@ -21,7 +23,7 @@ if (typeof window === 'undefined') {
 const prerender = function() {
     const sheet = new ServerStyleSheet();
 
-    const html = renderToString(sheet.collectStyles(<App store={store} />));
+    const html = render(sheet.collectStyles(<App store={store} />));
 
     const styles = sheet.getStyleTags();
 

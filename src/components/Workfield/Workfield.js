@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { h, Component } from 'preact';
 import Textarea from '../Textarea';
 import { hashFunction, fontReady } from '../../utils';
 import AnalizeWorker from 'worker-loader!./analize-worker';

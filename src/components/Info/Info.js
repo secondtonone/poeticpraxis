@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { h, Component } from 'preact';
 import styled from 'styled-components';
 
 import Button from '../../components/Button';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { h, Component } from 'preact';
 
 import { MainContent, Page } from './styled';
 import { ThemeProvider } from 'styled-components';

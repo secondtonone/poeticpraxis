@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 
 import RouteLink from '../RouteLink';
 import LogoBlack from '../../../public/img/Logo.svg';

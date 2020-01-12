@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import styled from 'styled-components';
 
 import { withElements } from '../../styles/helpers';

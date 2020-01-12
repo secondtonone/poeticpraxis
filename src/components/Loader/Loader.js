@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import styled, { keyframes } from 'styled-components';
 
 const stretch = keyframes`

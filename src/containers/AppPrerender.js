@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';

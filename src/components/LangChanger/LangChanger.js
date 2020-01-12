@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 
 import Select from '../Select';
 import { Flex, HiddenSelect } from '../../styles/components';

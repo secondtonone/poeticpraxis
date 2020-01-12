@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
