@@ -1,5 +1,3 @@
-/* import { h } from 'preact'; */
-/* import { renderToString } from 'react-dom/server';*/
 import { h } from 'preact';
 import render from 'preact-render-to-string';
 import { ServerStyleSheet } from 'styled-components';

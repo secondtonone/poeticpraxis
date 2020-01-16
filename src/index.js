@@ -1,3 +1,9 @@
+const DEV = process.env.NODE_ENV === 'development';
+
+if (DEV) {
+    require('preact/debug');
+}
+
 import { h } from 'preact';
 import { render } from 'react-dom';
 
@@ -9,8 +15,6 @@ import analyticsInit from './modules/analytics';
 import { delay } from './utils';
 
 import App from './containers/App';
-
-const DEV = process.env.NODE_ENV === 'development';
 
 const run = (Component) => {
     const rootElement =

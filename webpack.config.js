@@ -11,7 +11,6 @@ module.exports = {
     devtool: 'eval',
     entry: {
         app: [/* 'react-hot-loader/patch', */ './src/index.js']
-        /* vendor: ["preact", "react-router-dom", "redux", "preact-redux"] */
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
