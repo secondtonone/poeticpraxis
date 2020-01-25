@@ -16,6 +16,23 @@ export default class InlineInput extends Component {
             value: props.value,
             onHover: false
         };
+
+        this.container = null;
+        this.input = null;
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    handleClickOutside = (e) => {
+        if (this.state.isEdit && !this.container.contains(e.target)) {
+            this.toggleEdit();
+        }
     }
 
     toggleEdit = () => {
@@ -28,6 +45,10 @@ export default class InlineInput extends Component {
         this.setState({
             isEdit,
             onHover: false
+        }, () => {
+            if (this.state.isEdit && this.input) {
+                this.input.focus();
+            }
         });
     };
 
@@ -38,15 +59,20 @@ export default class InlineInput extends Component {
     };
 
     onHover = (onHover) => {
-        return () => this.setState({
-            onHover
-        });
+        return () =>
+            this.setState({
+                onHover
+            });
     };
 
     render() {
         const { value, isEdit, onHover } = this.state;
         return (
-            <Container display="flex" onMouseEnter={this.onHover(true)} onMouseLeave={this.onHover(false)}>
+            <Container
+                ref={(ref) => (this.container = ref)}
+                display="flex"
+                onMouseEnter={this.onHover(true)}
+                onMouseLeave={this.onHover(false)}>
                 {!isEdit ? (
                     <span>{value}</span>
                 ) : (
@@ -54,6 +80,7 @@ export default class InlineInput extends Component {
                         value={value}
                         onChange={this.onChange}
                         readOnly={!isEdit}
+                        ref={(ref) => (this.input = ref)}
                     />
                 )}
 
