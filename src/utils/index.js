@@ -112,3 +112,7 @@ export function getDaysFromNow(from) {
 
     return Math.round(Math.abs((from - now) / oneDay));
 }
+
+export function isSupportRecognition() {
+    return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+}

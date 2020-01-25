@@ -74,6 +74,9 @@ export default function Help({ lang = 'ru' }) {
                             переключает ритм строки, под цифрами указан метр
                         </Container>
                     </Flex>
+                    <Container margin="10px 0 0">
+                    После переходите на вкладку "Мелодия", что бы узнать: Что скрыто за словами?
+                    </Container>
                 </div>
             }
             foldedContent={<div>С чего начать?</div>}

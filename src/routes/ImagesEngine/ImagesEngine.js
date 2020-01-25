@@ -10,6 +10,9 @@ import Recorder from '../../components/Recorder';
 import MatchList from '../../components/MatchList';
 import Textarea from '../../components/Textarea';
 import Button from '../../components/Button';
+import SecondaryMenu from '../../components/SecondaryMenu';
+import MessageBox from '../../components/MessageBox';
+
 import ArrowBack from '../../components/IconSVG/ArrowBack';
 import Widgets from '../../components/IconSVG/Widgets';
 import Delete from '../../components/IconSVG/Delete';
@@ -18,9 +21,6 @@ import ContentCopy from '../../components/IconSVG/ContentCopy';
 import Subject from '../../components/IconSVG/Subject';
 import PlaylistAddCheck from '../../components/IconSVG/PlaylistAddCheck';
 import WordsIcon from '../../components/IconSVG/Words';
-import SecondaryMenu from '../../components/SecondaryMenu';
-import Info from '../../components/Info';
-import MessageBox from '../../components/MessageBox';
 
 import {
     FieldEditableArea,
@@ -34,6 +34,7 @@ import {
     ActionBar
 } from '../../styles/components';
 
+import Help from './Help';
 import { ButtonContainer } from './styled';
 
 export default class ImagesEngine extends Component {
@@ -375,29 +376,12 @@ export default class ImagesEngine extends Component {
                 )}
 
                 <LeftedLayout>
-                    {!text && (
-                        <Info>
-                            {
-                                translations[this.props.lang].messages[
-                                    'HOW_WORKS'
-                                ]
-                            }{' '}
-                            <Link href="/about#images-engine">
-                                {
-                                    translations[this.props.lang].messages[
-                                        'LEARN_MORE'
-                                    ]
-                                }
-                            </Link>
-                        </Info>
-                    )}
+                    {lang === 'ru' && <Help lang={lang} />}
 
                     {currentView === 'material' && (
                         <List _animated>
                             {!isDevice && (
-                                <Container
-                                    width="330px"
-                                    margin="0 auto">
+                                <Container width="330px" margin="0 auto">
                                     <Flex
                                         justify={
                                             lang === 'ru'

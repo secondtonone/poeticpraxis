@@ -361,7 +361,8 @@ export default class Rhythmic extends Component {
                     </ActionBar>
                 )}
                 <LeftedLayout>
-                    <Help lang={lang} />
+                    {lang === 'ru' && <Help lang={lang} />}
+                    
                     {currentView === 'rhythmic' && (
                         <div>
                             {isDevice && isFocused && (
@@ -425,11 +426,7 @@ export default class Rhythmic extends Component {
                                     stringsDictionary={stringsDictionary}
                                     toParent={this.getDataFromWorkfield}
                                     lang={lang}
-                                    placeHolder={`${
-                                        translations[lang].placeholders[
-                                            'RHYTHMICS'
-                                        ]
-                                    }...`}
+                                    placeHolder={`${translations[lang].placeholders['RHYTHMICS']}...`}
                                     ref={this.workfieldRef}
                                 />
                             </List>
