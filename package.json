@@ -73,7 +73,7 @@
     "private": true,
     "main": "index.js",
     "scripts": {
-        "dev": "webpack-dev-server",
+        "dev": "webpack-dev-server --config webpack.dev.config.js",
         "build": "rimraf dist && NODE_ENV=production webpack --config webpack.prod.config.js --mode production",
         "server": "node server.js",
         "analize": "rimraf dist && NODE_ENV=production ANALIZE=true webpack --config webpack.prod.config.js --mode production"

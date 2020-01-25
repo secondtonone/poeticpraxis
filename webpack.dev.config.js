@@ -7,8 +7,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const PORT = 9080;
 
 module.exports = {
+    mode: 'development',
+    devtool: 'cheap-eval-source-map',
     entry: {
-        app: ['./src/index.js']
+        app: [/* 'react-hot-loader/patch', */ './src/index.js']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -40,13 +42,13 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            limit: 5000
+                            limit: 8192
                         }
                     }
                 ]
             },
             {
-                test: /\.(png|jpg|jpeg|gif)$/,
+                test: /\.(png|jpg|jpeg|gif|mp3|ogg)$/,
                 use: ['file-loader']
             },
             {
@@ -72,18 +74,21 @@ module.exports = {
         }
     },
     optimization: {
-        namedModules: true,
+        namedModules: true, // NamedModulesPlugin()
         splitChunks: {
+            // CommonsChunkPlugin()
             chunks: 'all'
         },
         noEmitOnErrors: true
     },
     plugins: [
+        /* new webpack.HotModuleReplacementPlugin(), */
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('development')
             }
         }),
+
         new HtmlWebpackPlugin({
             template: './public/index.html',
             inject: 'head',

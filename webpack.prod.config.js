@@ -12,13 +12,15 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 
 const config = {
     mode: 'production',
+    devtool: false,
     entry: {
         app: ['./src/index.js']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: '[name].[hash].js'
+        filename: '[name].[hash].js',
+        globalObject: 'this'
     },
     module: {
         rules: [
@@ -79,21 +81,13 @@ const config = {
         }
     },
     optimization: {
-        namedModules: true, // NamedModulesPlugin()
+        namedModules: true,
         runtimeChunk: 'single',
         splitChunks: {
-            /* minChunks: 2, */
-            chunks: 'all',
-            cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all'
-                }
-            }
+            chunks: 'all'
         },
-        noEmitOnErrors: true, // NoEmitOnErrorsPlugin
-        concatenateModules: true, //ModuleConcatenationPlugin
+        noEmitOnErrors: true,
+        concatenateModules: true,
         minimizer: [
             new TerserPlugin({
                 cache: true,
@@ -133,7 +127,8 @@ const config = {
         }),
         new ScriptExtHtmlWebpackPlugin({
             defer: /app/,
-            defer: /\.js$/
+            defer: /\.js$/,
+            preload: /\.mp3$/
         }),
         new CopyWebpackPlugin([
             {
