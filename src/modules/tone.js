@@ -72,7 +72,7 @@ export function Piano() {
 }
 
 export function getInstrument(inst = 'piano') {
-    if (inst) {
+    if (inst && instruments[inst]) {
         return instruments[inst]();
     }
 }
