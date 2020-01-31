@@ -19,8 +19,6 @@ import DownloadIcon from '../IconSVG/DownloadIcon';
 import { Flex } from '../../styles/components';
 
 import {
-    LoaderConatiner,
-    LinkConatiner,
     DownloadLink,
     Title,
     PlayerContainer
@@ -265,39 +263,20 @@ export default class Melody extends Component {
                 }}>
                 {completeLoading ? (
                     <div>
-                        {/* !recorded && (
-                            <Info>{translations[lang].INFO_RECORDING}</Info>
-                        ) */}
-                        <Flex justify="space-between">
-                            <PlayerContainer>
-                                <Player
-                                    lang={lang}
-                                    play={this.play}
-                                    stop={this.stop}
-                                    progress={progress}
-                                    bpm={bpm}
-                                    setBPM={this.setBPM}
-                                />
-                            </PlayerContainer>
-
-                            {/* <Button
-                                _rounded
-                                _transparent
-                                disabled={!recorded}
-                                type="button">
-                                <DownloadLink
-                                    download={'melody'}
-                                    ref={(ref) => {
-                                        this.linkGetMelody = ref;
-                                    }}
-                                    disabled={!recorded}
-                                    href="#"
-                                    onClick={this.downloadMelody}>
-                                    <DownloadIcon _big />
-                                </DownloadLink>
-                                </Button> */}
-                        </Flex>
-                        <LinkConatiner>
+                        <PlayerContainer>
+                            <Player
+                                lang={lang}
+                                play={this.play}
+                                stop={this.stop}
+                                progress={progress}
+                                bpm={bpm}
+                                setBPM={this.setBPM}
+                            />
+                        </PlayerContainer>
+                        <Flex
+                            margin="0 0 24px"
+                            justify="flex-start"
+                            align="center">
                             <Title>{translations[lang].NOTES}</Title>
                             <DownloadLink
                                 margin="0 24px"
@@ -318,12 +297,12 @@ export default class Melody extends Component {
                                     {translations[lang].SAVE}{' '}
                                 </Button>
                             </DownloadLink>
-                        </LinkConatiner>
+                        </Flex>
                     </div>
                 ) : (
-                    <LoaderConatiner>
+                    <Flex margin="25% auto 0" justify="center">
                         <Loader />
-                    </LoaderConatiner>
+                    </Flex>
                 )}
 
                 <Canvas
