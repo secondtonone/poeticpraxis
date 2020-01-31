@@ -84,12 +84,18 @@ export function drawNotes({
     music,
     variant,
     canvasWidth,
+    canvasHeight,
     verticalOffset
 }) {
     
 
     ctx.textAlign = 'center';
     ctx.font = '18px Montserrat';
+
+    ctx.fillStyle = theme[variant].primaryColor;
+
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
     ctx.fillStyle = theme[variant].secondColor;
 
     let horizontal = 0;

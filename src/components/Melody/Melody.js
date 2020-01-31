@@ -22,7 +22,8 @@ import {
     LoaderConatiner,
     LinkConatiner,
     DownloadLink,
-    Title
+    Title,
+    PlayerContainer
 } from './styled';
 
 export default class Melody extends Component {
@@ -56,11 +57,32 @@ export default class Melody extends Component {
 
         this.linkGetMelody = null;
     }
+    shouldComponentUpdate(prevProps) {
+        if(prevProps.variant !== this.props.variant) {
+            const canvasWidth = this.canvas.offsetWidth;
+            const canvasHeight = this.canvas.offsetHeight;
 
+            let verticalOffset = this.verticalOffset;
+
+            const variant = prevProps.variant;
+
+            const { music } = this.state;
+
+            drawNotes({
+                ctx: this.ctx,
+                music,
+                variant,
+                canvasWidth,
+                canvasHeight,
+                verticalOffset
+            });
+        }
+    }
     async componentDidMount() {
         window.scrollTo(0, 0);
 
         const canvasWidth = this.canvas.offsetWidth;
+        const canvasHeight = this.canvas.offsetHeight;
 
         let verticalOffset = this.verticalOffset;
 
@@ -119,6 +141,7 @@ export default class Melody extends Component {
             music,
             variant,
             canvasWidth,
+            canvasHeight,
             verticalOffset
         });
 
@@ -246,14 +269,16 @@ export default class Melody extends Component {
                             <Info>{translations[lang].INFO_RECORDING}</Info>
                         ) */}
                         <Flex justify="space-between">
-                            <Player
-                                lang={lang}
-                                play={this.play}
-                                stop={this.stop}
-                                progress={progress}
-                                bpm={bpm}
-                                setBPM={this.setBPM}
-                            />
+                            <PlayerContainer>
+                                <Player
+                                    lang={lang}
+                                    play={this.play}
+                                    stop={this.stop}
+                                    progress={progress}
+                                    bpm={bpm}
+                                    setBPM={this.setBPM}
+                                />
+                            </PlayerContainer>
 
                             {/* <Button
                                 _rounded
