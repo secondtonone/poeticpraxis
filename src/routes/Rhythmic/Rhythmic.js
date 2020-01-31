@@ -433,7 +433,7 @@ export default class Rhythmic extends Component {
                         </div>
                     )}
                     {currentView === 'melody' && (
-                        <List _animated>
+                        <List >
                             <Melody
                                 lang={lang}
                                 variant={variant}
