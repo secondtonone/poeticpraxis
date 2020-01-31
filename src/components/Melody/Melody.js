@@ -6,15 +6,12 @@ import theme from '../../styles/theme';
 
 import { Tone, Instrument } from '../../modules/tone';
 import { drawNotes } from '../../modules/drawing';
-import { recorder, setUpRecorder } from '../../modules/mediaRecorder';
 import { makeLetterGramma } from '../../modules/melodic';
 
 import Loader from '../Loader';
 import Canvas from '../Canvas';
 import Player from '../Player';
 import Button from '../Button';
-import Info from '../Info';
-import DownloadIcon from '../IconSVG/DownloadIcon';
 
 import { Flex } from '../../styles/components';
 
@@ -32,9 +29,7 @@ export default class Melody extends Component {
             completeLoading: false,
             progress: 0,
             bpm: 72,
-            music: [],
-            recorded: false,
-            recording: false
+            music: []
         };
 
         this.verticalOffset = 100;
@@ -47,42 +42,37 @@ export default class Melody extends Component {
 
         this.canvasContainer = null;
 
-        this.downloadableMelody = null;
-
         this.ctx = null;
 
         this.linkGetNotes = null;
-
-        this.linkGetMelody = null;
     }
     shouldComponentUpdate(prevProps) {
         if(prevProps.variant !== this.props.variant) {
-            const canvasWidth = this.canvas.offsetWidth;
-            const canvasHeight = this.canvas.offsetHeight;
-
-            let verticalOffset = this.verticalOffset;
-
             const variant = prevProps.variant;
 
             const { music } = this.state;
 
-            drawNotes({
-                ctx: this.ctx,
-                music,
-                variant,
-                canvasWidth,
-                canvasHeight,
-                verticalOffset
-            });
+            this.drawNotes(music, variant);
         }
     }
-    async componentDidMount() {
-        window.scrollTo(0, 0);
 
+    drawNotes = (music, variant) => {
         const canvasWidth = this.canvas.offsetWidth;
         const canvasHeight = this.canvas.offsetHeight;
 
         let verticalOffset = this.verticalOffset;
+
+        drawNotes({
+            ctx: this.ctx,
+            music,
+            variant,
+            canvasWidth,
+            canvasHeight,
+            verticalOffset
+        });
+    }
+    async componentDidMount() {
+        window.scrollTo(0, 0);
 
         const {
             variant,
@@ -92,21 +82,6 @@ export default class Melody extends Component {
         if (Instrument) {
             Instrument.toMaster();
         }
-
-        setUpRecorder(
-            Instrument,
-            () => {
-                this.setState({
-                    recording: true
-                });
-            },
-            (result) => {
-                this.setState({
-                    recorded: true
-                });
-                this.downloadableMelody = result;
-            }
-        );
 
         this.setState({
             completeLoading: true
@@ -134,14 +109,7 @@ export default class Melody extends Component {
 
         this.ctx = this.canvas.getContext('2d');
 
-        drawNotes({
-            ctx: this.ctx,
-            music,
-            variant,
-            canvasWidth,
-            canvasHeight,
-            verticalOffset
-        });
+        this.drawNotes(music, variant);
 
     }
 
@@ -154,14 +122,8 @@ export default class Melody extends Component {
 
     partCallback = (time, notes) => {
         const vowelNotes = notes.vowelNotes;
-        const { music/* , recorded, recording  */} = this.state;
-        /* const lastSoundIndex = music[music.length - 1].index; */
 
-        /* if (!notes.index && recorder && !recording) {
-            recorder.start();
-        } */
-
-        Instrument.volume.value = Math.floor(notes.isAccented ? 4 : 0);
+        Instrument.volume.value = Math.floor(notes.sound);
 
         console.log(notes, Instrument.volume.value);
 
@@ -173,10 +135,6 @@ export default class Melody extends Component {
                 time.toFixed(2)
             );
         });
-
-        /* if (notes.index === lastSoundIndex && recorder && !recorded) {
-            recorder.stop();
-        } */
     };
 
     componentWillUnmount() {
@@ -248,13 +206,9 @@ export default class Melody extends Component {
         this.linkGetNotes.href = this.canvas.toDataURL('image/jpg');
     };
 
-    downloadMelody = (e) => {
-        e.target.href = this.downloadableMelody;
-    };
-
     render() {
         const { lang = 'ru', variant } = this.props;
-        const { completeLoading, bpm, progress, recorded } = this.state;
+        const { completeLoading, bpm, progress } = this.state;
 
         return (
             <div

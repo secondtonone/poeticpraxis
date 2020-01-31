@@ -7,7 +7,7 @@ const stepSoundMultiply = (step, elements) => {
     return step.map((tokenId) => {
         return {
             tokenId,
-            sound: elements[tokenId].accent === 1 ? 4 : 0
+            sound: elements[tokenId].accent === 1 ? 2 : 0
         };
     });
 };
