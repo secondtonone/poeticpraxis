@@ -5,7 +5,7 @@ import { translations } from './translations';
 import theme from '../../styles/theme';
 
 import { Tone, Instrument } from '../../modules/tone';
-import { drawNotes } from '../../modules/drawing';
+import Drawing from '../../modules/drawing';
 import { makeLetterGramma } from '../../modules/melodic';
 
 import Loader from '../Loader';
@@ -20,6 +20,8 @@ import {
     Title,
     PlayerContainer
 } from './styled';
+
+const drawing = new Drawing();
 
 export default class Melody extends Component {
     constructor(props) {
@@ -45,12 +47,15 @@ export default class Melody extends Component {
         this.ctx = null;
 
         this.linkGetNotes = null;
+
+        this.notePlayed = 1;
     }
     shouldComponentUpdate(prevProps) {
         if(prevProps.variant !== this.props.variant) {
             const variant = prevProps.variant;
 
             const { music } = this.state;
+            drawing.setVariant(variant);
 
             this.drawNotes(music, variant);
         }
@@ -62,7 +67,7 @@ export default class Melody extends Component {
 
         let verticalOffset = this.verticalOffset;
 
-        drawNotes({
+        drawing.drawNotes({
             ctx: this.ctx,
             music,
             variant,
@@ -103,14 +108,34 @@ export default class Melody extends Component {
             music
         });
 
-        Tone.Transport.loopEnd = Math.round(time + 0.5);
+        Tone.Transport.loopEnd = Math.round(time + 1);
 
         new Tone.Part(this.partCallback, music).start('+0.1');
 
         this.ctx = this.canvas.getContext('2d');
 
+        drawing.setCtx(this.ctx);
+        drawing.setVariant(variant);
+
         this.drawNotes(music, variant);
 
+        drawing.drawIndicator(this.notePlayed - 1);
+
+        console.log(drawing.coords);
+    }
+
+    followForIndicator = () => {
+        const {vertical} = drawing.coords[this.notePlayed-1];
+        console.log(vertical);
+
+        if (window.innerHeight/2.5 < vertical) {
+            window.scrollTo({
+                top: 100 + vertical,
+                behavior: 'smooth'
+            });
+        }
+        
+        
     }
 
     setUpPlayer = () => {
@@ -121,14 +146,18 @@ export default class Melody extends Component {
     };
 
     partCallback = (time, notes) => {
+
         const vowelNotes = notes.vowelNotes;
 
         Instrument.volume.value = Math.floor(notes.sound);
 
-        console.log(notes, Instrument.volume.value);
+        this.followForIndicator();
+
+        drawing.drawIndicator(this.notePlayed - 1);
+
+        ++this.notePlayed; 
 
         vowelNotes.forEach((note) => {
-            
             Instrument.triggerAttackRelease(
                 note.note,
                 note.duration,
@@ -158,9 +187,17 @@ export default class Melody extends Component {
     };
 
     stop = () => {
+        drawing.clearIndicator(this.notePlayed - 2);
+        this.notePlayed = 1;
         cancelAnimationFrame(this.sliderTimer);
 
         Tone.Transport.stop();
+    };
+
+    pause = () => {
+        cancelAnimationFrame(this.sliderTimer);
+
+        Tone.Transport.pause();
     };
 
     setBPM = (e) => {
@@ -222,6 +259,7 @@ export default class Melody extends Component {
                                 lang={lang}
                                 play={this.play}
                                 stop={this.stop}
+                                pause={this.pause}
                                 progress={progress}
                                 bpm={bpm}
                                 setBPM={this.setBPM}

@@ -44,6 +44,15 @@ export default class Player extends Component {
         }
     };
 
+    pause = () => {
+        this.setState({
+            isPlaying: false
+        });
+        if (this.props.pause) {
+            this.props.pause();
+        }
+    };
+
     repeat = () => {
         this.stop();
         this.play();
@@ -72,7 +81,7 @@ export default class Player extends Component {
                                 _rounded
                                 _transparent
                                 type="button"
-                                onClick={this.stop}
+                                onClick={this.pause}
                                 title={translations[lang].STOP}>
                                 <PauseIcon _big />
                             </Button>

@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import { calcRatio } from '../../modules/drawing';
+import Drawing from '../../modules/drawing';
 
 export default class Canvas extends Component {
     componentDidMount() {
@@ -14,7 +14,7 @@ export default class Canvas extends Component {
     }
 
     updateChart = () => {
-        const ratio = calcRatio();
+        const ratio = Drawing.calcRatio();
         this.canvas.width = this.canvas.offsetWidth * ratio;
         this.canvas.height = this.props.height * ratio;
         this.canvas.style.width = this.canvas.offsetWidth + 'px';

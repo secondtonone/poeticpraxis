@@ -26,9 +26,6 @@ const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
             soundGramma = [...soundGramma, ...modded];
         });
 
-        console.log(soundGramma);
-        
-
         soundGramma = soundGramma.concat([{ tokenId: 'p' }, { tokenId: 'p' }]);
 
         soundGramma.forEach(({tokenId, sound}) => {

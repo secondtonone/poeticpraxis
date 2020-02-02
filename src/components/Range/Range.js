@@ -11,6 +11,10 @@ const Range = styled.input`
         -webkit-appearance: none;
     }
 
+    &:disabled {
+        cursor: none;
+    }
+
     &:focus {
         outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
     }
