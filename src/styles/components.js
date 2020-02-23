@@ -149,7 +149,6 @@ const Footer = styled.footer`
     letter-spacing: 0px;
     font-weight: 300;
     word-spacing: 3px;
-    margin-top: 200px;
     text-align: center;
 `;
 

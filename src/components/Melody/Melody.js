@@ -58,6 +58,7 @@ export default class Melody extends Component {
             drawing.setVariant(variant);
 
             this.drawNotes(music, variant);
+            drawing.drawIndicator(this.notePlayed - 1);
         }
     }
 

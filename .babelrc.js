@@ -8,7 +8,7 @@ module.exports = {
                     browsers: ['>0.25%', 'not ie 11', 'not op_mini all']
                 },
                 useBuiltIns: 'usage',
-                corejs: 3
+                corejs: 3.6
             }
         ]
     ],
@@ -31,4 +31,4 @@ module.exports = {
             }
         ]
     ]
-};
+};6

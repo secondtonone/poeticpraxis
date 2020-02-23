@@ -381,7 +381,7 @@ export default class ImagesEngine extends Component {
                     {currentView === 'material' && (
                         <List _animated>
                             {!isDevice && (
-                                <Container width="330px" margin="0 auto">
+                                <Container width="380px" margin="0 auto">
                                     <Flex
                                         justify={
                                             lang === 'ru'

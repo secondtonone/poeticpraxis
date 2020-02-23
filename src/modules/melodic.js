@@ -29,7 +29,7 @@ const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
         soundGramma = soundGramma.concat([{ tokenId: 'p' }, { tokenId: 'p' }]);
 
         soundGramma.forEach(({tokenId, sound}) => {
-            let duration = 0.38;
+            let duration = /* 0.17; // */0.38;
             let vowelNotes = [];
 
             if (tokenId === 'p' || elements[tokenId].type === 'p') {
@@ -40,9 +40,9 @@ const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
 
                 const notes = mapLetterNote[char];
 
-                if (isAccented) {
-                    //duration = 0.75;
-                }
+                /* if (isAccented) {
+                    duration = 0.2;
+                } */
 
                 notes.main.forEach((note, index) => {
                     if (index < notesCount) {
@@ -70,7 +70,7 @@ const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
         });
     });
     
-    return { music, time};
+    return { music, time };
 };
 
 export { makeLetterGramma };

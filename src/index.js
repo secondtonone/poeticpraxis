@@ -4,25 +4,22 @@ if (DEV) {
     require('preact/debug');
 }
 
-import { h } from 'preact';
-import { render } from 'react-dom';
+import { h, hydrate } from 'preact';
 
-import '../public/fonts/fonts.css';
+//import '../public/fonts/fonts.css';
 
 import store from './store';
-
-import analyticsInit from './modules/analytics';
-import { delay } from './utils';
-
 import App from './containers/App';
 
-const run = (Component) => {
-    const rootElement =
-        process.env.NODE_ENV === 'production'
-            ? document.getElementById('app')
-            : document.body.lastElementChild;
+import analyticsInit from './modules/analytics';
 
-    render(<Component store={store} />, rootElement);
+
+const run = (Component) => {
+    const rootElement = DEV
+        ? document.body.lastElementChild
+        : document.getElementById('app'); 
+
+    hydrate(<Component store={store} />, rootElement);
 };
 
 if (!DEV) {
@@ -50,5 +47,5 @@ run(App);
 
 
 if (!DEV) {
-    delay(() => analyticsInit('yandex'));
-}
+    analyticsInit('yandex');
+} 

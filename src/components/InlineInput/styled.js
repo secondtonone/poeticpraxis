@@ -25,7 +25,8 @@ export const Input = styled.input`
 
 export const InputButton = styled(Button)`
     color: ${(props) => props.theme.secondColor};
-
+    margin-left: 16px;
+    
     &:hover {
         color: ${(props) =>
             props.pinned ? props.theme.accentColor : props.theme.secondColor};

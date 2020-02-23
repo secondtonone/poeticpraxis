@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import Bundle from '../components/Bundle';
 
 const About = (props) => (
-    <Bundle load={() => import(/* webpackChunkName: "About" */ './About')}>
+    <Bundle load={() => import(/* webpackChunkName: "About", webpackPreload: true  */ './About')}>
         {(Component) => (Component === null ? null : <Component {...props} />)}
     </Bundle>
 );

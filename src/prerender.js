@@ -2,8 +2,6 @@ import { h } from 'preact';
 import render from 'preact-render-to-string';
 import { ServerStyleSheet } from 'styled-components';
 
-
-
 import store from './store';
 
 import App from './containers/AppPrerender';

@@ -10,6 +10,7 @@
     <link rel="icon" sizes="192x192" href="<%= require('./img/Signx192.png') %>">
 
     <link rel="manifest" href="<%= require('./manifest.webmanifest') %>">
+    <link rel="preconnect" href="https://mc.yandex.ru/">
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="indie-catalog">
@@ -72,9 +73,37 @@
             }
         }
     </script>
+    <style>
+        @font-face {
+            font-family: 'Montserrat';
+            src: url("<%= require('./fonts/Montserrat/Montserrat-Light.woff2') %>") format('woff2'),
+                url("<%= require('./fonts/Montserrat/Montserrat-Light.woff') %>") format('woff'),
+                url("<%= require('./fonts/Montserrat/Montserrat-Light.ttf') %>") format('truetype');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Montserrat';
+            src: url("<%= require('./fonts/Montserrat/Montserrat-Regular.woff2') %>") format('woff2'),
+                url("<%= require('./fonts/Montserrat/Montserrat-Regular.woff') %>") format('woff'),
+                url("<%= require('./fonts/Montserrat/Montserrat-Regular.ttf') %>") format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Montserrat';
+            src: url("<%= require('./fonts/Montserrat/Montserrat-Medium.woff2') %>") format('woff2'),
+                url("<%= require('./fonts/Montserrat/Montserrat-Medium.woff') %>") format('woff'),
+                url("<%= require('./fonts/Montserrat/Montserrat-Medium.ttf') %>") format('truetype');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
 
     <%= require('../src/prerender.js').default().styles %>
-    
 </head>
 
 <body>

@@ -178,6 +178,7 @@ export default class About extends Component {
                                 (invented by{' '}
                                 <Link
                                     href="https://en.wikipedia.org/wiki/Sergei_Yesenin"
+                                    rel="noreferrer noopener"
                                     target="_blank">
                                     S. A. Yesenin
                                 </Link>
@@ -375,9 +376,10 @@ export default class About extends Component {
 
                 <Flex
                     direction="column"
-                    margin="150px 0 0"
-                    justify="flex-start">
-                    <Container padding="9px 0 25px">
+                    margin="150px 0 50px"
+                    justify="flex-start"
+                    height={isHiddenPayment? 'auto' :`${screenHeight-80}px`}>
+                    <Container padding="9px 0 25px" height="auto">
                         <Text
                             size={mediaQuery ? 64 : 128}
                             lineHeight="0.7"
@@ -399,7 +401,10 @@ export default class About extends Component {
                             for poetic practice.
                         </Text>
                     </Container>
-                    <Flex direction="column" justify="flex-start" height="100px">
+                    <Flex
+                        direction="column"
+                        justify="flex-start"
+                        height="100px">
                         {isRusLang ? 'Подписаться:' : 'Subscribe:'}
                         <Flex
                             direction={mediaQuery ? 'column' : 'row'}
@@ -408,6 +413,7 @@ export default class About extends Component {
                             {isRusLang && (
                                 <Link
                                     target="_blank"
+                                    rel="noreferrer noopener"
                                     href="tg://resolve?domain=poeticpraxis">
                                     TELEGRAM
                                 </Link>
@@ -415,6 +421,7 @@ export default class About extends Component {
                             {isRusLang && (
                                 <Link
                                     target="_blank"
+                                    rel="noreferrer noopener"
                                     href="https://vk.com/poeticpraxis">
                                     ВКОНТАКТЕ
                                 </Link>
@@ -422,6 +429,7 @@ export default class About extends Component {
                             {!isRusLang && (
                                 <Link
                                     target="_blank"
+                                    rel="noreferrer noopener"
                                     href="https://www.reddit.com/r/poeticpraxis/">
                                     REDDIT
                                 </Link>
@@ -442,7 +450,7 @@ export default class About extends Component {
                         </Button>
                     )}
                     <br />
-                    <Text isHidden={!isHiddenPayment}>
+                    {isHiddenPayment ? (
                         <iframe
                             src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0&targets-hint=&default-sum=2&button-text=11&payment-type-choice=on&hint=&successURL=&quickpay=shop&account=410014951905022"
                             width="300"
@@ -451,7 +459,7 @@ export default class About extends Component {
                             allowtransparency="true"
                             scrolling="no"
                         />
-                    </Text>
+                    ) : null}
                 </Flex>
 
                 <Footer>

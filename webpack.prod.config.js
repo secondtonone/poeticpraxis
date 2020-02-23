@@ -2,9 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
@@ -19,7 +17,7 @@ const config = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: '[name].[hash].js',
+        filename: '[name].[chunkhash:8].js',
         globalObject: 'this'
     },
     module: {
@@ -44,7 +42,7 @@ const config = {
                 ]
             },
             {
-                test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
+                test: /\.(svg)$/,
                 use: [
                     {
                         loader: 'url-loader',
@@ -55,7 +53,7 @@ const config = {
                 ]
             },
             {
-                test: /\.(png|jpg|jpeg|gif)$/,
+                test: /\.(png|jpg|jpeg|gif|mp3|ogg|woff|woff2|eot|ttf|otf)$/,
                 use: ['file-loader']
             },
             {
@@ -125,29 +123,41 @@ const config = {
                 Prod: true
             }
         }),
-        new ScriptExtHtmlWebpackPlugin({
-            defer: /app/,
-            defer: /\.js$/,
-            preload: /\.mp3$/
+        new PreloadWebpackPlugin({
+            rel: 'preload',
+            as(entry) {
+                if (/\.woff2$/.test(entry)) return 'font';
+                if (/\.css$/.test(entry)) return 'style';
+                if (/\.png$|.svg$/.test(entry)) return 'image';
+                return 'script';
+            },
+            fileBlacklist: [/\.ttf/, /\.woff$/, /worker/, /\.webmanifest/],
+            include: 'allAssets'
         }),
         new CopyWebpackPlugin([
             {
-                from: 'public/robots.txt'
+                from: 'public/robots.txt',
+                ignore: ['.DS_Store']
             },
             {
-                from: 'public/sitemap.xml'
+                from: 'public/sitemap.xml',
+                ignore: ['.DS_Store']
             },
             {
-                from: 'public/.htaccess'
+                from: 'public/.htaccess',
+                ignore: ['.DS_Store']
             },
             {
-                from: 'public/img/Sign.svg'
+                from: 'public/img/Sign.svg',
+                ignore: ['.DS_Store']
             },
             {
-                from: 'public/audio'
+                from: 'public/audio',
+                ignore: ['.DS_Store']
             },
             {
-                from: 'public/dictionary'
+                from: 'public/dictionary',
+                ignore: ['.DS_Store']
             }
         ]),
         new OfflinePlugin({
@@ -156,7 +166,7 @@ const config = {
             safeToUseOptionalCaches: true,
             excludes: ['robots.txt', 'sitemap.xml', '.htaccess'],
             caches: 'all',
-            externals: ['/', 'https://mc.yandex.ru/metrika/watch.js'],
+            externals: ['/', 'https://mc.yandex.ru/metrika/tag.js'],
             ServiceWorker: {
                 events: true,
                 output: 'sworker.js'

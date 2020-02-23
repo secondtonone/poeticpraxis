@@ -15,7 +15,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: '[name].[hash].js',
+        filename: '[name].[hash:8].js',
         globalObject: 'this'
     },
     module: {
@@ -103,15 +103,16 @@ module.exports = {
         }),
         new ScriptExtHtmlWebpackPlugin({
             defer: /app/,
-            defer: /\.js$/,
-            preload: /\.mp3$/
+            defer: /\.js$/
         }),
         new CopyWebpackPlugin([
             {
-                from: 'public/audio'
+                from: 'public/audio',
+                ignore: ['.DS_Store']
             },
             {
-                from: 'public/dictionary'
+                from: 'public/dictionary',
+                ignore: ['.DS_Store']
             }
         ])
     ],
