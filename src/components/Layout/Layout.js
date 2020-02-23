@@ -11,6 +11,10 @@ import Header from '../Header';
 import LangChanger from '../LangChanger';
 import ThemeTumbler from '../ThemeTumbler';
 
+import analyticsInit from '../../modules/analytics';
+
+const PROD = process.env.NODE_ENV === 'production';
+
 export default class Layout extends Component {
     changeThemeColor = () => {
         const metaThemeColor = document.querySelector('meta[name=theme-color]');
@@ -53,6 +57,10 @@ export default class Layout extends Component {
         } else {
             this.props.changeLang('ru');
         }
+
+        if (PROD) {
+            analyticsInit('yandex');
+        } 
     }
 
     render() {

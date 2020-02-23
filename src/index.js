@@ -6,12 +6,8 @@ if (DEV) {
 
 import { h, hydrate } from 'preact';
 
-//import '../public/fonts/fonts.css';
-
 import store from './store';
 import App from './containers/App';
-
-import analyticsInit from './modules/analytics';
 
 
 const run = (Component) => {
@@ -44,8 +40,3 @@ if (!DEV) {
 
 
 run(App);
-
-
-if (!DEV) {
-    analyticsInit('yandex');
-} 

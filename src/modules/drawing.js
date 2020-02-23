@@ -41,9 +41,13 @@ export default class Drawing {
         const heightCell = this.heightCell;
         const widthCell = this.widthCell;
 
-        if(index > 0) {
-            this.clearIndicator(index-1);
+        if (index === 0) {
+            this.clearIndicator(this.coords.length - 1);
         }
+        if(index > 0) {
+            this.clearIndicator(index - 1);
+        }
+        
         
         this.ctx.fillStyle = theme[this.variant].accentColor;
         //this.ctx.fillRect(horizontal + 30, vertical + 58, 50, 5);

@@ -48,7 +48,7 @@ export default class Melody extends Component {
 
         this.linkGetNotes = null;
 
-        this.notePlayed = 1;
+        this.notePlayed = 0;
     }
     shouldComponentUpdate(prevProps) {
         if(prevProps.variant !== this.props.variant) {
@@ -58,7 +58,7 @@ export default class Melody extends Component {
             drawing.setVariant(variant);
 
             this.drawNotes(music, variant);
-            drawing.drawIndicator(this.notePlayed - 1);
+            drawing.drawIndicator(this.notePlayed);
         }
     }
 
@@ -120,22 +120,18 @@ export default class Melody extends Component {
 
         this.drawNotes(music, variant);
 
-        drawing.drawIndicator(this.notePlayed - 1);
-
-        console.log(drawing.coords);
+        drawing.drawIndicator(this.notePlayed);
     }
 
-    followForIndicator = () => {
-        const {vertical} = drawing.coords[this.notePlayed-1];
-        console.log(vertical);
+    followForIndicator = (index) => {        
+        const { vertical } = drawing.coords[index];
 
-        if (window.innerHeight/2.5 < vertical) {
+        if (window.innerHeight / 2.5 < vertical) {
             window.scrollTo({
                 top: 100 + vertical,
                 behavior: 'smooth'
             });
         }
-        
         
     }
 
@@ -147,16 +143,14 @@ export default class Melody extends Component {
     };
 
     partCallback = (time, notes) => {
-
         const vowelNotes = notes.vowelNotes;
 
         Instrument.volume.value = Math.floor(notes.sound);
 
-        this.followForIndicator();
+        drawing.drawIndicator(notes.index);
+        this.followForIndicator(notes.index);
 
-        drawing.drawIndicator(this.notePlayed - 1);
-
-        ++this.notePlayed; 
+        this.notePlayed = notes.index; 
 
         vowelNotes.forEach((note) => {
             Instrument.triggerAttackRelease(
@@ -188,8 +182,8 @@ export default class Melody extends Component {
     };
 
     stop = () => {
-        drawing.clearIndicator(this.notePlayed - 2);
-        this.notePlayed = 1;
+        drawing.clearIndicator(this.notePlayed);
+        this.notePlayed = 0;
         cancelAnimationFrame(this.sliderTimer);
 
         Tone.Transport.stop();
