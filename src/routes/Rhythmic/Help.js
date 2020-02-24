@@ -1,6 +1,7 @@
 import { h } from 'preact';
 
 import { translations } from '../../components/Workfield/translations';
+import useSessionStorage from '../../hooks/useSessionStorage';
 
 import Info from '../../components/Info';
 
@@ -17,12 +18,27 @@ import {
 
 import { AccentRelative } from './styled';
 
+const helpState = () => {
+    const [valueSessionStorage, setValueSessionStorage] = useSessionStorage(
+        'isHideRhythmicHelp'
+    );
+
+    return [valueSessionStorage, () => setValueSessionStorage(true)];
+};
 export default function Help({ lang = 'ru' }) {
     const maxMedia600 = maxMatchMedia(600);
     const containerWidth = maxMedia600 ? '100%' : '33%';
+
+    const [isHadden, hideHelp] = helpState();
+
+    if (isHadden) {
+        return null;
+    }
+
     return (
         <Info
             lang={lang}
+            onClose={hideHelp}
             unfoldedContent={
                 <div>
                     Для постановки ударений в строках, нажимайте на:
@@ -75,7 +91,8 @@ export default function Help({ lang = 'ru' }) {
                         </Container>
                     </Flex>
                     <Container margin="10px 0 0">
-                    После переходите на вкладку "Мелодия", что бы узнать: Что скрыто за словами?
+                        После переходите на вкладку "Мелодия", что бы узнать:
+                        Что скрыто за словами?
                     </Container>
                 </div>
             }

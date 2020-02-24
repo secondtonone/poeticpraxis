@@ -1,22 +1,37 @@
 import { h } from 'preact';
 
 import { translations } from '../../components/Workfield/translations';
+import useSessionStorage from '../../hooks/useSessionStorage';
 
 import Info from '../../components/Info';
 
-import { Container, Flex } from '../../styles/components';
-import Widgets from '../../components/IconSVG/Widgets';
+import { Container } from '../../styles/components';
 
 import { maxMatchMedia, isSupportRecognition } from '../../utils';
+
+const helpState = () => {
+    const [valueSessionStorage, setValueSessionStorage] = useSessionStorage(
+        'isHideImagesEngineHelp'
+    );
+
+    return [valueSessionStorage, () => setValueSessionStorage(true)];
+}
 
 export default function Help({ lang = 'ru' }) {
     const maxMedia600 = maxMatchMedia(600);
     const containerWidth = maxMedia600 ? '100%' : '33%';
     const recognitionSupport = isSupportRecognition();
+    
+    const [isHadden, hideHelp] = helpState();
+
+    if (isHadden) {
+        return null;
+    }
 
     return (
         <Info
             lang={lang}
+            onClose={hideHelp}
             unfoldedContent={
                 <div>
                     <Container margin="10px 0 0">
@@ -31,11 +46,12 @@ export default function Help({ lang = 'ru' }) {
                         </Container>
                     ) : null}
                     <Container margin="10px 0 0">
-                        Нажмите на <Widgets _small />, чтобы получить
-                        словосочетания.
+                        Нажмите на кнопку внизу, чтобы получить словосочетания.
                     </Container>
                     <Container margin="10px 0 0">
-                        Выбирайте те, которые привлекли ваше внимание и дополняйте их для создания образов ранее ещё не проявленных.
+                        Выбирайте те, которые привлекли ваше внимание и
+                        дополняйте их для создания образов ранее ещё не
+                        проявленных.
                     </Container>
                 </div>
             }

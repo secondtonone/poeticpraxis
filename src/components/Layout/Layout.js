@@ -24,25 +24,14 @@ export default class Layout extends Component {
         );
     };
 
-    componentDidUpdate(prevProps) {
-        if (this.props.variant !== prevProps.variant) {
-            this.changeThemeColor();
-        }
-    }
-
     componentDidMount() {
-        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
-            .matches;
 
-        if (isDarkMode) {
-            this.props.changeTheme('dark');
-        } else if (isDaytime()) {
+        if (isDaytime() && this.props.variant === 'dark') {
             this.props.changeTheme('light');
-        } else {
+        } 
+        if (!isDaytime() && this.props.variant === 'light') {
             this.props.changeTheme('dark');
         }
-
-        this.changeThemeColor();
 
         let isLangEn = false;
 

@@ -1,11 +1,13 @@
 const ru = {
     CLOSE: 'Закрыть',
-    SHOW: 'Показать'
+    SHOW: 'Показать',
+    HIDE: 'Свернуть'
 };
 
 const en = {
     CLOSE: 'Close',
-    SHOW: 'Show'
+    SHOW: 'Show',
+    HIDE: 'Hide'
 };
 
 const translations = {

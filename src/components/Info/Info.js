@@ -3,14 +3,15 @@ import styled from 'styled-components';
 
 import Button from '../../components/Button';
 
-import Close from '../../components/IconSVG/Close';
-import InfoIcon from '../../components/IconSVG/Info';
 import { translations } from './translations';
+
+import Close from '../../components/IconSVG/Close';
 
 import { Flex } from '../../styles/components';
 
 const StyledBox = styled.div`
-    padding: 16px 24px;
+    padding: 32px 24px 16px;
+    position: relative;
     text-align: left;
     color: ${(props) => props.theme.secondColor};
     background-color: ${(props) => props.theme.lightGray};
@@ -26,6 +27,12 @@ const StyledBox = styled.div`
     }
 `;
 
+const CloseButton = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+`;
+
 export default class Info extends Component {
     constructor(props) {
         super(props);
@@ -38,15 +45,31 @@ export default class Info extends Component {
         let isInfoHidden = this.state.isInfoHidden;
 
         this.setState({
-            isInfoHidden: isInfoHidden ? false : true
+            isInfoHidden: !isInfoHidden
         });
+    };
+
+    hideInfo = () => {
+        if(this.props.onClose) {
+            this.props.onClose();
+        }
     };
     render() {
         const { lang = 'ru' } = this.props;
+
         return (
-            <div>
+            <StyledBox>
+                <CloseButton>
+                    <Button
+                        _rounded
+                        _transparent
+                        type="button"
+                        onClick={this.hideInfo}>
+                        <Close _middle />
+                    </Button>
+                </CloseButton>
                 {!this.state.isInfoHidden ? (
-                    <StyledBox>
+                    <div>
                         {this.props.unfoldedContent}
                         <Flex justify="flex-end">
                             <Button
@@ -55,28 +78,28 @@ export default class Info extends Component {
                                 type="button"
                                 margin="8px 8px"
                                 onClick={this.toggleInfo}>
-                                {translations[lang].CLOSE}{' '}
-                                <Close _small padding="0 0 0 8px" />
+                                {translations[lang].HIDE}{' '}
                             </Button>
                         </Flex>
-                    </StyledBox>
+                    </div>
                 ) : (
-                    <StyledBox>
+                    <div>
                         <Flex justify="space-between">
                             {this.props.foldedContent}
-                            <Button
-                                _flat
-                                _transparent
-                                type="button"
-                                margin="8px 8px"
-                                onClick={this.toggleInfo}>
-                                {translations[lang].SHOW}{' '}
-                                <InfoIcon _small padding="0 0 0 8px" />
-                            </Button>
+                            <Flex justify="flex-end" width="30%">
+                                <Button
+                                    _flat
+                                    _transparent
+                                    type="button"
+                                    margin="8px 8px"
+                                    onClick={this.toggleInfo}>
+                                    {translations[lang].SHOW}{' '}
+                                </Button>
+                            </Flex>
                         </Flex>
-                    </StyledBox>
+                    </div>
                 )}
-            </div>
+            </StyledBox>
         );
     }
 }
