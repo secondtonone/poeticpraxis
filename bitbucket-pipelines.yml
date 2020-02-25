@@ -1,27 +1,25 @@
-image: node:10.15.3
-
-
 pipelines:
   default:
     - step:
-      name: Install, Build
-      caches:
-        - node
-      deployment: production
-      script:
+        name: Install, Build
+        image: node:10.15.3
+        caches:
+          - node
+        deployment: production
+        script:
           - npm install
           - npm run build
         artifacts:
           - dist/**
 
     - step:
-      name: Deploy
-      script:
-        - pipe: atlassian/sftp-deploy:0.5.3
-        variables:
-          USER: $SFTP_USERNAME
-          SERVER: $SFTP_SERVER
-          REMOTE_PATH: $SFTP_REMOTE_PATH
-          LOCAL_PATH: 'dist'
-          PASSWORD: $SFTP_PASSWORD
-          EXTRA_ARGS: 'rm *'
+        name: Deploy
+        script:
+          - pipe: atlassian/sftp-deploy:0.5.3
+            variables:
+              USER: $SFTP_USERNAME
+              SERVER: $SFTP_SERVER
+              REMOTE_PATH: $SFTP_REMOTE_PATH
+              LOCAL_PATH: 'dist'
+              PASSWORD: $SFTP_PASSWORD
+              EXTRA_ARGS: 'rm *'
