@@ -91,12 +91,11 @@ export default function Help({ lang = 'ru' }) {
                         </Container>
                     </Flex>
                     <Container margin="10px 0 0">
-                        После переходите на вкладку "Мелодия", что бы узнать:
-                        Что скрыто за словами?
+                        После переходите на вкладку "Мелодия", что бы узнать: Что скрыто за словами?
                     </Container>
                 </div>
             }
-            foldedContent={<div>С чего начать?</div>}
+            foldedContent={<div>Cлова играют музыку. Как её услышать?</div>}
         />
     );
 }

@@ -212,6 +212,7 @@ const StyledButton = styled.button.attrs((props) => ({
 
     &._long {
         width: 100%;
+        text-align: center;
     }
 
     &._second {

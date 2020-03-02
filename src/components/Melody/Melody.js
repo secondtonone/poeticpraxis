@@ -36,13 +36,9 @@ export default class Melody extends Component {
 
         this.verticalOffset = 100;
 
-        this.containerWidth = 666;
-
         this.sliderTimer = null;
 
         this.canvas = null;
-
-        this.canvasContainer = null;
 
         this.ctx = null;
 
@@ -123,7 +119,7 @@ export default class Melody extends Component {
         drawing.drawIndicator(this.notePlayed);
     }
 
-    followForIndicator = (index) => {        
+    followForIndicator = (index) => {
         const { vertical } = drawing.coords[index];
 
         if (window.innerHeight / 2.5 < vertical) {
@@ -203,22 +199,17 @@ export default class Melody extends Component {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     };
 
-    createNewCtx = () => {
+    /* createNewCtx = () => {
         const canvas = document.createElement('canvas');
         canvas.width = this.canvas.width;
         canvas.height = this.canvas.height;
         return canvas.getContext('2d');
-    };
+    }; */
 
-    getHeightCanvas = () => {
+    getHeightCanvas = (width) => {
         const { strings, orderStrings } = this.props.rhythmicState;
 
         let height = 0;
-
-        let width =
-            window.innerWidth <= this.containerWidth
-                ? window.innerWidth
-                : this.containerWidth;
 
         orderStrings.forEach((stringId) => {
             height =
@@ -243,10 +234,7 @@ export default class Melody extends Component {
         const { completeLoading, bpm, progress } = this.state;
 
         return (
-            <div
-                ref={(ref) => {
-                    this.canvasContainer = ref;
-                }}>
+            <div>
                 {completeLoading ? (
                     <div>
                         <PlayerContainer>
@@ -297,7 +285,7 @@ export default class Melody extends Component {
                     getRef={(ref) => {
                         this.canvas = ref;
                     }}
-                    height={this.getHeightCanvas()}
+                    height={this.getHeightCanvas}
                 />
             </div>
         );

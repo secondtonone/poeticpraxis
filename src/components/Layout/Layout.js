@@ -16,14 +16,11 @@ import analyticsInit from '../../modules/analytics';
 const PROD = process.env.NODE_ENV === 'production';
 
 export default class Layout extends Component {
-    changeThemeColor = () => {
-        const metaThemeColor = document.querySelector('meta[name=theme-color]');
-        metaThemeColor.setAttribute(
-            'content',
-            theme[this.props.variant].primaryColor
-        );
-    };
-
+    
+    constructor (props) {
+        super(props);
+    }
+    
     componentDidMount() {
 
         if (isDaytime() && this.props.variant === 'dark') {

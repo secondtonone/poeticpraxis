@@ -80,7 +80,7 @@ const LeftedLayout = styled.div`
     margin-left: 100px;
 
     @media (max-width: 600px) {
-        padding: 128px 0 0;
+        padding: 121px 0 0;
         margin: 0;
     }
 `;
@@ -115,6 +115,7 @@ const Container = styled.div`
     bottom: ${(props) => (props.bottom ? props.bottom : 'auto')};
     left: ${(props) => (props.left ? props.left : 'auto')};
     right: ${(props) => (props.right ? props.right : 'auto')};
+    ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : '')}
 `;
 
 
@@ -271,12 +272,24 @@ const ActionBar = styled.div`
         margin-left: 16px;
     }
 
+    ${(props) =>
+        props.minHeight
+            ? `
+            transform: translateY(0);
+            transition: transform 0.5s ease-in;`
+            : ''}
+
     @media (max-width: 600px) {
         display: flex;
         position: fixed;
         bottom: 8px;
         right: 8px;
         z-index: 1002;
+    }
+
+    @media (max-height: ${(props) => props.minHeight? props.minHeight: '0' }) {
+        transform: translateY(120%);
+        display: none;
     }
 `;
 

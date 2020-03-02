@@ -57,12 +57,38 @@ const ButtonContainer = styled.div`
     justify-content: flex-start;
 
     @media (max-width: 600px) {
-        flex-direction: column-reverse;
+        justify-content: space-between;
+    }
+    @media (max-width: 420px) {
+        flex-direction: column;
+        align-items: center;
+    }
+`;
+
+const MainButton = styled(Button)`
+    transform: translateY(0);
+    transition: transform 0.5s ease-in;
+
+    @media (max-height: ${(props) => props.minHeight}) {
+        transform: translateY(120%);
+        display: none;
+    }
+`;
+
+const ContainerOnKeyboard = styled.div`
+    transform: translateY(0);
+    transition: transform 0.5s ease-in;
+
+    @media (max-height: ${(props) => props.minHeight}) {
+        transform: translateY(120%);
+        display: none;
     }
 `;
 
 export {
     MainSelect,
     FieldClearButton,
-    ButtonContainer
+    ButtonContainer,
+    MainButton,
+    ContainerOnKeyboard
 };

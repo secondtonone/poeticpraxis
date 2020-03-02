@@ -35,7 +35,7 @@ import {
 } from '../../styles/components';
 
 import Help from './Help';
-import { ButtonContainer } from './styled';
+import { ButtonContainer, MainButton } from './styled';
 
 export default class ImagesEngine extends Component {
     constructor(props) {
@@ -46,12 +46,12 @@ export default class ImagesEngine extends Component {
             words: stringToWords(props.engineState.text),
             field: {},
             sharedText: '',
-            actualHeight: window.innerHeight,
-            initHeight: window.innerHeight,
             isDisabledWordsview: !props.engineState.result.length
         };
 
         this.clearCount = false;
+
+        this.initHeight = window.innerHeight;
     }
 
     changeTitle = () => {
@@ -72,12 +72,6 @@ export default class ImagesEngine extends Component {
         this.changeTitle();
 
         window.scrollTo(0, 0);
-
-        window.addEventListener('resize', this.updateDimensions);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateDimensions);
     }
 
     getWords = async () => {
@@ -93,11 +87,6 @@ export default class ImagesEngine extends Component {
         } catch (error) {
             this.showMessage('Слова не хотят подбираться, попробуйте снова.');
         }
-    };
-    updateDimensions = () => {
-        this.setState({
-            actualHeight: window.innerHeight
-        });
     };
 
     handleTextInput = (e) => {
@@ -284,9 +273,7 @@ export default class ImagesEngine extends Component {
 
         const {
             textMessage,
-            isDisabledWordsview,
-            actualHeight,
-            initHeight
+            isDisabledWordsview
         } = this.state;
 
         const props = {
@@ -324,7 +311,7 @@ export default class ImagesEngine extends Component {
             }
         ];
 
-        const hideWithKeyboard = !(actualHeight * 1.3 < initHeight);
+        const heightForKeyboard = Math.floor(this.initHeight / 1.3);
 
         const isDevice = isTouchDevice();
 
@@ -335,45 +322,42 @@ export default class ImagesEngine extends Component {
                     handler={this.changeView}
                     current={currentView}
                 />
-                {hideWithKeyboard && (
-                    <ActionBar>
-                        {currentView === 'material' && (
-                            <Button
-                                _rounded
-                                _transparent
-                                disabled={!text.length}
-                                type="button"
-                                onClick={this.clearInput}
-                                title="Стереть текст">
-                                <Delete _middle />
-                            </Button>
-                        )}
-                        {currentView === 'material' && lang === 'ru' && (
-                            <Button
-                                _rounded
-                                _transparent
-                                type="button"
-                                onClick={this.getWords}
-                                title="Получить слова">
-                                <WordsIcon _middle />
-                            </Button>
-                        )}
-                    </ActionBar>
-                )}
+                <ActionBar minHeight={`${heightForKeyboard}px`}>
+                    {currentView === 'material' && (
+                        <Button
+                            _rounded
+                            _transparent
+                            disabled={!text.length}
+                            type="button"
+                            onClick={this.clearInput}
+                            title="Стереть текст">
+                            <Delete _middle />
+                        </Button>
+                    )}
+                    {currentView === 'material' && lang === 'ru' && (
+                        <Button
+                            _rounded
+                            _transparent
+                            type="button"
+                            onClick={this.getWords}
+                            title="Получить слова">
+                            <WordsIcon _middle />
+                        </Button>
+                    )}
+                </ActionBar>
 
-                {hideWithKeyboard && (
-                    <Button
-                        _rounded
-                        _main
-                        _animated-up
-                        _centred
-                        type="button"
-                        onClick={this.getResult}
-                        disabled={!text}
-                        title="Монтаж">
-                        <Widgets _big />
-                    </Button>
-                )}
+                <MainButton
+                    _rounded
+                    _main
+                    _animated-up
+                    _centred
+                    type="button"
+                    minHeight={`${heightForKeyboard}px`}
+                    onClick={this.getResult}
+                    disabled={!text}
+                    title="Монтаж">
+                    <Widgets _big />
+                </MainButton>
 
                 <LeftedLayout>
                     {lang === 'ru' && <Help lang={lang} />}
@@ -381,7 +365,10 @@ export default class ImagesEngine extends Component {
                     {currentView === 'material' && (
                         <List _animated>
                             {!isDevice && (
-                                <Container width="380px" margin="0 auto">
+                                <Container
+                                    maxWidth="380px"
+                                    width="100%"
+                                    margin="0 auto">
                                     <Flex
                                         justify={
                                             lang === 'ru'
@@ -401,12 +388,12 @@ export default class ImagesEngine extends Component {
                                                 _transparent
                                                 type="button"
                                                 onClick={this.getWords}
-                                                title="Получить слова">
+                                                title="Найти слова">
                                                 <WordsIcon
                                                     _small
                                                     padding="0 8px 0 0"
                                                 />
-                                                Получить слова
+                                                Найти слова
                                             </Button>
                                         )}
                                     </Flex>
@@ -508,11 +495,16 @@ export default class ImagesEngine extends Component {
                                 />
 
                                 {result.length > 30 ? (
-                                    <Container margin="8px 0 0">
+                                    <Flex
+                                        justify={
+                                            isDevice
+                                                ? 'center'
+                                                : 'space-between'
+                                        }
+                                        margin="8px 0 0">
                                         <Button
                                             _flat
                                             _transparent
-                                            _long
                                             _light-gray
                                             type="button"
                                             onClick={this.toTheTop}>
@@ -523,7 +515,7 @@ export default class ImagesEngine extends Component {
                                             }{' '}
                                             <ArrowBack _small _rotate-right />
                                         </Button>
-                                    </Container>
+                                    </Flex>
                                 ) : null}
                             </Container>
                         </List>

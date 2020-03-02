@@ -21,7 +21,7 @@ export default function Help({ lang = 'ru' }) {
     const maxMedia600 = maxMatchMedia(600);
     const containerWidth = maxMedia600 ? '100%' : '33%';
     const recognitionSupport = isSupportRecognition();
-    
+
     const [isHadden, hideHelp] = helpState();
 
     if (isHadden) {
@@ -55,7 +55,7 @@ export default function Help({ lang = 'ru' }) {
                     </Container>
                 </div>
             }
-            foldedContent={<div>С чего начать?</div>}
+            foldedContent={<div>Как завести мотор этой машины?</div>}
         />
     );
 }

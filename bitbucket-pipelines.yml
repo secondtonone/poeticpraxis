@@ -15,7 +15,7 @@ pipelines:
     - step:
         name: Deploy
         script:
-          - pipe: atlassian/sftp-deploy:0.5.3
+          - pipe: atlassian/ftp-deploy:0.3.0
             variables:
               USER: $SFTP_USERNAME
               SERVER: $SFTP_SERVER

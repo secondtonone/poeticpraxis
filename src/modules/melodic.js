@@ -40,9 +40,9 @@ const makeLetterGramma = ({ notesCount, strings, elements, orderStrings }) => {
 
                 const notes = mapLetterNote[char];
 
-                /* if (isAccented) {
-                    duration = 0.2;
-                } */
+                if (isAccented) {
+                    duration = 0.57;
+                }
 
                 notes.main.forEach((note, index) => {
                     if (index < notesCount) {

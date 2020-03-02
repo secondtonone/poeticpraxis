@@ -1,12 +1,12 @@
 const ru = {
-    CLOSE: 'Закрыть',
-    SHOW: 'Показать',
+    CLOSE: 'Не показывать',
+    SHOW: 'Узнать больше',
     HIDE: 'Свернуть'
 };
 
 const en = {
-    CLOSE: 'Close',
-    SHOW: 'Show',
+    CLOSE: 'Dont show',
+    SHOW: 'Learn more',
     HIDE: 'Hide'
 };
 
