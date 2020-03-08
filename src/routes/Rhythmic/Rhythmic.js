@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import { isTouchDevice } from '../../utils';
+import { isTouchDevice, wordByNumber } from '../../utils';
 import { translations } from './translations';
 
 import {
@@ -18,11 +18,11 @@ import {
 } from '../../modules/tone';
 
 import Help from './Help';
+import RhythmicMenu from './RhythmicMenu';
 
 import Workfield from '../../components/Workfield';
 import MessageBox from '../../components/MessageBox';
 import Button from '../../components/Button';
-import SecondaryMenu from '../../components/SecondaryMenu';
 import Melody from '../../components/Melody';
 
 import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
@@ -31,14 +31,14 @@ import ZoomInIcon from '../../components/IconSVG/ZoomIn';
 import ZoomOut from '../../components/IconSVG/ZoomOut';
 import Lock from '../../components/IconSVG/Lock';
 import LockOpen from '../../components/IconSVG/LockOpen';
-import MelodyIcon from '../../components/IconSVG/Melody';
-import RhythmIcon from '../../components/IconSVG/RhythmIcon';
 import ShareIcon from '../../components/IconSVG/Share';
 
 import {
     List,
     LeftedLayout,
-    ActionBar
+    ActionBar,
+    Flex,
+    TextMinor
 } from '../../styles/components';
 
 import {
@@ -57,11 +57,14 @@ export default class Rhythmic extends Component {
             zoomIn: false,
             isFocused: false,
             isEditable: true,
-            isDevice: isTouchDevice(),
             currentView: 'rhythmic',
-            rhythmicState: {},
+            rhythmicState: {
+                wordsCount: 0
+            },
             isHelpInfoHidden: false
         };
+
+        this.isDevice = isTouchDevice();
 
         this.mouseTrackingTimer = 0;
         this.stringPauseButton = null;
@@ -275,47 +278,24 @@ export default class Rhythmic extends Component {
             isEditable,
             isFocused,
             isToolbarHidden,
-            isDevice,
             currentView,
             rhythmicState
         } = this.state;
 
-        const secondMenu = [
-            {
-                value: 'rhythmic',
-                icon: <RhythmIcon />,
-                title: translations[lang].rhythmicMenu['RHYTHMICS'],
-                content: (
-                    <div>
-                        <RhythmIcon />
-                        <div>
-                            {translations[lang].rhythmicMenu['RHYTHMICS']}
-                        </div>
-                    </div>
-                ),
-                disabled: false
-            },
-            {
-                value: 'melody',
-                icon: <MelodyIcon />,
-                title: translations[lang].rhythmicMenu['MELODY'],
-                content: (
-                    <div>
-                        <MelodyIcon />
-                        <div>{translations[lang].rhythmicMenu['MELODY']}</div>
-                    </div>
-                ),
-                disabled: !text
-            }
-        ];
+        const isDevice = this.isDevice;
+
+        const wordsNumber = rhythmicState.wordsCount;
+
+        const mainMeter = rhythmicState.mainMeter;
 
         return (
             <section>
                 <MessageBox text={textMessage} bottom={120} />
-                <SecondaryMenu
-                    items={secondMenu}
+                <RhythmicMenu
                     handler={this.changeView}
                     current={currentView}
+                    lang={lang}
+                    text={text}
                 />
                 {currentView === 'rhythmic' && isDevice && !isFocused && (
                     <ActionBar>
@@ -325,7 +305,7 @@ export default class Rhythmic extends Component {
                             type="button"
                             disabled={!text}
                             onClick={this.copyToClipboard}
-                            title="Копировать в текстовый редактор">
+                            title={translations[lang].rhythmic['COPY']}>
                             <ContentCopy _middle />
                         </Button>
                         <Button
@@ -334,7 +314,7 @@ export default class Rhythmic extends Component {
                             type="button"
                             disabled={!text}
                             onClick={this.shareWithLink}
-                            title="Поделиться">
+                            title={translations[lang].rhythmic['SHARE']}>
                             <ShareIcon _big />
                         </Button>
 
@@ -343,7 +323,11 @@ export default class Rhythmic extends Component {
                             _rounded
                             _transparent
                             onClick={this.zoomHandler}
-                            title={zoomIn ? 'Уменьшить' : 'Увеличить'}>
+                            title={
+                                zoomIn
+                                    ? translations[lang].rhythmic['ZOOMOUT']
+                                    : translations[lang].rhythmic['ZOOMIN']
+                            }>
                             {zoomIn ? <ZoomOut _big /> : <ZoomInIcon _big />}
                         </Button>
 
@@ -354,15 +338,17 @@ export default class Rhythmic extends Component {
                             disabled={!text}
                             onClick={this.changeMode}
                             title={
-                                isEditable ? 'Блокировать' : 'Разблокировать'
+                                isEditable
+                                    ? translations[lang].rhythmic['BLOCK']
+                                    : translations[lang].rhythmic['UNBLOCK']
                             }>
                             {isEditable ? <Lock _big /> : <LockOpen _big />}
                         </Button>
                     </ActionBar>
                 )}
                 <LeftedLayout>
-                    {lang === 'ru' && <Help lang={lang} />}
-                    
+                    <Help lang={lang} />
+
                     {currentView === 'rhythmic' && (
                         <div>
                             {isDevice && isFocused && (
@@ -372,7 +358,9 @@ export default class Rhythmic extends Component {
                                     _big
                                     type="button"
                                     onClick={this.makeCaesura}
-                                    title="Цезура">
+                                    title={
+                                        translations[lang].rhythmic['CAESURA']
+                                    }>
                                     <KeyboardCapslock _big />
                                 </StringPauseButtonMobile>
                             )}
@@ -381,13 +369,17 @@ export default class Rhythmic extends Component {
                                 _animated
                                 ref={(ref) => (this.sectionElement = ref)}>
                                 {!isDevice && (
-                                    <ButtonContainer>
+                                    <Flex margin="0 0 16px">
                                         <CopyButton
                                             _rounded
                                             type="button"
                                             disabled={!text}
                                             onClick={this.copyToClipboard}
-                                            title="Копировать в текстовый редактор">
+                                            title={
+                                                translations[lang].rhythmic[
+                                                    'COPY'
+                                                ]
+                                            }>
                                             <ContentCopy _middle />
                                         </CopyButton>
                                         <CopyButton
@@ -395,10 +387,14 @@ export default class Rhythmic extends Component {
                                             type="button"
                                             disabled={!text}
                                             onClick={this.shareWithLink}
-                                            title="Поделиться">
+                                            title={
+                                                translations[lang].rhythmic[
+                                                    'SHARE'
+                                                ]
+                                            }>
                                             <ShareIcon _middle />
                                         </CopyButton>
-                                    </ButtonContainer>
+                                    </Flex>
                                 )}
 
                                 <StringPauseButton
@@ -410,7 +406,11 @@ export default class Rhythmic extends Component {
                                         _middle
                                         type="button"
                                         onClick={this.makeCaesura}
-                                        title="Поставить паузу">
+                                        title={
+                                            translations[lang].rhythmic[
+                                                'CAESURA'
+                                            ]
+                                        }>
                                         <KeyboardCapslock />
                                     </Button>
                                 </StringPauseButton>
@@ -429,11 +429,25 @@ export default class Rhythmic extends Component {
                                     placeHolder={`${translations[lang].placeholders['RHYTHMICS']}...`}
                                     ref={this.workfieldRef}
                                 />
+                                <Flex justify="flex-end">
+                                    <TextMinor>
+                                        {wordsNumber?`${wordsNumber} ${wordByNumber(
+                                            lang,
+                                            wordsNumber,
+                                            translations[lang].rhythmic[
+                                                'WORDS_AMOUNT'
+                                            ]
+                                        )}`: null}
+                                        {mainMeter
+                                            ? `, ${mainMeter.title} - ${mainMeter.inPercent}%`
+                                            : null}
+                                    </TextMinor>
+                                </Flex>
                             </List>
                         </div>
                     )}
                     {currentView === 'melody' && (
-                        <List >
+                        <List>
                             <Melody
                                 lang={lang}
                                 variant={variant}

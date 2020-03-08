@@ -2,11 +2,9 @@ import styled from 'styled-components';
 import { Link } from '../../styles/components';
 
 export const PlayerContainer = styled.div`
-    padding: 16px 24px;
-    width: 100%;
+    padding: 16px 0;
+    width: 666px;
     position: fixed;
-    left: 0;
-    right: 0;
     bottom: 0;
     margin: 0 auto;
     background: ${(props) =>
@@ -15,6 +13,8 @@ export const PlayerContainer = styled.div`
             : 'linear-gradient(rgba(249,248,247,.1),rgba(249,248,247,.9))'};
     @media (max-width: 600px) {
         bottom: 52px;
+        width: 100%;
+        padding: 16px 24px;
     }
 `;
 

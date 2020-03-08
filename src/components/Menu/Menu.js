@@ -23,8 +23,7 @@ export default class Menu extends Component {
     mobileNavMenu = null;
 
     toggleMenu = () => {
-        document.body.style.position = !this.state.isMenuHidden ? '' : 'fixed';
-        document.body.style.overflowY = !this.state.isMenuHidden ? 'auto' : 'hidden';
+        document.body.classList.toggle('fixed');
 
         this.props.onToggle();
         this.setState({
@@ -147,16 +146,6 @@ export default class Menu extends Component {
                                         ))}
                                     </Flex>
                                 </NavMenu.Item>
-
-                                {/* <NavMenu.Item>
-                                        <Button
-                                            _rounded
-                                            _flat
-                                            _transparent
-                                            onClick={this.toggleMenu}>
-                                            <Close />
-                                        </Button>
-                                    </NavMenu.Item> */}
                             </MobileNavMenu>
                         </Backdrop>
                     ) : null}

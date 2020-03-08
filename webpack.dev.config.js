@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const PORT = 9080;
+const PORT = 9000;
 
 module.exports = {
     mode: 'development',
@@ -102,7 +102,6 @@ module.exports = {
             }
         }),
         new ScriptExtHtmlWebpackPlugin({
-            defer: /app/,
             defer: /\.js$/
         }),
         new CopyWebpackPlugin([
@@ -118,9 +117,12 @@ module.exports = {
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),
-        liveReload: true,
         port: PORT,
         historyApiFallback: true,
-        publicPath: '/'
+        publicPath: '/',
+        watchOptions: {
+            aggregateTimeout: 1000,
+            poll: 1000
+        }
     }
 };

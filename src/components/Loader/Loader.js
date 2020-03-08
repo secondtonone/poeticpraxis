@@ -3,16 +3,15 @@ import styled, { keyframes } from 'styled-components';
 
 const stretch = keyframes`
     0%,
-    40%,
     100% {
-        transform: scaleY(0.4);
+        transform: scale(0.4, 1);
         opacity: 1;
     }
-    40%{
+    80%{
         opacity: 0;
     }
-    20% {
-        transform: scaleY(1);
+    50% {
+        transform: scale(1, 0.4);
         opacity: 1;
     }
 `;
@@ -21,36 +20,44 @@ const Container = styled.div`
     height: 100px;
     display: flex;
     align-items: center;
+    margin: 0 0 0 -50px;
+    position: relative;
+`;
+
+const Wrapper = styled.div`
+    height: ${(props) => (props.height ? props.height : '85vh')};
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0 auto;
 `;
 
 const Rect = styled.div`
-    background-color: ${(props) => props.theme.secondColor};
+    position: absolute;
+    background-color: ${(props) =>
+        props.color === 'accent'
+            ? props.theme.accentColor
+            : props.color === 'first'
+            ? props.theme.primaryColor
+            : props.theme.secondColor};
     height: ${(props) => props.delay * 100}%;
-    width: 10px;
+    width: ${(props) => props.delay * 100}px;
     color: ${(props) => props.theme.primaryColor};
     font-size: 10px;
-    display: inline-block;
     transform-origin: 50% 50%;
     animation: ${stretch} ${(props) => props.delay}s infinite ease-in-out;
 `;
 
-const Loader = () => {
+const Loader = ({ height }) => {
     return (
-        <Container>
-            <Rect delay={1} />
-            <Rect delay={0.5} />
-            <Rect delay={0.4} />
-            <Rect delay={0.6} />
-            <Rect delay={1.2} />
-            <Rect delay={0.3} />
-            <Rect delay={1.5} />
-            <Rect delay={0.7} />
-            <Rect delay={0.9} />
-            <Rect delay={1.2} />
-            <Rect delay={1.4} />
-            <Rect delay={0.3} />
-        </Container>
+        <Wrapper height={height}>
+            <Container>
+                <Rect delay={0.8} />
+                <Rect delay={0.4} color="accent" />
+                <Rect delay={1} color="first" />
+            </Container>
+        </Wrapper>
     );
 };
 

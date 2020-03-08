@@ -5,9 +5,9 @@ const ru = {
 };
 
 const en = {
-    CLOSE: 'Dont show',
+    CLOSE: 'Hide it',
     SHOW: 'Learn more',
-    HIDE: 'Hide'
+    HIDE: 'Show less'
 };
 
 const translations = {

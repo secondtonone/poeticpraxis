@@ -14,12 +14,50 @@ export default css`
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: subpixel-antialiased;
         background: ${theme.primaryWhite};
+        height: 100%;
+    }
+
+    .fixed {
+        overflow-y: hidden;
+        position: fixed;
     }
 
     *::-moz-selection,
     *::selection {
         color: ${theme.primaryWhite};
         background: ${theme.primaryBlack};
+    }
+
+    [data-tooltip] {
+        position: relative;
+    }
+
+    [data-tooltip]:before {
+        content: attr(data-tooltip);
+        white-space: nowrap;
+        text-align: center;
+        font-size: 10px;
+        font-weight: 300;
+        font-style: normal;
+        line-height: 1;
+        display: inline-block;
+        padding: 10px;
+        position: absolute;
+        z-index: 0;
+        top: 90%;
+        right: -350%;
+        pointer-events: none;
+        transition: all 0.3s 0.2s;
+        background-color: ${theme.primaryGray};
+        color: ${theme.primaryWhite};
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    [data-tooltip]:hover:before {
+        visibility: visible;
+        z-index: 9999;
+        opacity: 0.9;
     }
 
     .first-paint {

@@ -199,6 +199,12 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
     let interator = 0;
 
+    let wordsCount = 0;
+
+    const meterDetect = meterDetection();
+
+    let mainMeter = null;
+
     let wordLinks = {};
 
     let stringLinks = {};
@@ -237,6 +243,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
         /* Слово */
         const tokensLength = tokens.length;
 
+        
+
         for (let index = 0; index < tokensLength; index++) {
             const token = tokens[index];
 
@@ -248,6 +256,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
             let accents = [];
 
+
+
             let hashTokenId = '';
             /* символ */
             if (isLetter(token)) {
@@ -256,6 +266,10 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                 let vowelCounter = 0;
 
                 type = 'w';
+
+                let prev = null;
+
+                let next = null;
 
                 /* Буквы */
                 const letters = [...token];
@@ -292,10 +306,10 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                         ) {
                             accent = isInDictionary(string, stringsDictionary)
                                 ? isAccented(
-                                      string,
-                                      stringIndex,
-                                      stringsDictionary
-                                  )
+                                    string,
+                                    stringIndex,
+                                    stringsDictionary
+                                )
                                 : isAccented(token, index, wordsDictionary);
                         } else {
                             accent =
@@ -322,8 +336,14 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
                     idSymbol = `${idString}${idToken}${idSymbol}`;
 
+                    if (prev) {
+                        elements[prev].next = idSymbol;
+                    }
+
                     elements[idSymbol] = {
                         isLast,
+                        prev,
+                        next,
                         type,
                         char,
                         accent,
@@ -334,6 +354,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                         stringIndex,
                         hashTokenId
                     };
+
+                    prev = idSymbol;
 
                     hashTable[hashTokenId] = {
                         id: idSymbol
@@ -361,6 +383,9 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
                     id: idToken,
                     idString
                 };
+
+                ++wordsCount;
+                
             } else {
                 hashTokenId = hashFunction(token, ++interator);
 
@@ -411,6 +436,8 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
 
         rhythmPreset = rhythmDetection(steps, elements);
 
+        mainMeter = meterDetect(rhythmPreset);
+
         strings[idString] = {
             order,
             string,
@@ -423,8 +450,13 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
             id: idString
         };
 
+        
+
         orderStrings.push(idString);
     }
+
+    console.log(strings);
+    console.log(elements);
 
     return {
         strings,
@@ -432,7 +464,9 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
         elements,
         hashTable,
         wordLinks,
-        stringLinks
+        stringLinks,
+        wordsCount,
+        mainMeter
     };
 }
 
@@ -596,6 +630,25 @@ function rhythmDetection(steps, elements) {
     });
 
     return findCommon(stringPresetRhythm) || 0;
+}
+
+function meterDetection() {
+    let map = [0,0,0,0,0,0];
+    let count = 0;
+
+    return (stringMeter) => {
+
+        map[stringMeter] = map[stringMeter] ? map[stringMeter] + 1 : 1;
+
+        ++count;
+
+        const mainMeter = map.indexOf(Math.max(...map));
+        const inPercent = Math.floor(map[mainMeter]/(count / 100));
+
+        const title = rhythmPresets[mainMeter].title;
+
+        return { title, inPercent };
+    }
 }
 
 function wordAccent(accent) {
@@ -798,7 +851,7 @@ export function makeAccent({
     };
 }
 /**
- * @typedef {{size: 1 | 2 | 3, accent: 0 | 1 | 2 | 3 }} RhythmPreset
+ * @typedef {{size: 1 | 2 | 3, accent: 0 | 1 | 2 | 3, title: string }} RhythmPreset
  */
 /**
  * @type {Array<RhythmPreset>}
@@ -806,29 +859,37 @@ export function makeAccent({
 export const rhythmPresets = [
     {
         size: 2,
-        accent: 0
+        accent: 0,
+        title: 'PYRRHIC'
     },
     {
         size: 2,
-        accent: 1
+        accent: 1,
+        title: 'TROCHEE'
     },
     {
         size: 2,
-        accent: 2
+        accent: 2,
+        title: 'IAMB'
     },
     {
         size: 3,
-        accent: 1
+        accent: 1,
+        title: 'DACTYL'
     },
     {
         size: 3,
-        accent: 2
+        accent: 2,
+        name: 'AMPHIBRACHIUM'
     },
     {
         size: 3,
-        accent: 3
+        accent: 3,
+        name: 'ANAPAEST'
     }
 ];
+
+export const accents = ['black', 'red', 'red_secondary', 'gray'];
 
 /**
  * @typedef {string} idString - has format 's02874'
@@ -889,5 +950,7 @@ export const structure = {
     tags: [],
     hashTable: {},
     stringLinks: {},
-    wordLinks: {}
+    wordLinks: {},
+    wordsCount: 0,
+    mainMeter: null
 };

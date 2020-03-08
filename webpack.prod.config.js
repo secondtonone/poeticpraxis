@@ -83,6 +83,24 @@ const config = {
         runtimeChunk: 'single',
         splitChunks: {
             chunks: 'all'
+            /*  maxInitialRequests: Infinity,
+            minSize: 0,
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name(module) {
+                        // получает имя, то есть node_modules/packageName/not/this/part.js
+                        // или node_modules/packageName
+                        const packageName = module.context.match(
+                            /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                        )[1];
+
+                        // имена npm-пакетов можно, не опасаясь проблем, использовать
+                        // в URL, но некоторые серверы не любят символы наподобие @
+                        return `npm.${packageName.replace('@', '')}`;
+                    }
+                }
+            } */
         },
         noEmitOnErrors: true,
         concatenateModules: true,
@@ -125,14 +143,20 @@ const config = {
         }),
         new PreloadWebpackPlugin({
             rel: 'preload',
-            as(entry) {
+            /* as(entry) {
                 if (/\.woff2$/.test(entry)) return 'font';
                 if (/\.css$/.test(entry)) return 'style';
+                if (/worker/.test(entry)) return 'worker';
                 if (/\.png$|.svg$/.test(entry)) return 'image';
                 return 'script';
             },
-            fileBlacklist: [/\.ttf/, /\.woff$/, /worker/, /\.webmanifest/],
-            include: 'allAssets'
+            fileBlacklist: [
+                /\.ttf/,
+                /\.woff$/,
+                /serviceworker/,
+                /\.webmanifest/
+            ], */
+            include: /* 'allAssets' */ 'initial'
         }),
         new CopyWebpackPlugin([
             {

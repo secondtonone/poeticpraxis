@@ -1,6 +1,5 @@
 import { h } from 'preact';
 
-import { translations } from '../../components/Workfield/translations';
 import useSessionStorage from '../../hooks/useSessionStorage';
 
 import Info from '../../components/Info';
@@ -15,13 +14,11 @@ const helpState = () => {
     );
 
     return [valueSessionStorage, () => setValueSessionStorage(true)];
-}
+};
 
 export default function Help({ lang = 'ru' }) {
-    const maxMedia600 = maxMatchMedia(600);
-    const containerWidth = maxMedia600 ? '100%' : '33%';
     const recognitionSupport = isSupportRecognition();
-
+    const isLangRU = lang === 'ru';
     const [isHadden, hideHelp] = helpState();
 
     if (isHadden) {
@@ -35,27 +32,41 @@ export default function Help({ lang = 'ru' }) {
             unfoldedContent={
                 <div>
                     <Container margin="10px 0 0">
-                        Записывайте {recognitionSupport ? 'или диктуйте' : null}{' '}
+                        {isLangRU
+                            ? `Записывайте ${
+                                recognitionSupport ? 'или диктуйте' : ''
+                            }
                         слова, любые которые приходят вам в голову и в голову
-                        ваших друзей.
+                        ваших друзей.`
+                            : `Write down ${
+                                recognitionSupport ? 'or dictate' : ''
+                            } words that come to your mind and to mind of your friends.`}
                     </Container>
                     {lang === 'ru' ? (
                         <Container margin="10px 0 0">
                             Дополнительно к ним можно получить случайные слова
-                            из словаря.
+                            нажав на "Найти слова".
                         </Container>
                     ) : null}
                     <Container margin="10px 0 0">
-                        Нажмите на кнопку внизу, чтобы получить словосочетания.
+                        {isLangRU
+                            ? 'Нажмите на кнопку "Собрать", чтобы получить словосочетания.'
+                            : 'Click on the “Montage” button to get phrases.'}
                     </Container>
                     <Container margin="10px 0 0">
-                        Выбирайте те, которые привлекли ваше внимание и
-                        дополняйте их для создания образов ранее ещё не
-                        проявленных.
+                        {isLangRU
+                            ? 'Выбирайте те, которые привлекли ваше внимание и дополняйте их для создания образов ранее ещё не проявленных.'
+                            : 'Choose those that have attracted your attention and supplement them to create images that have not yet been manifested.'}
                     </Container>
                 </div>
             }
-            foldedContent={<div>Как завести мотор этой машины?</div>}
+            foldedContent={
+                <div>
+                    {isLangRU
+                        ? 'Как завести мотор этой машины?'
+                        : 'How to start the engine of this machine?'}
+                </div>
+            }
         />
     );
 }

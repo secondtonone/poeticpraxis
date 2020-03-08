@@ -32,7 +32,7 @@ const field = css`
 
 const WorkField = styled.div`
     position: relative;
-    margin: 0 0 32px 0;
+    margin: 0 32px 32px 24px;
 `;
 
 const StringPauseRelative = styled.span`

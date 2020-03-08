@@ -26,11 +26,9 @@ export const StyledMatchList = styled.ul`
 StyledMatchList.Item = styled.li`
     position: relative;
     padding: 8px 8px 8px 54px;
-    width: ${(props) =>
-        props.compact ? '50%' : '100%'};
+    width: ${(props) => (props.compact ? '50%' : '100%')};
     display: inline-block;
-
-
+    vertical-align: top;
 
     @media (max-width: 880px) {
         width: 100%;

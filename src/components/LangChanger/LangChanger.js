@@ -1,25 +1,25 @@
 import { h } from 'preact';
+import { useCallback } from 'preact/compat';
 
-import Select from '../Select';
 import { Flex, HiddenSelect } from '../../styles/components';
 import Dropdown from '../Dropdown';
 import Button from '../Button';
 
-import { translations } from './translations';
 import { isTouchDevice } from '../../utils';
 
 import LangIcon from '../IconSVG/Lang';
 
-const LangChanger = ({ lang = 'ru', changeLang, texted = false }) => {
-    const langOptions = [
-        { title: 'Русский', value: 'ru' },
-        { title: 'English', value: 'en' }
-    ];
+const langOptions = [
+    { title: 'Русский', value: 'ru' },
+    { title: 'English', value: 'en' }
+];
 
-    const onChange = (value) => {
+const LangChanger = ({ lang = 'ru', changeLang }) => {
+    
+    const onChange = useCallback((value) => {
         changeLang(value);
         document.documentElement.lang = value;
-    };
+    }, [changeLang]);
 
     return (
         <Flex justify="center">
@@ -53,17 +53,6 @@ const LangChanger = ({ lang = 'ru', changeLang, texted = false }) => {
                     </label>
                 </Button>
             )}
-            {/* 
-            <Select
-                weight="400"
-                id="lang"
-                value={lang}
-                options={langOptions}
-                onChange={(e) => {
-                    changeLang(e.target.value);
-                    document.documentElement.lang = e.target.value;
-                }}
-            /> */}
         </Flex>
     );
 };

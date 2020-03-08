@@ -3,7 +3,16 @@ const ru = {
     STRONG: 'Сильная доля',
     SECOND: 'Побочное ударение',
     SILENT: 'Непроизносимый звук',
-    PAUSE: 'Однодольная пауза'
+    PAUSE: 'Однодольная пауза',
+    ACCENT: 'Ударения',
+    COUNT_METER: 'Количество слогов',
+    LINE_NUMBER: 'Номер строки',
+    PYRRHIC: 'Пиррихий',
+    TROCHEE: 'Хорей',
+    IAMB: 'Ямб',
+    DACTYL: 'Дактиль',
+    AMPHIBRACHIUM: 'Амфибрахий',
+    ANAPAEST: 'Анапест'
 };
 
 const en = {
@@ -11,7 +20,16 @@ const en = {
     STRONG: 'Strong beat',
     SECOND: 'Side accent',
     SILENT: 'Silent letter',
-    PAUSE: 'Pause'
+    PAUSE: 'Pause',
+    ACCENT: 'Accents',
+    COUNT_METER: 'Syllables',
+    LINE_NUMBER: 'Line number',
+    PYRRHIC: 'Pyrrhic',
+    TROCHEE: 'Trochee',
+    IAMB: 'Iamb',
+    DACTYL: 'Dactyl',
+    AMPHIBRACHIUM: 'Amphibrachium',
+    ANAPAEST: 'Anapaest'
 };
 
 const translations = {

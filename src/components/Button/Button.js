@@ -126,8 +126,9 @@ const StyledButton = styled.button.attrs((props) => ({
         border: none;
         font-weight: 400;
         border-radius: ${(props) =>
-            props.size ? `${props.size * 1.5}px` : '36px'};
+            props.size ? `${props.size * 2}px` : '32px'};
         width: ${(props) => (props.width ? props.width : 'auto')};
+        height: auto;
         display: inline-block;
         font-size: ${(props) => (props.size ? `${props.size}px` : '24px')};
         padding: ${(props) => (props.size ? `${props.size}px` : '24px')};

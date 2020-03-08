@@ -28,10 +28,11 @@ const helpState = () => {
 export default function Help({ lang = 'ru' }) {
     const maxMedia600 = maxMatchMedia(600);
     const containerWidth = maxMedia600 ? '100%' : '33%';
+    const isLangRU = lang === 'ru';
 
-    const [isHadden, hideHelp] = helpState();
+    const [isHidden, hideHelp] = helpState();
 
-    if (isHadden) {
+    if (isHidden) {
         return null;
     }
 
@@ -41,20 +42,26 @@ export default function Help({ lang = 'ru' }) {
             onClose={hideHelp}
             unfoldedContent={
                 <div>
-                    Для постановки ударений в строках, нажимайте на:
+                    {isLangRU
+                        ? 'Для постановки ударений в строках, нажимайте на'
+                        : 'To set the accents in the lines, click on'}
                     <Flex
                         align="flex-start"
                         margin="10px 0 0"
                         direction={maxMedia600 ? 'column' : 'row'}>
                         <Container width={containerWidth}>
                             <AccentRelative accent={'red'} /> -{' '}
-                            {translations[lang].STRONG}, двойное нажатие снимает
-                            ударение в слове{' '}
+                            {translations[lang].STRONG},{' '}
+                            {isLangRU
+                                ? 'двойное нажатие снимает ударение в слове'
+                                : 'by double tap cleaning accent in the word'}{' '}
                         </Container>
                         <Container width={containerWidth}>
                             <AccentRelative accent={'black'} /> -{' '}
-                            {translations[lang].WEAK}, двойное нажатие убирает
-                            все метки в слове и ставит ударение{' '}
+                            {translations[lang].WEAK},{' '}
+                            {isLangRU
+                                ? 'двойное нажатие убирает все метки в слове и ставит ударение'
+                                : 'by double tap cleaning all marks and set accent in the word'}{' '}
                         </Container>
                         <Flex
                             align="baseline"
@@ -86,16 +93,26 @@ export default function Help({ lang = 'ru' }) {
                                     <TriangleElement />
                                 </Syllable.AccentType>
                             </Container>{' '}
-                            - кол-во ударных/общее кол-во слогов, нажатие
-                            переключает ритм строки, под цифрами указан метр
+                            -{' '}
+                            {isLangRU
+                                ? 'кол-во ударных/общее кол-во слогов, нажатие переключает ритм строки, под цифрами указан метр'
+                                : 'number of stressed vowel/total syllables, under them - meter, click for changing the line rhythm'}
                         </Container>
                     </Flex>
                     <Container margin="10px 0 0">
-                        После переходите на вкладку "Мелодия", что бы узнать: Что скрыто за словами?
+                        {isLangRU
+                            ? 'После переходите на вкладку "Мелодия", что бы узнать: Что скрыто за словами?'
+                            : 'After all, go to "Melody" tab to find out: What is hidden behind the words?'}
                     </Container>
                 </div>
             }
-            foldedContent={<div>Cлова играют музыку. Как её услышать?</div>}
+            foldedContent={
+                <div>
+                    {isLangRU
+                        ? 'Cлова играют музыку. Как её услышать?'
+                        : 'Words play music. How to hear it?'}
+                </div>
+            }
         />
     );
 }

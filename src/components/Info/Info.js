@@ -1,13 +1,14 @@
 import { h, Component } from 'preact';
+import { useState, useCallback } from 'preact/compat';
 import styled from 'styled-components';
 
 import Button from '../../components/Button';
 
 import { translations } from './translations';
 
-import { Flex } from '../../styles/components';
+import { Flex, Container } from '../../styles/components';
 
-const StyledBox = styled.div`
+const StyledBox = styled(Flex)`
     padding: 16px 24px 8px;
     position: relative;
     text-align: left;
@@ -17,15 +18,66 @@ const StyledBox = styled.div`
     margin: 0 auto 32px;
     font-weight: 300;
     line-height: 28px;
-    max-width: 730px;
+    max-width: 666px;
 
     @media (max-width: 600px) {
         margin: 0 0 32px;
         line-height: 1.6;
+        flex-direction: column;
     }
 `;
+const Info = ({ lang = 'ru', foldedContent, unfoldedContent, onClose }) => {
+    const [isInfoHidden, setVisibility] = useState(true);
 
-export default class Info extends Component {
+    const toggleInfo = useCallback(() => {
+        setVisibility(!isInfoHidden);
+    }, [isInfoHidden]);
+
+    const hideInfo = useCallback(() => {
+        if (onClose) {
+            onClose();
+        }
+    }, [onClose]);
+
+    return (
+        <StyledBox
+            justify="stretch"
+            direction={isInfoHidden ? 'row' : 'column'}>
+            <Container minWidth="300px" margin="0 0 8px 0">
+                {isInfoHidden ? foldedContent : unfoldedContent}
+            </Container>
+            <Flex justify="flex-end" minWidth="300px">
+                <Button
+                    _flat
+                    _transparent
+                    type="button"
+                    margin="0 8px 0"
+                    onClick={hideInfo}>
+                    {translations[lang].CLOSE}{' '}
+                </Button>
+                {isInfoHidden ? (
+                    <Button
+                        _flat
+                        _transparent
+                        type="button"
+                        onClick={toggleInfo}>
+                        {translations[lang].SHOW}{' '}
+                    </Button>
+                ) : (
+                    <Button
+                        _flat
+                        _transparent
+                        type="button"
+                        onClick={toggleInfo}>
+                        {translations[lang].HIDE}{' '}
+                    </Button>
+                )}
+            </Flex>
+        </StyledBox>
+    );
+};
+
+/* class Info extends Component {
     constructor(props) {
         super(props);
 
@@ -50,42 +102,42 @@ export default class Info extends Component {
         const { lang = 'ru', foldedContent, unfoldedContent } = this.props;
 
         return (
-            <StyledBox>
-                <div>
-                    {this.state.isInfoHidden
-                        ? foldedContent
-                        : unfoldedContent}
-                    <Flex justify="flex-end">
+            <StyledBox justify="stretch" direction={this.state.isInfoHidden ? 'row' : 'column'}>
+                <Container minWidth="300px">
+                    {this.state.isInfoHidden ? foldedContent : unfoldedContent}
+                </Container>
+                <Flex justify="flex-end" minWidth="300px">
+                    <Button
+                        _flat
+                        _transparent
+                        type="button"
+                        margin="8px 8px 0"
+                        onClick={this.hideInfo}>
+                        {translations[lang].CLOSE}{' '}
+                    </Button>
+                    {this.state.isInfoHidden ? (
                         <Button
                             _flat
                             _transparent
                             type="button"
-                            margin="8px 8px 0"
-                            onClick={this.hideInfo}>
-                            {translations[lang].CLOSE}{' '}
+                            margin="8px 0 0"
+                            onClick={this.toggleInfo}>
+                            {translations[lang].SHOW}{' '}
                         </Button>
-                        {this.state.isInfoHidden ? (
-                            <Button
-                                _flat
-                                _transparent
-                                type="button"
-                                margin="8px 0 0 8px"
-                                onClick={this.toggleInfo}>
-                                {translations[lang].SHOW}{' '}
-                            </Button>
-                        ) : (
-                            <Button
-                                _flat
-                                _transparent
-                                type="button"
-                                margin="8px 0 0 8px"
-                                onClick={this.toggleInfo}>
-                                {translations[lang].HIDE}{' '}
-                            </Button>
-                        )}
-                    </Flex>
-                </div>
+                    ) : (
+                        <Button
+                            _flat
+                            _transparent
+                            type="button"
+                            margin="8px 0 0"
+                            onClick={this.toggleInfo}>
+                            {translations[lang].HIDE}{' '}
+                        </Button>
+                    )}
+                </Flex>
             </StyledBox>
         );
     }
 }
+ */
+export default Info;

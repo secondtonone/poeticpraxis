@@ -6,6 +6,13 @@ const ru = {
     placeholders: {
         ENGINE: 'Введите слова или вставьте текст'
     },
+    engine: {
+        MONTAGE: 'Собрать',
+        CLEAR: 'Стереть текст',
+        GET: 'Получить слова',
+        RECORD: 'Запись',
+        WORDS_AMOUNT: ['слово', 'слова', 'слов']
+    },
     matchList: {
         FAVORITES: 'Выбранныe',
         FAVOR_HINT: 'Выберите словосочетания',
@@ -21,7 +28,7 @@ const ru = {
         PAIRS_COPIED: 'Пары скопированы',
         HOW_WORKS: 'Как это работает?',
         LEARN_MORE: 'Узнать больше.',
-        CLICK_MORE: 'Нажмите еще раз.'
+        CLICK_MORE: 'Нажмите еще раз для удаления'
     }
 };
 
@@ -32,6 +39,13 @@ const en = {
     },
     placeholders: {
         ENGINE: 'Write or paste words'
+    },
+    engine: {
+        MONTAGE: 'Montaging',
+        CLEAR: 'Delete text',
+        GET: 'Get words',
+        RECORD: 'Recording',
+        WORDS_AMOUNT: ['word', 'words']
     },
     matchList: {
         FAVORITES: 'Favorites',
@@ -48,7 +62,7 @@ const en = {
         PAIRS_COPIED: 'Pairs copied',
         HOW_WORKS: 'How it works?',
         LEARN_MORE: 'Learn more.',
-        CLICK_MORE: 'Click one more time'
+        CLICK_MORE: 'Click one more time for deleting'
     }
 };
 

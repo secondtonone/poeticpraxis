@@ -3,17 +3,25 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 
 import Layout from '../components/Layout';
 import Bundle from '../components/Bundle';
+import Loader from '../components/Loader';
 
 const About = (props) => (
-    <Bundle load={() => import(/* webpackChunkName: "About", webpackPreload: true  */ './About')}>
-        {(Component) => (Component === null ? null : <Component {...props} />)}
+    <Bundle
+        load={() =>
+            import(
+                /* webpackChunkName: "About", webpackPreload: true  */ './About'
+            )
+        }>
+        {(Component) => (
+            (Component === null ? <Loader /> : <Component {...props} />)
+        )}
     </Bundle>
 );
 
 const Rhythmic = (props) => (
     <Bundle
         load={() => import(/* webpackChunkName: "Rhythmic" */ './Rhythmic')}>
-        {(Component) => (Component === null ? null : <Component {...props} />)}
+        {(Component) => (Component === null ? <Loader /> : <Component {...props} />)}
     </Bundle>
 );
 
@@ -22,7 +30,7 @@ const ImagesEngine = (props) => (
         load={() =>
             import(/* webpackChunkName: "ImagesEngine" */ './ImagesEngine')
         }>
-        {(Component) => (Component === null ? null : <Component {...props} />)}
+        {(Component) => (Component === null ? <Loader /> : <Component {...props} />)}
     </Bundle>
 );
 

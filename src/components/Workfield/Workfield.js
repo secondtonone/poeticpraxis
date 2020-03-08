@@ -1,5 +1,12 @@
 import { h, Component } from 'preact';
+
 import Textarea from '../Textarea';
+import Marks from './Marks';
+import HiddenMarks from './HiddenMarks';
+import InfoMarks from './InfoMarks';
+
+import {translations} from './translations';
+
 import { hashFunction, fontReady } from '../../utils';
 import AnalizeWorker from 'worker-loader!./analize-worker';
 
@@ -9,29 +16,20 @@ import {
     tagMaker,
     makeCaesura,
     makeAccent,
-    rhythmPresets
+    rhythmPresets,
+    accents
 } from './module';
+
 
 import { copyFrom } from '../../modules/copying';
 
 import { FieldEditableArea } from '../../styles/components';
 
 import {
-    Accent,
-    StringPauseRelative,
-    StringPause,
-    StringField,
-    Syllable,
-    StringNumber,
     FakeField,
-    AccentRelative,
     WorkField,
-    PaintField,
-    TriangleElement,
-    CircleElement
+    PaintField
 } from './styled';
-
-import { translations } from './translations';
 
 /* парсить по словам, сравнивать с предыдущим деревом */
 
@@ -60,7 +58,7 @@ export default class Workfield extends Component {
         this.textAnalizingWorker = null;
         this.tagsWorker = null;
 
-        this.accents = ['black', 'red', 'red_secondary', 'gray'];
+        this.accents = accents;
     }
 
     componentDidMount() {
@@ -92,7 +90,7 @@ export default class Workfield extends Component {
         }
     }
 
-    componentWillUpdate(nextProps) {
+    UNSAFE_componentWillUpdate(nextProps) {
         if (nextProps.text !== this.props.text) {
             if (this.timerLinting) {
                 clearTimeout(this.timerLinting);
@@ -104,7 +102,7 @@ export default class Workfield extends Component {
         }
     }
 
-    /* shouldComponentUpdate(prevProps, nextState) {
+    /* shouldComponentUpdate(prevProps, props) {
         if (
             Object.keys(nextState.elements).length &&
             JSON.stringify(this.state.elements) ===
@@ -130,8 +128,18 @@ export default class Workfield extends Component {
         });
     giveDataToParent = () => {
         if (this.props.toParent) {
-            const { strings, elements, orderStrings } = this.state;
-            this.props.toParent({ strings, elements, orderStrings });
+            const translation = translations[this.props.lang];
+            const { strings, elements, orderStrings, wordsCount, mainMeter: {title, inPercent} } = this.state;
+            this.props.toParent({
+                strings,
+                elements,
+                orderStrings,
+                wordsCount,
+                mainMeter: {
+                    title: translation[title],
+                    inPercent
+                }
+            });
         }
     };
 
@@ -301,211 +309,6 @@ export default class Workfield extends Component {
         this.textLinting(text);
     };
 
-    makeMarkingTags = (strings, orderStrings, elements) => {
-        let stringsOrders = [];
-
-        let symbolsTags = {};
-
-        let markingTags = [];
-
-        const orderStringsLength = orderStrings.length;
-
-        for (let index = 0; index < orderStringsLength; index++) {
-            const id = orderStrings[index];
-
-            const string = strings[id];
-
-            stringsOrders = [...stringsOrders, ...string.order];
-        }
-
-        const stringsOrdersLength = stringsOrders.length;
-
-        for (let index = 0; index < stringsOrdersLength; index++) {
-            const id = stringsOrders[index];
-
-            const symbol = elements[id];
-
-            let char = symbol.char;
-
-            const idString = symbol.idString;
-
-            const accent = symbol.accent;
-
-            let tag = char;
-
-            if (!symbolsTags[idString]) {
-                symbolsTags[idString] = [];
-            }
-
-            if (symbol.type === 'v') {
-                tag = (
-                    <Accent
-                        data-type={this.accents[accent]}
-                        accent={this.accents[accent]}
-                        key={`a-${id}`}
-                        id={id}>
-                        {char}
-                    </Accent>
-                );
-            }
-            if (symbol.type === 'p') {
-                tag = (
-                    <StringPause
-                        key={`sp-${id}`}
-                        id={id}
-                        data-type="string-pause">
-                        {char}
-                    </StringPause>
-                );
-            }
-
-            symbolsTags[idString].push(tag);
-        }
-
-        for (let index = 0; index < orderStringsLength; index++) {
-            const id = orderStrings[index];
-
-            const symbols = symbolsTags[id] || [];
-
-            markingTags.push(
-                <StringField key={`st-${id}`} id={id}>
-                    {symbols.length ? symbols : ' '}
-                </StringField>
-            );
-        }
-
-        return markingTags;
-    };
-
-    makeRenderedTags = (tags) => {
-        const renderedTags = [];
-
-        const tagsLength = tags.length;
-
-        const wordId = '';
-
-        const translation =
-            translations[this.props.lang ? this.props.lang : 'ru'];
-
-        const decription = Object.values(translation);
-
-        for (let index = 0; index < tagsLength; index++) {
-            const sign = tags[index];
-
-            const style = {
-                top: sign.tag.top,
-                left: sign.tag.left,
-                height: sign.tag.height,
-                width: sign.tag.width
-            };
-
-            if (sign.type === 'p') {
-                renderedTags.push(
-                    <StringPauseRelative
-                        key={`spr-${sign.id}`}
-                        id={sign.id}
-                        style={style}
-                        data-type={sign.type}
-                        title={translation.PAUSE}>
-                        &#8896;
-                    </StringPauseRelative>
-                );
-            }
-
-            renderedTags.push(
-                <AccentRelative
-                    accent={this.accents[sign.accent]}
-                    data-accent={this.accents[sign.accent]}
-                    key={`acr-${sign.id}`}
-                    id={sign.id}
-                    style={style}
-                    data-type={sign.type}
-                    title={decription[sign.accent]}
-                />
-            );
-        }
-
-        return renderedTags;
-    };
-
-    makeAccentSizeIdicator = (size, accent) => {
-        let scheme = [];
-
-        for (let i = 1; i <= size; i++) {
-            if (i === accent) {
-                scheme.push(<TriangleElement key={`tr-${i}`} />);
-            } else {
-                scheme.push(<CircleElement key={`cl-${i}`} />);
-            }
-        }
-
-        return scheme;
-    };
-
-    makeInfoTags = (strings, orderStrings, lineHeight = 0, elements) => {
-        let infoTags = [];
-
-        let stringCounter = 0;
-
-        const dataTypeAQ = 'a/q';
-
-        const orderStringsLength = orderStrings.length;
-
-        for (let index = 0; index < orderStringsLength; index++) {
-            const stringId = orderStrings[index];
-
-            const string = strings[stringId];
-            if (string.tag) {
-                const tag = string.tag;
-
-                const size = rhythmPresets[string.rhythmPreset].size;
-
-                const accent = rhythmPresets[string.rhythmPreset].accent;
-
-                const vowels = string.vowel;
-
-                const delta = tag.height - lineHeight;
-
-                const vowelAccentCount = vowels.filter(
-                    (id) =>
-                        elements[id].accent === 1 || elements[id].accent === 2
-                ).length;
-
-                infoTags.push([
-                    this.props.syllableOff || !vowels.length ? null : (
-                        <Syllable
-                            id={stringId}
-                            data-type={dataTypeAQ}
-                            key={`s-${tag.top}`}
-                            style={{ top: tag.top + delta }}
-                            title="Ударение/количество слогов">
-                            {vowelAccentCount ? (
-                                <Syllable.Accent>
-                                    {vowelAccentCount}
-                                </Syllable.Accent>
-                            ) : null}
-                            {string.soundGramma.length}
-                            <Syllable.AccentType>
-                                {this.makeAccentSizeIdicator(size, accent)}
-                            </Syllable.AccentType>
-                        </Syllable>
-                    ),
-                    this.props.stringNumberOff ||
-                    !string.words.length ? null : (
-                        <StringNumber
-                            key={`n-${tag.top}`}
-                            style={{ top: tag.top }}
-                            title="Номер строки">
-                            {++stringCounter}
-                        </StringNumber>
-                    )
-                ]);
-            }
-        }
-
-        return infoTags;
-    };
-
     accentHandler = (signId, accent) => {
         let wordsDictionary = this.props.wordsDictionary || {};
 
@@ -642,14 +445,29 @@ export default class Workfield extends Component {
         this.textarea = ref;
     };
 
+    workfieldFocusHandler = () => {
+        if (this.props.focusHandler) {
+            this.props.focusHandler(true);
+        }
+    }
+
+    workfieldBlurHandler = () => {
+        if (this.props.focusHandler) {
+            this.props.focusHandler(false);
+        }
+    }
+
     render() {
         const {
             readOnly,
-            focusHandler,
             text,
             placeHolder,
-            onMouseMove
+            onMouseMove,
+            lang,
+            syllableOff,
+            stringNumberOff
         } = this.props;
+
         const {
             strings,
             field,
@@ -659,49 +477,17 @@ export default class Workfield extends Component {
             zoomIn
         } = this.state;
 
-        const renderedTags = this.makeRenderedTags(tags);
-
-        const marckupTags = this.makeMarkingTags(
-            strings,
-            orderStrings,
-            elements
-        );
-
-        const infoTags = this.makeInfoTags(
-            strings,
-            orderStrings,
-            field.lineHeight,
-            elements
-        );
-
-        let props = {
-            onInput: this.handleTextInput,
-            value: text,
-            Textarea: FieldEditableArea,
-            getMeasure: this.getMeasureField,
-            readOnly: readOnly,
-            zoomIn: zoomIn,
-            onMouseMove: onMouseMove,
-            onFocus: () => {
-                if (focusHandler) {
-                    focusHandler(true);
-                }
-            },
-            onBlur: () => {
-                if (focusHandler) {
-                    focusHandler(false);
-                }
-            },
-            placeHolder: placeHolder || ''
-        };
-
         return (
             <WorkField>
                 <FakeField
                     data-id-comp="fakeField"
                     zoomIn={zoomIn}
                     ref={this.fakeFieldRef}>
-                    {marckupTags}
+                    <HiddenMarks
+                        strings={strings}
+                        orderStrings={orderStrings}
+                        elements={elements}
+                    />
                 </FakeField>
 
                 <PaintField
@@ -709,10 +495,30 @@ export default class Workfield extends Component {
                     zoomIn={zoomIn}
                     onClick={this.paintFieldHandler}
                     onDoubleClick={this.doubleClickPaintFieldHandler}>
-                    {renderedTags}
-                    {infoTags}
+                    <Marks tags={tags} lang={lang} />
+                    <InfoMarks
+                        lang={lang}
+                        strings={strings}
+                        orderStrings={orderStrings}
+                        lineHeight={field.lineHeight}
+                        elements={elements}
+                        syllableOff={syllableOff}
+                        stringNumberOff={stringNumberOff}
+                    />
                 </PaintField>
-                <Textarea {...props} ref={this.textareaRef} />
+                <Textarea
+                    onInput={this.handleTextInput}
+                    value={text}
+                    Textarea={FieldEditableArea}
+                    getMeasure={this.getMeasureField}
+                    readOnly={readOnly}
+                    zoomIn={zoomIn}
+                    onMouseMove={onMouseMove}
+                    onFocus={this.workfieldFocusHandler}
+                    onBlur={this.workfieldBlurHandler}
+                    placeHolder={placeHolder || ''}
+                    ref={this.textareaRef}
+                />
             </WorkField>
         );
     }

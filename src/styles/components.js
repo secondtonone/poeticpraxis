@@ -24,6 +24,8 @@ const Flex = styled.div`
     align-items: ${(props) => (props.align ? props.align : 'center')};
     margin: ${(props) => (props.margin ? props.margin : 0)};
     padding: ${(props) => (props.padding ? props.padding : 0)};
+    ${(props) => (props.maxWidth ? `max-width:${props.maxWidth}` : '')}
+    ${(props) => (props.minWidth ? `min-width:${props.minWidth}` : '')}
 `;
 
 const FieldEditableArea = styled.textarea`
@@ -78,6 +80,7 @@ const Hint = styled.div`
 
 const LeftedLayout = styled.div`
     margin-left: 100px;
+    padding: 32px 0 0;
 
     @media (max-width: 600px) {
         padding: 121px 0 0;
@@ -116,6 +119,7 @@ const Container = styled.div`
     left: ${(props) => (props.left ? props.left : 'auto')};
     right: ${(props) => (props.right ? props.right : 'auto')};
     ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : '')}
+    ${(props) => (props.minWidth ? `min-width: ${props.minWidth};` : '')}
 `;
 
 
@@ -165,7 +169,7 @@ const FieldLabel = styled.label`
 
 const List = styled.div.attrs((props) => ({ className: withElements(props) }))`
     position: relative;
-    padding: 32px 64px 80px;
+    padding: 0 64px 80px;
     max-width: 794px;
     width: 100%;
     min-height: 1042px;
@@ -306,11 +310,7 @@ const Backdrop = styled.div`
 `;
 
 const LandingContainer = styled.div`
-    margin: -168px 0 0;
-
-    @media (max-width: 600px) {
-        margin: 0;
-    }
+    margin: 0;
 `;
 
 const Mirrored = styled.span`

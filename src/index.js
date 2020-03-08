@@ -9,6 +9,8 @@ import { h, hydrate } from 'preact';
 import store from './store';
 import App from './containers/App';
 
+import analyticsInit from './modules/analytics';
+
 
 const run = (Component) => {
     const rootElement = DEV
@@ -40,3 +42,8 @@ if (!DEV) {
 
 
 run(App);
+
+
+if (!DEV) {
+    window.addEventListener('load', () => analyticsInit('yandex'));
+}

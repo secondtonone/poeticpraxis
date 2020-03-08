@@ -3,14 +3,13 @@ import { h, Component } from 'preact';
 import { imaged, stringToWords } from '../../modules/imaged';
 import { copying } from '../../modules/copying';
 import { getWords } from '../../modules/dictionary';
-import { isTouchDevice } from '../../utils';
+import { isTouchDevice, wordByNumber } from '../../utils';
 import { translations } from './translations';
 
 import Recorder from '../../components/Recorder';
 import MatchList from '../../components/MatchList';
 import Textarea from '../../components/Textarea';
 import Button from '../../components/Button';
-import SecondaryMenu from '../../components/SecondaryMenu';
 import MessageBox from '../../components/MessageBox';
 
 import ArrowBack from '../../components/IconSVG/ArrowBack';
@@ -18,8 +17,6 @@ import Widgets from '../../components/IconSVG/Widgets';
 import Delete from '../../components/IconSVG/Delete';
 import CheckCircle from '../../components/IconSVG/CheckCircle';
 import ContentCopy from '../../components/IconSVG/ContentCopy';
-import Subject from '../../components/IconSVG/Subject';
-import PlaylistAddCheck from '../../components/IconSVG/PlaylistAddCheck';
 import WordsIcon from '../../components/IconSVG/Words';
 
 import {
@@ -31,10 +28,13 @@ import {
     Flex,
     List,
     Link,
+    TextMinor,
     ActionBar
 } from '../../styles/components';
 
 import Help from './Help';
+import ImagesEngineMenu from './ImagesEngineMenu';
+
 import { ButtonContainer, MainButton } from './styled';
 
 export default class ImagesEngine extends Component {
@@ -56,7 +56,7 @@ export default class ImagesEngine extends Component {
 
     changeTitle = () => {
         document.title = `POETIC PRAXIS | ${
-            this.props.lang === 'ru' ? 'МАШИНА ОБРАЗОВ' : 'EMAGES ENGINE'
+            this.props.isRusLang ? 'МАШИНА ОБРАЗОВ' : 'EMAGES ENGINE'
         }${
             this.props.engineState.text
                 ? ` - ${this.props.engineState.text.substring(0, 30)}...`
@@ -265,62 +265,28 @@ export default class ImagesEngine extends Component {
                 result,
                 text,
                 pinned,
-                wordsNumber,
                 currentView = 'material'
             },
             lang = 'ru'
         } = this.props;
 
-        const {
-            textMessage,
-            isDisabledWordsview
-        } = this.state;
+        const { textMessage, isDisabledWordsview } = this.state;
 
-        const props = {
-            onInput: this.handleTextInput,
-            value: text,
-            Textarea: FieldEditableArea,
-            getMeasure: this.getMeasureField,
-            placeHolder: `${translations[lang].placeholders['ENGINE']}...`
-        };
-
-        const secondMenu = [
-            {
-                value: 'material',
-                icon: <Subject />,
-                title: translations[lang].engineMenu['MATERIAL'],
-                content: (
-                    <div>
-                        <Subject />
-                        <div>{translations[lang].engineMenu['MATERIAL']}</div>
-                    </div>
-                ),
-                disabled: false
-            },
-            {
-                value: 'words',
-                icon: <PlaylistAddCheck />,
-                title: translations[lang].engineMenu['WORDS'],
-                content: (
-                    <div>
-                        <PlaylistAddCheck />
-                        <div>{translations[lang].engineMenu['WORDS']}</div>
-                    </div>
-                ),
-                disabled: isDisabledWordsview
-            }
-        ];
+        const wordsNumber = stringToWords(text).length;
 
         const heightForKeyboard = Math.floor(this.initHeight / 1.3);
 
         const isDevice = isTouchDevice();
 
+        const isRusLang = lang === 'ru';
+
         return (
             <section>
-                <SecondaryMenu
-                    items={secondMenu}
+                <ImagesEngineMenu
+                    isDisabledWordsview={isDisabledWordsview}
                     handler={this.changeView}
                     current={currentView}
+                    lang={lang}
                 />
                 <ActionBar minHeight={`${heightForKeyboard}px`}>
                     {currentView === 'material' && (
@@ -330,37 +296,50 @@ export default class ImagesEngine extends Component {
                             disabled={!text.length}
                             type="button"
                             onClick={this.clearInput}
-                            title="Стереть текст">
+                            title={translations[lang].engine['CLEAR']}>
                             <Delete _middle />
                         </Button>
                     )}
-                    {currentView === 'material' && lang === 'ru' && (
+                    {currentView === 'material' && isRusLang && (
                         <Button
                             _rounded
                             _transparent
                             type="button"
                             onClick={this.getWords}
-                            title="Получить слова">
+                            title={translations[lang].engine['GET']}>
                             <WordsIcon _middle />
                         </Button>
                     )}
                 </ActionBar>
-
-                <MainButton
-                    _rounded
-                    _main
-                    _animated-up
-                    _centred
-                    type="button"
-                    minHeight={`${heightForKeyboard}px`}
-                    onClick={this.getResult}
-                    disabled={!text}
-                    title="Монтаж">
-                    <Widgets _big />
-                </MainButton>
-
+                {isDevice ? (
+                    <MainButton
+                        _rounded
+                        _main
+                        _animated-up
+                        _centred
+                        type="button"
+                        minHeight={`${heightForKeyboard}px`}
+                        onClick={this.getResult}
+                        disabled={!text}
+                        title={translations[lang].engine['MONTAGE']}>
+                        <Widgets _big />
+                    </MainButton>
+                ) : (
+                    <MainButton
+                        _main
+                        _action
+                        _animated-up
+                        width="160px"
+                        size={16}
+                        type="button"
+                        disabled={!text}
+                        onClick={this.getResult}>
+                        <Widgets _small />{' '}
+                        {translations[lang].engine['MONTAGE']}
+                    </MainButton>
+                )}
                 <LeftedLayout>
-                    {lang === 'ru' && <Help lang={lang} />}
+                    <Help lang={lang} />
 
                     {currentView === 'material' && (
                         <List _animated>
@@ -371,37 +350,62 @@ export default class ImagesEngine extends Component {
                                     margin="0 auto">
                                     <Flex
                                         justify={
-                                            lang === 'ru'
+                                            isRusLang
                                                 ? 'space-between'
                                                 : 'center'
                                         }>
                                         <Recorder
                                             lang={lang}
-                                            title="Запись"
+                                            title={
+                                                translations[lang].engine[
+                                                    'RECORD'
+                                                ]
+                                            }
                                             text={text}
                                             transmitState={setEngineState}
                                             showMessage={this.showMessage}
                                         />
-                                        {lang === 'ru' && (
+                                        {isRusLang && (
                                             <Button
                                                 _flat
                                                 _transparent
                                                 type="button"
                                                 onClick={this.getWords}
-                                                title="Найти слова">
+                                                title={
+                                                    translations[lang].engine[
+                                                        'GET'
+                                                    ]
+                                                }>
                                                 <WordsIcon
                                                     _small
                                                     padding="0 8px 0 0"
                                                 />
-                                                Найти слова
+                                                {
+                                                    translations[lang].engine[
+                                                        'GET'
+                                                    ]
+                                                }
                                             </Button>
                                         )}
                                     </Flex>
                                 </Container>
                             )}
                             <div>
-                                <Textarea {...props} />
+                                <Textarea
+                                    onInput={this.handleTextInput}
+                                    value={text}
+                                    Textarea={FieldEditableArea}
+                                    getMeasure={this.getMeasureField}
+                                    placeHolder={`${translations[lang].placeholders['ENGINE']}...`}
+                                />
                             </div>
+                            <Flex justify="flex-end">
+                                <TextMinor>{wordsNumber?`${wordsNumber} ${wordByNumber(
+                                    lang,
+                                    wordsNumber,
+                                    translations[lang].engine['WORDS_AMOUNT']
+                                )}`: null}</TextMinor>
+                            </Flex>
                         </List>
                     )}
 
@@ -409,7 +413,8 @@ export default class ImagesEngine extends Component {
                         <List _animated>
                             <Container margin="0 0 32px">
                                 <SecondaryTitle>
-                                    {translations[lang].matchList['FAVORITES']}
+                                    {translations[lang].matchList['FAVORITES']}{' '}
+                                    <TextMinor>({pinned.length})</TextMinor>
                                 </SecondaryTitle>
 
                                 <MatchList
@@ -470,7 +475,8 @@ export default class ImagesEngine extends Component {
 
                             <Container margin="0 0 32px">
                                 <SecondaryTitle>
-                                    {translations[lang].matchList['PAIRS']}
+                                    {translations[lang].matchList['PAIRS']}{' '}
+                                    <TextMinor>({result.length})</TextMinor>
                                 </SecondaryTitle>
                                 {result.length ? null : (
                                     <Hint>

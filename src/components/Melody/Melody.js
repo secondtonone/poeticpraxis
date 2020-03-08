@@ -199,13 +199,6 @@ export default class Melody extends Component {
         Tone.Transport.bpm.value = parseInt(e.target.value);
     };
 
-    /* createNewCtx = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = this.canvas.width;
-        canvas.height = this.canvas.height;
-        return canvas.getContext('2d');
-    }; */
-
     getHeightCanvas = (width) => {
         const { strings, orderStrings } = this.props.rhythmicState;
 
@@ -215,13 +208,13 @@ export default class Melody extends Component {
             height =
                 height +
                 Math.ceil(
-                    (strings[stringId].soundGramma.length * 90 +
+                    (strings[stringId].soundGramma.length * 100 +
                         this.verticalOffset) /
                         width
                 ) *
                     this.verticalOffset;
         });
-
+        
         return height;
     };
 
