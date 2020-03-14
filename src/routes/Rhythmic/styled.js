@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import theme from '../../styles/theme';
 
-import { AnimationShow, AnimationUp } from '../../styles/components';
+import { AnimationShow, AnimationUp, Flex } from '../../styles/components';
 
 import Button from '../../components/Button';
 
@@ -14,12 +14,18 @@ const ChangeModeButton = styled(Button)`
     }
 `;
 
+const FlexSided = styled(Flex)`
+    @media (max-width: 600px) {
+        padding-right: 16px;
+    }
+`;
+
 const StringPauseButton = styled.div`
     position: absolute;
-    left: -20px;
-    top: 32px;
+    left: 13px;
+    top: 66px;
     transform: translateY(0);
-    transition: transform 0.5s ease-out;
+    transition: transform 0.5s 0.2s ease-out;
 
     @media (max-width: 880px) {
         display: none;
@@ -129,5 +135,6 @@ export {
     CopyButton,
     CopyButtonMobile,
     ButtonContainer,
-    AccentRelative
+    AccentRelative,
+    FlexSided
 };
