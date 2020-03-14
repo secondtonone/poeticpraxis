@@ -77,9 +77,9 @@ const InfoMarks = ({
                     <Syllable
                         id={stringId}
                         data-type={dataTypeAQ}
+                        title={accentsInfo}
                         key={`s-${tag.top}`}
-                        style={{ top: tag.top + delta }}
-                        data-tooltip={accentsInfo}>
+                        style={{ top: tag.top + delta }}>
                         {vowelAccentCount ? (
                             <Syllable.Accent>
                                 {vowelAccentCount}
@@ -94,8 +94,8 @@ const InfoMarks = ({
                 stringNumberOff || !string.words.length ? null : (
                     <StringNumber
                         key={`n-${tag.top}`}
-                        style={{ top: tag.top }}
-                        data-tooltip={lineNumber}>
+                        title={lineNumber}
+                        style={{ top: tag.top }}>
                         {++stringCounter}
                     </StringNumber>
                 )
