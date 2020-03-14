@@ -455,9 +455,6 @@ export function textAnalizator(text, stringsDictionary, wordsDictionary) {
         orderStrings.push(idString);
     }
 
-    console.log(strings);
-    console.log(elements);
-
     return {
         strings,
         orderStrings,
@@ -952,5 +949,8 @@ export const structure = {
     stringLinks: {},
     wordLinks: {},
     wordsCount: 0,
-    mainMeter: null
+    mainMeter: {
+        title: '',
+        inPercent: 0
+    }
 };

@@ -1,3 +1,3 @@
-import Workfield from './Workfield';
+import Workfield from './Workfieldv2';
 
 export default Workfield;
