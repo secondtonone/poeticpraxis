@@ -1,7 +1,7 @@
 const light = {
     name: 'light',
     primaryRed: '#DE2420',
-    secondRed: '#da6e6e',
+    secondRed: '#f5baba',
     thirdRed: '#92130e',
     primaryBlack: '#181311',
     primaryWhite: '#F9F8F7',
@@ -22,7 +22,7 @@ const light = {
 const dark = {
     name: 'dark',
     primaryRed: '#DE2420',
-    secondRed: '#da6e6e',
+    secondRed: '#f5baba',
     thirdRed: '#92130e',
     primaryBlack: '#181311',
     primaryWhite: '#F9F8F7',
@@ -43,7 +43,7 @@ const dark = {
 
 const theme = {
     primaryRed: '#DE2420',
-    secondRed: '#da6e6e',
+    secondRed: '#f5baba',
     thirdRed: '#92130e',
     primaryBlack: '#181311',
     primaryWhite: '#F9F8F7',

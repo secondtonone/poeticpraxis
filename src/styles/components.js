@@ -164,7 +164,7 @@ const FieldLabel = styled.label`
     color: ${theme.primaryGray};
     font-family: ${theme.mainFont};
 
-    ${(props) => (props.isHidden ? Hidden : '')};
+    ${(props) => (props.isHidden ? props.isHidden : '')};
 `;
 
 const List = styled.div.attrs((props) => ({ className: withElements(props) }))`
@@ -206,7 +206,10 @@ const List = styled.div.attrs((props) => ({ className: withElements(props) }))`
     }
 
     @media (max-width: 600px) {
-        padding: 24px 24px 64px;
+        padding: 24px
+            ${(props) =>
+                props.sidePaddingMobile ? props.sidePaddingMobile : '24px'}
+            64px;
     }
 `;
 
@@ -235,7 +238,7 @@ DropdownList.ListItem = styled.li`
     margin: 0;
     padding: 16px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     color: ${(props) =>
         props.active ? props.theme.accentColor : props.theme.secondColor};
