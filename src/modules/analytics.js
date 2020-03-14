@@ -30,7 +30,8 @@ const yandexInit = () => {
     ym(48473147, 'init', {
         clickmap: true,
         trackLinks: true,
-        accurateTrackBounce: true
+        accurateTrackBounce: true,
+        webvisor: true
     });
 };
 /* (function(d, w, c) {
