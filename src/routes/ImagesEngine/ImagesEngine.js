@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 import { imaged, stringToWords } from '../../modules/imaged';
 import { copying } from '../../modules/copying';
 import { getWords } from '../../modules/dictionary';
-import { isTouchDevice, wordByNumber } from '../../utils';
+import { isTouchDevice, wordByNumber, isSupportRecognition } from '../../utils';
 import { translations } from './translations';
 
 import Recorder from '../../components/Recorder';
@@ -350,7 +350,7 @@ export default class ImagesEngine extends Component {
                                     margin="0 auto">
                                     <Flex
                                         justify={
-                                            isRusLang
+                                            isRusLang && isSupportRecognition()
                                                 ? 'space-between'
                                                 : 'center'
                                         }>
@@ -400,11 +400,17 @@ export default class ImagesEngine extends Component {
                                 />
                             </div>
                             <Flex justify="flex-end">
-                                <TextMinor>{wordsNumber?`${wordsNumber} ${wordByNumber(
-                                    lang,
-                                    wordsNumber,
-                                    translations[lang].engine['WORDS_AMOUNT']
-                                )}`: null}</TextMinor>
+                                <TextMinor>
+                                    {wordsNumber
+                                        ? `${wordsNumber} ${wordByNumber(
+                                              lang,
+                                              wordsNumber,
+                                              translations[lang].engine[
+                                                  'WORDS_AMOUNT'
+                                              ]
+                                          )}`
+                                        : null}
+                                </TextMinor>
                             </Flex>
                         </List>
                     )}
