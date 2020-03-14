@@ -17,7 +17,7 @@ export default class Textarea extends Component {
     }
 
     componentDidMount() {
-        delay(this.getBoxMeasure);
+        requestAnimationFrame(this.getBoxMeasure);
     }
 
     getBoxMeasure = () => {
@@ -48,14 +48,14 @@ export default class Textarea extends Component {
 
     componentDidUpdate() {
         if (this.delayHeightChange) {
-            clearTimeout(this.delayHeightChange);
+            cancelAnimationFrame(this.delayHeightChange);
         }
-        this.delayHeightChange = delay(() => this.heightChange(this.field));
+        this.delayHeightChange = requestAnimationFrame(() => this.heightChange(this.field));
     }
 
     componentWillUnmount() {
         //clearTimeout(this.timerID);
-        clearTimeout(this.delayHeightChange);
+        cancelAnimationFrame(this.delayHeightChange);
     }
 
     heightChange = (element) => {
