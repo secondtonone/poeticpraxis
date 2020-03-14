@@ -24,6 +24,7 @@ import Workfield from '../../components/Workfield';
 import MessageBox from '../../components/MessageBox';
 import Button from '../../components/Button';
 import Melody from '../../components/Melody';
+import Zoom from '../../components/Zoom';
 
 import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
 import ContentCopy from '../../components/IconSVG/ContentCopy';
@@ -45,7 +46,7 @@ import {
     StringPauseButton,
     StringPauseButtonMobile,
     CopyButton,
-    ButtonContainer
+    FlexSided
 } from './styled';
 
 export default class Rhythmic extends Component {
@@ -59,14 +60,17 @@ export default class Rhythmic extends Component {
             isEditable: true,
             currentView: 'rhythmic',
             rhythmicState: {
-                wordsCount: 0
+                wordsCount: 0,
+                mainMeter: {
+                    title: '',
+                    inPercent: 0
+                }
             },
             isHelpInfoHidden: false
         };
 
         this.isDevice = isTouchDevice();
 
-        this.mouseTrackingTimer = 0;
         this.stringPauseButton = null;
         this.sectionElement = null;
     }
@@ -183,17 +187,33 @@ export default class Rhythmic extends Component {
         let zoomIn = this.state.zoomIn;
 
         if (zoomIn) {
-            zoomIn = false;
+            this.zoomOutHandler();
         } else {
-            zoomIn = true;
+            this.zoomInHandler();
         }
-
-        this.setState({
-            zoomIn
-        });
-
-        this.workfield.changeZoomMode(zoomIn);
     };
+
+    zoomInHandler = () => {
+        if (!this.state.zoomIn) {
+            const zoomIn = true;
+            this.setState({
+                zoomIn
+            });
+
+            this.workfield.changeZoomMode(zoomIn);
+        }
+    }
+
+    zoomOutHandler = () => {
+        if (this.state.zoomIn) {
+            const zoomIn = false;
+            this.setState({
+                zoomIn
+            });
+
+            this.workfield.changeZoomMode(zoomIn);
+        }
+    }
 
     getDataFromWorkfield = (rhythmicState) => {
         this.setState({
@@ -236,20 +256,23 @@ export default class Rhythmic extends Component {
     };
 
     mouseTracking = (e) => {
-        if (this.mouseTrackingTimer) {
-            window.clearTimeout(this.mouseTrackingTimer);
-        }
-        const gap = this.sectionElement ? this.sectionElement.offsetTop : 168;
+        const sectionGap = this.sectionElement ? this.sectionElement.offsetTop : 196;
+
+        const beginButtonGap = this.stringPauseButton.offsetTop;
+
+        const buttonHeight = 19;
 
         let transform = `translateY(${
-            e.pageY - gap < 0 ? 0 : Math.floor(e.pageY - gap - 48)
+            e.pageY < sectionGap
+                ? 0
+                : Math.ceil(e.pageY - sectionGap - beginButtonGap - buttonHeight)
         }px)`;
 
-        this.mouseTrackingTimer = setTimeout(() => {
-            if (this.stringPauseButton) {
+        if (this.stringPauseButton) {
+            requestAnimationFrame(() => {
                 this.stringPauseButton.style.transform = transform;
-            }
-        }, 150);
+            });
+        }
     };
 
     zoomHandler = () => {
@@ -262,6 +285,7 @@ export default class Rhythmic extends Component {
     workfieldRef = (ref) => {
         this.workfield = ref;
     };
+
     render() {
         const {
             setRhytmicState,
@@ -287,6 +311,14 @@ export default class Rhythmic extends Component {
         const wordsNumber = rhythmicState.wordsCount;
 
         const mainMeter = rhythmicState.mainMeter;
+
+        const wordsNumberString = `${wordsNumber} ${wordByNumber(
+            lang,
+            wordsNumber,
+            translations[lang].rhythmic['WORDS_AMOUNT']
+        )}`;
+
+        const mainMeterString = `, ${mainMeter.title} - ${mainMeter.inPercent}%`;
 
         return (
             <section>
@@ -350,7 +382,9 @@ export default class Rhythmic extends Component {
                     <Help lang={lang} />
 
                     {currentView === 'rhythmic' && (
-                        <div>
+                        <Zoom
+                            onZoomIn={this.zoomHandler}
+                            onZoomOut={this.zoomHandler}>
                             {isDevice && isFocused && (
                                 <StringPauseButtonMobile
                                     _rounded
@@ -367,6 +401,7 @@ export default class Rhythmic extends Component {
 
                             <List
                                 _animated
+                                sidePaddingMobile={'0'}
                                 ref={(ref) => (this.sectionElement = ref)}>
                                 {!isDevice && (
                                     <Flex margin="0 0 16px">
@@ -417,10 +452,11 @@ export default class Rhythmic extends Component {
 
                                 <Workfield
                                     onMouseMove={this.mouseTracking}
+                                    errorHandler={this.showMessage}
                                     readOnly={!isEditable}
                                     text={text}
                                     transmitState={setRhytmicState}
-                                    focusHandler={this.focusHandler}
+                                    onFocus={this.focusHandler}
                                     setWordsDictionary={setWordsDictionary}
                                     wordsDictionary={wordsDictionary}
                                     stringsDictionary={stringsDictionary}
@@ -429,23 +465,19 @@ export default class Rhythmic extends Component {
                                     placeHolder={`${translations[lang].placeholders['RHYTHMICS']}...`}
                                     ref={this.workfieldRef}
                                 />
-                                <Flex justify="flex-end">
+
+                                <FlexSided justify="flex-end">
                                     <TextMinor>
-                                        {wordsNumber?`${wordsNumber} ${wordByNumber(
-                                            lang,
-                                            wordsNumber,
-                                            translations[lang].rhythmic[
-                                                'WORDS_AMOUNT'
-                                            ]
-                                        )}`: null}
-                                        {mainMeter
-                                            ? `, ${mainMeter.title} - ${mainMeter.inPercent}%`
+                                        {wordsNumber ? wordsNumberString : null}
+                                        {wordsNumber && mainMeter
+                                            ? mainMeterString
                                             : null}
                                     </TextMinor>
-                                </Flex>
+                                </FlexSided>
                             </List>
-                        </div>
+                        </Zoom>
                     )}
+
                     {currentView === 'melody' && (
                         <List>
                             <Melody
