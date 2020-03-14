@@ -9,6 +9,7 @@ export default class ErrorBoundary extends Component {
     }
 
     static getDerivedStateFromError(error) {
+        console.warn(error);
         return { hasError: true };
     }
     render() {
