@@ -20,6 +20,8 @@ const StyledSecondaryMenu = styled.div`
                 ? props.theme.grayDarkColor
                 : props.theme.primaryColor};
         box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
+        transition: all .2s ease-in;
+        ${(props) => props.isTranslate ?'transform: translateY(-44px);': ''}
     }
 `;
 

@@ -1,5 +1,5 @@
 import { h } from 'preact';
-
+import { useState, useCallback, useEffect } from 'preact/compat';
 import {
     Menu,
     Item,
@@ -12,6 +12,10 @@ import Logo from '../Logo';
 
 import {BetaSign} from '../../styles/components';
 
+const delta = 76;
+
+let lastPosition = 0;
+
 export default function SecondaryMenu({
     children,
     items,
@@ -19,9 +23,31 @@ export default function SecondaryMenu({
     current,
     variant = 'light'
 }) {
+
+    const [isTranslate, setTranslate] = useState(false);
+
     const countTab = items.length;
+
+    useEffect(() => {
+        const scrollHandler = () => {
+            if (
+                (/* lastPosition < window.pageYOffset && */window.pageYOffset - delta > 0)
+            ) {
+                setTranslate(true);
+            } else {
+                setTranslate(false);
+            }
+
+            lastPosition = window.pageYOffset;
+        };
+
+        window.addEventListener('scroll', scrollHandler);
+
+        return () => window.removeEventListener('scroll', scrollHandler);
+    }, []);
+
     return (
-        <StyledSecondaryMenu>
+        <StyledSecondaryMenu isTranslate={isTranslate}>
             <LogoContainer>
                 <BetaSign>
                     <Logo variant={variant} />
