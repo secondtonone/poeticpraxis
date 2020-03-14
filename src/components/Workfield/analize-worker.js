@@ -7,6 +7,5 @@ self.addEventListener('message', (e) => {
         stringsDictionary,
         wordsDictionary
     );
-
     self.postMessage(analizedText);
 });
