@@ -14,7 +14,8 @@ export const PlayerContainer = styled.div`
     @media (max-width: 600px) {
         bottom: 52px;
         width: 100%;
-        padding: 16px 24px;
+        padding: 0 24px;
+        left: 0;
     }
 `;
 
