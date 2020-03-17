@@ -1,10 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-
-const PORT = 9080;
 
 module.exports = {
     entry: {
@@ -13,7 +7,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: '[name].[hash].js',
+        filename: '[name].[hash:8].js',
         globalObject: 'this'
     },
     module: {
@@ -24,18 +18,7 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader'
-                    }
-                ]
-            },
-            {
-                test: /\.(svg|woff|woff2|eot|ttf|otf)$/,
+                test: /\.(svg)$/,
                 use: [
                     {
                         loader: 'url-loader',
@@ -46,7 +29,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|jpg|jpeg|gif)$/,
+                test: /\.(png|jpg|jpeg|gif|mp3|ogg|woff|woff2|eot|ttf|otf)$/,
                 use: ['file-loader']
             },
             {
@@ -73,48 +56,11 @@ module.exports = {
     },
     optimization: {
         namedModules: true,
+        runtimeChunk: 'single',
+        moduleIds: 'hashed',
         splitChunks: {
             chunks: 'all'
         },
         noEmitOnErrors: true
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('development')
-            }
-        }),
-        new HtmlWebpackPlugin({
-            template: './public/index.html',
-            inject: 'head',
-            minify: {
-                minifyCSS: true,
-                minifyJS: true,
-                removeComments: true
-            },
-            env: {
-                Prod: false
-            }
-        }),
-        new ScriptExtHtmlWebpackPlugin({
-            defer: /app/,
-            defer: /\.js$/,
-            preload: /\.mp3$/
-        }),
-        new CopyWebpackPlugin([
-            {
-                from: 'public/audio'
-            },
-            {
-                from: 'public/dictionary'
-            }
-        ])
-    ],
-    devServer: {
-        contentBase: path.resolve(__dirname, 'dist'),
-        liveReload: true,
-        port: PORT,
-        historyApiFallback: true,
-        publicPath: '/'
     }
 };

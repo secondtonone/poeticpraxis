@@ -1,4 +1,3 @@
-const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -8,25 +7,19 @@ const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 
+const baseConfig = require('./webpack.config');
+
 const config = {
+    ...baseConfig,
     mode: 'production',
     devtool: false,
-    entry: {
-        app: ['./src/index.js']
-    },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: '/',
-        filename: '[name].[chunkhash:8].js',
-        globalObject: 'this'
+        ...baseConfig.output,
+        filename: '[name].[chunkhash:8].js'
     },
     module: {
         rules: [
-            {
-                test: /.js?$/,
-                use: ['babel-loader', 'eslint-loader'],
-                exclude: /node_modules/
-            },
+            ...baseConfig.module.rules,
             {
                 test: /\.css$/,
                 use: [
@@ -40,69 +33,11 @@ const config = {
                         }
                     }
                 ]
-            },
-            {
-                test: /\.(svg)$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 5000
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.(png|jpg|jpeg|gif|mp3|ogg|woff|woff2|eot|ttf|otf)$/,
-                use: ['file-loader']
-            },
-            {
-                test: /\.worker\.js$/,
-                use: { loader: 'worker-loader' }
-            },
-            {
-                test: /\.webmanifest$/,
-                include: /public/,
-                loader: [
-                    'file-loader?name=[name].[ext]',
-                    'webmanifest-loader'
-                ].join('!')
             }
         ]
     },
-    resolve: {
-        extensions: ['.js', '.json'],
-        alias: {
-            react: 'preact/compat',
-            'react-dom/test-utils': 'preact/test-utils',
-            'react-dom': 'preact/compat'
-        }
-    },
     optimization: {
-        namedModules: true,
-        runtimeChunk: 'single',
-        splitChunks: {
-            chunks: 'all'
-            /*  maxInitialRequests: Infinity,
-            minSize: 0,
-            cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name(module) {
-                        // получает имя, то есть node_modules/packageName/not/this/part.js
-                        // или node_modules/packageName
-                        const packageName = module.context.match(
-                            /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-                        )[1];
-
-                        // имена npm-пакетов можно, не опасаясь проблем, использовать
-                        // в URL, но некоторые серверы не любят символы наподобие @
-                        return `npm.${packageName.replace('@', '')}`;
-                    }
-                }
-            } */
-        },
-        noEmitOnErrors: true,
+        ...baseConfig.optimization,
         concatenateModules: true,
         minimizer: [
             new TerserPlugin({
