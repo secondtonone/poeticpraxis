@@ -5,11 +5,11 @@ export default class Bundle extends Component {
         component: null
     };
 
-    componentDidMount() {
-        this.props.load().then((component) => {
-            this.setState({
-                component: component.default ? component.default : component
-            });
+    async componentDidMount() {
+        const component = await this.props.load();
+        
+        this.setState({
+            component: component.default ? component.default : component
         });
     }
 
