@@ -4,7 +4,7 @@ if (DEV) {
     require('preact/debug');
 }
 
-import { h, hydrate } from 'preact';
+import { h, render } from 'preact';
 
 import store from './store';
 import App from './containers/App';
@@ -17,7 +17,7 @@ const run = (Component) => {
         ? document.body.lastElementChild
         : document.getElementById('app'); 
 
-    hydrate(<Component store={store} />, rootElement);
+    render(<Component store={store} />, rootElement);
 };
 
 if (!DEV) {
