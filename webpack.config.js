@@ -58,6 +58,7 @@ module.exports = {
         namedModules: true,
         runtimeChunk: 'single',
         moduleIds: 'hashed',
+        usedExports: true,
         splitChunks: {
             chunks: 'all'
         },
