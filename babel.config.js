@@ -19,7 +19,6 @@ module.exports = {
                 pure: true
             }
         ],
-        'react-hot-loader/babel',
         '@babel/plugin-transform-runtime',
         '@babel/plugin-syntax-dynamic-import',
         '@babel/plugin-proposal-class-properties',
