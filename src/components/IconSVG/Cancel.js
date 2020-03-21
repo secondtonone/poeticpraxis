@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import Icon from '../Icon';
+import Icon from '@components/Icon';
 
 export default class Cancel extends Component {
     render() {

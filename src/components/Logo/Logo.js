@@ -1,8 +1,8 @@
 import { h } from 'preact';
 
-import RouteLink from '../RouteLink';
-import LogoBlack from '../../../public/img/Logo.svg';
-import LogoWhite from '../../../public/img/Logo-white.svg';
+import RouteLink from '@components/RouteLink';
+import LogoBlack from '@public/img/Logo.svg';
+import LogoWhite from '@public/img/Logo-white.svg';
 
 const Logo = ({ variant = 'light', height = 24 }) => {
     return (

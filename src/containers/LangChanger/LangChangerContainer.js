@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
+import { changeLang } from '@containers/Layout/LayoutActions';
 
-import Layout from './Layout';
-import { changeTheme, changeLang } from '../../components/Layout/LayoutActions';
+import LangChanger from './LangChanger';
 
 const mapDispatchToProps = {
-    changeTheme,
     changeLang
 };
 
@@ -16,4 +15,4 @@ const mapStateToProps = (state) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Layout);
+)(LangChanger);

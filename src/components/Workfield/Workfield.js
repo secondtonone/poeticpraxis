@@ -1,13 +1,13 @@
 import { h, Component } from 'preact';
 
-import Textarea from '../Textarea';
+import Textarea from '@components/Textarea';
 import Marks from './Marks';
 import HiddenMarks from './HiddenMarks';
 import InfoMarks from './InfoMarks';
 
 import {translations} from './translations';
 
-import { hashFunction, fontReady } from '../../utils';
+import { hashFunction, fontReady } from '@utils';
 import AnalizeWorker from 'worker-loader!./analize-worker';
 
 import {
@@ -21,9 +21,9 @@ import {
 } from './module';
 
 
-import { copyFrom } from '../../modules/copying';
+import { copyFrom } from '@modules/copying';
 
-import { FieldEditableArea } from '../../styles/components';
+import { FieldEditableArea } from '@styles/components';
 
 import {
     FakeField,
@@ -56,7 +56,6 @@ export default class Workfield extends Component {
         this.preventPaintFieldHandler = false;
 
         this.textAnalizingWorker = null;
-        this.tagsWorker = null;
 
         this.accents = accents;
     }
@@ -90,29 +89,18 @@ export default class Workfield extends Component {
         }
     }
 
-    UNSAFE_componentWillUpdate(nextProps) {
-        if (nextProps.text !== this.props.text) {
+    componentDidUpdate(prevProps) {
+        if (this.props.text !== prevProps.text) {
             if (this.timerLinting) {
-                clearTimeout(this.timerLinting);
+                cancelAnimationFrame(this.timerLinting);
             }
 
-            this.timerLinting = setTimeout(() => {
-                this.textLinting(nextProps.text);
-            }, 50);
+            this.timerLinting = requestAnimationFrame(() => {
+                this.textLinting(this.props.text);
+            });
         }
     }
 
-    /* shouldComponentUpdate(prevProps, props) {
-        if (
-            Object.keys(nextState.elements).length &&
-            JSON.stringify(this.state.elements) ===
-                JSON.stringify(nextState.elements)
-        ) {
-            console.log(this.state.elements);
-
-            return false;
-        }
-    } */
     getAnalizedText = ({ text, stringsDictionary, wordsDictionary }) =>
         new Promise((resolve, reject) => {
             this.textAnalizingWorker.postMessage({
@@ -121,11 +109,16 @@ export default class Workfield extends Component {
                 wordsDictionary
             });
 
-            this.textAnalizingWorker.onmessage = function(e) {
+            this.textAnalizingWorker.onmessage = (e) => {
                 let analizedText = e.data;
                 resolve(analizedText);
             };
+
+            this.textAnalizingWorker.onerror = (e) => {
+                reject(e);
+            };
         });
+
     giveDataToParent = () => {
         if (this.props.toParent) {
             const translation = translations[this.props.lang];
@@ -162,45 +155,52 @@ export default class Workfield extends Component {
     };
 
     handleTextInput = (e) => {
+        const text = e.target.value;
         this.props.transmitState({
-            text: e.target.value
+            text
         });
     };
 
     textLinting = async (text) => {
-        let stringsDictionary = this.props.stringsDictionary || {};
+        try {
+            let stringsDictionary = this.props.stringsDictionary || {};
 
-        let wordsDictionary = this.props.wordsDictionary || {};
+            let wordsDictionary = this.props.wordsDictionary || {};
 
-        let analizedText = {};
+            let analizedText = {};
 
-        if (this.textAnalizingWorker) {
-            analizedText = await this.getAnalizedText({
-                text,
-                stringsDictionary,
-                wordsDictionary
+            if (this.textAnalizingWorker) {
+                analizedText = await this.getAnalizedText({
+                    text,
+                    stringsDictionary,
+                    wordsDictionary
+                });
+            } else {
+                analizedText = textAnalizator(
+                    text,
+                    stringsDictionary,
+                    wordsDictionary
+                );
+            }
+
+            await this.setStateAsync({
+                ...analizedText
             });
-        } else {
-            analizedText = textAnalizator(
-                text,
-                stringsDictionary,
-                wordsDictionary
-            );
+
+            const children = this.fakeField.children;
+
+            const stringsLinted = tagMaker(children, analizedText);
+
+            await this.setStateAsync({
+                ...stringsLinted
+            });
+
+            this.giveDataToParent();
+        } catch (e) {
+            if (this.props.errorHandler) {
+                this.props.errorHandler('Музыка не зазвучит, инструмент упал с 9ого этажа...');
+            }
         }
-
-        await this.setStateAsync({
-            ...analizedText
-        });
-
-        const children = this.fakeField.children;
-
-        let stringsLinted = tagMaker(children, analizedText);
-
-        this.setState({
-            ...stringsLinted
-        });
-
-        this.giveDataToParent();
     };
 
     makeCaesura = () => {
@@ -243,7 +243,7 @@ export default class Workfield extends Component {
     };
 
     /* анализ строк */
-    getSugesstions = (strings) => {
+    getSugesstions = (string) => {
         if (string) {
             return {
                 stroke: 'all',
@@ -301,15 +301,23 @@ export default class Workfield extends Component {
     };
 
     changeZoomMode = async (zoomIn) => {
-        await this.setStateAsync({
-            zoomIn
-        });
+        try {
+            await this.setStateAsync({
+                zoomIn
+            });
 
-        const text = this.props.text;
-        this.textLinting(text);
+            const text = this.props.text;
+            this.textLinting(text);
+        } catch (e) {
+            if (this.props.errorHandler) {
+                this.props.errorHandler(
+                    'Что же там произошло?'
+                );
+            }
+        }
     };
 
-    accentHandler = (signId, accent) => {
+    accentHandler = async (signId, accent) => {
         let wordsDictionary = this.props.wordsDictionary || {};
 
         let stringsDictionary = this.props.stringsDictionary || {};
@@ -327,7 +335,7 @@ export default class Workfield extends Component {
             accent
         });
 
-        this.setState({
+        await this.setStateAsync({
             elements: result.elements,
             strings: result.strings
         });
@@ -386,7 +394,7 @@ export default class Workfield extends Component {
         }
     };
 
-    changeAccentInWord = (idSymbol) => {
+    changeAccentInWord = async (idSymbol) => {
         let wordsDictionary = this.props.wordsDictionary || {};
 
         let stringsDictionary = this.props.stringsDictionary || {};
@@ -421,7 +429,7 @@ export default class Workfield extends Component {
             });
         });
 
-        this.setState({
+        await this.setStateAsync({
             elements: result.elements,
             strings: result.strings
         });
@@ -446,14 +454,14 @@ export default class Workfield extends Component {
     };
 
     workfieldFocusHandler = () => {
-        if (this.props.focusHandler) {
-            this.props.focusHandler(true);
+        if (this.props.onFocus) {
+            this.props.onFocus(true);
         }
     }
 
     workfieldBlurHandler = () => {
-        if (this.props.focusHandler) {
-            this.props.focusHandler(false);
+        if (this.props.onFocus) {
+            this.props.onFocus(false);
         }
     }
 

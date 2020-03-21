@@ -1,10 +1,10 @@
 import { h, Component } from 'preact';
 
-import Button from '../Button';
-import LangChanger from '../LangChanger';
-import ThemeTumbler from '../ThemeTumbler';
-import SettingsIcon from '../IconSVG/Settings';
-import { DropdownList, Container } from '../../styles/components';
+import Button from '@components/Button';
+import LangChanger from '@containers/LangChanger';
+import ThemeTumbler from '@containers/ThemeTumbler';
+import SettingsIcon from '@icons/Settings';
+import { DropdownList, Container } from '@styles/components';
 
 export default class Settings extends Component {
     constructor(props) {

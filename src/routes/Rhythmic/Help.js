@@ -1,20 +1,20 @@
 import { h } from 'preact';
 
-import { translations } from '../../components/Workfield/translations';
-import useSessionStorage from '../../hooks/useSessionStorage';
+import { translations } from '@components/Workfield/translations';
+import useSessionStorage from '@hooks/useSessionStorage';
 
-import Info from '../../components/Info';
+import Info from '@components/Info';
 
-import { Container, Flex } from '../../styles/components';
+import { Container, Flex } from '@styles/components';
 
-import { maxMatchMedia } from '../../utils';
+import { maxMatchMedia } from '@utils';
 
 import {
     StringPause,
     TriangleElement,
     CircleElement,
     Syllable
-} from '../../components/Workfield/styled';
+} from '@components/Workfield/styled';
 
 import { AccentRelative } from './styled';
 

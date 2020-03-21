@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import styled from 'styled-components';
 
-import { withElements } from '../../styles/helpers';
+import { withElements } from '@styles/helpers';
 
 const StyledIcon = styled.i.attrs((props) => ({
     className: withElements(props)

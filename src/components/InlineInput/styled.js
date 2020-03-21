@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import Button from '../../components/Button';
-import theme from '../../styles/theme';
+import Button from '@components/Button';
+import theme from '@styles/theme';
 
 export const Input = styled.input`
     font-family: ${theme.mainFont};

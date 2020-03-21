@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import MessageBox from '../MessageBox';
+import MessageBox from '@components/MessageBox';
 
 export default class ErrorBoundary extends Component {
     constructor(props) {

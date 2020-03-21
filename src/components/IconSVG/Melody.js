@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import Icon from '../Icon';
+import Icon from '@components/Icon';
 
 function Melody(props) {
     return (

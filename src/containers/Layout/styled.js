@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { show } from '../../styles/animations';
-import { withElements } from '../../styles/helpers';
+import { show } from '@styles/animations';
+import { withElements } from '@styles/helpers';
 
 const MainContent = styled.main`
     padding-top: 72px;

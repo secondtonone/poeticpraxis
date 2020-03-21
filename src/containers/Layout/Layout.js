@@ -1,22 +1,22 @@
 import { h, Component } from 'preact';
 import { useEffect } from 'preact/compat';
+import { ThemeProvider } from 'styled-components';
 
 import { MainContent, Page } from './styled';
-import { ThemeProvider } from 'styled-components';
-import theme from '../../styles/theme';
+import theme from '@styles/theme';
 
-import { isDaytime, userLang } from '../../utils';
+import { isDaytime, userLang } from '@utils';
 
-import Menu from '../Menu';
-import Header from '../Header';
-import LangChanger from '../LangChanger';
-import ThemeTumbler from '../ThemeTumbler';
-import ErrorBoundary from '../ErrorBoundary';
+
+import Menu from '@components/Menu';
+import Header from '@components/Header';
+import LangChanger from '@containers/LangChanger';
+import ThemeTumbler from '@containers/ThemeTumbler';
+import ErrorBoundary from '@containers/ErrorBoundary';
 
 const Layout = ({ children, variant, lang, changeTheme, changeLang }) => {
 
     useEffect(() => {
-        
         if (isDaytime()) {
             changeTheme('light');
         } else {
@@ -36,13 +36,12 @@ const Layout = ({ children, variant, lang, changeTheme, changeLang }) => {
         } else {
             changeLang('ru');
         }
-    }, []);
+    }, [changeTheme, changeLang]);
 
     return (
         <ThemeProvider theme={theme[variant]}>
             <Page _animated>
                 <Header
-                    variant={variant}
                     lang={lang}
                     children={(props) => (
                         <Menu

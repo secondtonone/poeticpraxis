@@ -1,13 +1,13 @@
 import { h, Component } from 'preact';
 
-import { randomize } from '../../utils';
+import { randomize } from '@utils';
 
 import { StyledMatchList } from './styled';
 
-import InlineInput from '../../components/InlineInput';
+import InlineInput from '@components/InlineInput';
 
-import Cancel from '../../components/IconSVG/Cancel';
-import CheckCircle from '../../components/IconSVG/CheckCircle';
+import Cancel from '@icons/Cancel';
+import CheckCircle from '@icons/CheckCircle';
 
 export default class MatchList extends Component {
     render() {

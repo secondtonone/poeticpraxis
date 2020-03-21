@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import { isTouchDevice, wordByNumber } from '../../utils';
+import { isTouchDevice, wordByNumber } from '@utils';
 import { translations } from './translations';
 
 import {
@@ -8,31 +8,31 @@ import {
     sharing,
     encodeDictionary,
     linkToStateDecode
-} from '../../modules/sharing';
+} from '@modules/sharing';
 
 import {
     getToneModule,
     Tone,
     getInstrument,
     Instrument
-} from '../../modules/tone';
+} from '@modules/tone';
 
 import Help from './Help';
 import RhythmicMenu from './RhythmicMenu';
 
-import Workfield from '../../components/Workfield';
-import MessageBox from '../../components/MessageBox';
-import Button from '../../components/Button';
-import Melody from '../../components/Melody';
-import Zoom from '../../components/Zoom';
+import Workfield from '@components/Workfield';
+import MessageBox from '@components/MessageBox';
+import Button from '@components/Button';
+import Melody from '@components/Melody';
+import Zoom from '@components/Zoom';
 
-import KeyboardCapslock from '../../components/IconSVG/KeyboardCapslock';
-import ContentCopy from '../../components/IconSVG/ContentCopy';
-import ZoomInIcon from '../../components/IconSVG/ZoomIn';
-import ZoomOut from '../../components/IconSVG/ZoomOut';
-import Lock from '../../components/IconSVG/Lock';
-import LockOpen from '../../components/IconSVG/LockOpen';
-import ShareIcon from '../../components/IconSVG/Share';
+import KeyboardCapslock from '@icons/KeyboardCapslock';
+import ContentCopy from '@icons/ContentCopy';
+import ZoomInIcon from '@icons/ZoomIn';
+import ZoomOut from '@icons/ZoomOut';
+import Lock from '@icons/Lock';
+import LockOpen from '@icons/LockOpen';
+import ShareIcon from '@icons/Share';
 
 import {
     List,
@@ -40,7 +40,7 @@ import {
     ActionBar,
     Flex,
     TextMinor
-} from '../../styles/components';
+} from '@styles/components';
 
 import {
     StringPauseButton,

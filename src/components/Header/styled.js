@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { hexToRgb } from '../../utils';
+import { hexToRgb } from '@utils';
 
 const PageHeader = styled.header`
     position: fixed;

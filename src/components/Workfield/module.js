@@ -1,4 +1,4 @@
-import { randomize, hashFunction, findCommon } from '../../utils';
+import { randomize, hashFunction, findCommon } from '@utils';
 
 
 const vowelsList = 'eyuioaуеыаоэёяиюäöüéàèùâêîôûïüÿìíòóúęąєў';
@@ -634,14 +634,12 @@ function meterDetection() {
     let count = 0;
 
     return (stringMeter) => {
-
         map[stringMeter] = map[stringMeter] ? map[stringMeter] + 1 : 1;
 
         ++count;
 
         const mainMeter = map.indexOf(Math.max(...map));
         const inPercent = Math.floor(map[mainMeter]/(count / 100));
-
         const title = rhythmPresets[mainMeter].title;
 
         return { title, inPercent };
@@ -755,6 +753,8 @@ export function makeAccent({
 
     const idString = element.idString;
 
+    const meterDetect = meterDetection();
+
     const idWord = `${idString}${element.idToken}`;
 
     //let stringLinksTriggered = false;
@@ -802,7 +802,7 @@ export function makeAccent({
     strings[idString].soundGramma = makeSoundGramma(
         signId,
         string,
-        elementAccent
+        elements[signId].accent
     );
 
     /* Работа с количеством ударений */
@@ -824,6 +824,21 @@ export function makeAccent({
             strings
         });
     }
+
+    /* Определение метра */
+
+    strings[idString].steps = stringOnSteps(
+        strings[idString].soundGramma,
+        strings[idString].totalStringAccents.length,
+        elements
+    );
+
+    strings[idString].rhythmPreset = rhythmDetection(
+        strings[idString].steps,
+        elements
+    );
+
+    strings[idString].mainMeter = meterDetect(strings[idString].rhythmPreset);
 
     /* if(!stringLinksTriggered && wordLinks[wordLowerCased]) {
             wordLinks[wordLowerCased].forEach( idWord => {
@@ -877,12 +892,12 @@ export const rhythmPresets = [
     {
         size: 3,
         accent: 2,
-        name: 'AMPHIBRACHIUM'
+        title: 'AMPHIBRACHIUM'
     },
     {
         size: 3,
         accent: 3,
-        name: 'ANAPAEST'
+        title: 'ANAPAEST'
     }
 ];
 

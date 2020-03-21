@@ -1,10 +1,9 @@
 import { h } from 'preact';
 import styled from 'styled-components';
 
-import theme from '../../styles/theme';
-import { AnimationUp } from '../../styles/components';
-import { withElements } from '../../styles/helpers';
-import { hexToRgb } from '../../utils';
+import theme from '@styles/theme';
+import { AnimationUp } from '@styles/components';
+import { withElements } from '@styles/helpers';
 
 const StyledButton = styled.button.attrs((props) => ({
     className: withElements(props)

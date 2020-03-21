@@ -2,9 +2,9 @@ import { h } from 'preact';
 
 import { translations } from './translations';
 
-import SecondaryMenu from '../../components/SecondaryMenu';
-import MelodyIcon from '../../components/IconSVG/Melody';
-import RhythmIcon from '../../components/IconSVG/RhythmIcon';
+import SecondaryMenu from '@components/SecondaryMenu';
+import MelodyIcon from '@icons/Melody';
+import RhythmIcon from '@icons/RhythmIcon';
 
 const secondMenu = (lang, text) => [
     {

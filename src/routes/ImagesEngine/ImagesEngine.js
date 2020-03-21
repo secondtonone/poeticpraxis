@@ -1,23 +1,23 @@
 import { h, Component } from 'preact';
 
-import { imaged, stringToWords } from '../../modules/imaged';
-import { copying } from '../../modules/copying';
-import { getWords } from '../../modules/dictionary';
-import { isTouchDevice, wordByNumber, isSupportRecognition } from '../../utils';
+import { imaged, stringToWords } from '@modules/imaged';
+import { copying } from '@modules/copying';
+import { getWords } from '@modules/dictionary';
+import { isTouchDevice, wordByNumber, isSupportRecognition } from '@utils';
 import { translations } from './translations';
 
-import Recorder from '../../components/Recorder';
-import MatchList from '../../components/MatchList';
-import Textarea from '../../components/Textarea';
-import Button from '../../components/Button';
-import MessageBox from '../../components/MessageBox';
+import Recorder from '@components/Recorder';
+import MatchList from '@components/MatchList';
+import Textarea from '@components/Textarea';
+import Button from '@components/Button';
+import MessageBox from '@components/MessageBox';
 
-import ArrowBack from '../../components/IconSVG/ArrowBack';
-import Widgets from '../../components/IconSVG/Widgets';
-import Delete from '../../components/IconSVG/Delete';
-import CheckCircle from '../../components/IconSVG/CheckCircle';
-import ContentCopy from '../../components/IconSVG/ContentCopy';
-import WordsIcon from '../../components/IconSVG/Words';
+import ArrowBack from '@icons/ArrowBack';
+import Widgets from '@icons/Widgets';
+import Delete from '@icons/Delete';
+import CheckCircle from '@icons/CheckCircle';
+import ContentCopy from '@icons/ContentCopy';
+import WordsIcon from '@icons/Words';
 
 import {
     FieldEditableArea,
@@ -30,7 +30,7 @@ import {
     Link,
     TextMinor,
     ActionBar
-} from '../../styles/components';
+} from '@styles/components';
 
 import Help from './Help';
 import ImagesEngineMenu from './ImagesEngineMenu';

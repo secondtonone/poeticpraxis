@@ -4,13 +4,13 @@ import { lazy, Suspense } from 'preact/compat';
 import { NavLink } from 'react-router-dom';
 
 import examples from './examples';
-import { maxMatchMedia } from '../../utils';
+import { maxMatchMedia } from '@utils';
 
-import Button from '../../components/Button';
-import Loader from '../../components/Loader';
+import Button from '@components/Button';
+import Loader from '@components/Loader';
 
 const Workfield = lazy(() =>
-    import(/* webpackChunkName: "Workfield" */ '../../components/Workfield')
+    import(/* webpackChunkName: "Workfield" */ '@components/Workfield')
 );
 
 import {
@@ -18,7 +18,7 @@ import {
     Flex,
     TextAccent,
     Container
-} from '../../styles/components';
+} from '@styles/components';
 
 const AboutRhythmic = ({lang, mediaQuery}) => {
     const isRusLang = lang === 'ru';

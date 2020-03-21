@@ -1,9 +1,9 @@
 import { h } from 'preact';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
-import Layout from '../components/Layout';
-import Bundle from '../components/Bundle';
-import Loader from '../components/Loader';
+import Layout from '@containers/Layout';
+import Bundle from '@containers/Bundle';
+import Loader from '@components/Loader';
 
 const About = (props) => (
     <Bundle

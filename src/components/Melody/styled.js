@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from '../../styles/components';
+import { Link } from '@styles/components';
 
 export const PlayerContainer = styled.div`
     padding: 16px 0;

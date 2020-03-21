@@ -1,12 +1,12 @@
 import { h } from 'preact';
 
-import useSessionStorage from '../../hooks/useSessionStorage';
+import useSessionStorage from '@hooks/useSessionStorage';
 
-import Info from '../../components/Info';
+import Info from '@components/Info';
 
-import { Container } from '../../styles/components';
+import { Container } from '@styles/components';
 
-import { maxMatchMedia, isSupportRecognition } from '../../utils';
+import { maxMatchMedia, isSupportRecognition } from '@utils';
 
 const helpState = () => {
     const [valueSessionStorage, setValueSessionStorage] = useSessionStorage(

@@ -1,4 +1,4 @@
-import { randomGenerator } from '../utils';
+import { randomGenerator } from '@utils';
 
 const totalWords = 67774;
 const interval = 5000;

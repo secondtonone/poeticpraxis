@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
-
-export default class Bundle extends Component {
+class Bundle extends Component {
     state = {
         component: null
     };
@@ -17,3 +16,5 @@ export default class Bundle extends Component {
         return this.props.children(this.state.component);
     }
 }
+
+export default Bundle;

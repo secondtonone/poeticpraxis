@@ -2,9 +2,9 @@ import { h } from 'preact';
 
 import { NavLink } from 'react-router-dom';
 
-import { maxMatchMedia } from '../../utils';
+import { maxMatchMedia } from '@utils';
 
-import Button from '../../components/Button';
+import Button from '@components/Button';
 
 import {
     Text,
@@ -14,7 +14,7 @@ import {
     Container,
     Strong,
     TextMinor,
-} from '../../styles/components';
+} from '@styles/components';
 
 const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
     const isRusLang = lang === 'ru';

@@ -2,11 +2,11 @@ import { h, Component } from 'preact';
 import { useState, useCallback } from 'preact/compat';
 import styled from 'styled-components';
 
-import Button from '../../components/Button';
+import Button from '@components/Button';
 
 import { translations } from './translations';
 
-import { Flex, Container } from '../../styles/components';
+import { Flex, Container } from '@styles/components';
 
 const StyledBox = styled(Flex)`
     padding: 16px 24px 8px;

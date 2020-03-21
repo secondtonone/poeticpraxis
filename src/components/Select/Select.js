@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
 import styled from 'styled-components';
 
-import theme from '../../styles/theme';
+import theme from '@styles/theme';
 
-import ArrowDropDown from '../IconSVG/ArrowDropDown';
+import ArrowDropDown from '@icons/ArrowDropDown';
 
 const Label = styled.label`
     color: ${(props) => props.theme.secondColor};

@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
-import { randomize, delay } from '../../utils';
+import { randomize, delay } from '@utils';
 
-import { FieldLabel, SimpleTextarea } from '../../styles/components';
+import { FieldLabel, SimpleTextarea } from '@styles/components';
 
 export default class Textarea extends Component {
     constructor(props) {

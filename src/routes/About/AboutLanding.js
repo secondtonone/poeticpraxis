@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import Button from '../../components/Button';
-import Logo from '../../components/Logo';
+import Button from '@components/Button';
+import Logo from '@components/Logo';
 
 import {
     Text,
@@ -10,7 +10,7 @@ import {
     TextAccent,
     DesctopHiddenContainer,
     BetaSign
-} from '../../styles/components';
+} from '@styles/components';
 
 const innerHeight = window.innerHeight;
 

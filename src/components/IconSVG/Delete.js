@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import Icon from "../Icon";
+import Icon from "@components/Icon";
 export default class Delete extends Component {
     render() {
         return (

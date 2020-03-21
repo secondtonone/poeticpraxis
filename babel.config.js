@@ -7,8 +7,8 @@ module.exports = {
                 targets: {
                     browsers: ['>0.25%', 'not ie 11', 'not op_mini all']
                 },
-                useBuiltIns: 'entry',
-                corejs: 3.6
+                useBuiltIns: 'usage',
+                corejs: 3
             }
         ]
     ],

@@ -2,18 +2,18 @@ import { h, Component } from 'preact';
 
 import { translations } from './translations';
 
-import theme from '../../styles/theme';
+import theme from '@styles/theme';
 
-import { Tone, Instrument } from '../../modules/tone';
-import Drawing from '../../modules/drawing';
-import { makeLetterGramma } from '../../modules/melodic';
+import { Tone, Instrument } from '@modules/tone';
+import Drawing from '@modules/drawing';
+import { makeLetterGramma } from '@modules/melodic';
 
-import Loader from '../Loader';
-import Canvas from '../Canvas';
-import Player from '../Player';
-import Button from '../Button';
+import Loader from '@components/Loader';
+import Canvas from '@components/Canvas';
+import Player from '@components/Player';
+import Button from '@components/Button';
 
-import { Flex } from '../../styles/components';
+import { Flex } from '@styles/components';
 
 import {
     DownloadLink,

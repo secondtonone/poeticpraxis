@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
-import Recognition from '../../modules/recognition';
+import Recognition from '@modules/recognition';
 import { translations } from './translations';
 
-import Button from '../Button';
-import MicIcon from '../IconSVG/Mic';
+import Button from '@components/Button';
+import MicIcon from '@icons/Mic';
 
 export default class Recorder extends Component {
     constructor(props) {

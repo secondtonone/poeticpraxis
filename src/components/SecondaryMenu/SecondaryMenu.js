@@ -8,9 +8,9 @@ import {
     LogoContainer
 } from './styled';
 
-import Logo from '../Logo';
+import Logo from '@components/Logo';
 
-import {BetaSign} from '../../styles/components';
+import {BetaSign} from '@styles/components';
 
 const delta = 76;
 

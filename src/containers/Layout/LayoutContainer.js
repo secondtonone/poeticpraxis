@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
-import { changeTheme } from '../Layout/LayoutActions';
 
-import ThemeTumbler from './ThemeTumbler';
+import Layout from './Layout';
+import { changeTheme, changeLang } from './LayoutActions';
 
 const mapDispatchToProps = {
-    changeTheme
+    changeTheme,
+    changeLang
 };
 
 const mapStateToProps = (state) => ({
@@ -15,4 +16,4 @@ const mapStateToProps = (state) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ThemeTumbler);
+)(Layout);

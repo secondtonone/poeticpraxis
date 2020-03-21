@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import Drawing from '../../modules/drawing';
+import Drawing from '@modules/drawing';
 
 export default class Canvas extends Component {
     componentDidMount() {

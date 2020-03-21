@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { setEngineState, sharingText } from './ImagesEngineActions';
-import { changeTheme } from '../../components/Layout/LayoutActions';
+import { changeTheme } from '@containers/Layout/LayoutActions';
 
 import ImagesEngine from './ImagesEngine';
 

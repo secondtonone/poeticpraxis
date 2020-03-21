@@ -3,8 +3,8 @@ import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 
-import styles from '../styles';
-import Routes from '../routes';
+import styles from '@styles';
+import Routes from '@routes';
 
 const GlobalStyle = createGlobalStyle`${styles}`;
 

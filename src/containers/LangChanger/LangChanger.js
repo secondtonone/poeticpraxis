@@ -1,13 +1,13 @@
 import { h } from 'preact';
 import { useCallback } from 'preact/compat';
 
-import { Flex, HiddenSelect } from '../../styles/components';
-import Dropdown from '../Dropdown';
-import Button from '../Button';
+import { Flex, HiddenSelect } from '@styles/components';
+import Dropdown from '@components/Dropdown';
+import Button from '@components/Button';
 
-import { isTouchDevice } from '../../utils';
+import { isTouchDevice } from '@utils';
 
-import LangIcon from '../IconSVG/Lang';
+import LangIcon from '@icons/Lang';
 
 const langOptions = [
     { title: 'Русский', value: 'ru' },

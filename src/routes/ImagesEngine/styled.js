@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import { AnimationUp } from '../../styles/components';
-import Button from '../../components/Button';
-import Select from '../../components/Select';
+import { AnimationUp } from '@styles/components';
+import Button from '@components/Button';
+import Select from '@components/Select';
 
 const MainSelect = styled(Select)`
     position: fixed;

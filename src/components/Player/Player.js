@@ -2,14 +2,14 @@ import { h, Component } from 'preact';
 
 import { translations } from './translations';
 
-import Button from '../Button';
-import Range from '../Range';
+import Button from '@components/Button';
+import Range from '@components/Range';
 
-import PlayIcon from '../IconSVG/PlayIcon';
-import ReplayIcon from '../IconSVG/ReplayIcon';
-import PauseIcon from '../IconSVG/PauseIcon';
+import PlayIcon from '@icons/PlayIcon';
+import ReplayIcon from '@icons/ReplayIcon';
+import PauseIcon from '@icons/PauseIcon';
 
-import { Flex, Container } from '../../styles/components';
+import { Flex, Container } from '@styles/components';
 
 export default class Player extends Component {
     constructor(props) {

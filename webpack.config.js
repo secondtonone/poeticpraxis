@@ -51,7 +51,16 @@ module.exports = {
         alias: {
             react: 'preact/compat',
             'react-dom/test-utils': 'preact/test-utils',
-            'react-dom': 'preact/compat'
+            'react-dom': 'preact/compat',
+            '@components': path.join(__dirname, 'src/components'),
+            '@containers': path.join(__dirname, 'src/containers'),
+            '@utils': path.join(__dirname, 'src/utils'),
+            '@styles': path.join(__dirname, 'src/styles'),
+            '@modules': path.join(__dirname, 'src/modules'),
+            '@hooks': path.join(__dirname, 'src/hooks'),
+            '@routes': path.join(__dirname, 'src/routes'),
+            '@icons': path.join(__dirname, 'src/components/IconSVG'),
+            '@public': path.join(__dirname, 'public')
         }
     },
     optimization: {

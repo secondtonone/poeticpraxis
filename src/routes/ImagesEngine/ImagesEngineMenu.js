@@ -2,9 +2,9 @@ import { h } from 'preact';
 
 import { translations } from './translations';
 
-import SecondaryMenu from '../../components/SecondaryMenu';
-import Subject from '../../components/IconSVG/Subject';
-import PlaylistAddCheck from '../../components/IconSVG/PlaylistAddCheck';
+import SecondaryMenu from '@components/SecondaryMenu';
+import Subject from '@icons/Subject';
+import PlaylistAddCheck from '@icons/PlaylistAddCheck';
 
 const secondMenu = (lang, isDisabledWordsview) => [
     {

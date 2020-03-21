@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useState, useCallback } from 'preact/compat';
 
-import Button from '../../components/Button';
+import Button from '@components/Button';
 
 import {
     Text,
@@ -9,7 +9,7 @@ import {
     Flex,
     TextAccent,
     Container
-} from '../../styles/components';
+} from '@styles/components';
 
 const AboutProject = ({ lang = 'ru', screenHeight, mediaQuery }) => {
     const [isHiddenPayment, setPaymentVisibility] = useState(false);

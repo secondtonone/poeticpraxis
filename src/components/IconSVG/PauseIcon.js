@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import Icon from '../Icon';
+import Icon from '@components/Icon';
 
 export default class PauseIcon extends Component {
     render() {

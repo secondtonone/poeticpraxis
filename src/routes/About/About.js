@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
 import { lazy, Suspense } from 'preact/compat';
 
-import { scrollToAnchor, maxMatchMedia, getDaysFromNow } from '../../utils';
+import { scrollToAnchor, maxMatchMedia, getDaysFromNow } from '@utils';
 
-import Loader from '../../components/Loader';
+import Loader from '@components/Loader';
 
 import AboutLanding from './AboutLanding';
 import AboutEngine from './AboutEngine';
@@ -27,7 +27,7 @@ const AboutProject = lazy(() =>
 import {
     Link,
     Footer
-} from '../../styles/components';
+} from '@styles/components';
 
 export default class About extends Component {
     state = { innerWidth: window.innerWidth };

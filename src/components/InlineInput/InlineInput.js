@@ -2,10 +2,10 @@ import { h, Component } from 'preact';
 
 import { Input, InputButton } from './styled';
 
-import { Container } from '../../styles/components';
+import { Container } from '@styles/components';
 
-import DoneIcon from '../IconSVG/DoneIcon';
-import EditIcon from '../IconSVG/EditIcon';
+import DoneIcon from '@icons/DoneIcon';
+import EditIcon from '@icons/EditIcon';
 
 export default class InlineInput extends Component {
     constructor(props) {

@@ -3,16 +3,31 @@ import { h, Component } from 'preact';
 import { NavBar, NavMenu, NavMenuBar, MobileNavMenu } from './styled';
 
 import { translations } from './translations';
-import Widgets from '../IconSVG/Widgets';
+import MenuItems from './MenuItems';
 
-import ChangeHistory from '../IconSVG/ChangeHistory';
-import Burger from '../IconSVG/Burger';
+import Widgets from '@icons/Widgets';
 
-import Button from '../Button';
-import RouteLink from '../RouteLink';
+import ChangeHistory from '@icons/ChangeHistory';
+import Burger from '@icons/Burger';
 
-import { Backdrop, Flex, Container } from '../../styles/components';
+import Button from '@components/Button';
+import RouteLink from '@components/RouteLink';
 
+import { Backdrop, Flex, Container } from '@styles/components';
+
+
+const menu = [
+    {
+        url: 'images-engine',
+        title: 'ENGINE',
+        icon: <Widgets />
+    },
+    {
+        url: 'rhythmic',
+        title: 'RHYTHMICS',
+        icon: <ChangeHistory />
+    }
+];
 export default class Menu extends Component {
     state = {
         isMenuHidden: true
@@ -67,43 +82,6 @@ export default class Menu extends Component {
     render() {
         const { inline, items, lang = 'ru' } = this.props;
 
-        const menu = [
-            {
-                url: 'images-engine',
-                title: translations[lang].menu['ENGINE'],
-                icon: <Widgets />
-            },
-            {
-                url: 'rhythmic',
-                title: translations[lang].menu['RHYTHMICS'],
-                icon: <ChangeHistory />
-            }
-        ];
-
-        const navMenuDevice = menu.map((item, index) => {
-            return (
-                <NavMenu.Item key={`menu-${index}`}>
-                    <RouteLink to={`/${item.url}`} onClick={this.toggleMenu}>
-                        <NavMenu.Title>{item.title}</NavMenu.Title>
-                    </RouteLink>
-                </NavMenu.Item>
-            );
-        });
-
-        const navMenu = menu.map((item, index) => {
-            return (
-                <NavMenu.Item key={`menu-${index}`}>
-                    <RouteLink to={`/${item.url}`}>
-                        <NavMenu.Title>{item.title}</NavMenu.Title>
-                    </RouteLink>
-                </NavMenu.Item>
-            );
-        });
-
-        const menuItems = items.map((item, index) => {
-            return <NavMenu.Item key={`item-${index}`}>{item}</NavMenu.Item>;
-        });
-
         return (
             <NavBar id="nav" inline={inline}>
                 <NavMenuBar>
@@ -133,7 +111,23 @@ export default class Menu extends Component {
                                         </NavMenu.Title>
                                     </RouteLink>
                                 </NavMenu.Item>
-                                {navMenuDevice}
+                                <MenuItems
+                                    lang={lang}
+                                    items={menu}
+                                    render={(item) => (
+                                        <RouteLink
+                                            to={`/${item.url}`}
+                                            onClick={this.toggleMenu}>
+                                            <NavMenu.Title>
+                                                {
+                                                    translations[lang].menu[
+                                                        item.title
+                                                    ]
+                                                }
+                                            </NavMenu.Title>
+                                        </RouteLink>
+                                    )}
+                                />
                                 <NavMenu.Item />
                                 <NavMenu.Item>
                                     <Flex justify="space-between">
@@ -151,8 +145,17 @@ export default class Menu extends Component {
                     ) : null}
                 </NavMenuBar>
                 <NavMenu>
-                    {navMenu}
-                    {menuItems}
+                    <MenuItems
+                        items={menu}
+                        render={(item) => (
+                            <RouteLink to={`/${item.url}`}>
+                                <NavMenu.Title>
+                                    {translations[lang].menu[item.title]}
+                                </NavMenu.Title>
+                            </RouteLink>
+                        )}
+                    />
+                    <MenuItems items={items} />
                 </NavMenu>
             </NavBar>
         );
