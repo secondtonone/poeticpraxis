@@ -1,5 +1,5 @@
 import { copying } from './copying';
-import { isTouchDevice } from '@utils';
+import isTouchDevice from '@utils/isTouchDevice';
 
 export function getLongLink(string) {
     return encodeURI(

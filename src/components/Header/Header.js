@@ -11,7 +11,7 @@ import {
     BetaSign
 } from '@styles/components';
 
-import { isTouchDevice } from '@utils';
+import isTouchDevice from '@utils/isTouchDevice';
 import { translations } from './translations';
 
 import RouteLink from '@components/RouteLink';

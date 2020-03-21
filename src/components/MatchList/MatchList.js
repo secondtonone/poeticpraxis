@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import { randomize } from '@utils';
+import randomize from '@utils/randomize';
 
 import { StyledMatchList } from './styled';
 

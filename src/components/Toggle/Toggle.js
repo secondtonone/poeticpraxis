@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import theme from '@styles/theme';
 
-import { randomize } from '@utils';
+import randomize from '@utils/randomize';
 
 const Label = styled.label`
     color: ${(props) => props.theme.secondColor};

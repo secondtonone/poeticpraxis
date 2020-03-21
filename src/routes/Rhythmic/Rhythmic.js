@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 
-import { isTouchDevice, wordByNumber } from '@utils';
+import wordByNumber from '@utils/wordByNumber';
+import isTouchDevice from '@utils/isTouchDevice';
 import { translations } from './translations';
 
 import {

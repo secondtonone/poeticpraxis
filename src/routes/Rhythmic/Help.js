@@ -7,7 +7,7 @@ import Info from '@components/Info';
 
 import { Container, Flex } from '@styles/components';
 
-import { maxMatchMedia } from '@utils';
+import maxMatchMedia from '@utils/maxMatchMedia';
 
 import {
     StringPause,

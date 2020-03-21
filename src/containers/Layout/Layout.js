@@ -5,7 +5,8 @@ import { ThemeProvider } from 'styled-components';
 import { MainContent, Page } from './styled';
 import theme from '@styles/theme';
 
-import { isDaytime, userLang } from '@utils';
+import isDaytime from '@utils/isDaytime';
+import userLang from '@utils/userLang';
 
 
 import Menu from '@components/Menu';

@@ -6,7 +6,7 @@ import Info from '@components/Info';
 
 import { Container } from '@styles/components';
 
-import { maxMatchMedia, isSupportRecognition } from '@utils';
+import isSupportRecognition from '@utils/isSupportRecognition';
 
 const helpState = () => {
     const [valueSessionStorage, setValueSessionStorage] = useSessionStorage(

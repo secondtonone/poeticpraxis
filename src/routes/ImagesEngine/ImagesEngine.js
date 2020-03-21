@@ -3,7 +3,11 @@ import { h, Component } from 'preact';
 import { imaged, stringToWords } from '@modules/imaged';
 import { copying } from '@modules/copying';
 import { getWords } from '@modules/dictionary';
-import { isTouchDevice, wordByNumber, isSupportRecognition } from '@utils';
+
+import wordByNumber from '@utils/wordByNumber';
+import isSupportRecognition from '@utils/isSupportRecognition';
+import isTouchDevice from '@utils/isTouchDevice';
+
 import { translations } from './translations';
 
 import Recorder from '@components/Recorder';

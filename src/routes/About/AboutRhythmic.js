@@ -4,7 +4,7 @@ import { lazy, Suspense } from 'preact/compat';
 import { NavLink } from 'react-router-dom';
 
 import examples from './examples';
-import { maxMatchMedia } from '@utils';
+import maxMatchMedia from '@utils/maxMatchMedia';
 
 import Button from '@components/Button';
 import Loader from '@components/Loader';

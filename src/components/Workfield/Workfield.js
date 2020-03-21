@@ -7,7 +7,8 @@ import InfoMarks from './InfoMarks';
 
 import {translations} from './translations';
 
-import { hashFunction, fontReady } from '@utils';
+import hashFunction from '@utils/hashFunction';
+import fontReady from '@utils/fontReady';
 import AnalizeWorker from 'worker-loader!./analize-worker';
 
 import {

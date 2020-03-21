@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { randomize, delay } from '@utils';
+import randomize from '@utils/randomize';
 
 import { FieldLabel, SimpleTextarea } from '@styles/components';
 

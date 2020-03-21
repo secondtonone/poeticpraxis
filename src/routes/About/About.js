@@ -1,7 +1,9 @@
 import { h, Component } from 'preact';
 import { lazy, Suspense } from 'preact/compat';
 
-import { scrollToAnchor, maxMatchMedia, getDaysFromNow } from '@utils';
+import scrollToAnchor from '@utils/scrollToAnchor';
+import maxMatchMedia from '@utils/maxMatchMedia';
+import getDaysFromNow from '@utils/getDaysFromNow';
 
 import Loader from '@components/Loader';
 

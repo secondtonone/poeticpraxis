@@ -1,6 +1,3 @@
-export function isTouchDevice() {
-    return 'ontouchstart' in window.document.documentElement;
-}
 
 export function isDaytime() {
     const hours = new Date().getHours();

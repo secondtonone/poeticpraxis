@@ -2,7 +2,7 @@ import { h } from 'preact';
 
 import { NavLink } from 'react-router-dom';
 
-import { maxMatchMedia } from '@utils';
+import maxMatchMedia from '@utils/maxMatchMedia';
 
 import Button from '@components/Button';
 

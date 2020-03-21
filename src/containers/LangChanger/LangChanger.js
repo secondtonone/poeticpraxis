@@ -5,7 +5,7 @@ import { Flex, HiddenSelect } from '@styles/components';
 import Dropdown from '@components/Dropdown';
 import Button from '@components/Button';
 
-import { isTouchDevice } from '@utils';
+import isTouchDevice from '@utils/isTouchDevice';
 
 import LangIcon from '@icons/Lang';
 

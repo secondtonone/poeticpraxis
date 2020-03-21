@@ -1,4 +1,6 @@
-import { randomize, hashFunction, findCommon } from '@utils';
+import randomize from '@utils/randomize';
+import hashFunction from '@utils/hashFunction';
+import findCommon from '@utils/findCommon';
 
 
 const vowelsList = 'eyuioaуеыаоэёяиюäöüéàèùâêîôûïüÿìíòóúęąєў';
