@@ -19,7 +19,6 @@ import MessageBox from '@components/MessageBox';
 import ArrowBack from '@icons/ArrowBack';
 import Widgets from '@icons/Widgets';
 import Delete from '@icons/Delete';
-import CheckCircle from '@icons/CheckCircle';
 import ContentCopy from '@icons/ContentCopy';
 import WordsIcon from '@icons/Words';
 
@@ -407,12 +406,12 @@ export default class ImagesEngine extends Component {
                                 <TextMinor>
                                     {wordsNumber
                                         ? `${wordsNumber} ${wordByNumber(
-                                              lang,
-                                              wordsNumber,
-                                              translations[lang].engine[
-                                                  'WORDS_AMOUNT'
-                                              ]
-                                          )}`
+                                            lang,
+                                            wordsNumber,
+                                            translations[lang].engine[
+                                                'WORDS_AMOUNT'
+                                            ]
+                                        )}`
                                         : null}
                                 </TextMinor>
                             </Flex>
