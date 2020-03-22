@@ -12,7 +12,9 @@ const ru = {
     IAMB: 'Ямб',
     DACTYL: 'Дактиль',
     AMPHIBRACHIUM: 'Амфибрахий',
-    ANAPAEST: 'Анапест'
+    ANAPAEST: 'Анапест',
+    ERROR_INSTR: 'Инструмент не настроен',
+    ERROR_WHAT: 'Что же там произошло?'
 };
 
 const en = {
@@ -29,7 +31,9 @@ const en = {
     IAMB: 'Iamb',
     DACTYL: 'Dactyl',
     AMPHIBRACHIUM: 'Amphibrachium',
-    ANAPAEST: 'Anapaest'
+    ANAPAEST: 'Anapaest',
+    ERROR_INSTR: 'Piano not tuned',
+    ERROR_WHAT: 'What happened there?'
 };
 
 const translations = {

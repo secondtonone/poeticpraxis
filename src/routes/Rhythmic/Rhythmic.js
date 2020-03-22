@@ -60,13 +60,6 @@ export default class Rhythmic extends Component {
             isFocused: false,
             isEditable: true,
             currentView: 'rhythmic',
-            rhythmicState: {
-                wordsCount: 0,
-                mainMeter: {
-                    title: '',
-                    inPercent: 0
-                }
-            },
             isHelpInfoHidden: false
         };
 
@@ -216,12 +209,6 @@ export default class Rhythmic extends Component {
         }
     }
 
-    getDataFromWorkfield = (rhythmicState) => {
-        this.setState({
-            rhythmicState
-        });
-    };
-
     focusHandler = (isFocused) => {
         const isEditable = this.state.isEditable;
 
@@ -291,7 +278,7 @@ export default class Rhythmic extends Component {
         const {
             setRhytmicState,
             setWordsDictionary,
-            rhythmicState: { text, stringsDictionary },
+            rhythmicState,
             wordsDictionary,
             lang = 'ru',
             variant = 'light'
@@ -303,19 +290,24 @@ export default class Rhythmic extends Component {
             isEditable,
             isFocused,
             isToolbarHidden,
-            currentView,
-            rhythmicState
+            currentView
         } = this.state;
+
+        const {
+            text,
+            stringsDictionary,
+            wordsCount = 0,
+            mainMeter = {
+                title: '',
+                inPercent: 0
+            }
+        } = rhythmicState;
 
         const isDevice = this.isDevice;
 
-        const wordsNumber = rhythmicState.wordsCount;
-
-        const mainMeter = rhythmicState.mainMeter;
-
-        const wordsNumberString = `${wordsNumber} ${wordByNumber(
+        const wordsNumberString = `${wordsCount} ${wordByNumber(
             lang,
-            wordsNumber,
+            wordsCount,
             translations[lang].rhythmic['WORDS_AMOUNT']
         )}`;
 
@@ -452,25 +444,24 @@ export default class Rhythmic extends Component {
                                 </StringPauseButton>
 
                                 <Workfield
-                                    onMouseMove={this.mouseTracking}
-                                    errorHandler={this.showMessage}
-                                    readOnly={!isEditable}
                                     text={text}
-                                    transmitState={setRhytmicState}
-                                    onFocus={this.focusHandler}
-                                    setWordsDictionary={setWordsDictionary}
+                                    placeHolder={`${translations[lang].placeholders['RHYTHMICS']}...`}
+                                    readOnly={!isEditable}
+                                    lang={lang}
                                     wordsDictionary={wordsDictionary}
                                     stringsDictionary={stringsDictionary}
-                                    toParent={this.getDataFromWorkfield}
-                                    lang={lang}
-                                    placeHolder={`${translations[lang].placeholders['RHYTHMICS']}...`}
+                                    onMouseMove={this.mouseTracking}
+                                    onError={this.showMessage}
+                                    onFocus={this.focusHandler}
+                                    onUpdate={setRhytmicState}
+                                    setWordsDictionary={setWordsDictionary}
                                     ref={this.workfieldRef}
                                 />
 
                                 <FlexSided justify="flex-end">
                                     <TextMinor>
-                                        {wordsNumber ? wordsNumberString : null}
-                                        {wordsNumber && mainMeter
+                                        {wordsCount ? wordsNumberString : null}
+                                        {wordsCount && mainMeter
                                             ? mainMeterString
                                             : null}
                                     </TextMinor>

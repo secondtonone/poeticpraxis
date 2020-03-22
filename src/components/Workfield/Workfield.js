@@ -120,11 +120,11 @@ export default class Workfield extends Component {
             };
         });
 
-    giveDataToParent = () => {
-        if (this.props.toParent) {
+    onUpdate = () => {
+        if (this.props.onUpdate) {
             const translation = translations[this.props.lang];
             const { strings, elements, orderStrings, wordsCount, mainMeter: {title, inPercent} } = this.state;
-            this.props.toParent({
+            this.props.onUpdate({
                 strings,
                 elements,
                 orderStrings,
@@ -157,9 +157,7 @@ export default class Workfield extends Component {
 
     handleTextInput = (e) => {
         const text = e.target.value;
-        this.props.transmitState({
-            text
-        });
+        this.props.onUpdate && this.props.onUpdate({ text });
     };
 
     textLinting = async (text) => {
@@ -196,17 +194,18 @@ export default class Workfield extends Component {
                 ...stringsLinted
             });
 
-            this.giveDataToParent();
+            this.onUpdate();
         } catch (e) {
-            if (this.props.errorHandler) {
-                this.props.errorHandler('Музыка не зазвучит, инструмент упал с 9ого этажа...');
+            if (this.props.onError) {
+                const translation = translations[this.props.lang];
+                this.props.onError(translation['ERROR_INSTR']);
             }
         }
     };
 
     makeCaesura = () => {
         makeCaesura(this.mainField, (text) => {
-            this.props.transmitState({
+            this.props.onUpdate && this.props.onUpdate({
                 text
             });
         });
@@ -270,7 +269,7 @@ export default class Workfield extends Component {
             strings
         });
 
-        this.giveDataToParent();
+        this.onUpdate();
 
         const rhythmPresetIndex = this.state.strings[stringId].rhythmPreset;
 
@@ -310,10 +309,9 @@ export default class Workfield extends Component {
             const text = this.props.text;
             this.textLinting(text);
         } catch (e) {
-            if (this.props.errorHandler) {
-                this.props.errorHandler(
-                    'Что же там произошло?'
-                );
+            if (this.props.onError) {
+                const translation = translations[this.props.lang];
+                this.props.onError(translation['ERROR_WHAT']);
             }
         }
     };
@@ -341,15 +339,11 @@ export default class Workfield extends Component {
             strings: result.strings
         });
 
-        this.giveDataToParent();
-
         if (!this.props.readOnly) {
             this.props.setWordsDictionary(result.wordsDictionary);
-
-            this.props.transmitState({
-                stringsDictionary: result.stringsDictionary
-            });
         }
+
+        this.onUpdate();
     };
 
     paintFieldHandler = (e) => {
@@ -435,15 +429,11 @@ export default class Workfield extends Component {
             strings: result.strings
         });
 
-        this.giveDataToParent();
-
         if (!this.props.readOnly) {
             this.props.setWordsDictionary(result.wordsDictionary);
-
-            this.props.transmitState({
-                stringsDictionary: result.stringsDictionary
-            });
         }
+
+        this.onUpdate();
     };
 
     fakeFieldRef = (ref) => {
