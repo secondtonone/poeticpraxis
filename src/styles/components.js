@@ -303,6 +303,7 @@ const ActionBar = styled.div`
 const Backdrop = styled.div`
     position: fixed;
     height: 100vh;
+    z-index: 9999;
     bottom: 0;
     left: 0;
     right: 0;
