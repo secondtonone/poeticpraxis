@@ -6,7 +6,7 @@ const PageHeader = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: ${(props) => (props.zIndex ? props.zIndex : 1001)};
+    z-index: 1001;
     width: 100%;
     background: linear-gradient(
         rgba(${(props) => hexToRgb(props.theme.primaryColor).join(',')}, 0.9),

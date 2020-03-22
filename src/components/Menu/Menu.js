@@ -12,6 +12,7 @@ import Burger from '@icons/Burger';
 
 import Button from '@components/Button';
 import RouteLink from '@components/RouteLink';
+import Portal from '@components/Portal';
 
 import { Backdrop, Flex, Container } from '@styles/components';
 
@@ -40,7 +41,6 @@ export default class Menu extends Component {
     toggleMenu = () => {
         document.body.classList.toggle('fixed');
 
-        this.props.onToggle();
         this.setState({
             isMenuHidden: !this.state.isMenuHidden
         });
@@ -65,17 +65,18 @@ export default class Menu extends Component {
     onTouchMove = (e) => {
 
         this.deltaY = e.touches[0].clientY - this.initialY;
+        if (this.mobileNavMenu) {
+            this.mobileNavMenu.style.transform = `translateY(${
+                this.deltaY < 0 ? 0 : this.deltaY
+            }px)`;
 
-        this.mobileNavMenu.style.transform = `translateY(${
-            this.deltaY < 0 ? 0 : this.deltaY
-        }px)`;
-
-        if (
-            this.deltaY > this.mobileNavMenu.offsetHeight * 0.85 &&
-            !this.state.isMenuHidden
-        ) {
-            this.deltaY = 0;
-            this.toggleMenu();
+            if (
+                this.deltaY > this.mobileNavMenu.offsetHeight * 0.85 &&
+                !this.state.isMenuHidden
+            ) {
+                this.deltaY = 0;
+                this.toggleMenu();
+            }
         }
     };
 
@@ -93,55 +94,61 @@ export default class Menu extends Component {
                         <Burger />
                     </Button>
                     {!this.state.isMenuHidden ? (
-                        <Backdrop>
-                            <MobileNavMenu
-                                ref={(ref) => {
-                                    this.mobileNavMenu = ref;
-                                }}
-                                onTouchMove={this.onTouchMove}
-                                onTouchStart={this.onTouchToggle}
-                                onTouchEnd={this.onTouchToggle}>
-                                <NavMenu.Item>
-                                    <RouteLink
-                                        to={'/'}
-                                        exact
-                                        onClick={this.toggleMenu}>
-                                        <NavMenu.Title>
-                                            {translations[lang].menu['ABOUT']}
-                                        </NavMenu.Title>
-                                    </RouteLink>
-                                </NavMenu.Item>
-                                <MenuItems
-                                    lang={lang}
-                                    items={menu}
-                                    render={(item) => (
+                        <Portal id="portal-menu">
+                            <Backdrop>
+                                <MobileNavMenu
+                                    ref={(ref) => {
+                                        this.mobileNavMenu = ref;
+                                    }}
+                                    onTouchMove={this.onTouchMove}
+                                    onTouchStart={this.onTouchToggle}
+                                    onTouchEnd={this.onTouchToggle}>
+                                    <NavMenu.Item>
                                         <RouteLink
-                                            to={`/${item.url}`}
+                                            to={'/'}
+                                            exact
                                             onClick={this.toggleMenu}>
                                             <NavMenu.Title>
                                                 {
                                                     translations[lang].menu[
-                                                        item.title
+                                                        'ABOUT'
                                                     ]
                                                 }
                                             </NavMenu.Title>
                                         </RouteLink>
-                                    )}
-                                />
-                                <NavMenu.Item />
-                                <NavMenu.Item>
-                                    <Flex justify="space-between">
-                                        {items.map((item, index) => (
-                                            <Container
-                                                width="40%"
-                                                key={`item-${index}`}>
-                                                {item}
-                                            </Container>
-                                        ))}
-                                    </Flex>
-                                </NavMenu.Item>
-                            </MobileNavMenu>
-                        </Backdrop>
+                                    </NavMenu.Item>
+                                    <MenuItems
+                                        lang={lang}
+                                        items={menu}
+                                        render={(item) => (
+                                            <RouteLink
+                                                to={`/${item.url}`}
+                                                onClick={this.toggleMenu}>
+                                                <NavMenu.Title>
+                                                    {
+                                                        translations[lang].menu[
+                                                            item.title
+                                                        ]
+                                                    }
+                                                </NavMenu.Title>
+                                            </RouteLink>
+                                        )}
+                                    />
+                                    <NavMenu.Item />
+                                    <NavMenu.Item>
+                                        <Flex justify="space-between">
+                                            {items.map((item, index) => (
+                                                <Container
+                                                    width="40%"
+                                                    key={`item-${index}`}>
+                                                    {item}
+                                                </Container>
+                                            ))}
+                                        </Flex>
+                                    </NavMenu.Item>
+                                </MobileNavMenu>
+                            </Backdrop>
+                        </Portal>
                     ) : null}
                 </NavMenuBar>
                 <NavMenu>

@@ -38,7 +38,6 @@ const MobileNavMenu = styled.ul`
 
     @media (max-width: 600px) {
         position: fixed;
-        z-index: 1003;
         left: 0;
         bottom: 0;
         padding: 24px 64px 0;

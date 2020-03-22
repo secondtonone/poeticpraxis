@@ -1,146 +1,148 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1,user-scalable=no, minimal-ui">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1,user-scalable=no, minimal-ui">
 
-    <link rel="icon" href="<%= require('./img/Signx48.png') %>">
-    <link rel="icon" sizes="192x192" href="<%= require('./img/Signx192.png') %>">
+        <link rel="icon" href="<%= require('./img/Signx48.png') %>">
+        <link rel="icon" sizes="192x192" href="<%= require('./img/Signx192.png') %>">
 
-    <link rel="manifest" href="<%= require('./manifest.webmanifest') %>">
-    
-    
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="indie-catalog">
+        <link rel="manifest" href="<%= require('./manifest.webmanifest') %>">
+        
+        
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="application-name" content="indie-catalog">
 
 
-    <title>POETIC PRAXIS</title>
-    
-    <link rel="alternate" hreflang="ru" href="https://poeticpraxis.ru?lang=ru" />
-    <link rel="alternate" hreflang="en" href="https://poeticpraxis.ru?lang=en" />
-    <link rel="alternate" hreflang="ru" href="https://poeticpraxis.ru/rhythmic?lang=ru" />
-    <link rel="alternate" hreflang="en" href="https://poeticpraxis.ru/rhythmic?lang=en" />
-    <link rel="alternate" hreflang="ru" href="https://poeticpraxis.ru/images-engine?lang=ru" />
-    <link rel="alternate" hreflang="en" href="https://poeticpraxis.ru/images-engine?lang=en" />
-    <link rel="alternate" hreflang="x-default" href="https://poeticpraxis.ru?lang=en" />
+        <title>POETIC PRAXIS</title>
+        
+        <link rel="alternate" hreflang="ru" href="https://poeticpraxis.ru?lang=ru" />
+        <link rel="alternate" hreflang="en" href="https://poeticpraxis.ru?lang=en" />
+        <link rel="alternate" hreflang="ru" href="https://poeticpraxis.ru/rhythmic?lang=ru" />
+        <link rel="alternate" hreflang="en" href="https://poeticpraxis.ru/rhythmic?lang=en" />
+        <link rel="alternate" hreflang="ru" href="https://poeticpraxis.ru/images-engine?lang=ru" />
+        <link rel="alternate" hreflang="en" href="https://poeticpraxis.ru/images-engine?lang=en" />
+        <link rel="alternate" hreflang="x-default" href="https://poeticpraxis.ru?lang=en" />
 
-    <meta name="google-site-verification" content="sohMAevZvZLTrp8D-OtMPYWyIvtqo8wqbzrhyV3JNXI" />
-    <meta name="google-site-verification" content="ojb0yCV0QjCvPmvwMJFgYARMH3BLr6vGJ1S8NZQuxgI" />
-    <meta name="yandex-verification" content="f7507b925022203f" />
+        <meta name="google-site-verification" content="sohMAevZvZLTrp8D-OtMPYWyIvtqo8wqbzrhyV3JNXI" />
+        <meta name="google-site-verification" content="ojb0yCV0QjCvPmvwMJFgYARMH3BLr6vGJ1S8NZQuxgI" />
+        <meta name="yandex-verification" content="f7507b925022203f" />
 
-    <meta name="mailru-domain" content="aXoCyBrJfmBJKZIk" />
-    <meta name="description" content="Поэтическая практика. Исследуйте и творите.">
-    <meta name="keywords" content="поэзия poetry стихи poems размер метр meter стопа foot beats rhythm строфа strophe verse ударение  accent emphasis гласная стихотворение поэт poet поэтический poetic лирика lyrics литература literature творчество art строфы стихотворчество стихоплетство рифмачество rhyme муза muse лира lyre искусство текст text строфы стишки слова words слоги syllable буквы letters вирши язык language икт accent stressed ямб iamb хорей trochee анапест anapest дактиль dactyl амфибрахий поэтическая практика poetic praxis машина образов images engine образы images инструмент instruments исследование research искусство русская поэзия современная поэзия что такое поэзия ударение пауза стиховедение Пушкин Бродский Есенин Маяковский Цветаева">
+        <meta name="mailru-domain" content="aXoCyBrJfmBJKZIk" />
+        <meta name="description" content="Поэтическая практика. Исследуйте и творите.">
+        <meta name="keywords" content="поэзия poetry стихи poems размер метр meter стопа foot beats rhythm строфа strophe verse ударение  accent emphasis гласная стихотворение поэт poet поэтический poetic лирика lyrics литература literature творчество art строфы стихотворчество стихоплетство рифмачество rhyme муза muse лира lyre искусство текст text строфы стишки слова words слоги syllable буквы letters вирши язык language икт accent stressed ямб iamb хорей trochee анапест anapest дактиль dactyl амфибрахий поэтическая практика poetic praxis машина образов images engine образы images инструмент instruments исследование research искусство русская поэзия современная поэзия что такое поэзия ударение пауза стиховедение Пушкин Бродский Есенин Маяковский Цветаева">
 
-    <meta property="og:title" content="POETIC PRAXIS">
-    <meta property="og:description" content="Поэтическая практика. Исследуйте и творите.">
-    <meta property="og:image" content="<%= require('./img/Sign.svg') %>">
-    <meta property="og:type" content="product">
+        <meta property="og:title" content="POETIC PRAXIS">
+        <meta property="og:description" content="Поэтическая практика. Исследуйте и творите.">
+        <meta property="og:image" content="<%= require('./img/Sign.svg') %>">
+        <meta property="og:type" content="product">
 
-    <meta name="author" content="Кузнецов Макс А.Ю">
-    <meta name="robots" content="noyaca">
-    <meta name="robots" content="noodp">
+        <meta name="author" content="Кузнецов Макс А.Ю">
+        <meta name="robots" content="noyaca">
+        <meta name="robots" content="noodp">
 
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#F9F8F7">
+        <!-- Chrome, Firefox OS and Opera -->
+        <meta name="theme-color" content="#F9F8F7">
 
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#F9F8F7">
+        <!-- Windows Phone -->
+        <meta name="msapplication-navbutton-color" content="#F9F8F7">
 
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="indie-catalog">
-    <link rel="apple-touch-icon" href="<%= require('./img/Signx192.png') %>">
+        <!-- iOS Safari -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="indie-catalog">
+        <link rel="apple-touch-icon" href="<%= require('./img/Signx192.png') %>">
 
-    
-    
-    <script type="application/ld+json">
-        {
-            "@context": "http://schema.org/",
-            "@type": "WebSite",
-            "name": "POETIC PRAXIS",
-            "alternateName": "POETIC PRAXIS | Поэтическая практика",
-            "url": "https://www.poeticpraxis.ru",
-            "description": "Творчество, исследования, поэзия, искусство",
-            "keywords": "поэзия стихи размер метр стопа строфа ударение гласная стихотворение поэт поэтический лирика литература творчество строфы стихотворчество стихоплетство рифмачество муза лира искусство текст строфы стишки слова слоги буквы вирши язык икт ямб хорей анапест дактиль амфибрахий поэтическая практика poetic praxis машина образов образы инструмент исследование искусство",
-            "creator": {
-                "@type": "Person",
-                "name": "Макс А.Ю.",
-                "email": "secondtonone.secondtonone@gmail.com"
+        
+        
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org/",
+                "@type": "WebSite",
+                "name": "POETIC PRAXIS",
+                "alternateName": "POETIC PRAXIS | Поэтическая практика",
+                "url": "https://www.poeticpraxis.ru",
+                "description": "Творчество, исследования, поэзия, искусство",
+                "keywords": "поэзия стихи размер метр стопа строфа ударение гласная стихотворение поэт поэтический лирика литература творчество строфы стихотворчество стихоплетство рифмачество муза лира искусство текст строфы стишки слова слоги буквы вирши язык икт ямб хорей анапест дактиль амфибрахий поэтическая практика poetic praxis машина образов образы инструмент исследование искусство",
+                "creator": {
+                    "@type": "Person",
+                    "name": "Макс А.Ю.",
+                    "email": "secondtonone.secondtonone@gmail.com"
+                }
             }
-        }
-    </script>
-    
-    <style>
-        @font-face {
-            font-family: 'Montserrat';
-            src: url("<%= require('./fonts/Montserrat/Montserrat-Light.woff2') %>") format('woff2'),
-                url("<%= require('./fonts/Montserrat/Montserrat-Light.woff') %>") format('woff'),
-                url("<%= require('./fonts/Montserrat/Montserrat-Light.ttf') %>") format('truetype');
-            font-weight: 300;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'Montserrat';
-            src: url("<%= require('./fonts/Montserrat/Montserrat-Regular.woff2') %>") format('woff2'),
-                url("<%= require('./fonts/Montserrat/Montserrat-Regular.woff') %>") format('woff'),
-                url("<%= require('./fonts/Montserrat/Montserrat-Regular.ttf') %>") format('truetype');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'Montserrat';
-            src: url("<%= require('./fonts/Montserrat/Montserrat-Medium.woff2') %>") format('woff2'),
-                url("<%= require('./fonts/Montserrat/Montserrat-Medium.woff') %>") format('woff'),
-                url("<%= require('./fonts/Montserrat/Montserrat-Medium.ttf') %>") format('truetype');
-            font-weight: 500;
-            font-style: normal;
-            font-display: swap;
-        }
-    </style>
+        </script>
+        
+        <style>
+            @font-face {
+                font-family: 'Montserrat';
+                src: url("<%= require('./fonts/Montserrat/Montserrat-Light.woff2') %>") format('woff2'),
+                    url("<%= require('./fonts/Montserrat/Montserrat-Light.woff') %>") format('woff'),
+                    url("<%= require('./fonts/Montserrat/Montserrat-Light.ttf') %>") format('truetype');
+                font-weight: 300;
+                font-style: normal;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: 'Montserrat';
+                src: url("<%= require('./fonts/Montserrat/Montserrat-Regular.woff2') %>") format('woff2'),
+                    url("<%= require('./fonts/Montserrat/Montserrat-Regular.woff') %>") format('woff'),
+                    url("<%= require('./fonts/Montserrat/Montserrat-Regular.ttf') %>") format('truetype');
+                font-weight: 400;
+                font-style: normal;
+                font-display: swap;
+            }
+            @font-face {
+                font-family: 'Montserrat';
+                src: url("<%= require('./fonts/Montserrat/Montserrat-Medium.woff2') %>") format('woff2'),
+                    url("<%= require('./fonts/Montserrat/Montserrat-Medium.woff') %>") format('woff'),
+                    url("<%= require('./fonts/Montserrat/Montserrat-Medium.ttf') %>") format('truetype');
+                font-weight: 500;
+                font-style: normal;
+                font-display: swap;
+            }
+        </style>
 
-    <%= require('../src/prerender.js').default().styles %>
-    <link rel="preload" href="<%= require('./fonts/Montserrat/Montserrat-Light.woff2') %>" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href="<%= require('./fonts/Montserrat/Montserrat-Regular.woff2') %>" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href="<%= require('./fonts/Montserrat/Montserrat-Medium.woff2') %>" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preconnect" href="https://mc.yandex.ru/" />
-</head>
+        <%= require('../src/prerender.js').default().styles %>
+        <link rel="preload" href="<%= require('./fonts/Montserrat/Montserrat-Light.woff2') %>" as="font" type="font/woff2" crossorigin="anonymous" />
+        <link rel="preload" href="<%= require('./fonts/Montserrat/Montserrat-Regular.woff2') %>" as="font" type="font/woff2" crossorigin="anonymous" />
+        <link rel="preload" href="<%= require('./fonts/Montserrat/Montserrat-Medium.woff2') %>" as="font" type="font/woff2" crossorigin="anonymous" />
+        <link rel="preconnect" href="https://mc.yandex.ru/" />
+    </head>
 
-<body>
+    <body>
 
-    <noscript>
-        <div>
-            <img src="https://mc.yandex.ru/watch/48473147" style="position:absolute; left:-9999px;" alt="" />
+        <noscript>
+            <div>
+                <img src="https://mc.yandex.ru/watch/48473147" style="position:absolute; left:-9999px;" alt="" />
+            </div>
+        </noscript>
+
+        <noscript><p class="first-paint">Если вы видите этот текст, то в вашем браузере отключен Javascript. Для дальнейшей работы вы должны его включить.</p></noscript>
+
+
+        <p class="first-paint">
+            POETIC PRAXIS - ЧТО СКРЫТО ЗА СЛОВАМИ? НОВЫЕ ИДЕИ И МУЗЫКА МЕЖДУ СТРОК. 
+            POETIC PRAXIS - СКРЫТО? НОВЫЕ. 
+            POETIC PRAXIS - СЛОВАМИ? ИДЕИ СТРОК. 
+            POETIC PRAXIS - ЧТО ЗА? И.
+            POETIC PRAXIS - ПОЭТИЧЕСКАЯ ПРАКТИКА.
+        </p>
+
+        <div class="blocks">
+            <div class="block block__first"></div>
+            <div class="block block__second"></div>
+            <div class="block block__third"></div>
+            <div class="block block__fourth"></div>
         </div>
-    </noscript>
 
-    <noscript><p class="first-paint">Если вы видите этот текст, то в вашем браузере отключен Javascript. Для дальнейшей работы вы должны его включить.</p></noscript>
+        <div id="portal-menu"></div>
 
-    
-    <p class="first-paint">
-        POETIC PRAXIS - ЧТО СКРЫТО ЗА СЛОВАМИ? НОВЫЕ ИДЕИ И МУЗЫКА МЕЖДУ СТРОК. 
-        POETIC PRAXIS - СКРЫТО? НОВЫЕ. 
-        POETIC PRAXIS - СЛОВАМИ? ИДЕИ СТРОК. 
-        POETIC PRAXIS - ЧТО ЗА? И.
-        POETIC PRAXIS - ПОЭТИЧЕСКАЯ ПРАКТИКА.
-    </p>
-    
-    <div class="blocks">
-        <div class="block block__first"></div>
-        <div class="block block__second"></div>
-        <div class="block block__third"></div>
-        <div class="block block__fourth"></div>
-    </div>
+        <div id="app">
+            <%= require('../src/prerender.js').default().html %>
+        </div>
 
-
-    <div id="app">
-        <%= require('../src/prerender.js').default().html %>
-    </div>
-</body>
+    </body>
 
 </html>

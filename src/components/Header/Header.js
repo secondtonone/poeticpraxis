@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { useEffect, useState, useCallback, useContext } from 'preact/compat';
+import { useEffect, useState, useContext } from 'preact/compat';
 import { ThemeContext } from 'styled-components';
 
 import { PageHeader, ContentField, Logo, Block } from './styled';
@@ -19,13 +19,11 @@ import RouteLink from '@components/RouteLink';
 import LogoPic from '@public/img/Logo.svg';
 import LogoPicWhite from '@public/img/Logo-white.svg';
 
-const initHeaderZIndex = 1001;
 
 const Header = ({ children, lang = 'ru' }) => {
     const initHeight = window.innerHeight;
     const themeContext = useContext(ThemeContext);
     const [ actualHeight, setHeight ] = useState(initHeight);
-    const [headerZIndex, setHeaderZIndex] = useState(initHeaderZIndex);
 
     useEffect(() => {
         const updateDimensions = () => setHeight(window.innerHeight);
@@ -35,15 +33,9 @@ const Header = ({ children, lang = 'ru' }) => {
         return () => window.removeEventListener('resize', updateDimensions);
     }, []);
 
-    const toggleHeaderZIndex = useCallback(
-        () => setHeaderZIndex(headerZIndex === initHeaderZIndex ? 2009 : initHeaderZIndex),
-        [headerZIndex]
-    );
-
     return (
         <PageHeader
-            hidden={isTouchDevice() && actualHeight < initHeight}
-            zIndex={headerZIndex}>
+            hidden={isTouchDevice() && actualHeight < initHeight}>
             <HoveredElement>
                 <Block>
                     <RouteLink to="/" exact>
@@ -68,7 +60,7 @@ const Header = ({ children, lang = 'ru' }) => {
                     </RouteLink>
                 </Block>
             </HoveredElement>
-            <ContentField>{children({ toggleHeaderZIndex })}</ContentField>
+            <ContentField>{children}</ContentField>
         </PageHeader>
     );
 }

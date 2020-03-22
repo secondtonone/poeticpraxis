@@ -42,17 +42,13 @@ const Layout = ({ children, variant, lang, changeTheme, changeLang }) => {
     return (
         <ThemeProvider theme={theme[variant]}>
             <Page _animated>
-                <Header
-                    lang={lang}
-                    children={(props) => (
-                        <Menu
-                            inline
-                            lang={lang}
-                            onToggle={props.toggleHeaderZIndex}
-                            items={[<ThemeTumbler />, <LangChanger />]}
-                        />
-                    )}
-                />
+                <Header lang={lang}>
+                    <Menu
+                        inline
+                        lang={lang}
+                        items={[<ThemeTumbler />, <LangChanger />]}
+                    />
+                </Header>
                 <MainContent>
                     <ErrorBoundary>{children}</ErrorBoundary>
                 </MainContent>
