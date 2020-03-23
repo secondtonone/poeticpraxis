@@ -1,23 +1,21 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
         "target": "es6",
-        "baseUrl": ".",
+        "module": "commonJS",
+        "baseUrl": "./",
+        "jsx": "react",
         "paths": {
-            "@components/*": ["./src/components/*"],
-            "@containers/*": ["./src/containers/*"],
-            "@utils/*": ["./src/utils/*"],
-            "@styles/*": ["./src/styles/*"],
-            "@modules/*": ["./src/modules/*"],
-            "@hooks/*": ["./src/hooks/*"],
-            "@routes/*": ["./src/routes/*"],
-            "@public/*": ["./public/*"],
-            "@icons/*": ["./src/components/IconSVG/*"]
+            "@components/*": ["src/components/*"],
+            "@containers/*": ["src/containers/*"],
+            "@utils/*": ["src/utils/*"],
+            "@styles/*": ["src/styles/*"],
+            "@modules/*": ["src/modules/*"],
+            "@hooks/*": ["src/hooks/*"],
+            "@routes/*": ["src/routes/*"],
+            "@public/*": ["public/*"],
+            "@icons/*": ["src/components/IconSVG/*"]
         }
     },
-    "include": [
-        "src/**/*"
-    ],
     "exclude": [
         "node_modules", "dist", ".vscode"
     ]
