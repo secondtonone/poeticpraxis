@@ -6,7 +6,6 @@ import { translations } from './translations';
 import MenuItems from './MenuItems';
 
 import Widgets from '@icons/Widgets';
-
 import ChangeHistory from '@icons/ChangeHistory';
 import Burger from '@icons/Burger';
 
