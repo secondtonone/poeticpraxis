@@ -5,6 +5,7 @@ import meterDetection from './meterDetection';
 import isLetter from './isLetter';
 import isSpace from './isSpace';
 import isPause from './isPause';
+import isVowel from './isVowel';
 import isInDictionary from './isInDictionary';
 import isAccented from './isAccented';
 import isAccentedByRegExp from './isAccentedByRegExp';

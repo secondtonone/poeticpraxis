@@ -1,3 +1,5 @@
+import vowelCount from './vowelCount';
+
 function positionAccent(vowelCount) {
     return Math.floor((vowelCount + 1) / 2);
 }
