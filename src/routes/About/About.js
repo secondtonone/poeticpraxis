@@ -1,9 +1,13 @@
-import { h, Component } from 'preact';
-import { lazy, Suspense } from 'preact/compat';
+import { h } from 'preact';
+import { lazy, Suspense, useEffect } from 'preact/compat';
+
+import useResizeUpdate from '@hooks/useResizeUpdate';
 
 import scrollToAnchor from '@utils/scrollToAnchor';
 import maxMatchMedia from '@utils/maxMatchMedia';
 import getDaysFromNow from '@utils/getDaysFromNow';
+import engSuffixNumber from '@utils/engSuffixNumber';
+import changePageTitle from '@utils/changePageTitle';
 
 import Loader from '@components/Loader';
 
@@ -27,13 +31,60 @@ const AboutProject = lazy(() =>
 );
 
 import {
-    Link,
     Footer
 } from '@styles/components';
 
-export default class About extends Component {
+
+const daysFromNow = getDaysFromNow(new Date(2016, 4, 25));
+const engDateSuffix = engSuffixNumber(daysFromNow);
+
+const About = ({ lang = 'ru' }) => {
+    
+    useResizeUpdate();
+
+    const isRusLang = lang === 'ru';
+    const title = isRusLang ? 'ГЛАВНАЯ' : 'MAIN PAGE';
+    const mediaQuery = maxMatchMedia(800);
+
+    useEffect(() => {
+        changePageTitle(title);
+        scrollToAnchor();
+    }, []);
+
+    useEffect(() => {
+        changePageTitle(title);
+    }, [lang]);
+
+    return (
+        <section>
+            <AboutLanding lang={lang} mediaQuery={mediaQuery} />
+
+            <AboutEngine lang={lang} mediaQuery={mediaQuery} />
+
+            <Suspense fallback={<Loader />}>
+                <AboutRhythmic lang={lang} mediaQuery={mediaQuery} />
+            </Suspense>
+
+            <Suspense fallback={<Loader />}>
+                <AboutProject lang={lang} mediaQuery={mediaQuery} />
+            </Suspense>
+
+            <Footer>
+                &copy; POETIC PRAXIS {daysFromNow}
+                {isRusLang ? '-й день' : `${engDateSuffix} day`}
+            </Footer>
+        </section>
+    );
+    
+}
+
+/* class About extends Component {
     state = { innerWidth: window.innerWidth };
     mediaQuery = maxMatchMedia(800);
+
+    daysFromNow = getDaysFromNow(new Date(2016, 4, 25));
+
+    engDateSuffix = engSuffixNumber(this.daysFromNow);
     changeTitle = () => {
         document.title = `POETIC PRAXIS | ${
             this.props.lang === 'ru' ? 'ГЛАВНАЯ' : 'HOME'
@@ -69,11 +120,9 @@ export default class About extends Component {
     render() {
         const { lang = 'ru' } = this.props;
         const isRusLang = lang === 'ru';
-        const screenHeight = window.innerHeight;
 
         return (
             <section>
-                
                 <AboutLanding lang={lang} mediaQuery={this.mediaQuery} />
 
                 <AboutEngine lang={lang} mediaQuery={this.mediaQuery} />
@@ -86,23 +135,16 @@ export default class About extends Component {
                     <AboutProject
                         lang={lang}
                         mediaQuery={this.mediaQuery}
-                        screenHeight={screenHeight}
                     />
                 </Suspense>
 
                 <Footer>
-                    &copy; POETIC PRAXIS {getDaysFromNow(new Date(2016, 4, 25))}{' '}
-                    {lang === 'ru' ? 'день' : 'day'}
-                    {this.mediaQuery && <br />}
-                    {' ▴ '}
-                    {this.mediaQuery && <br />}
-                    <Link href="mailto:thearchitect@poeticpraxis.ru">
-                        {isRusLang
-                            ? 'Жалобы и предложения'
-                            : 'Complaints and suggestions'}
-                    </Link>{' '}
+                    &copy; POETIC PRAXIS {this.daysFromNow}
+                    {isRusLang ? '-й день' : `${this.engDateSuffix} day`}
                 </Footer>
             </section>
         );
     }
 }
+ */
+export default About;
