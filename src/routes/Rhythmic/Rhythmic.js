@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 
 import wordByNumber from '@utils/wordByNumber';
 import isTouchDevice from '@utils/isTouchDevice';
+import changePageTitle from '@utils/changePageTitle';
+
 import { translations } from './translations';
 
 import {
@@ -70,13 +72,10 @@ export default class Rhythmic extends Component {
     }
 
     changeTitle = () => {
-        document.title = `POETIC PRAXIS | ${
-            this.props.lang === 'ru' ? 'ПРОСОДИЯ' : 'PROSODY'
-        }${
+        changePageTitle(`${this.props.lang === 'ru' ? 'ПРОСОДИЯ' : 'PROSODY'}${
             this.props.rhythmicState.text
                 ? ` - ${this.props.rhythmicState.text.substring(0, 30)}...`
-                : ''
-        }`;
+                : ''}`);
     };
     componentDidUpdate(prevProps) {
         if (this.props.lang !== prevProps.lang) {

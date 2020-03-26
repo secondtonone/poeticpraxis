@@ -7,6 +7,7 @@ import { getWords } from '@modules/dictionary';
 import wordByNumber from '@utils/wordByNumber';
 import isSupportRecognition from '@utils/isSupportRecognition';
 import isTouchDevice from '@utils/isTouchDevice';
+import changePageTitle from '@utils/changePageTitle';
 
 import { translations } from './translations';
 
@@ -58,13 +59,13 @@ export default class ImagesEngine extends Component {
     }
 
     changeTitle = () => {
-        document.title = `POETIC PRAXIS | ${
-            this.props.isRusLang ? 'МАШИНА ОБРАЗОВ' : 'EMAGES ENGINE'
-        }${
-            this.props.engineState.text
-                ? ` - ${this.props.engineState.text.substring(0, 30)}...`
-                : ''
-        }`;
+        changePageTitle(
+            `${this.props.lang === 'ru' ? 'МАШИНА ОБРАЗОВ' : 'EMAGES ENGINE'}${
+                this.props.engineState.text
+                    ? ` - ${this.props.engineState.text.substring(0, 30)}...`
+                    : ''
+            }`
+        );
     };
     componentDidUpdate(prevProps) {
         if (this.props.lang !== prevProps.lang) {
