@@ -11,7 +11,7 @@ import {
     Container
 } from '@styles/components';
 
-const AboutProject = ({ lang = 'ru', screenHeight, mediaQuery }) => {
+const AboutProject = ({ lang = 'ru', mediaQuery }) => {
     const [isHiddenPayment, setPaymentVisibility] = useState(false);
 
     const togglePayment = useCallback(() => {
@@ -25,7 +25,7 @@ const AboutProject = ({ lang = 'ru', screenHeight, mediaQuery }) => {
             direction="column"
             margin="150px 0 50px"
             justify="flex-start"
-            height={isHiddenPayment ? 'auto' : `${screenHeight - 80}px`}>
+            height={isHiddenPayment ? 'auto' : `${window.innerHeight - 80}px`}>
             <Container padding="9px 0 25px" height="auto">
                 <Text
                     size={mediaQuery ? 64 : 128}
@@ -47,36 +47,49 @@ const AboutProject = ({ lang = 'ru', screenHeight, mediaQuery }) => {
                     for poetic practice.
                 </Text>
             </Container>
-            <Flex direction="column" justify="flex-start" height="100px">
-                {isRusLang ? 'Подписаться:' : 'Subscribe:'}
-                <Flex
-                    direction={mediaQuery ? 'column' : 'row'}
-                    justify="space-evenly"
-                    width="300px">
-                    {isRusLang && (
-                        <Link
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            href="tg://resolve?domain=poeticpraxis">
-                            TELEGRAM
+            <Flex justify="space-between" height="100px" width="700px">
+                <Flex direction="column" justify="flex-start">
+                    {isRusLang ? 'Подписаться:' : 'Subscribe:'}
+                    <Flex
+                        direction={mediaQuery ? 'column' : 'row'}
+                        justify="space-evenly"
+                        width="300px">
+                        {isRusLang && (
+                            <Link
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                href="tg://resolve?domain=poeticpraxis">
+                                TELEGRAM
+                            </Link>
+                        )}
+                        {isRusLang && (
+                            <Link
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                href="https://vk.com/poeticpraxis">
+                                ВКОНТАКТЕ
+                            </Link>
+                        )}
+                        {!isRusLang && (
+                            <Link
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                href="https://www.reddit.com/r/poeticpraxis/">
+                                REDDIT
+                            </Link>
+                        )}
+                    </Flex>
+                </Flex>
+                <Flex direction="column" justify="flex-start">
+                    {isRusLang ? 'Написать:' : 'Send e-mail:'}
+                    <Flex
+                        direction={mediaQuery ? 'column' : 'row'}
+                        justify="space-evenly"
+                        width="300px">
+                        <Link href="mailto:thearchitect@poeticpraxis.ru">
+                            thearchitect@poeticpraxis.ru
                         </Link>
-                    )}
-                    {isRusLang && (
-                        <Link
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            href="https://vk.com/poeticpraxis">
-                            ВКОНТАКТЕ
-                        </Link>
-                    )}
-                    {!isRusLang && (
-                        <Link
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            href="https://www.reddit.com/r/poeticpraxis/">
-                            REDDIT
-                        </Link>
-                    )}
+                    </Flex>
                 </Flex>
             </Flex>
             {isRusLang && (
