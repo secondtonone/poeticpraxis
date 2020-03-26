@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
@@ -67,7 +68,7 @@ const config = {
         }),
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            inject: 'body',
+            inject: 'head',
             minify: {
                 minifyCSS: true,
                 minifyJS: true,
@@ -77,6 +78,9 @@ const config = {
             env: {
                 Prod: true
             }
+        }),
+        new ScriptExtHtmlWebpackPlugin({
+            defer: /\.js$/
         }),
         new PreloadWebpackPlugin({
             rel: 'preload',
