@@ -25,7 +25,8 @@ const ImagesEngineMaterial = ({
     lang = 'ru',
     getWords,
     textarea,
-    recorder
+    recorder,
+    history
 }) => {
     const wordsNumber = stringToWords(text).length;
 
@@ -63,10 +64,10 @@ const ImagesEngineMaterial = ({
                 <TextMinor>
                     {wordsNumber
                         ? `${wordsNumber} ${wordByNumber(
-                              lang,
-                              wordsNumber,
-                              translations[lang].engine['WORDS_AMOUNT']
-                          )}`
+                            lang,
+                            wordsNumber,
+                            translations[lang].engine['WORDS_AMOUNT']
+                        )}`
                         : null}
                 </TextMinor>
             </Flex>
