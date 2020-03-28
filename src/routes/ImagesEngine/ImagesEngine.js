@@ -4,8 +4,6 @@ import { imaged, stringToWords } from '@modules/imaged';
 import { copying } from '@modules/copying';
 import { getWords } from '@modules/dictionary';
 
-import wordByNumber from '@utils/wordByNumber';
-import isSupportRecognition from '@utils/isSupportRecognition';
 import isTouchDevice from '@utils/isTouchDevice';
 import changePageTitle from '@utils/changePageTitle';
 
@@ -31,13 +29,13 @@ import {
     Container,
     Flex,
     List,
-    Link,
     TextMinor,
     ActionBar
 } from '@styles/components';
 
 import Help from './Help';
-import ImagesEngineMenu from './ImagesEngineMenu';
+import Menu from './Menu';
+import Material from './Material';
 
 import { ButtonContainer, MainButton } from './styled';
 
@@ -276,8 +274,6 @@ export default class ImagesEngine extends Component {
 
         const { textMessage, isDisabledWordsview } = this.state;
 
-        const wordsNumber = stringToWords(text).length;
-
         const heightForKeyboard = Math.floor(this.initHeight / 1.3);
 
         const isDevice = isTouchDevice();
@@ -286,7 +282,7 @@ export default class ImagesEngine extends Component {
 
         return (
             <section>
-                <ImagesEngineMenu
+                <Menu
                     isDisabledWordsview={isDisabledWordsview}
                     handler={this.changeView}
                     current={currentView}
@@ -344,57 +340,21 @@ export default class ImagesEngine extends Component {
                 )}
                 <LeftedLayout>
                     <Help lang={lang} />
-
                     {currentView === 'material' && (
-                        <List _animated>
-                            {!isDevice && (
-                                <Container
-                                    maxWidth="380px"
-                                    width="100%"
-                                    margin="0 auto">
-                                    <Flex
-                                        justify={
-                                            isRusLang && isSupportRecognition()
-                                                ? 'space-between'
-                                                : 'center'
-                                        }>
-                                        <Recorder
-                                            lang={lang}
-                                            title={
-                                                translations[lang].engine[
-                                                    'RECORD'
-                                                ]
-                                            }
-                                            text={text}
-                                            transmitState={setEngineState}
-                                            showMessage={this.showMessage}
-                                        />
-                                        {isRusLang && (
-                                            <Button
-                                                _flat
-                                                _transparent
-                                                type="button"
-                                                onClick={this.getWords}
-                                                title={
-                                                    translations[lang].engine[
-                                                        'GET'
-                                                    ]
-                                                }>
-                                                <WordsIcon
-                                                    _small
-                                                    padding="0 8px 0 0"
-                                                />
-                                                {
-                                                    translations[lang].engine[
-                                                        'GET'
-                                                    ]
-                                                }
-                                            </Button>
-                                        )}
-                                    </Flex>
-                                </Container>
-                            )}
-                            <div>
+                        <Material
+                            text={text}
+                            lang={lang}
+                            getWords={this.getWords}
+                            recorder={
+                                <Recorder
+                                    lang={lang}
+                                    title={translations[lang].engine['RECORD']}
+                                    text={text}
+                                    transmitState={setEngineState}
+                                    showMessage={this.showMessage}
+                                />
+                            }
+                            textarea={
                                 <Textarea
                                     onInput={this.handleTextInput}
                                     value={text}
@@ -402,21 +362,8 @@ export default class ImagesEngine extends Component {
                                     getMeasure={this.getMeasureField}
                                     placeHolder={`${translations[lang].placeholders['ENGINE']}...`}
                                 />
-                            </div>
-                            <Flex justify="flex-end">
-                                <TextMinor>
-                                    {wordsNumber
-                                        ? `${wordsNumber} ${wordByNumber(
-                                            lang,
-                                            wordsNumber,
-                                            translations[lang].engine[
-                                                'WORDS_AMOUNT'
-                                            ]
-                                        )}`
-                                        : null}
-                                </TextMinor>
-                            </Flex>
-                        </List>
+                            }
+                        />
                     )}
 
                     {currentView === 'words' && (
