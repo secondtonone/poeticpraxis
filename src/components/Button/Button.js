@@ -252,6 +252,8 @@ const StyledButton = styled.button.attrs((props) => ({
     }
 
     margin: ${(props) => (props.margin ? props.margin : 0)};
+    ${(props) => (props.padding ? `padding: ${props.padding};` : '')};
+    ${(props) => (props.size ? `font-size: ${props.size}px;` : '')};
 `;
 
 function Button(props) {
