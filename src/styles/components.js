@@ -4,17 +4,6 @@ import theme from './theme';
 import { show, upAlt, up } from './animations';
 import { withElements } from './helpers';
 
-const Hidden = css`
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-`;
-
 const Flex = styled.div`
     display: flex;
     width: ${(props) => (props.width ? props.width : '100%')};
@@ -141,10 +130,17 @@ const Text = styled.div`
     margin-bottom: ${(props) => (props.mb ? `${props.mb}px` : '18px')};
     text-align: ${(props) => (props.align ? props.align : 'left')};
     ${(props) => (props.isHidden ? 'display: none;' : '')};
+    text-shadow: -2px -2px 0 ${(props) => props.theme.primaryColor},
+        2px -2px 0 ${(props) => props.theme.primaryColor},
+        -2px 0px 0 ${(props) => props.theme.primaryColor},
+        2px 2px 0 ${(props) => props.theme.primaryColor};
 `;
+
+
 
 const Link = styled.a`
     color: ${(props) => props.theme.accentColor};
+    fill: ${(props) => props.theme.accentColor};
 `;
 
 const Footer = styled.footer`
@@ -318,7 +314,7 @@ const LandingContainer = styled.div`
 `;
 
 const Mirrored = styled.span`
-    transform: scale(-1, 0);
+    transform: scale(-1);
 `;
 
 const TextAccent = styled.span`
