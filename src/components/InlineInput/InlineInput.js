@@ -42,8 +42,6 @@ export default class InlineInput extends Component {
             this.props.onChange(this.state.value);
         }
 
-        console.log('toggleEdit');
-
         this.setState({
             isEdit,
             onHover: false
