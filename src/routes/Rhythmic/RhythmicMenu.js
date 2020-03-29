@@ -6,7 +6,7 @@ import SecondaryMenu from '@components/SecondaryMenu';
 import MelodyIcon from '@icons/Melody';
 import RhythmIcon from '@icons/RhythmIcon';
 
-const secondMenu = (lang, text) => [
+const secondMenu = (lang, [first, second]) => [
     {
         value: 'rhythmic',
         icon: <RhythmIcon />,
@@ -17,7 +17,7 @@ const secondMenu = (lang, text) => [
                 <div>{translations[lang].rhythmicMenu['RHYTHMICS']}</div>
             </div>
         ),
-        disabled: false
+        disabled: first
     },
     {
         value: 'melody',
@@ -29,7 +29,7 @@ const secondMenu = (lang, text) => [
                 <div>{translations[lang].rhythmicMenu['MELODY']}</div>
             </div>
         ),
-        disabled: !text
+        disabled: second
     }
 ];
 
@@ -37,7 +37,7 @@ const RhythmicMenu = ({lang = 'ru', current, handler, text}) => {
 
     return (
         <SecondaryMenu
-            items={secondMenu(lang, text)}
+            items={secondMenu(lang, [false,!text])}
             handler={handler}
             current={current}
         />
