@@ -1,5 +1,12 @@
 import { h } from 'preact';
-import { useState, useRef, useEffect, useCallback } from 'preact/compat';
+import {
+    useState,
+    useRef,
+    useEffect,
+    useCallback,
+    Suspense,
+    lazy
+} from 'preact/compat';
 
 import useTitlePage from '@hooks/useTitlePage';
 import useMessage from '@hooks/useMessage';
@@ -29,8 +36,16 @@ import ActionBar from './ActionBar';
 
 import Workfield from '@components/Workfield';
 import MessageBox from '@components/MessageBox';
-import Melody from '@components/Melody';
 import Zoom from '@components/Zoom';
+import Loader from '@components/Loader';
+
+const Melody = lazy(() =>
+    import(
+        /* webpackChunkName: "Melody" */
+        /* webpackPreload: true */
+        '@components/Melody'
+    )
+);
 
 import {
     List,
@@ -224,11 +239,13 @@ const Rhythmic = ({
 
                 {currentView === 'melody' && (
                     <List>
-                        <Melody
-                            lang={lang}
-                            variant={variant}
-                            rhythmicState={rhythmicState}
-                        />
+                        <Suspense fallback={<Loader />}>
+                            <Melody
+                                lang={lang}
+                                variant={variant}
+                                rhythmicState={rhythmicState}
+                            />
+                        </Suspense>
                     </List>
                 )}
             </LeftedLayout>
