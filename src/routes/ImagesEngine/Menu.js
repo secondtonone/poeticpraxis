@@ -6,7 +6,7 @@ import SecondaryMenu from '@components/SecondaryMenu';
 import Subject from '@icons/Subject';
 import PlaylistAddCheck from '@icons/PlaylistAddCheck';
 
-const secondMenu = (lang, isDisabledWordsview) => [
+const secondMenu = (lang, [first, isDisabledWordsview]) => [
     {
         value: 'material',
         icon: <Subject />,
@@ -17,7 +17,7 @@ const secondMenu = (lang, isDisabledWordsview) => [
                 <div>{translations[lang].engineMenu['MATERIAL']}</div>
             </div>
         ),
-        disabled: false
+        disabled: first
     },
     {
         value: 'words',
@@ -42,7 +42,7 @@ const ImagesEngineMenu = ({
 }) => {
     return (
         <SecondaryMenu
-            items={secondMenu(lang, isDisabledWordsview)}
+            items={secondMenu(lang, [false, isDisabledWordsview])}
             handler={handler}
             current={current}
         />
