@@ -16,6 +16,10 @@
             "@icons/*": ["src/components/IconSVG/*"]
         }
     },
+    "include": [
+        "src/**/*",
+        "public/**/*"
+    ],
     "exclude": [
         "node_modules", "dist", ".vscode"
     ]
