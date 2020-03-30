@@ -3,17 +3,17 @@ import { h } from 'preact';
 import Button from '@components/Button';
 import Logo from '@components/Logo';
 import Flex from '@components/Flex';
+import Container from '@components/Container';
 
 import {
-    Text,
     PrimaryTitle,
     LandingContainer,
     TextAccent,
     DesctopHiddenContainer,
     BetaSign,
-    Container,
     TriangleButton,
-    PrimaryColor
+    PrimaryColor,
+    TextConstructor
 } from '@styles/components';
 
 const innerHeight = window.innerHeight;
@@ -48,16 +48,30 @@ const AboutLanding = ({ lang = 'ru', mediaQuery }) => {
                         lineHeight={0.5}
                         align="center">
                         {isRusLang ? (
-                            <span>
-                                ЧТО СКРЫТО {mediaQuery ? <br /> : null} ЗА{' '}
+                            <TextConstructor word="40">
+                                <TextConstructor letter="-18">
+                                    ЧТО
+                                </TextConstructor>{' '}
+                                <TextConstructor letter="-18">
+                                    СКРЫТО
+                                </TextConstructor>{' '}
+                                {mediaQuery ? <br /> : null}{' '}
+                                <TextConstructor letter="-18">
+                                    ЗА
+                                </TextConstructor>{' '}
                                 <br />
-                                <TextAccent>СЛОВАМИ?</TextAccent>
-                            </span>
+                                <TextAccent>
+                                    С
+                                    <TextConstructor letter="-18">
+                                        ЛОВАМИ?
+                                    </TextConstructor>
+                                </TextAccent>
+                            </TextConstructor>
                         ) : (
-                            <span>
+                            <TextConstructor>
                                 WHAT IS HIDDEN <br /> BEHIND <br />{' '}
                                 <TextAccent>THE WORDS?</TextAccent>
-                            </span>
+                            </TextConstructor>
                         )}
                     </PrimaryTitle>
                     <Flex direction="column" height="auto">

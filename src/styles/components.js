@@ -82,23 +82,6 @@ const AnimationUp = css`
     animation-timing-function: ease-out;
 `;
 
-const Container = styled.div`
-    width: ${(props) => (props.width ? props.width : '100%')};
-    display: ${(props) => (props.display ? props.display : 'block')};
-    position: ${(props) => (props.position ? props.position : 'relative')};
-    height: ${(props) => (props.height ? props.height : '100%')};
-    margin: ${(props) => (props.margin ? props.margin : 0)};
-    padding: ${(props) => (props.padding ? props.padding : 0)};
-    z-index: ${(props) => (props.zIndex ? props.zIndex : 0)};
-    top: ${(props) => (props.top ? props.top : 'auto')};
-    bottom: ${(props) => (props.bottom ? props.bottom : 'auto')};
-    left: ${(props) => (props.left ? props.left : 'auto')};
-    right: ${(props) => (props.right ? props.right : 'auto')};
-    ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : '')}
-    ${(props) => (props.minWidth ? `min-width: ${props.minWidth};` : '')}
-`;
-
-
 const DesctopHiddenContainer = styled.div`
     display: none;
     @media (max-width: 600px) {
@@ -314,6 +297,16 @@ const TextMinor = styled.span`
     color: ${(props) => props.theme.grayColor};
 `;
 
+const TextConstructor = styled.span`
+    letter-spacing: ${(props) => (props.letter ? props.letter : '0')}px;
+    word-spacing: ${(props) => (props.word ? props.word : '0')}px;
+
+    @media (max-width: 800px) {
+        letter-spacing: inherit;
+        word-spacing: inherit;
+    }
+`;
+
 const PrimaryColor = styled.span`
     background: ${(props) => props.theme.primaryColor};
 `;
@@ -362,9 +355,9 @@ export {
     LeftedLayout,
     AnimationShow,
     AnimationUp,
-    Container,
     PrimaryTitle,
     Text,
+    TextConstructor,
     Link,
     Footer,
     FieldLabel,

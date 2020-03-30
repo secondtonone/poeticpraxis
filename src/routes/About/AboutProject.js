@@ -3,13 +3,9 @@ import { useState, useCallback } from 'preact/compat';
 
 import Button from '@components/Button';
 import Flex from '@components/Flex';
+import Container from '@components/Container';
 
-import {
-    Text,
-    Link,
-    TextAccent,
-    Container
-} from '@styles/components';
+import { Text, Link, TextAccent, TextConstructor } from '@styles/components';
 
 import Telegram from '@icons/Telegram';
 import Insta from '@icons/Insta';
@@ -38,8 +34,11 @@ const AboutProject = ({ lang = 'ru', mediaQuery }) => {
                     lineHeight="0.7"
                     align="center"
                     spacing="-10">
-                    POETIC
-                    <TextAccent>PRAXIS</TextAccent>
+                    <TextConstructor letter="-18">POETIC</TextConstructor>
+                    <TextAccent>
+                        <TextConstructor letter="-15">PR</TextConstructor>A
+                        <TextConstructor letter="-16">XIS</TextConstructor>
+                    </TextAccent>
                 </Text>
                 <Text isHidden={!isRusLang} size={14} align="center">
                     проект, созданный чтобы узнать, что скрыто за словами -
@@ -58,9 +57,7 @@ const AboutProject = ({ lang = 'ru', mediaQuery }) => {
                 direction="column"
                 height="100px"
                 width="700px">
-                <Flex
-                    justify="space-around"
-                    width="300px">
+                <Flex justify="space-around" width="300px">
                     <Link
                         target="_blank"
                         rel="noreferrer noopener"
@@ -79,14 +76,13 @@ const AboutProject = ({ lang = 'ru', mediaQuery }) => {
                         href="https://instagram.com/poeticpraxis">
                         <Insta _big />
                     </Link>
-                    
+
                     <Link
                         target="_blank"
                         rel="noreferrer noopener"
                         href="https://www.reddit.com/r/poeticpraxis/">
                         <Reddit _big />
                     </Link>
-                    
                 </Flex>
 
                 <Flex
@@ -107,6 +103,7 @@ const AboutProject = ({ lang = 'ru', mediaQuery }) => {
                     width="300px"
                     size={16}
                     type="button"
+                    borderWidth="5"
                     margin="42px 0 24px"
                     onClick={togglePayment}>
                     {!isHiddenPayment

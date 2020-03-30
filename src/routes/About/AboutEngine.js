@@ -6,12 +6,12 @@ import maxMatchMedia from '@utils/maxMatchMedia';
 
 import Button from '@components/Button';
 import Flex from '@components/Flex';
+import Container from '@components/Container';
 
 import {
     Text,
     Link,
     TextAccent,
-    Container,
     Strong,
     TextMinor,
     PrimaryTitle,
@@ -175,7 +175,11 @@ const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
                 <Container padding="5% 0 0">
                     <Flex direction="column">
                         <NavLink to="/images-engine">
-                            <Button _action--outlined width="200px" size={16}>
+                            <Button
+                                _action--outlined
+                                width="200px"
+                                borderWidth="5"
+                                size={16}>
                                 {isRusLang ? `ПОПРОБОВАТЬ` : `Lets try`}
                             </Button>
                         </NavLink>
