@@ -101,10 +101,10 @@ const StyledButton = styled.button.attrs((props) => ({
         background-color: transparent;
         text-align: center;
         cursor: pointer;
-        border: none;
         font-weight: 400;
-        border-radius: 6px;
-        border: 1px solid ${(props) => props.theme.accentColor};
+        border: ${(props) =>
+            props.borderWidth ? props.borderWidth : '1'}px solid ${(props) =>
+    props.theme.accentColor};
         width: ${(props) => (props.width ? props.width : 'auto')};
         display: inline-block;
         font-size: ${(props) => (props.size ? `${props.size}px` : '24px')};
