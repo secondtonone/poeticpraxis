@@ -4,7 +4,7 @@ import useSessionStorage from '@hooks/useSessionStorage';
 
 import Info from '@components/Info';
 
-import { Container } from '@styles/components';
+import Container from '@components/Container';
 
 import isSupportRecognition from '@utils/isSupportRecognition';
 

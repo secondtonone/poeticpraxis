@@ -10,11 +10,11 @@ import { translations } from './translations';
 
 import Button from '@components/Button';
 import Flex from '@components/Flex';
+import Container from '@components/Container';
 
 import WordsIcon from '@icons/Words';
 
 import {
-    Container,
     List,
     TextMinor,
 } from '@styles/components';

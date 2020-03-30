@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 
 import { Input, InputButton } from './styled';
 
-import { Container } from '@styles/components';
+import Container from '@components/Container';
 
 import DoneIcon from '@icons/DoneIcon';
 import EditIcon from '@icons/EditIcon';

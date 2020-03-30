@@ -13,8 +13,10 @@ import Button from '@components/Button';
 import RouteLink from '@components/RouteLink';
 import Portal from '@components/Portal';
 import Flex from '@components/Flex';
+import Container from '@components/Container';
 
-import { Backdrop, Container } from '@styles/components';
+
+import { Backdrop } from '@styles/components';
 
 
 const menu = [

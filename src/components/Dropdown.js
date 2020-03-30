@@ -1,7 +1,9 @@
 import { h, Component } from 'preact';
 
-import { DropdownList, Container } from '@styles/components';
+import { DropdownList } from '@styles/components';
 import Flex from '@components/Flex';
+import Container from '@components/Container';
+
 
 export default class Dropdown extends Component {
     constructor(props) {

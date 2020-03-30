@@ -9,7 +9,7 @@ import PlayIcon from '@icons/PlayIcon';
 import ReplayIcon from '@icons/ReplayIcon';
 import PauseIcon from '@icons/PauseIcon';
 
-import { Container } from '@styles/components';
+import Container from '@components/Container';
 import Flex from '@components/Flex';
 export default class Player extends Component {
     constructor(props) {

@@ -6,7 +6,7 @@ import Button from '@components/Button';
 
 import { translations } from './translations';
 
-import { Container } from '@styles/components';
+import Container from '@components/Container';
 import Flex from '@components/Flex';
 
 const StyledBox = styled(Flex)`

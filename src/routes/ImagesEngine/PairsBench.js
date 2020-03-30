@@ -10,6 +10,7 @@ import { translations } from './translations';
 import MatchList from '@components/MatchList';
 import Button from '@components/Button';
 import Flex from '@components/Flex';
+import Container from '@components/Container';
 
 import ArrowBack from '@icons/ArrowBack';
 import Widgets from '@icons/Widgets';
@@ -18,7 +19,6 @@ import ContentCopy from '@icons/ContentCopy';
 import {
     Hint,
     SecondaryTitle,
-    Container,
     List,
     TextMinor,
 } from '@styles/components';
