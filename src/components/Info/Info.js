@@ -6,7 +6,8 @@ import Button from '@components/Button';
 
 import { translations } from './translations';
 
-import { Flex, Container } from '@styles/components';
+import { Container } from '@styles/components';
+import Flex from '@components/Flex';
 
 const StyledBox = styled(Flex)`
     padding: 16px 24px 8px;

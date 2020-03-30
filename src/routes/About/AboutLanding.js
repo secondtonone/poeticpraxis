@@ -2,14 +2,18 @@ import { h } from 'preact';
 
 import Button from '@components/Button';
 import Logo from '@components/Logo';
+import Flex from '@components/Flex';
 
 import {
     Text,
-    Flex,
+    PrimaryTitle,
     LandingContainer,
     TextAccent,
     DesctopHiddenContainer,
-    BetaSign
+    BetaSign,
+    Container,
+    TriangleButton,
+    PrimaryColor
 } from '@styles/components';
 
 const innerHeight = window.innerHeight;
@@ -35,15 +39,18 @@ const AboutLanding = ({ lang = 'ru', mediaQuery }) => {
                     </Flex>
                 </DesctopHiddenContainer>
                 <Flex direction="column" justify="space-evenly">
-                    <Text
+                    <PrimaryTitle
+                        as="h1"
+                        multiplyer="2"
                         size={mediaQuery ? 60 : 128}
                         weight={400}
-                        mb={64}
+                        mb={mediaQuery ? 0 : 64}
                         lineHeight={0.5}
                         align="center">
                         {isRusLang ? (
                             <span>
-                                ЧТО СКРЫТО ЗА <br />
+                                ЧТО СКРЫТО {mediaQuery ? <br /> : null} ЗА{' '}
+                                <br />
                                 <TextAccent>СЛОВАМИ?</TextAccent>
                             </span>
                         ) : (
@@ -52,15 +59,27 @@ const AboutLanding = ({ lang = 'ru', mediaQuery }) => {
                                 <TextAccent>THE WORDS?</TextAccent>
                             </span>
                         )}
-                    </Text>
-                    <Button
-                        _action
-                        width="200px"
-                        size={16}
-                        type="button"
-                        onClick={reavelButtonHandler}>
-                        {isRusLang ? `Явить сейчас` : `Reveal now`}
-                    </Button>
+                    </PrimaryTitle>
+                    <Flex direction="column" height="auto">
+                        <TriangleButton as="div">&#9653;</TriangleButton>
+                        <Container
+                            position="absolute"
+                            height="auto"
+                            width="auto">
+                            <Button
+                                _action
+                                _transparent
+                                width="200px"
+                                size={16}
+                                padding="0 0 8px 0"
+                                type="button"
+                                onClick={reavelButtonHandler}>
+                                <PrimaryColor>
+                                    {isRusLang ? `Явить сейчас` : `Reveal now`}
+                                </PrimaryColor>
+                            </Button>
+                        </Container>
+                    </Flex>
                 </Flex>
             </Flex>
         </LandingContainer>

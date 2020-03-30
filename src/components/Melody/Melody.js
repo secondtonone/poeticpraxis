@@ -13,7 +13,7 @@ import Canvas from '@components/Canvas';
 import Player from '@components/Player';
 import Button from '@components/Button';
 
-import { Flex } from '@styles/components';
+import Flex from '@components/Flex';
 
 import {
     DownloadLink,

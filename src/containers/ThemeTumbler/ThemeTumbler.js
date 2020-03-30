@@ -1,13 +1,13 @@
 import { h } from 'preact';
 import { useCallback } from 'preact/compat';
 
-import { Flex } from '@styles/components';
+import Flex from '@components/Flex';
 
 import Button from '@components/Button';
 import BrightnessIcon from '@icons/Brightness';
 import Sunny from '@icons/Sunny';
 
-const ThemeTumbler = ({ variant, changeTheme, onChange, lang = 'ru' }) => {
+const ThemeTumbler = ({ variant, changeTheme, onChange }) => {
 
     const themeHandler = useCallback(() => {
         changeTheme();

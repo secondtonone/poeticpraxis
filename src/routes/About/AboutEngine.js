@@ -5,15 +5,16 @@ import { NavLink } from 'react-router-dom';
 import maxMatchMedia from '@utils/maxMatchMedia';
 
 import Button from '@components/Button';
+import Flex from '@components/Flex';
 
 import {
     Text,
     Link,
-    Flex,
     TextAccent,
     Container,
     Strong,
     TextMinor,
+    PrimaryTitle,
 } from '@styles/components';
 
 const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
@@ -30,7 +31,9 @@ const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
                         padding={
                             maxMatchMedia(700) ? '0 50px 0' : '27px 50px 0 0'
                         }>
-                        <Text
+                        <PrimaryTitle
+                            as="h2"
+                            multiplyer="2"
                             size={mediaQuery ? 64 : 128}
                             lineHeight={mediaQuery ? 0.5 : 0.4}
                             align={mediaQuery ? 'left' : 'right'}
@@ -48,7 +51,7 @@ const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
                                     <TextAccent>IDEAS</TextAccent>
                                 </span>
                             )}
-                        </Text>
+                        </PrimaryTitle>
                     </Container>
                     <Container
                         width={mediaQuery ? '100%' : '500px'}

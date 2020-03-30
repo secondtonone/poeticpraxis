@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 import theme from '@styles/theme';
 
-import { AnimationShow, AnimationUp, Flex } from '@styles/components';
+import { AnimationShow, AnimationUp } from '@styles/components';
 
+import Flex from '@components/Flex';
 import Button from '@components/Button';
 
 const ChangeModeButton = styled(Button)`

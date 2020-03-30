@@ -9,6 +9,7 @@ import { translations } from './translations';
 
 import MatchList from '@components/MatchList';
 import Button from '@components/Button';
+import Flex from '@components/Flex';
 
 import ArrowBack from '@icons/ArrowBack';
 import Widgets from '@icons/Widgets';
@@ -18,7 +19,6 @@ import {
     Hint,
     SecondaryTitle,
     Container,
-    Flex,
     List,
     TextMinor,
 } from '@styles/components';

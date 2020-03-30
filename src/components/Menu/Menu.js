@@ -12,8 +12,9 @@ import Burger from '@icons/Burger';
 import Button from '@components/Button';
 import RouteLink from '@components/RouteLink';
 import Portal from '@components/Portal';
+import Flex from '@components/Flex';
 
-import { Backdrop, Flex, Container } from '@styles/components';
+import { Backdrop, Container } from '@styles/components';
 
 
 const menu = [

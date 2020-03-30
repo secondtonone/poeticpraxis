@@ -1,9 +1,10 @@
 import { h } from 'preact';
 import { useCallback } from 'preact/compat';
 
-import { Flex, HiddenSelect } from '@styles/components';
+import { HiddenSelect } from '@styles/components';
 import Dropdown from '@components/Dropdown';
 import Button from '@components/Button';
+import Flex from '@components/Flex';
 
 import isTouchDevice from '@utils/isTouchDevice';
 

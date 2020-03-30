@@ -7,7 +7,6 @@ import {
     HoveredElement,
     ShowOnHover,
     HideOnHover,
-    Flex,
     BetaSign
 } from '@styles/components';
 
@@ -15,6 +14,7 @@ import isTouchDevice from '@utils/isTouchDevice';
 import { translations } from './translations';
 
 import RouteLink from '@components/RouteLink';
+import Flex from '@components/Flex';
 
 import LogoPic from '@public/img/Logo.svg';
 import LogoPicWhite from '@public/img/Logo-white.svg';

@@ -2,14 +2,20 @@ import { h } from 'preact';
 import { useState, useCallback } from 'preact/compat';
 
 import Button from '@components/Button';
+import Flex from '@components/Flex';
 
 import {
     Text,
     Link,
-    Flex,
     TextAccent,
     Container
 } from '@styles/components';
+
+import Telegram from '@icons/Telegram';
+import Insta from '@icons/Insta';
+import Reddit from '@icons/Reddit';
+import Vk from '@icons/Vk';
+import Email from '@icons/Convert';
 
 const AboutProject = ({ lang = 'ru', mediaQuery }) => {
     const [isHiddenPayment, setPaymentVisibility] = useState(false);
@@ -47,49 +53,52 @@ const AboutProject = ({ lang = 'ru', mediaQuery }) => {
                     for poetic practice.
                 </Text>
             </Container>
-            <Flex justify="space-between" height="100px" width="700px">
-                <Flex direction="column" justify="flex-start">
-                    {isRusLang ? 'Подписаться:' : 'Subscribe:'}
-                    <Flex
-                        direction={mediaQuery ? 'column' : 'row'}
-                        justify="space-evenly"
-                        width="300px">
-                        {isRusLang && (
-                            <Link
-                                target="_blank"
-                                rel="noreferrer noopener"
-                                href="tg://resolve?domain=poeticpraxis">
-                                TELEGRAM
-                            </Link>
-                        )}
-                        {isRusLang && (
-                            <Link
-                                target="_blank"
-                                rel="noreferrer noopener"
-                                href="https://vk.com/poeticpraxis">
-                                ВКОНТАКТЕ
-                            </Link>
-                        )}
-                        {!isRusLang && (
-                            <Link
-                                target="_blank"
-                                rel="noreferrer noopener"
-                                href="https://www.reddit.com/r/poeticpraxis/">
-                                REDDIT
-                            </Link>
-                        )}
-                    </Flex>
+            <Flex
+                justify="space-between"
+                direction="column"
+                height="100px"
+                width="700px">
+                <Flex
+                    justify="space-around"
+                    width="300px">
+                    <Link
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        href="tg://resolve?domain=poeticpraxis">
+                        <Telegram _big />
+                    </Link>
+                    <Link
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        href="https://vk.com/poeticpraxis">
+                        <Vk _big />
+                    </Link>
+                    <Link
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        href="https://instagram.com/poeticpraxis">
+                        <Insta _big />
+                    </Link>
+                    
+                    <Link
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        href="https://www.reddit.com/r/poeticpraxis/">
+                        <Reddit _big />
+                    </Link>
+                    
                 </Flex>
-                <Flex direction="column" justify="flex-start">
-                    {isRusLang ? 'Написать:' : 'Send e-mail:'}
-                    <Flex
-                        direction={mediaQuery ? 'column' : 'row'}
-                        justify="space-evenly"
-                        width="300px">
-                        <Link href="mailto:thearchitect@poeticpraxis.ru">
+
+                <Flex
+                    direction={mediaQuery ? 'column' : 'row'}
+                    justify="space-evenly"
+                    width="300px">
+                    <Link href="mailto:thearchitect@poeticpraxis.ru">
+                        <Flex align="flex-start">
+                            <Email _small padding="0 8px 0 0" />{' '}
                             thearchitect@poeticpraxis.ru
-                        </Link>
-                    </Flex>
+                        </Flex>
+                    </Link>
                 </Flex>
             </Flex>
             {isRusLang && (
@@ -98,7 +107,7 @@ const AboutProject = ({ lang = 'ru', mediaQuery }) => {
                     width="300px"
                     size={16}
                     type="button"
-                    margin="24px 0"
+                    margin="42px 0 24px"
                     onClick={togglePayment}>
                     {!isHiddenPayment
                         ? 'поддержать проект'

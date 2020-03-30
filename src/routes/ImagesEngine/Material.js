@@ -9,12 +9,12 @@ import isTouchDevice from '@utils/isTouchDevice';
 import { translations } from './translations';
 
 import Button from '@components/Button';
+import Flex from '@components/Flex';
 
 import WordsIcon from '@icons/Words';
 
 import {
     Container,
-    Flex,
     List,
     TextMinor,
 } from '@styles/components';

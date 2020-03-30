@@ -8,6 +8,7 @@ import maxMatchMedia from '@utils/maxMatchMedia';
 
 import Button from '@components/Button';
 import Loader from '@components/Loader';
+import Flex from '@components/Flex';
 
 const Workfield = lazy(() =>
     import(/* webpackChunkName: "Workfield" */ '@components/Workfield')
@@ -15,9 +16,9 @@ const Workfield = lazy(() =>
 
 import {
     Text,
-    Flex,
     TextAccent,
-    Container
+    Container,
+    PrimaryTitle
 } from '@styles/components';
 
 const AboutRhythmic = ({lang, mediaQuery}) => {
@@ -30,7 +31,9 @@ const AboutRhythmic = ({lang, mediaQuery}) => {
             <Container
                 width={mediaQuery ? '100%' : '70%'}
                 padding={mediaQuery ? '0 50px 0' : '9px 0 50px'}>
-                <Text
+                <PrimaryTitle
+                    multiplyer="2"
+                    as="h2"
                     size={mediaQuery ? 64 : 128}
                     lineHeight={mediaQuery ? 0.5 : 0.4}
                     align={mediaQuery ? 'left' : 'right'}
@@ -48,7 +51,7 @@ const AboutRhythmic = ({lang, mediaQuery}) => {
                             <TextAccent>BETWEEN LINES</TextAccent>
                         </span>
                     )}
-                </Text>
+                </PrimaryTitle>
             </Container>
             <Flex direction={mediaQuery ? 'column' : 'row'} align="flex-start">
                 <Container

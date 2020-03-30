@@ -4,19 +4,6 @@ import theme from './theme';
 import { show, upAlt, up } from './animations';
 import { withElements } from './helpers';
 
-const Flex = styled.div`
-    display: flex;
-    width: ${(props) => (props.width ? props.width : '100%')};
-    height: ${(props) => (props.height ? props.height : '100%')};
-    flex-direction: ${(props) => (props.direction ? props.direction : 'row')};
-    justify-content: ${(props) => (props.justify ? props.justify : 'center')};
-    align-items: ${(props) => (props.align ? props.align : 'center')};
-    margin: ${(props) => (props.margin ? props.margin : 0)};
-    padding: ${(props) => (props.padding ? props.padding : 0)};
-    ${(props) => (props.maxWidth ? `max-width:${props.maxWidth}` : '')}
-    ${(props) => (props.minWidth ? `min-width:${props.minWidth}` : '')}
-`;
-
 const FieldEditableArea = styled.textarea`
     position: relative;
     font-family: ${theme.mainFont};
@@ -130,12 +117,14 @@ const Text = styled.div`
     margin-bottom: ${(props) => (props.mb ? `${props.mb}px` : '18px')};
     text-align: ${(props) => (props.align ? props.align : 'left')};
     ${(props) => (props.isHidden ? 'display: none;' : '')};
-    text-shadow: -2px -2px 0 ${(props) => props.theme.primaryColor},
-        2px -2px 0 ${(props) => props.theme.primaryColor},
-        -2px 0px 0 ${(props) => props.theme.primaryColor},
-        2px 2px 0 ${(props) => props.theme.primaryColor};
 `;
 
+const PrimaryTitle = styled(Text)`
+    text-shadow: -${(props) => props.multiplyer? props.multiplyer : 1}px -${(props) => props.multiplyer? props.multiplyer : 1}px 0 ${(props) => props.theme.primaryColor},
+        ${(props) => props.multiplyer? props.multiplyer : 1}px -${(props) => props.multiplyer? props.multiplyer : 1}px 0 ${(props) => props.theme.primaryColor},
+        -${(props) => props.multiplyer? props.multiplyer : 1}px 0px 0 ${(props) => props.theme.primaryColor},
+        ${(props) => props.multiplyer? props.multiplyer : 1}px ${(props) => props.multiplyer? props.multiplyer : 1}px 0 ${(props) => props.theme.primaryColor};
+`;
 
 
 const Link = styled.a`
@@ -325,6 +314,10 @@ const TextMinor = styled.span`
     color: ${(props) => props.theme.grayColor};
 `;
 
+const PrimaryColor = styled.span`
+    background: ${(props) => props.theme.primaryColor};
+`;
+
 const Strong = styled.span`
     font-weight: 400;
 `;
@@ -351,6 +344,15 @@ const BetaSign = styled.div`
     }
 `;
 
+const TriangleButton = styled(Mirrored)`
+    font-size: 120px;
+    color: ${(props) => props.theme.accentColor};
+
+    @media (max-width: 600px) {
+        font-size: 94px;
+    }
+`;
+
 export {
     Backdrop,
     FieldEditableArea,
@@ -361,13 +363,13 @@ export {
     AnimationShow,
     AnimationUp,
     Container,
+    PrimaryTitle,
     Text,
     Link,
     Footer,
     FieldLabel,
     SimpleTextarea,
     List,
-    Flex,
     LandingContainer,
     TextAccent,
     Strong,
@@ -379,5 +381,7 @@ export {
     ActionBar,
     Mirrored,
     HiddenSelect,
-    BetaSign
+    BetaSign,
+    TriangleButton,
+    PrimaryColor
 };

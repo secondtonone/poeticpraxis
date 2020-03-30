@@ -37,7 +37,7 @@ const Layout = ({ children, variant, lang, changeTheme, changeLang }) => {
         } else {
             changeLang('ru');
         }
-    }, [changeTheme, changeLang]);
+    }, []);
 
     return (
         <ThemeProvider theme={theme[variant]}>

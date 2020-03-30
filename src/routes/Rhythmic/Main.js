@@ -7,12 +7,13 @@ import isTouchDevice from '@utils/isTouchDevice';
 import { translations } from './translations';
 
 import Button from '@components/Button';
+import Flex from '@components/Flex';
 
 import KeyboardCapslock from '@icons/KeyboardCapslock';
 import ContentCopy from '@icons/ContentCopy';
 import ShareIcon from '@icons/Share';
 
-import { List, Flex, TextMinor } from '@styles/components';
+import { List, TextMinor } from '@styles/components';
 
 import {
     StringPauseButton,

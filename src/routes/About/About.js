@@ -2,12 +2,12 @@ import { h } from 'preact';
 import { lazy, Suspense, useEffect } from 'preact/compat';
 
 import useResizeUpdate from '@hooks/useResizeUpdate';
+import useTitlePage from '@hooks/useTitlePage';
 
 import scrollToAnchor from '@utils/scrollToAnchor';
 import maxMatchMedia from '@utils/maxMatchMedia';
 import getDaysFromNow from '@utils/getDaysFromNow';
 import engSuffixNumber from '@utils/engSuffixNumber';
-import changePageTitle from '@utils/changePageTitle';
 
 import Loader from '@components/Loader';
 
@@ -46,14 +46,11 @@ const About = ({ lang = 'ru' }) => {
     const title = isRusLang ? 'ГЛАВНАЯ' : 'MAIN PAGE';
     const mediaQuery = maxMatchMedia(800);
 
-    useEffect(() => {
-        changePageTitle(title);
-        scrollToAnchor();
-    }, []);
+    useTitlePage(title);
 
     useEffect(() => {
-        changePageTitle(title);
-    }, [lang]);
+        scrollToAnchor();
+    }, []);
 
     return (
         <section>
