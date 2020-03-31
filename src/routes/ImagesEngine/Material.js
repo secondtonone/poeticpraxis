@@ -25,8 +25,7 @@ const ImagesEngineMaterial = ({
     lang = 'ru',
     getWords,
     textarea,
-    recorder,
-    history
+    recorder
 }) => {
     const wordsNumber = stringToWords(text).length;
 

@@ -43,7 +43,7 @@ const About = ({ lang = 'ru' }) => {
     useResizeUpdate();
 
     const isRusLang = lang === 'ru';
-    const title = isRusLang ? 'ГЛАВНАЯ' : 'MAIN PAGE';
+    const title = isRusLang ? 'ГЛАВНАЯ' : 'HOME';
     const mediaQuery = maxMatchMedia(800);
 
     useTitlePage(title);

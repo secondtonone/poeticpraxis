@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { useState, useEffect, useRef, useCallback } from 'preact/compat';
 
 import { Input, InputButton } from './styled';
 
@@ -7,96 +8,84 @@ import Container from '@components/Container';
 import DoneIcon from '@icons/DoneIcon';
 import EditIcon from '@icons/EditIcon';
 
-export default class InlineInput extends Component {
-    constructor(props) {
-        super(props);
+const InlineInput = ({ onChange, value }) => {
 
-        this.state = {
-            isEdit: false,
-            value: props.value,
-            onHover: false
+    const container = useRef();
+    const input = useRef();
+    const [ isEdit, setEdit ] = useState(false);
+    const [ text, setText ] = useState(value);
+    const [ isHover, setHover ] = useState(false);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (isEdit && !container.current.contains(e.target)) {
+                toggleEdit();
+            }
         };
 
-        this.container = null;
-        this.input = null;
-    }
-
-    componentDidMount() {
-        document.addEventListener('mousedown', this.handleClickOutside);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleClickOutside);
-    }
-
-    handleClickOutside = (e) => {
-        if (this.state.isEdit && !this.container.contains(e.target)) {
-            this.toggleEdit();
-        }
-    }
-
-    toggleEdit = () => {
-        const isEdit = !this.state.isEdit;
-
-        if (!isEdit) {
-            this.props.onChange(this.state.value);
+        if (isEdit && input.current) {
+            input.current.focus();
         }
 
-        this.setState({
-            isEdit,
-            onHover: false
-        }, () => {
-            if (this.state.isEdit && this.input) {
-                this.input.focus();
-            }
-        });
-    };
+        document.addEventListener('mousedown', handleClickOutside);
 
-    onChange = (e) => {
-        this.setState({
-            value: e.target.value
-        });
-    };
-
-    onHover = (onHover) => {
         return () =>
-            this.setState({
-                onHover
-            });
-    };
+            document.removeEventListener('mousedown', handleClickOutside);
+    }, [isEdit]);
 
-    render() {
-        const { value, isEdit, onHover } = this.state;
-        return (
-            <Container
-                ref={(ref) => (this.container = ref)}
-                display="flex"
-                onMouseEnter={this.onHover(true)}
-                onMouseLeave={this.onHover(false)}>
-                {!isEdit ? (
-                    <span>{value}</span>
-                ) : (
-                    <Input
-                        value={value}
-                        onChange={this.onChange}
-                        readOnly={!isEdit}
-                        ref={(ref) => (this.input = ref)}
-                    />
-                )}
+    const toggleEdit = useCallback(() => {
+        if (isEdit) {
+            onChange(text);
+        }
+        setEdit(!isEdit);
+        setHover(false);
+    }, [isEdit, text]);
 
-                {(onHover || isEdit) && (
-                    <InputButton
-                        _rounded
-                        _transparent
-                        _small
-                        _gray
-                        type="button"
-                        title={!isEdit ? 'Редактировать' : 'Сохранить'}
-                        onClick={this.toggleEdit}>
-                        {!isEdit ? <EditIcon _middle /> : <DoneIcon _middle />}
-                    </InputButton>
-                )}
-            </Container>
-        );
-    }
+    const onChangeInput = useCallback(
+        (e) => {
+            setText(e.target.value);
+        },
+        []
+    );
+
+    const onMouseEnter = useCallback(() => {
+        setHover(true);
+    }, []);
+
+    const onMouseLeave = useCallback(() => {
+        setHover(false);
+    }, []);
+
+    return (
+        <Container
+            ref={container}
+            display="flex"
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}>
+            {!isEdit ? (
+                <span>{text}</span>
+            ) : (
+                <Input
+                    value={text}
+                    onChange={onChangeInput}
+                    readOnly={!isEdit}
+                    ref={input}
+                />
+            )}
+
+            {(isHover || isEdit) && (
+                <InputButton
+                    _rounded
+                    _transparent
+                    _small
+                    _gray
+                    type="button"
+                    title={!isEdit ? 'Редактировать' : 'Сохранить'}
+                    onClick={toggleEdit}>
+                    {!isEdit ? <EditIcon _middle /> : <DoneIcon _middle />}
+                </InputButton>
+            )}
+        </Container>
+    );
 }
+export default InlineInput;
