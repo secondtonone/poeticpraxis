@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import Icon from '@components/Icon';
 
 export default function(props) {
