@@ -10,20 +10,28 @@ export default class Recognition {
 
         this.isRecording = false;
 
-        this.onMessage = onMessage;
-
-        if (onResult) {
-            this.recognition.onresult = this.onResult(onResult);
-        }
+        this.setOnResultHandler(onResult);
+        this.setOnMessagetHandler(onMessage);
 
         this.recognition.onspeechend = this.onSpeechEnd;
     }
 
+    setOnResultHandler = (onResult) => {
+        if (onResult) {
+            this.recognition.onresult = this.onResult(onResult);
+        }
+    }
+
+    setOnMessagetHandler = (onMessage) => {
+        if (onMessage) {
+            this.onMessage = onMessage;
+        }
+    }
     stateHandler = (message, isRecording) => {
         if (this.onMessage) {
             this.onMessage(message, isRecording);
         } else {
-            console.log(message);
+            console.warn(message);
         }
     };
 
