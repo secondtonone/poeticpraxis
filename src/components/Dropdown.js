@@ -1,81 +1,74 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useState, useEffect, useRef, useCallback } from 'preact/compat';
 
 import { DropdownList } from '@styles/components';
 import Flex from '@components/Flex';
 import Container from '@components/Container';
 
+export default function Dropdown({
+    isOpen = false,
+    title,
+    side,
+    top,
+    options,
+    value,
+    onChange,
+}) {
+    const [isListOpen, setVisibility] = useState(isOpen);
+    const dropdown = useRef();
+    const lang = value;
 
-export default class Dropdown extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isOpen: this.props.isOpen || false
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (dropdown.current && !dropdown.current.contains(e.target)) {
+                setVisibility(false);
+            }
         };
 
-        this.dropdown = null;
-    }
+        document.addEventListener('mousedown', handleClickOutside);
 
-    componentDidMount() {
-        document.addEventListener('mousedown', this.handleClickOutside);
-    }
+        return () =>
+            document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
-    componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleClickOutside);
-    }
+    const closeList = useCallback(() => {
+        setVisibility(false);
+    }, []);
 
-    handleClickOutside = (event) => {
-        if (this.dropdown && !this.dropdown.contains(event.target)) {
-            this.manualToggleDropdown(false);
-        }
-    };
+    const toggleDropdown = useCallback((e) => {
+        e.preventDefault();
+        setVisibility((isOpen) => !isOpen);
+    }, []);
 
-    manualToggleDropdown = (isOpen) => {
-        this.setState({
-            isOpen
-        });
-    };
+    const itemHandler = useCallback((e) => {
+        onChange(e.target.dataset.value);
+        closeList();
+    }, []);
 
-    toggleDropdown = () => {
-        let isOpen = this.state.isOpen ? false : true;
-        this.setState({
-            isOpen
-        });
-    };
+    return (
+        <Container>
+            <Flex onClick={toggleDropdown}>{title}</Flex>
 
-    render() {
-        return (
-            <Container>
-                <Flex
-                    onClick={(e) => {
-                        e.preventDefault();
-                        this.toggleDropdown();
-                    }}>
-                    {this.props.title}
-                </Flex>
-
-                {this.state.isOpen && (
-                    <DropdownList
-                        side={this.props.side || 'right'}
-                        top={this.props.top || '32px'}
-                        tabIndex="0"
-                        onBlur={() => {
-                            this.manualToggleDropdown(false);
-                        }}
-                        ref={(el) => (this.dropdown = el)}>
-                        {this.props.options.map(({ title, value }, index) => {
-                            return (
-                                <DropdownList.ListItem
-                                    active={value === this.props.value}
-                                    key={index}
-                                    onClick={() => this.props.onChange(value)}>
-                                    {title}
-                                </DropdownList.ListItem>
-                            );
-                        })}
-                    </DropdownList>
-                )}
-            </Container>
-        );
-    }
+            {isListOpen && (
+                <DropdownList
+                    side={side || 'right'}
+                    top={top || '32px'}
+                    tabIndex="0"
+                    onBlur={closeList}
+                    ref={dropdown}>
+                    {options.map(({ title, value }, index) => {
+                        return (
+                            <DropdownList.ListItem
+                                active={value === lang}
+                                data-value={value}
+                                key={index}
+                                onClick={itemHandler}>
+                                {title}
+                            </DropdownList.ListItem>
+                        );
+                    })}
+                </DropdownList>
+            )}
+        </Container>
+    );
 }
