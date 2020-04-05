@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import theme from './theme';
-import { show, upAlt, up } from './animations';
+import { show, upAlt, up, downAlt } from './animations';
 import { withElements } from './helpers';
 
 const FieldEditableArea = styled.textarea`
@@ -81,6 +81,16 @@ const AnimationUp = css`
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 `;
+
+const AnimationDown = css`
+    transform: translateY(-1000%);
+    animation-name: ${downAlt};
+    animation-duration: 0.7s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+`;
+
 
 const DesctopHiddenContainer = styled.div`
     display: none;
@@ -355,6 +365,7 @@ export {
     LeftedLayout,
     AnimationShow,
     AnimationUp,
+    AnimationDown,
     PrimaryTitle,
     Text,
     TextConstructor,

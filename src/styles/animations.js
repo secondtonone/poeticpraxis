@@ -10,6 +10,15 @@ const upAlt = keyframes`
     }
 `;
 
+const downAlt = keyframes`
+    50% {
+        transform: translateY(-1000%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+`;
+
 const up = keyframes`
     100% {
         transform: translateY(0);
@@ -40,6 +49,7 @@ const whited = keyframes`
 
 export {
     upAlt,
+    downAlt,
     up,
     show,
     loaded,
