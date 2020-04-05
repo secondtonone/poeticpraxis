@@ -15,12 +15,10 @@ const langOptions = [
     { title: 'English', value: 'en' }
 ];
 
-
-
 const LangChanger = ({ lang = 'ru', changeLang }) => {
-    const onChange = useCallback((value) => {
-        changeLang(value);
-        document.documentElement.lang = value;
+    const onChange = useCallback((e) => {
+        changeLang(e.target.value);
+        document.documentElement.lang = e.target.value;
     }, [changeLang]);
 
     const isDevice = isTouchDevice();
@@ -30,10 +28,7 @@ const LangChanger = ({ lang = 'ru', changeLang }) => {
             {isDevice ? (
                 <label htmlFor="lang">
                     <LangIcon _middle />
-                    <HiddenSelect
-                        id="lang"
-                        value={lang}
-                        onChange={(e) => onChange(e.target.value)}>
+                    <HiddenSelect id="lang" value={lang} onChange={onChange}>
                         {langOptions.map(({ title, value }, index) => {
                             return (
                                 <option key={index} value={value}>
