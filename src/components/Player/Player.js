@@ -1,4 +1,5 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useState, useCallback, useEffect } from 'preact/compat';
 
 import { translations } from './translations';
 
@@ -11,112 +12,104 @@ import PauseIcon from '@icons/PauseIcon';
 
 import Container from '@components/Container';
 import Flex from '@components/Flex';
-export default class Player extends Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            isPlaying: false
+export default function Player({
+    lang = 'ru',
+    bpm,
+    progress,
+    setBPM,
+    stop,
+    play,
+    pause
+}) {
+    const [isPlaying, setPlayerState] = useState(false);
+
+    useEffect(() => {
+        return () => {
+            _stop();
         };
-    }
+    }, []);
 
-    componentWillUnmount() {
-        if (this.state.isPlaying) {
-            this.stop();
+    const _play = useCallback(() => {
+        setPlayerState(true);
+        if (play) {
+            play();
         }
-    }
+    }, [play]);
 
-    play = () => {
-        this.setState({
-            isPlaying: true
-        });
-        if (this.props.play) {
-            this.props.play();
+    const _stop = useCallback(() => {
+        setPlayerState(false);
+        if (stop) {
+            stop();
         }
-    };
+    }, [stop]);
 
-    stop = () => {
-        this.setState({
-            isPlaying: false
-        });
-        if (this.props.stop) {
-            this.props.stop();
+    const _pause = useCallback(() => {
+        setPlayerState(false);
+        if (pause) {
+            pause();
         }
-    };
+    }, [pause]);
 
-    pause = () => {
-        this.setState({
-            isPlaying: false
-        });
-        if (this.props.pause) {
-            this.props.pause();
-        }
-    };
+    const repeat = useCallback(() => {
+        _stop();
+        _play();
+    }, [_play, _stop]);
 
-    repeat = () => {
-        this.stop();
-        this.play();
-    };
-
-    render() {
-        const { lang = 'ru', bpm, progress, setBPM } = this.props;
-        const { isPlaying } = this.state;
-
-        return (
-            <Container>
-                <Flex justify="space-between">
-                    <div>
-                        {!isPlaying && (
-                            <Button
-                                _rounded
-                                _transparent
-                                type="button"
-                                onClick={this.play}
-                                title={translations[lang].PLAY}>
-                                <PlayIcon _big />
-                            </Button>
-                        )}
-                        {isPlaying && (
-                            <Button
-                                _rounded
-                                _transparent
-                                type="button"
-                                onClick={this.pause}
-                                title={translations[lang].STOP}>
-                                <PauseIcon _big />
-                            </Button>
-                        )}
+    return (
+        <Container>
+            <Flex justify="space-between">
+                <div>
+                    {!isPlaying && (
                         <Button
                             _rounded
                             _transparent
                             type="button"
-                            onClick={this.repeat}
-                            title={translations[lang].REPEAT}>
-                            <ReplayIcon _big />
+                            onClick={_play}
+                            title={translations[lang].PLAY}>
+                            <PlayIcon _big />
                         </Button>
-                    </div>
-                    <div>
-                        {translations[lang].TEMPO}
-                        <Range
-                            type="range"
-                            value={bpm}
-                            min="20"
-                            max="200"
-                            onChange={setBPM}
-                        />
-                    </div>
-                </Flex>
+                    )}
+                    {isPlaying && (
+                        <Button
+                            _rounded
+                            _transparent
+                            type="button"
+                            onClick={_pause}
+                            title={translations[lang].STOP}>
+                            <PauseIcon _big />
+                        </Button>
+                    )}
+                    <Button
+                        _rounded
+                        _transparent
+                        type="button"
+                        onClick={repeat}
+                        title={translations[lang].REPEAT}>
+                        <ReplayIcon _big />
+                    </Button>
+                </div>
                 <div>
+                    {translations[lang].TEMPO}
                     <Range
-                        hideThumb
                         type="range"
-                        value={progress}
-                        min="0"
-                        max="100"
-                        disabled
+                        value={bpm}
+                        min="20"
+                        max="200"
+                        onChange={setBPM}
                     />
                 </div>
-            </Container>
-        );
-    }
+            </Flex>
+            <div>
+                <Range
+                    hideThumb
+                    type="range"
+                    value={progress}
+                    min="0"
+                    max="100"
+                    disabled
+                />
+            </div>
+        </Container>
+    );
 }

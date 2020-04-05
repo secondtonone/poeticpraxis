@@ -1,3 +1,5 @@
+import { h } from 'preact';
+import { memo } from 'preact/compat';
 import styled from 'styled-components';
 
 const Range = styled.input`
@@ -130,4 +132,4 @@ const Range = styled.input`
     }
 `;
 
-export default Range;
+export default memo((props) => <Range {...props} />)
