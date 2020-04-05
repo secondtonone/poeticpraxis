@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import { useState, useCallback } from 'preact/compat';
 import styled from 'styled-components';
 
@@ -78,67 +78,4 @@ const Info = ({ lang = 'ru', foldedContent, unfoldedContent, onClose }) => {
     );
 };
 
-/* class Info extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isInfoHidden: true
-        };
-    }
-    toggleInfo = () => {
-        let isInfoHidden = this.state.isInfoHidden;
-
-        this.setState({
-            isInfoHidden: !isInfoHidden
-        });
-    };
-
-    hideInfo = () => {
-        if(this.props.onClose) {
-            this.props.onClose();
-        }
-    };
-    render() {
-        const { lang = 'ru', foldedContent, unfoldedContent } = this.props;
-
-        return (
-            <StyledBox justify="stretch" direction={this.state.isInfoHidden ? 'row' : 'column'}>
-                <Container minWidth="300px">
-                    {this.state.isInfoHidden ? foldedContent : unfoldedContent}
-                </Container>
-                <Flex justify="flex-end" minWidth="300px">
-                    <Button
-                        _flat
-                        _transparent
-                        type="button"
-                        margin="8px 8px 0"
-                        onClick={this.hideInfo}>
-                        {translations[lang].CLOSE}{' '}
-                    </Button>
-                    {this.state.isInfoHidden ? (
-                        <Button
-                            _flat
-                            _transparent
-                            type="button"
-                            margin="8px 0 0"
-                            onClick={this.toggleInfo}>
-                            {translations[lang].SHOW}{' '}
-                        </Button>
-                    ) : (
-                        <Button
-                            _flat
-                            _transparent
-                            type="button"
-                            margin="8px 0 0"
-                            onClick={this.toggleInfo}>
-                            {translations[lang].HIDE}{' '}
-                        </Button>
-                    )}
-                </Flex>
-            </StyledBox>
-        );
-    }
-}
- */
 export default Info;

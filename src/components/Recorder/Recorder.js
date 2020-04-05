@@ -41,9 +41,11 @@ export default function Recorder (props) {
         } catch (error) {
             setSupporting(false);
         }
-
-        return () => recognition && recognition.stop();
     }, []);
+
+    useEffect(() => {
+        return () => recognition && isRecording && recognition.stop();
+    }, [isRecording]);
 
     useEffect(() => {
         recognition.setOnResultHandler(onTranslate);

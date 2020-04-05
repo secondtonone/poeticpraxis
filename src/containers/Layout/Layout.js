@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import { useEffect } from 'preact/compat';
 import { ThemeProvider } from 'styled-components';
 

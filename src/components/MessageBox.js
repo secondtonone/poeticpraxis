@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import styled from 'styled-components';
 
 const StyledMessageBox = styled.div`
@@ -27,8 +27,8 @@ const StyledMessageBox = styled.div`
     -webkit-font-smoothing: antialiased;
     ${(props) =>
         props.theme.name === 'dark'
-        ? `background: ${props.theme.grayDarkColor}; color: ${props.theme.secondColor};`
-            : ''}  
+            ? `background: ${props.theme.grayDarkColor}; color: ${props.theme.secondColor};`
+            : ''}
     @media (max-width: 600px) {
         bottom: 0;
         transform: translateY(
@@ -40,13 +40,10 @@ const StyledMessageBox = styled.div`
     }
 `;
 
-export default class MessageBox extends Component {
-    render() {
-        const { text, bottom } = this.props;
-        return (
-            <StyledMessageBox bottom={bottom} text={text}>
-                {text}
-            </StyledMessageBox>
-        );
-    }
+export default function MessageBox({ text, bottom }) {
+    return (
+        <StyledMessageBox bottom={bottom} text={text}>
+            {text}
+        </StyledMessageBox>
+    );
 }

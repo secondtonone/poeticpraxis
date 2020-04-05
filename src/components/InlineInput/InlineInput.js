@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import { useState, useEffect, useRef, useCallback } from 'preact/compat';
 
 import { Input, InputButton } from './styled';

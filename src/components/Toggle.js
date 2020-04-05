@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import styled from 'styled-components';
 
 import theme from '@styles/theme';
@@ -72,16 +72,14 @@ const Input = styled.input`
     }
 `;
 
-class Toggle extends Component {
-    render() {
-        const id = `tog${randomize()}`;
-        return (
-            <Container>
-                <Input type="checkbox" id={id} {...this.props} />
-                <Label htmlFor={id} />
-            </Container>
-        );
-    }
+const  Toggle = (props) => {
+    const id = `tog${randomize()}`;
+    return (
+        <Container>
+            <Input type="checkbox" id={id} {...props} />
+            <Label htmlFor={id} />
+        </Container>
+    );
 }
 
 export default Toggle;

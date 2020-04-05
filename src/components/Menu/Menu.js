@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useState, useCallback, useRef, useEffect } from 'preact/compat';
+import { useState, useCallback, useRef } from 'preact/compat';
 
 import { NavBar, NavMenu, NavMenuBar, MobileNavMenu } from './styled';
 

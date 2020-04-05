@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import styled from 'styled-components';
 
 import theme from '@styles/theme';
