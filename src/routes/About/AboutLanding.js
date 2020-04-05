@@ -41,7 +41,7 @@ const AboutLanding = ({ lang = 'ru', mediaQuery }) => {
                 <Flex direction="column" justify="space-evenly">
                     <PrimaryTitle
                         as="h1"
-                        multiplyer="2"
+                        multiplyer="0"
                         size={mediaQuery ? 60 : 128}
                         weight={400}
                         mb={mediaQuery ? 0 : 64}

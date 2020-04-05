@@ -32,7 +32,7 @@ const AboutRhythmic = ({lang, mediaQuery}) => {
                 width={mediaQuery ? '100%' : '70%'}
                 padding={mediaQuery ? '0 50px 0' : '9px 0 50px'}>
                 <PrimaryTitle
-                    multiplyer="2"
+                    multiplyer="0"
                     as="h2"
                     size={mediaQuery ? 64 : 128}
                     lineHeight={mediaQuery ? 0.5 : 0.4}

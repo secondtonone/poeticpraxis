@@ -33,7 +33,7 @@ const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
                         }>
                         <PrimaryTitle
                             as="h2"
-                            multiplyer="2"
+                            multiplyer="0"
                             size={mediaQuery ? 64 : 128}
                             lineHeight={mediaQuery ? 0.5 : 0.4}
                             align={mediaQuery ? 'left' : 'right'}
