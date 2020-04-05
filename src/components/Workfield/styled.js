@@ -124,11 +124,12 @@ const Syllable = styled.div`
         right: -17px;
 
         &::before {
-            position: relative;
+            position: absolute;
             top: 10px;
-            width: 100%;
+            right: 0;
+            width: 100vw;
             letter-spacing: 3px;
-            font-size: 12px;
+            font-size: 10px;
             white-space: nowrap;
             color: ${theme.primaryGray};
             content: '....................' '....................'
