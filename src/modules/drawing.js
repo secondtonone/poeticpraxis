@@ -5,7 +5,11 @@ export default class Drawing {
     radius = 5;
     heightCell = 58;
     widthCell = 55;
-    static calcRatio() {
+
+    canvas = null;
+    ctx = null;
+
+    calcRatio() {
         let ctx = document.createElement('canvas').getContext('2d'),
             dpr = window.devicePixelRatio || 1,
             bsr =
@@ -18,12 +22,33 @@ export default class Drawing {
         return dpr / bsr;
     }
 
-    setCtx (ctx) {
-        this.ctx = ctx;
+    updateChart(heightCalc) {
+        const ratio = this.calcRatio();
+
+        this.canvas.width = this.canvas.offsetWidth * ratio;
+
+        const recalculatedHeight = heightCalc(this.canvas.offsetWidth);
+
+        this.canvas.height = recalculatedHeight * ratio;
+        this.canvas.style.width = this.canvas.offsetWidth + 'px';
+        this.canvas.style.height = recalculatedHeight + 'px';
+        
+        this.ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        this.ctx.fillStyle = theme[this.variant].primaryColor;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    setCtx (canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
     }
 
     setVariant (variant) {
         this.variant = variant;
+    }
+
+    getVariant () {
+        return this.variant;
     }
     clearIndicator (index) {
         const { vertical, horizontal } = this.coords[index];
@@ -62,48 +87,45 @@ export default class Drawing {
         this.ctx.fill();
     }
     drawCell({
-        ctx,
         note: { isAccented, char, frequents, notes },
         horizontal,
-        vertical,
-        variant
+        vertical
     }) {
         vertical = vertical + 20;
         if (isAccented) {
-            ctx.fillStyle = theme[variant].accentColor;
+            this.ctx.fillStyle = theme[this.variant].accentColor;
         }
-        ctx.fillText(char, horizontal + 60, vertical);
-        ctx.font = '10px Montserrat';
-        ctx.fillStyle = theme[variant].grayColor;
-        //ctx.fillText('Т', horizontal + 50, vertical);
-        ctx.font = '20px Montserrat';
-        ctx.fillStyle = theme[variant].secondColor;
+        this.ctx.fillText(char, horizontal + 60, vertical);
+        this.ctx.font = '10px Montserrat';
+        this.ctx.fillStyle = theme[this.variant].grayColor;
+        //this.ctx.fillText('Т', horizontal + 50, vertical);
+        this.ctx.font = '20px Montserrat';
+        this.ctx.fillStyle = theme[this.variant].secondColor;
         vertical = vertical + 20;
-        ctx.fillText(notes, horizontal + 60, vertical);
-        ctx.font = '10px Montserrat';
-        ctx.fillStyle = theme[variant].grayColor;
+        this.ctx.fillText(notes, horizontal + 60, vertical);
+        this.ctx.font = '10px Montserrat';
+        this.ctx.fillStyle = theme[this.variant].grayColor;
         vertical = vertical + 12;
-        ctx.fillText(frequents, horizontal + 60, vertical);
-        ctx.font = '18px Montserrat';
-        ctx.fillStyle = theme[variant].secondColor;
+        this.ctx.fillText(frequents, horizontal + 60, vertical);
+        this.ctx.font = '18px Montserrat';
+        this.ctx.fillStyle = theme[this.variant].secondColor;
     }
 
     drawNotes({
-        ctx,
         music,
-        variant,
-        canvasWidth,
-        canvasHeight,
         verticalOffset
     }) {
-        ctx.textAlign = 'center';
-        ctx.font = '18px Montserrat';
+        const canvasWidth = this.canvas.offsetWidth;
+        const canvasHeight = this.canvas.offsetHeight;
 
-        ctx.fillStyle = theme[variant].primaryColor;
+        this.ctx.textAlign = 'center';
+        this.ctx.font = '18px Montserrat';
 
-        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+        this.ctx.fillStyle = theme[this.variant].primaryColor;
 
-        ctx.fillStyle = theme[variant].secondColor;
+        this.ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        this.ctx.fillStyle = theme[this.variant].secondColor;
 
         this.coords = [];
 
@@ -128,16 +150,14 @@ export default class Drawing {
 
             if (string !== lastString) {
                 this.drawStringNumber({
-                    ctx,
                     stringIndex,
                     horizontal,
-                    vertical,
-                    variant
+                    vertical
                 });
                 stringIndex++;
             }
 
-            this.drawNote({ ctx, note, horizontal, vertical, variant });
+            this.drawNote({ note, horizontal, vertical });
 
             this.coords.push({
                 horizontal,
@@ -150,15 +170,15 @@ export default class Drawing {
         });
     }
 
-    drawStringNumber({ ctx, stringIndex, horizontal, vertical, variant }) {
-        ctx.font = '18px Montserrat';
-        ctx.fillStyle = theme[variant].grayColor;
-        ctx.fillText(stringIndex, horizontal + 8, vertical + 40);
-        ctx.font = '18px Montserrat';
-        ctx.fillStyle = theme[variant].secondColor;
+    drawStringNumber({ stringIndex, horizontal, vertical }) {
+        this.ctx.font = '18px Montserrat';
+        this.ctx.fillStyle = theme[this.variant].grayColor;
+        this.ctx.fillText(stringIndex, horizontal + 8, vertical + 40);
+        this.ctx.font = '18px Montserrat';
+        this.ctx.fillStyle = theme[this.variant].secondColor;
     }
 
-    drawNote({ ctx, note, horizontal, vertical, variant }) {
+    drawNote({ note, horizontal, vertical }) {
         let notes = '';
         let frequents = '';
         let string = note.string;
@@ -175,11 +195,9 @@ export default class Drawing {
         const isAccented = note.isAccented;
 
         this.drawCell({
-            ctx,
             note: { notes, frequents, isAccented, char },
             horizontal,
-            vertical,
-            variant
+            vertical
         });
     }
 }
