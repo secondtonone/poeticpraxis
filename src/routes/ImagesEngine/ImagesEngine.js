@@ -1,8 +1,9 @@
 import { h } from 'preact';
-import { lazy, Suspense, useEffect, useState, useCallback } from 'preact/compat';
+import { lazy, Suspense, useState, useCallback } from 'preact/compat';
 
 import useTitlePage from '@hooks/useTitlePage';
 import useMessage from '@hooks/useMessage';
+import useScrollToTop from '@hooks/useScrollToTop';
 
 import { imaged, stringToWords } from '@modules/imaged';
 import { getWords } from '@modules/dictionary';
@@ -70,10 +71,7 @@ const ImagesEngine = ({
     }`;
 
     useTitlePage(title);
-
-    useEffect(() => {
-        toTheTop();
-    }, []);
+    useScrollToTop();
 
     const getDictionaryWords = useCallback(async () => {
         try {
