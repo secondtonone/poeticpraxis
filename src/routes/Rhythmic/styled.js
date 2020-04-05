@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import theme from '@styles/theme';
 
-import { AnimationShow, AnimationUp } from '@styles/components';
+import { AnimationShow, AnimationUp, AnimationDown } from '@styles/components';
 
 import Flex from '@components/Flex';
 import Button from '@components/Button';
@@ -52,11 +52,11 @@ const StringPauseButtonMobile = styled(Button)`
     ${AnimationUp};
 `;
 
-const CopyButton = styled(Button)`
+const UpperButton = styled(Button)`
     @media (min-width: 320px) and (max-width: 1024px) and (orientation: portrait) {
         display: none;
     }
-    ${AnimationUp};
+    ${AnimationDown};
 `;
 
 const ButtonContainer = styled.div`
@@ -133,7 +133,7 @@ export {
     ChangeModeButton,
     StringPauseButton,
     StringPauseButtonMobile,
-    CopyButton,
+    UpperButton,
     CopyButtonMobile,
     ButtonContainer,
     AccentRelative,
