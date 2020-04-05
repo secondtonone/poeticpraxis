@@ -33,15 +33,20 @@ const secondMenu = (lang, [first, second]) => [
     }
 ];
 
-const RhythmicMenu = ({lang = 'ru', current, handler, text}) => {
-
+const RhythmicMenu = ({
+    lang = 'ru',
+    current,
+    handler,
+    isAnalyzeReady
+}) => {
+    
     return (
         <SecondaryMenu
-            items={secondMenu(lang, [false,!text])}
+            items={secondMenu(lang, [false, !isAnalyzeReady])}
             handler={handler}
             current={current}
         />
     );
-}
+};
 
 export default RhythmicMenu;

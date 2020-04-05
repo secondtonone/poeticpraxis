@@ -68,10 +68,11 @@ const Rhythmic = ({
 
     const workfield = useRef();
 
-    const [textMessage, showMessage] = useMessage();
+    const [ textMessage, showMessage ] = useMessage();
     const [ zoomIn, setZoom ] = useState(false);
     const [ isFocused, setFocus ] = useState(false);
     const [ isEditable, setEditableMode ] = useState(true);
+    const [ isAnalyzeReady, setAnalyzeStatus] = useState(false);
     const [ currentView, setView ] = useState('rhythmic');
 
     const isDevice = isTouchDevice();
@@ -137,10 +138,9 @@ const Rhythmic = ({
     };
 
     const changeMode = useCallback(() => {
-        setEditableMode(!isEditable);
-
+        setEditableMode((isEditable) => !isEditable);
         zoomOutHandler();
-    }, [isEditable]);
+    }, []);
 
     const zoomInHandler = () => {
         const zoomIn = true;
@@ -184,6 +184,14 @@ const Rhythmic = ({
         }
     }, [isEditable, zoomIn]);
 
+    const onTextLintingStart = useCallback(() => {
+        setAnalyzeStatus(false);
+    }, []);
+
+    const onTextLintingEnd = useCallback(() => {
+        setAnalyzeStatus(true);
+    }, []);
+
     return (
         <section>
             <MessageBox text={textMessage} bottom={120} />
@@ -192,6 +200,7 @@ const Rhythmic = ({
                 current={currentView}
                 lang={lang}
                 text={text}
+                isAnalyzeReady={isAnalyzeReady}
             />
             {currentView === 'rhythmic' && isDevice && !isFocused && (
                 <ActionBar
@@ -230,6 +239,8 @@ const Rhythmic = ({
                                     onError={showMessage}
                                     onFocus={focusHandler}
                                     onUpdate={setRhytmicState}
+                                    onTextLintingStart={onTextLintingStart}
+                                    onTextLintingEnd={onTextLintingEnd}
                                     ref={workfield}
                                 />
                             )}

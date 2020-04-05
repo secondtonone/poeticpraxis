@@ -18,7 +18,7 @@ import { List, TextMinor } from '@styles/components';
 import {
     StringPauseButton,
     StringPauseButtonMobile,
-    CopyButton,
+    UpperButton,
     FlexSided
 } from './styled';
 
@@ -91,22 +91,22 @@ const Main = ({
             <List _animated sidePaddingMobile={'0'} ref={sectionElement}>
                 {!isDevice && (
                     <Flex margin="0 0 16px">
-                        <CopyButton
+                        <UpperButton
                             _rounded
                             type="button"
                             disabled={!text}
                             onClick={copyToClipboard}
                             title={translations[lang].rhythmic['COPY']}>
                             <ContentCopy _middle />
-                        </CopyButton>
-                        <CopyButton
+                        </UpperButton>
+                        <UpperButton
                             _rounded
                             type="button"
                             disabled={!text}
                             onClick={shareWithLink}
                             title={translations[lang].rhythmic['SHARE']}>
                             <ShareIcon _middle />
-                        </CopyButton>
+                        </UpperButton>
                     </Flex>
                 )}
 

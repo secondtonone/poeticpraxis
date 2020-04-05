@@ -163,6 +163,8 @@ export default class Workfield extends Component {
 
     textLinting = async (text) => {
         try {
+            this.props.onTextLintingStart && this.props.onTextLintingStart();
+
             let stringsDictionary = this.props.stringsDictionary || {};
 
             let wordsDictionary = this.props.wordsDictionary || {};
@@ -196,6 +198,8 @@ export default class Workfield extends Component {
             });
 
             this.onUpdate();
+            this.props.onTextLintingEnd &&
+                this.props.onTextLintingEnd();
         } catch (e) {
             if (this.props.onError) {
                 const translation = translations[this.props.lang];
