@@ -58,8 +58,7 @@ const ImagesEngine = ({
     sharingText,
     history
 }) => {
-    /* для апдейта страницы */
-    const [field, setField] = useState({});
+ 
     const [words, setWords] = useState(stringToWords(text));
     const [textMessage, showMessage] = useMessage();
     const [isDisabledWordsview, setIsDisabledWordsview] = useState(
@@ -238,7 +237,6 @@ const ImagesEngine = ({
                                 onInput={handleTextInput}
                                 value={text}
                                 Textarea={FieldEditableArea}
-                                getMeasure={setField}
                                 placeHolder={`${translations[lang].placeholders['ENGINE']}...`}
                             />
                         }
