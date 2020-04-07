@@ -1,85 +1,91 @@
 import { h } from 'preact';
-import { PureComponent } from 'preact/compat';
+import {
+    useLayoutEffect,
+    useRef,
+    useCallback,
+    memo,
+} from 'preact/compat';
 import randomize from '@utils/randomize';
 
 import { FieldLabel, SimpleTextarea } from '@styles/components';
 
-export default class Textarea extends PureComponent {
+let delayHeightChange = null;
+const id = `i${randomize()}`;
 
-    field = null;
-    delayHeightChange = 0;
-    componentDidMount() {
-        this.props.getRef && this.props.getRef(this.field);
-        this.heightChange();
-    }
+const Textarea = memo(({
+    getRef,
+    Textarea = SimpleTextarea,
+    value,
+    onMouseUp,
+    onInput,
+    onClick,
+    readOnly,
+    className,
+    placeHolder,
+    label,
+    onFocus,
+    onBlur,
+    onMouseMove,
+    onKeyDown,
+    onKeyUp,
+    zoomIn,
+    onChange,
+}) => {
+    const textarea = useRef();
+    const prevValue = useRef();
 
-    componentDidUpdate() {
-        this.delayHeightChange = requestAnimationFrame(this.heightChange);
-    }
+    useLayoutEffect(() => {
+        getRef && getRef(textarea.current);
+        return () => cancelAnimationFrame(delayHeightChange);
+    }, []);
 
-    componentWillUnmount() {
-        cancelAnimationFrame(this.delayHeightChange);
-    }
+    useLayoutEffect(() => {
+        if (prevValue.current !== value) {
+            prevValue.current = value;
+            delayHeightChange = requestAnimationFrame(heightChange);
+        }
+    }, [value]);
 
-    heightChange = () => {
-        this.field.style.height = 'auto';
+    const heightChange = useCallback(() => {
+        textarea.current.style.height = 'auto';
+        const scrollHeight = textarea.current.scrollHeight;
+        textarea.current.style.height = scrollHeight + 'px';
+    },[]);
 
-        const height = this.field.scrollHeight;
+    const _onChange = useCallback(
+        () => {
+            onChange && onChange();
+        },
+        [onChange]
+    );
 
-        this.field.style.height = height + 'px';
-    };
+    return (
+        <div>
+            <FieldLabel htmlFor={id} isHidden={!(label && value)}>
+                {label}
+            </FieldLabel>
+            <Textarea
+                name={id}
+                id={id}
+                onInput={onInput}
+                onMouseMove={onMouseMove}
+                onMouseUp={onMouseUp}
+                onClick={onClick}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onKeyUp={onKeyUp}
+                onKeyDown={onKeyDown}
+                zoomIn={zoomIn}
+                value={value}
+                className={className}
+                ref={textarea}
+                readOnly={readOnly}
+                onChange={_onChange}
+                placeholder={placeHolder}
+                aria-label="workfield"
+            />
+        </div>
+    );
+});
 
-    getRef = (ref) => this.field = ref
-
-    onChange  = () => this.props.onChange && this.props.onChange()
-
-    render() {
-        const {
-            Textarea = SimpleTextarea,
-            value,
-            onMouseUp,
-            onInput,
-            onClick,
-            readOnly,
-            className,
-            placeHolder,
-            label,
-            onFocus,
-            onBlur,
-            onMouseMove,
-            onKeyDown,
-            onKeyUp,
-            zoomIn
-        } = this.props;
-
-        const id = `i${randomize()}`;
-
-        return (
-            <div>
-                <FieldLabel htmlFor={id} isHidden={!(label && value)}>
-                    {label}
-                </FieldLabel>
-                <Textarea
-                    name={id}
-                    id={id}
-                    onInput={onInput}
-                    onMouseMove={onMouseMove}
-                    onMouseUp={onMouseUp}
-                    onClick={onClick}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    onKeyUp={onKeyUp}
-                    onKeyDown={onKeyDown}
-                    zoomIn={zoomIn}
-                    value={value}
-                    className={className}
-                    ref={this.getRef}
-                    readOnly={readOnly}
-                    onChange={this.onChange}
-                    placeholder={placeHolder}
-                    aria-label="workfield"
-                />
-            </div>
-        );
-    }
-}
+export default Textarea;
