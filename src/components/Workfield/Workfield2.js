@@ -58,7 +58,6 @@ export default class Workfield extends Component {
     }
 
     componentDidMount() {
-        this.setHandlers();
         this.lineHeight =
             parseInt(
                 window.getComputedStyle(this.mainField, null).lineHeight,
@@ -101,14 +100,6 @@ export default class Workfield extends Component {
                 this.textLinting(this.props.text);
             });
         }
-    }
-
-    setHandlers = () => {
-        this.props.setMakeCaesuraHandler && this.props.setMakeCaesuraHandler(this.makeCaesura);
-        this.props.setCopyToClipboardHandler &&
-            this.props.setCopyToClipboardHandler(this.copyToClipboard);
-        this.props.setChangeZoomModeHandler &&
-            this.props.setChangeZoomModeHandler(this.changeZoomMode);
     }
 
     getAnalizedText = ({ text, stringsDictionary, wordsDictionary }) =>

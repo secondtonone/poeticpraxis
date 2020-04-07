@@ -52,6 +52,11 @@ import {
     LeftedLayout
 } from '@styles/components';
 
+
+let makeCaesura = () => {};
+let copyToClipboardHandler = () => {};
+let changeZoomMode = () => {};
+
 const Rhythmic = ({
     setRhytmicState,
     setWordsDictionary,
@@ -129,13 +134,24 @@ const Rhythmic = ({
     }, [stringsDictionary, lang]);
 
     const copyToClipboard = useCallback(() => {
-        workfield.current.copyToClipboard();
+        copyToClipboardHandler();
         showMessage(translations[lang].messages['COPIED']);
     }, [lang]);
 
-    const makeCaesura = () => {
+    /* const makeCaesura = () => {
         workfield.current.makeCaesura();
-    };
+    }; */
+    const setCopyToClipboardHandler = useCallback((handler) => {
+        copyToClipboardHandler = handler;
+    }, []);
+
+    const setMakeCaesuraHandler = useCallback((handler) => {
+        makeCaesura = handler;
+    },[]);
+
+    const setChangeZoomModeHandler = useCallback((handler) => {
+        changeZoomMode = handler;
+    }, []);
 
     const changeMode = useCallback(() => {
         setEditableMode((isEditable) => !isEditable);
@@ -145,13 +161,13 @@ const Rhythmic = ({
     const zoomInHandler = () => {
         const zoomIn = true;
         setZoom(zoomIn);
-        workfield.current.changeZoomMode(zoomIn);
+        changeZoomMode(zoomIn);
     }
 
     const zoomOutHandler = () => {
         const zoomIn = false;
         setZoom(zoomIn);
-        workfield.current.changeZoomMode(zoomIn);
+        changeZoomMode(zoomIn);
     }
 
     const focusHandler = useCallback((isFocused) => {
@@ -241,6 +257,15 @@ const Rhythmic = ({
                                     onUpdate={setRhytmicState}
                                     onTextLintingStart={onTextLintingStart}
                                     onTextLintingEnd={onTextLintingEnd}
+                                    setMakeCaesuraHandler={
+                                        setMakeCaesuraHandler
+                                    }
+                                    setCopyToClipboardHandler={
+                                        setCopyToClipboardHandler
+                                    }
+                                    setChangeZoomModeHandler={
+                                        setChangeZoomModeHandler
+                                    }
                                     ref={workfield}
                                 />
                             )}
