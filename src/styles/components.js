@@ -7,7 +7,7 @@ import { withElements } from './helpers';
 const FieldEditableArea = styled.textarea`
     position: relative;
     font-family: ${theme.mainFont};
-    height: 100%;
+    height: auto;
     width: 100%;
     margin: 0;
     color: ${(props) => props.theme.secondColor};
@@ -26,6 +26,7 @@ const FieldEditableArea = styled.textarea`
     border: 0;
     resize: none;
     cursor: text;
+    will-change: height;
 
     &:focus {
         outline: none;
