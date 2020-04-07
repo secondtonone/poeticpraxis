@@ -32,7 +32,6 @@ const Textarea = memo(({
     onChange,
 }) => {
     const textarea = useRef();
-    const prevValue = useRef();
 
     useLayoutEffect(() => {
         getRef && getRef(textarea.current);
@@ -40,11 +39,8 @@ const Textarea = memo(({
     }, []);
 
     useLayoutEffect(() => {
-        if (prevValue.current !== value) {
-            prevValue.current = value;
-            delayHeightChange = requestAnimationFrame(heightChange);
-        }
-    }, [value]);
+        delayHeightChange = requestAnimationFrame(heightChange);
+    }, [value, zoomIn]);
 
     const heightChange = useCallback(() => {
         textarea.current.style.height = 'auto';
