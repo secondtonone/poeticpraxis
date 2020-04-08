@@ -1,5 +1,5 @@
-import { h, Component } from 'preact';
-
+import { h, createRef } from 'preact';
+import { PureComponent } from 'preact/compat';
 import Textarea from '@components/Textarea';
 
 import Marks from './Marks';
@@ -8,7 +8,7 @@ import InfoMarks from './InfoMarks';
 
 import {translations} from './translations';
 
-import hashFunction from '@utils/hashFunction';
+/* import hashFunction from '@utils/hashFunction'; */
 import fontReady from '@utils/fontReady';
 import AnalizeWorker from 'worker-loader!./analize-worker';
 
@@ -19,7 +19,8 @@ import {
     makeCaesura,
     makeAccent,
     rhythmPresets,
-    accents
+    accents,
+    getAnalizedTextFromWorker
 } from './module';
 
 
@@ -35,7 +36,7 @@ import {
 
 /* парсить по словам, сравнивать с предыдущим деревом */
 
-export default class Workfield extends Component {
+export default class Workfield extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -51,7 +52,8 @@ export default class Workfield extends Component {
 
         this.textAnalizingWorker = null;
 
-        this.mainField = null;
+        this.mainField = createRef();
+        this.fakeField = createRef();
         this.lineHeight = 1;
 
         this.accents = accents;
@@ -61,7 +63,7 @@ export default class Workfield extends Component {
         this.setHandlers();
         this.lineHeight =
             parseInt(
-                window.getComputedStyle(this.mainField, null).lineHeight,
+                window.getComputedStyle(this.mainField.current, null).lineHeight,
                 10
             ) || 1;
 
@@ -111,24 +113,6 @@ export default class Workfield extends Component {
             this.props.setChangeZoomModeHandler(this.changeZoomMode);
     }
 
-    getAnalizedText = ({ text, stringsDictionary, wordsDictionary }) =>
-        new Promise((resolve, reject) => {
-            this.textAnalizingWorker.postMessage({
-                text,
-                stringsDictionary,
-                wordsDictionary
-            });
-
-            this.textAnalizingWorker.onmessage = (e) => {
-                let analizedText = e.data;
-                resolve(analizedText);
-            };
-
-            this.textAnalizingWorker.onerror = (e) => {
-                reject(e);
-            };
-        });
-
     onUpdate = () => {
         if (this.props.onUpdate) {
             const translation = translations[this.props.lang];
@@ -158,12 +142,6 @@ export default class Workfield extends Component {
         this.textLinting(this.props.text);
     };
 
-    getMeasureField = (field) => {
-        this.setState({
-            field
-        });
-    };
-
     handleTextInput = (e) => {
         const text = e.target.value;
         this.props.onUpdate && this.props.onUpdate({ text });
@@ -180,12 +158,13 @@ export default class Workfield extends Component {
             let analizedText = {};
 
             if (this.textAnalizingWorker) {
-                analizedText = await this.getAnalizedText({
+                analizedText = await getAnalizedTextFromWorker({
+                    worker: this.textAnalizingWorker,
                     text,
                     stringsDictionary,
-                    wordsDictionary
+                    wordsDictionary,
                 });
-            } else {
+            } else { 
                 analizedText = textAnalizator(
                     text,
                     stringsDictionary,
@@ -197,7 +176,7 @@ export default class Workfield extends Component {
                 ...analizedText
             });
 
-            const children = this.fakeField.children;
+            const children = this.fakeField.current.children;
 
             const stringsLinted = tagMaker(children, analizedText);
 
@@ -217,22 +196,22 @@ export default class Workfield extends Component {
     };
 
     makeCaesura = () => {
-        makeCaesura(this.mainField, (text) => {
+        makeCaesura(this.mainField.current, (text) => {
             this.props.onUpdate && this.props.onUpdate({
                 text
             });
         });
-        this.mainField.focus();
+        this.mainField.current.focus();
     };
 
     copyToClipboard = () => {
-        copyFrom(this.fakeField);
+        copyFrom(this.fakeField.current);
     };
 
-    getSelection = () => {
-        const start = this.mainField.selectionStart;
+    /*getSelection = () => {
+        const start = this.mainField.current.selectionStart;
 
-        const end = this.mainField.selectionEnd;
+        const end = this.mainField.current.selectionEnd;
 
         const hashTable = this.state.hashTable;
 
@@ -242,7 +221,7 @@ export default class Workfield extends Component {
 
         const textSelected = this.props.text.substring(start, end);
 
-        /* hashTokenId = hashFunction(token,++interator);*/
+        // hashTokenId = hashFunction(token,++interator);
 
         textSelected.split('').forEach((char, index) => {
             let hashTokenId = hashFunction(char, index + start + 1);
@@ -252,22 +231,9 @@ export default class Workfield extends Component {
             console.log(elements[elementId]);
         });
 
-        /* здесь мы высчитываем и сразу корректируем state.elements*/
-    };
+        // здесь мы высчитываем и сразу корректируем state.elements
+    };*/
 
-    /* анализ строк */
-    getSugesstions = (string) => {
-        if (string) {
-            return {
-                stroke: 'all',
-                rhythm: {
-                    size: 2,
-                    accent: 1
-                }
-            };
-        }
-    };
-    /* применение */
     changeRhythmHandler = async (stringId) => {
         const strings = this.state.strings;
         const string = strings[stringId];
@@ -449,14 +415,7 @@ export default class Workfield extends Component {
         this.onUpdate();
     };
 
-    fakeFieldRef = (ref) => {
-        this.fakeField = ref;
-    };
-
-    textareaRef = (ref) => {
-        this.mainField = ref;
-    };
-
+    getRef = (ref) => this.mainField.current = ref
     workfieldFocusHandler = () => {
         if (this.props.onFocus) {
             this.props.onFocus(true);
@@ -473,7 +432,7 @@ export default class Workfield extends Component {
         const {
             readOnly,
             text,
-            placeHolder,
+            placeHolder = '',
             onMouseMove,
             lang,
             syllableOff,
@@ -493,7 +452,7 @@ export default class Workfield extends Component {
                 <FakeField
                     data-id-comp="fakeField"
                     zoomIn={zoomIn}
-                    ref={this.fakeFieldRef}>
+                    ref={this.fakeField}>
                     <HiddenMarks
                         strings={strings}
                         orderStrings={orderStrings}
@@ -521,14 +480,13 @@ export default class Workfield extends Component {
                     onInput={this.handleTextInput}
                     value={text}
                     Textarea={FieldEditableArea}
-                    getMeasure={this.getMeasureField}
                     readOnly={readOnly}
                     zoomIn={zoomIn}
                     onMouseMove={onMouseMove}
                     onFocus={this.workfieldFocusHandler}
                     onBlur={this.workfieldBlurHandler}
-                    placeHolder={placeHolder || ''}
-                    getRef={this.textareaRef}
+                    placeHolder={placeHolder}
+                    getRef={this.getRef}
                 />
             </WorkField>
         );

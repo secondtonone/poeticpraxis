@@ -5,6 +5,7 @@ import makeCaesura from './makeCaesura';
 import makeAccent from './makeAccent';
 import rhythmPresets from './rhythmPresets';
 import accents from './accents';
+import getAnalizedTextFromWorker from './getAnalizedTextFromWorker';
 
 export {
     structure,
@@ -13,5 +14,6 @@ export {
     makeCaesura,
     makeAccent,
     rhythmPresets,
-    accents
-}
+    accents,
+    getAnalizedTextFromWorker,
+};

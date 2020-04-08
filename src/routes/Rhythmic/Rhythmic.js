@@ -1,7 +1,6 @@
 import { h } from 'preact';
 import {
     useState,
-    useRef,
     useEffect,
     useCallback,
     Suspense,
@@ -71,8 +70,6 @@ const Rhythmic = ({
         stringsDictionary
     } = rhythmicState;
 
-    const workfield = useRef();
-
     const [ textMessage, showMessage ] = useMessage();
     const [ zoomIn, setZoom ] = useState(false);
     const [ isFocused, setFocus ] = useState(false);
@@ -138,9 +135,6 @@ const Rhythmic = ({
         showMessage(translations[lang].messages['COPIED']);
     }, [lang]);
 
-    /* const makeCaesura = () => {
-        workfield.current.makeCaesura();
-    }; */
     const setCopyToClipboardHandler = useCallback((handler) => {
         copyToClipboardHandler = handler;
     }, []);
@@ -266,7 +260,6 @@ const Rhythmic = ({
                                     setChangeZoomModeHandler={
                                         setChangeZoomModeHandler
                                     }
-                                    ref={workfield}
                                 />
                             )}
                         />
