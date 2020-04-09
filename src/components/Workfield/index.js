@@ -1,3 +1,3 @@
-import Workfield from './Workfield';
+import Workfield from './WorkfieldContainer';
 
 export default Workfield;
