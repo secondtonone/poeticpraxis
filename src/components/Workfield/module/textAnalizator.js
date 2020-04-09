@@ -135,14 +135,14 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
                         ) {
                             accent = isInDictionary(string, stringsDictionary)
                                 ? isAccented(
-                                      string,
-                                      stringIndex,
-                                      stringsDictionary
-                                  )
+                                    string,
+                                    stringIndex,
+                                    stringsDictionary
+                                )
                                 : isAccented(token, index, wordsDictionary);
                         } else {
                             accent =
-                                isAccentedByRegExp('ёЁ', char) ||
+                                isAccentedByRegExp('[ёЁ]', char) ||
                                 isAccentedByPosition(token, vowelCounter);
                         }
 
