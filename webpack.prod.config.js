@@ -16,7 +16,7 @@ const config = {
     devtool: false,
     output: {
         ...baseConfig.output,
-        filename: '[name].[chunkhash:8].js'
+        filename: '[name].[chunkhash:8].js',
     },
     module: {
         rules: [
@@ -25,17 +25,17 @@ const config = {
                 test: /\.css$/,
                 use: [
                     {
-                        loader: 'style-loader'
+                        loader: 'style-loader',
                     },
                     {
                         loader: 'css-loader',
                         options: {
-                            minimize: true
-                        }
-                    }
-                ]
-            }
-        ]
+                            minimize: true,
+                        },
+                    },
+                ],
+            },
+        ],
     },
     optimization: {
         ...baseConfig.optimization,
@@ -48,23 +48,23 @@ const config = {
                 terserOptions: {
                     parallel: true,
                     output: {
-                        comments: false
+                        comments: false,
                     },
                     mangle: true,
                     compress: {
                         keep_fargs: false,
-                        hoist_funs: true
-                    }
-                }
-            })
-        ]
+                        hoist_funs: true,
+                    },
+                },
+            }),
+        ],
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
+                NODE_ENV: JSON.stringify('production'),
+            },
         }),
         new HtmlWebpackPlugin({
             template: './public/index.html',
@@ -73,14 +73,14 @@ const config = {
                 minifyCSS: true,
                 minifyJS: true,
                 removeComments: true,
-                collapseWhitespace: true
+                collapseWhitespace: true,
             },
             env: {
-                Prod: true
-            }
+                Prod: true,
+            },
         }),
         new ScriptExtHtmlWebpackPlugin({
-            defer: /\.js$/
+            defer: /\.js$/,
         }),
         new PreloadWebpackPlugin({
             rel: 'preload',
@@ -97,33 +97,33 @@ const config = {
                 /serviceworker/,
                 /\.webmanifest/
             ], */
-            include: /* 'allAssets' */ 'initial'
+            include: /* 'allAssets' */ 'asyncChunks'
         }),
         new CopyWebpackPlugin([
             {
                 from: 'public/robots.txt',
-                ignore: ['.DS_Store']
+                ignore: ['.DS_Store'],
             },
             {
                 from: 'public/sitemap.xml',
-                ignore: ['.DS_Store']
+                ignore: ['.DS_Store'],
             },
             {
                 from: 'public/.htaccess',
-                ignore: ['.DS_Store']
+                ignore: ['.DS_Store'],
             },
             {
                 from: 'public/img/Sign.svg',
-                ignore: ['.DS_Store']
+                ignore: ['.DS_Store'],
             },
             {
                 from: 'public/audio',
-                ignore: ['.DS_Store']
+                ignore: ['.DS_Store'],
             },
             {
                 from: 'public/dictionary',
-                ignore: ['.DS_Store']
-            }
+                ignore: ['.DS_Store'],
+            },
         ]),
         new OfflinePlugin({
             appShell: '/',
@@ -134,13 +134,13 @@ const config = {
             externals: ['/', 'https://mc.yandex.ru/metrika/tag.js'],
             ServiceWorker: {
                 events: true,
-                output: 'sworker.js'
+                output: 'sworker.js',
             },
             AppCache: {
-                events: true
-            }
-        })
-    ]
+                events: true,
+            },
+        }),
+    ],
 };
 
 if (process.env.ANALIZE) {
