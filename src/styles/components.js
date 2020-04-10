@@ -350,10 +350,15 @@ const BetaSign = styled.div`
 
 const TriangleButton = styled(Mirrored)`
     font-size: 120px;
+    -moz-transform: scale(-2.9) translate(0, -9px);
     color: ${(props) => props.theme.accentColor};
+    height: 152px;
+    position: absolute;
+    top: -75px;
 
     @media (max-width: 600px) {
         font-size: 94px;
+        top: -90px;
     }
 `;
 

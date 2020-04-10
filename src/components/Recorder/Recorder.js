@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useState, useEffect, useCallback } from 'preact/compat';
 
+import isSupportRecognition from '@utils/isSupportRecognition';
 import Recognition from '@modules/recognition';
 import { translations } from './translations';
 
@@ -9,19 +10,17 @@ import MicIcon from '@icons/Mic';
 
 let recognition = null;
 
-export default function Recorder (props) {
+export default function Recorder(props) {
+    const { lang = 'ru', text, transmitState, showMessage } = props;
 
-    const { lang = 'ru', text, transmitState, showMessage} = props;
-    
-    const [ isRecording, setRecording ] = useState(false);
-    const [ isSupporting, setSupporting ] = useState(true);
+    const [isRecording, setRecording] = useState(false);
 
     const onTranslate = useCallback(
         (transcription) => {
             const newText = `${text}\n${transcription}`;
 
             transmitState({
-                text: newText
+                text: newText,
             });
         },
         [text, transmitState]
@@ -36,10 +35,8 @@ export default function Recorder (props) {
     );
 
     useEffect(() => {
-        try {
+        if (isSupportRecognition()) {
             recognition = new Recognition();
-        } catch (error) {
-            setSupporting(false);
         }
     }, []);
 
@@ -48,23 +45,25 @@ export default function Recorder (props) {
     }, [isRecording]);
 
     useEffect(() => {
-        recognition.setOnResultHandler(onTranslate);
-        recognition.setOnMessagetHandler(onError);
+        if (recognition) { 
+            recognition.setOnResultHandler(onTranslate);
+            recognition.setOnMessagetHandler(onError);
+        }
     }, [onTranslate]);
-
 
     const toggle = () => {
         recognition.toggle();
     };
 
-
-    if (!isSupporting) {
-        return null;
-    }
-    return (
-        <Button _flat _transparent _accent={isRecording} onClick={toggle} {...props}>
+    return isSupportRecognition() ? (
+        <Button
+            _flat
+            _transparent
+            _accent={isRecording}
+            onClick={toggle}
+            {...props}>
             <MicIcon _small padding="0 8px 0 0" />{' '}
             {isRecording ? translations[lang].OFF : translations[lang].ON}
         </Button>
-    );
+    ) : null;
 }
