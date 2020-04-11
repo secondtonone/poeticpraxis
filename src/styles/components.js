@@ -1,43 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import theme from './theme';
-import { show, upAlt, up, downAlt } from './animations';
-import { withElements } from './helpers';
-
-const FieldEditableArea = styled.textarea`
-    position: relative;
-    font-family: ${theme.mainFont};
-    height: auto;
-    width: 100%;
-    margin: 0;
-    color: ${(props) => props.theme.secondColor};
-    letter-spacing: 0;
-    word-spacing: 0;
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 52px;
-    display: block;
-    text-align: left;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    background-color: transparent;
-    word-break: break-word;
-    box-sizing: border-box;
-    border: 0;
-    resize: none;
-    cursor: text;
-    will-change: height;
-
-    &:focus {
-        outline: none;
-    }
-
-    ${(props) => {
-        if (props.zoomIn) {
-            return `font-size: 28px;`;
-        }
-    }};
-`;
+import { show, upAlt, downAlt } from './animations';
 
 const SecondaryTitle = styled.h2`
     font-size: 18px;
@@ -62,6 +26,10 @@ const LeftedLayout = styled.div`
     @media (max-width: 600px) {
         padding: 121px 0 0;
         margin: 0;
+    }
+
+    @media (min-width: 1100px) {
+        margin-left: 200px;
     }
 `;
 
@@ -100,27 +68,6 @@ const DesctopHiddenContainer = styled.div`
     }
 `;
 
-const Text = styled.div`
-    font-family: ${theme.mainFont};
-    line-height: ${(props) => (props.lineHeight ? props.lineHeight : '1.7')};
-    font-size: ${(props) => (props.size ? `${props.size}px` : '18px')};
-    letter-spacing: ${(props) =>
-        props.spacing ? `${props.spacing}px` : '0px'};
-    font-weight: ${(props) => (props.weight ? props.weight : '300')};
-    word-spacing: 6px;
-    margin-bottom: ${(props) => (props.mb ? `${props.mb}px` : '18px')};
-    text-align: ${(props) => (props.align ? props.align : 'left')};
-    ${(props) => (props.isHidden ? 'display: none;' : '')};
-`;
-
-const PrimaryTitle = styled(Text)`
-    text-shadow: -${(props) => props.multiplyer? props.multiplyer : 1}px -${(props) => props.multiplyer? props.multiplyer : 1}px 0 ${(props) => props.theme.primaryColor},
-        ${(props) => props.multiplyer? props.multiplyer : 1}px -${(props) => props.multiplyer? props.multiplyer : 1}px 0 ${(props) => props.theme.primaryColor},
-        -${(props) => props.multiplyer? props.multiplyer : 1}px 0px 0 ${(props) => props.theme.primaryColor},
-        ${(props) => props.multiplyer? props.multiplyer : 1}px ${(props) => props.multiplyer? props.multiplyer : 1}px 0 ${(props) => props.theme.primaryColor};
-`;
-
-
 const Link = styled.a`
     color: ${(props) => props.theme.accentColor};
     fill: ${(props) => props.theme.accentColor};
@@ -144,83 +91,6 @@ const FieldLabel = styled.label`
     font-family: ${theme.mainFont};
 
     ${(props) => (props.isHidden ? props.isHidden : '')};
-`;
-
-const List = styled.div.attrs((props) => ({ className: withElements(props) }))`
-    position: relative;
-    padding: 0 64px 80px;
-    max-width: 794px;
-    width: 100%;
-    min-height: 1042px;
-    background-color: transparent;
-    margin: 0 auto;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    text-align: left;
-    transition: all 1.5s ease-in-out;
-    opacity: 1;
-
-    &._animated {
-        transform: translateY(2000px);
-        animation-name: ${up};
-        animation-duration: 0.2s;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
-        animation-timing-function: ease-in-out;
-    }
-
-    &._horizontal {
-        display: inline-block;
-        vertical-align: top;
-        width: 50%;
-    }
-
-    @media (max-width: 880px) {
-        min-height: 100%;
-    }
-
-    @media (max-width: 794px) {
-        width: 100%;
-    }
-
-    @media (max-width: 600px) {
-        padding: 24px
-            ${(props) =>
-                props.sidePaddingMobile ? props.sidePaddingMobile : '24px'}
-            64px;
-    }
-`;
-
-const DropdownList = styled.ul`
-    position: absolute;
-    top: ${(props) => props.top || '-3px'};
-    ${(props) => props.side || 'left'}: 8px;
-    list-style: none;
-    background: ${(props) => props.theme.primaryColor};
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-width: 150px;
-    box-shadow: 5px 4px 25px 3px rgba(0, 0, 0, 0.1);
-    max-height: 200px;
-    outline: none;
-    ${(props) =>
-        props.theme.name === 'dark'
-            ? `background: ${props.theme.grayDarkColor};`
-            : ''} &:focus {
-        outline: none;
-    }
-`;
-
-DropdownList.ListItem = styled.li`
-    margin: 0;
-    padding: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: ${(props) =>
-        props.active ? props.theme.accentColor : props.theme.secondColor};
 `;
 
 const SimpleTextarea = styled.textarea``;
@@ -364,22 +234,17 @@ const TriangleButton = styled(Mirrored)`
 
 export {
     Backdrop,
-    FieldEditableArea,
-    DropdownList,
     SecondaryTitle,
     Hint,
     LeftedLayout,
     AnimationShow,
     AnimationUp,
     AnimationDown,
-    PrimaryTitle,
-    Text,
     TextConstructor,
     Link,
     Footer,
     FieldLabel,
     SimpleTextarea,
-    List,
     LandingContainer,
     TextAccent,
     Strong,
