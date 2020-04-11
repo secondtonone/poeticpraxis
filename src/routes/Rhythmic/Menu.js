@@ -9,7 +9,6 @@ import RhythmIcon from '@icons/RhythmIcon';
 const secondMenu = (lang, [first, second]) => [
     {
         value: 'rhythmic',
-        icon: <RhythmIcon />,
         title: translations[lang].rhythmicMenu['RHYTHMICS'],
         content: (
             <div>
@@ -21,7 +20,6 @@ const secondMenu = (lang, [first, second]) => [
     },
     {
         value: 'melody',
-        icon: <MelodyIcon />,
         title: translations[lang].rhythmicMenu['MELODY'],
         content: (
             <div>

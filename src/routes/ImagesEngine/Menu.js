@@ -9,7 +9,6 @@ import PlaylistAddCheck from '@icons/PlaylistAddCheck';
 const secondMenu = (lang, [first, isDisabledWordsview]) => [
     {
         value: 'material',
-        icon: <Subject />,
         title: translations[lang].engineMenu['MATERIAL'],
         content: (
             <div>
@@ -21,7 +20,6 @@ const secondMenu = (lang, [first, isDisabledWordsview]) => [
     },
     {
         value: 'words',
-        icon: <PlaylistAddCheck />,
         title: translations[lang].engineMenu['WORDS'],
         content: (
             <div>

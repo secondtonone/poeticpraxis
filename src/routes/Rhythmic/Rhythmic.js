@@ -29,7 +29,7 @@ import {
 } from '@modules/tone';
 
 import Help from './Help';
-import RhythmicMenu from './RhythmicMenu';
+import RhythmicMenu from './Menu';
 import Workbench from './Main';
 import ActionBar from './ActionBar';
 
@@ -37,6 +37,7 @@ import Workfield from '@components/Workfield';
 import MessageBox from '@components/MessageBox';
 import Zoom from '@components/Zoom';
 import Loader from '@components/Loader';
+import List from '@components/List';
 
 const Melody = lazy(() =>
     import(
@@ -47,14 +48,12 @@ const Melody = lazy(() =>
 );
 
 import {
-    List,
     LeftedLayout
 } from '@styles/components';
 
 
 let makeCaesura = () => {};
 let copyToClipboardHandler = () => {};
-let changeZoomMode = () => {};
 
 const Rhythmic = ({
     setRhytmicState,
@@ -143,10 +142,6 @@ const Rhythmic = ({
         makeCaesura = handler;
     },[]);
 
-    const setChangeZoomModeHandler = useCallback((handler) => {
-        changeZoomMode = handler;
-    }, []);
-
     const changeMode = useCallback(() => {
         setEditableMode((isEditable) => !isEditable);
         zoomOutHandler();
@@ -155,13 +150,11 @@ const Rhythmic = ({
     const zoomInHandler = () => {
         const zoomIn = true;
         setZoom(zoomIn);
-        changeZoomMode(zoomIn);
     }
 
     const zoomOutHandler = () => {
         const zoomIn = false;
         setZoom(zoomIn);
-        changeZoomMode(zoomIn);
     }
 
     const focusHandler = useCallback((isFocused) => {
@@ -240,6 +233,7 @@ const Rhythmic = ({
                                 <Workfield
                                     text={text}
                                     placeHolder={`${translations[lang].placeholders['RHYTHMICS']}...`}
+                                    zoomIn={zoomIn}
                                     readOnly={!isEditable}
                                     lang={lang}
                                     wordsDictionary={wordsDictionary}
@@ -256,9 +250,6 @@ const Rhythmic = ({
                                     }
                                     setCopyToClipboardHandler={
                                         setCopyToClipboardHandler
-                                    }
-                                    setChangeZoomModeHandler={
-                                        setChangeZoomModeHandler
                                     }
                                 />
                             )}
