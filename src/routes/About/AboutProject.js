@@ -4,8 +4,9 @@ import { useState, useCallback } from 'preact/compat';
 import Button from '@components/Button';
 import Flex from '@components/Flex';
 import Container from '@components/Container';
+import Text from '@components/Text';
 
-import { Text, Link, TextAccent, TextConstructor } from '@styles/components';
+import { Link, TextAccent, TextConstructor } from '@styles/components';
 
 import Telegram from '@icons/Telegram';
 import Insta from '@icons/Insta';

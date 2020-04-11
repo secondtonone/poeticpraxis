@@ -10,15 +10,14 @@ import Button from '@components/Button';
 import Loader from '@components/Loader';
 import Flex from '@components/Flex';
 import Container from '@components/Container';
+import Text from '@components/Text';
 
 const Workfield = lazy(() =>
     import(/* webpackChunkName: "Workfield" */ '@components/Workfield')
 );
 
 import {
-    Text,
-    TextAccent,
-    PrimaryTitle
+    TextAccent
 } from '@styles/components';
 
 const AboutRhythmic = ({lang, mediaQuery}) => {
@@ -31,8 +30,7 @@ const AboutRhythmic = ({lang, mediaQuery}) => {
             <Container
                 width={mediaQuery ? '100%' : '70%'}
                 padding={mediaQuery ? '0 50px 0' : '9px 0 50px'}>
-                <PrimaryTitle
-                    multiplyer="0"
+                <Text
                     as="h2"
                     size={mediaQuery ? 64 : 128}
                     lineHeight={mediaQuery ? 0.5 : 0.4}
@@ -51,7 +49,7 @@ const AboutRhythmic = ({lang, mediaQuery}) => {
                             <TextAccent>BETWEEN LINES</TextAccent>
                         </span>
                     )}
-                </PrimaryTitle>
+                </Text>
             </Container>
             <Flex direction={mediaQuery ? 'column' : 'row'} align="flex-start">
                 <Container

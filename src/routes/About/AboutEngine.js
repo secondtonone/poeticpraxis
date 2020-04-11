@@ -7,14 +7,13 @@ import maxMatchMedia from '@utils/maxMatchMedia';
 import Button from '@components/Button';
 import Flex from '@components/Flex';
 import Container from '@components/Container';
+import Text from '@components/Text';
 
 import {
-    Text,
     Link,
     TextAccent,
     Strong,
-    TextMinor,
-    PrimaryTitle,
+    TextMinor
 } from '@styles/components';
 
 const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
@@ -31,9 +30,8 @@ const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
                         padding={
                             maxMatchMedia(700) ? '0 50px 0' : '27px 50px 0 0'
                         }>
-                        <PrimaryTitle
+                        <Text
                             as="h2"
-                            multiplyer="0"
                             size={mediaQuery ? 64 : 128}
                             lineHeight={mediaQuery ? 0.5 : 0.4}
                             align={mediaQuery ? 'left' : 'right'}
@@ -51,7 +49,7 @@ const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
                                     <TextAccent>IDEAS</TextAccent>
                                 </span>
                             )}
-                        </PrimaryTitle>
+                        </Text>
                     </Container>
                     <Container
                         width={mediaQuery ? '100%' : '500px'}

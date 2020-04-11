@@ -4,9 +4,9 @@ import Button from '@components/Button';
 import Logo from '@components/Logo';
 import Flex from '@components/Flex';
 import Container from '@components/Container';
+import Text from '@components/Text';
 
 import {
-    PrimaryTitle,
     LandingContainer,
     TextAccent,
     DesctopHiddenContainer,
@@ -39,9 +39,8 @@ const AboutLanding = ({ lang = 'ru', mediaQuery }) => {
                     </Flex>
                 </DesctopHiddenContainer>
                 <Flex direction="column" justify="space-evenly">
-                    <PrimaryTitle
+                    <Text
                         as="h1"
-                        multiplyer="0"
                         size={mediaQuery ? 60 : 128}
                         weight={400}
                         mb={mediaQuery ? 0 : 64}
@@ -73,7 +72,7 @@ const AboutLanding = ({ lang = 'ru', mediaQuery }) => {
                                 <TextAccent>THE WORDS?</TextAccent>
                             </TextConstructor>
                         )}
-                    </PrimaryTitle>
+                    </Text>
                     <Flex direction="column" height="auto">
                         <TriangleButton as="div">&#9653;</TriangleButton>
                         <Container
