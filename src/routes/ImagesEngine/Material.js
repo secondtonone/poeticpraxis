@@ -11,11 +11,11 @@ import { translations } from './translations';
 import Button from '@components/Button';
 import Flex from '@components/Flex';
 import Container from '@components/Container';
+import List from '@components/List';
 
 import WordsIcon from '@icons/Words';
 
 import {
-    List,
     TextMinor,
 } from '@styles/components';
 

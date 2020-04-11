@@ -17,13 +17,13 @@ import Textarea from '@components/Textarea';
 import Button from '@components/Button';
 import MessageBox from '@components/MessageBox';
 import Loader from '@components/Loader';
+import FieldEditableArea from '@components/FieldEditableArea';
 
 import Widgets from '@icons/Widgets';
 import Delete from '@icons/Delete';
 import WordsIcon from '@icons/Words';
 
 import {
-    FieldEditableArea,
     LeftedLayout,
     ActionBar
 } from '@styles/components';

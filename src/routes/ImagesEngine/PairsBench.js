@@ -15,11 +15,11 @@ import Container from '@components/Container';
 import ArrowBack from '@icons/ArrowBack';
 import Widgets from '@icons/Widgets';
 import ContentCopy from '@icons/ContentCopy';
+import List from '@components/List';
 
 import {
     Hint,
     SecondaryTitle,
-    List,
     TextMinor,
 } from '@styles/components';
 

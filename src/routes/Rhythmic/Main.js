@@ -8,12 +8,13 @@ import { translations } from './translations';
 
 import Button from '@components/Button';
 import Flex from '@components/Flex';
+import List from '@components/List';
 
 import KeyboardCapslock from '@icons/KeyboardCapslock';
 import ContentCopy from '@icons/ContentCopy';
 import ShareIcon from '@icons/Share';
 
-import { List, TextMinor } from '@styles/components';
+import { TextMinor } from '@styles/components';
 
 import {
     StringPauseButton,
