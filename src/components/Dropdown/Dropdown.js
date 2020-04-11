@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useState, useEffect, useRef, useCallback } from 'preact/compat';
 
-import { DropdownList } from '@styles/components';
+import { DropdownList } from './styled';
 import Flex from '@components/Flex';
 import Container from '@components/Container';
 
@@ -41,7 +41,7 @@ export default function Dropdown({
     }, []);
 
     const itemHandler = useCallback((e) => {
-        onChange(e.target.dataset.value);
+        onChange(e);
         closeList();
     }, []);
 
