@@ -9,6 +9,7 @@ const StyledSecondaryMenu = styled.div`
     left: 0;
     width: 100px;
     z-index: 1000;
+    justify-content: center;
 
     @media (max-width: 600px) {
         top: 0;
@@ -20,8 +21,13 @@ const StyledSecondaryMenu = styled.div`
                 ? props.theme.grayDarkColor
                 : props.theme.primaryColor};
         box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
-        transition: all .2s ease-in;
-        ${(props) => props.isTranslate ?'transform: translateY(-44px);': ''}
+        transition: all 0.2s ease-in;
+        ${(props) => (props.isTranslate ? 'transform: translateY(-44px);' : '')}
+    }
+
+    @media (min-width: 1100px) {
+        width: 200px;
+        justify-content: flex-start;
     }
 `;
 
@@ -53,6 +59,10 @@ const Menu = styled.ul`
 
     @media (max-width: 600px) {
         display: flex;
+        font-size: 14px;
+    }
+
+    @media (min-width: 1100px) {
         font-size: 14px;
     }
 `;
@@ -92,6 +102,30 @@ const Item = styled.li`
             props.active
                 ? `2px solid ${props.theme.accentColor}`
                 : '2px solid transparent'};
+
+        & > div {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            & > div {
+                padding-left: 8px;
+            }
+        }
+    }
+
+    @media (min-width: 1100px) {
+        & > div {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            & > div {
+                padding-left: 16px;
+            }
+        }
     }
 `;
 

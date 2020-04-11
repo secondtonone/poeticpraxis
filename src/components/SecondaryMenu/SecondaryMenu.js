@@ -5,12 +5,12 @@ import {
     Item,
     StyledSecondaryMenu,
     Container,
-    LogoContainer
+    LogoContainer,
 } from './styled';
 
 import Logo from '@components/Logo';
 
-import {BetaSign} from '@styles/components';
+import { BetaSign } from '@styles/components';
 
 const delta = 76;
 
@@ -21,9 +21,8 @@ export default function SecondaryMenu({
     items,
     handler,
     current,
-    variant = 'light'
+    variant = 'light',
 }) {
-
     const [isTranslate, setTranslate] = useState(false);
 
     const countTab = items.length;
@@ -31,7 +30,9 @@ export default function SecondaryMenu({
     useEffect(() => {
         const scrollHandler = () => {
             if (
-                (/* lastPosition < window.pageYOffset && */window.pageYOffset - delta > 0)
+                /* lastPosition < window.pageYOffset && */ window.pageYOffset -
+                    delta >
+                0
             ) {
                 setTranslate(true);
             } else {
@@ -54,27 +55,25 @@ export default function SecondaryMenu({
                 </BetaSign>
             </LogoContainer>
             {items ? (
-                <div>
-                    <Menu>
-                        {items.map((item, index) => {
-                            return (
-                                <Item
-                                    count={countTab}
-                                    key={`item-${index}`}
-                                    onClick={() => {
-                                        if (item.disabled) {
-                                            return false;
-                                        }
-                                        handler(item.value);
-                                    }}
-                                    disabled={item.disabled}
-                                    active={current === item.value}>
-                                    {item.content}
-                                </Item>
-                            );
-                        })}
-                    </Menu>
-                </div>
+                <Menu>
+                    {items.map((item, index) => {
+                        return (
+                            <Item
+                                count={countTab}
+                                key={`item-${index}`}
+                                onClick={() => {
+                                    if (item.disabled) {
+                                        return false;
+                                    }
+                                    handler(item.value);
+                                }}
+                                disabled={item.disabled}
+                                active={current === item.value}>
+                                {item.content}
+                            </Item>
+                        );
+                    })}
+                </Menu>
             ) : null}
             <Container>{children}</Container>
         </StyledSecondaryMenu>
