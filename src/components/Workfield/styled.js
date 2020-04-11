@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import theme from '@styles/theme';
 
@@ -168,6 +168,45 @@ Syllable.AccentType = styled.div`
     }
 `;
 
+const flash = keyframes`
+    100% {
+        opacity: 0.1;
+        background-position: 10px;
+    }
+    50% {
+        background-position: 5px;
+    }
+    10% {
+        opacity: 0.9;
+        background-position: 0;
+    }
+`;
+
+const SyllableStub = styled(Syllable)`
+    margin-top: 15px;
+    background: ${(props) => props.theme.grayColor};
+    background: linear-gradient(
+        90deg,
+        ${(props) => props.theme.grayColor} 0,
+        ${(props) => props.theme.primaryColor} 50%,
+        ${(props) => props.theme.grayColor} 100%
+    );
+    height: 20px;
+    top: 15px;
+    width: 20px;
+    border-radius: 3px;
+    animation: ${flash} 0.5s infinite ease-in-out;
+
+    @media (max-width: 600px) {
+        margin-top: 20px;
+
+        &::before {
+            top: -5px;
+        }
+    }
+`;
+
+
 const StringNumber = styled.div`
     position: absolute;
     left: -20px;
@@ -320,6 +359,25 @@ const Accent = styled.span`
     }}
 `;
 
+const MarkStub = styled.div`
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    background: ${(props) => props.theme.grayColor};
+    background: linear-gradient(
+        90deg,
+        ${(props) => props.theme.grayColor} 0,
+        ${(props) => props.theme.primaryColor} 50%,
+        ${(props) => props.theme.grayColor} 100%
+    );
+    height: 5px;
+    margin-top: 4px;
+    top: 15px;
+    width: 100px;
+    border-radius: 3px;
+    animation: ${flash} 0.5s infinite ease-in-out;
+`;
+
 const PaintField = styled.div`
     position: relative;
 
@@ -351,6 +409,8 @@ export {
     StringPause,
     StringField,
     Syllable,
+    SyllableStub,
+    MarkStub,
     TriangleElement,
     CircleElement,
     StringNumber,

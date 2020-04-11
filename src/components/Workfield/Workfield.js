@@ -6,6 +6,7 @@ import FieldEditableArea from '@components/FieldEditableArea';
 import Marks from './Marks';
 import HiddenMarks from './HiddenMarks';
 import InfoMarks from './InfoMarks';
+import StubMarks from './StubMarks';
 
 import { FakeField, WorkField, PaintField } from './styled';
 
@@ -15,7 +16,7 @@ export default function Workfield({
     lang,
     placeHolder = '',
     value,
-    zoomIn,
+    zoomIn = false,
     readOnly,
     lineHeight,
     syllableOff,
@@ -51,6 +52,7 @@ export default function Workfield({
                 zoomIn={zoomIn}
                 onClick={onClick}
                 onDoubleClick={onDoubleClick}>
+                <StubMarks strings={strings} orderStrings={orderStrings} />
                 <Marks tags={tags} lang={lang} />
                 <InfoMarks
                     lang={lang}

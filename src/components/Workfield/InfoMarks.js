@@ -50,8 +50,9 @@ const InfoMarks = ({
     for (let index = 0; index < orderStringsLength; index++) {
         const stringId = orderStrings[index];
 
-        const string = strings[stringId];
-        if (string.tag) {
+        if (strings[stringId] && strings[stringId].tag) {
+            const string = strings[stringId];
+
             const tag = string.tag;
 
             const size = rhythmPresets[string.rhythmPreset].size;
@@ -99,8 +100,8 @@ const InfoMarks = ({
                         {++stringCounter}
                     </StringNumber>
                 )
-            ]); 
-        }
+            ]);
+        } 
     }
 
     return infoTags; 

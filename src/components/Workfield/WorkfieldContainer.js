@@ -29,7 +29,7 @@ export default class WorkfieldContainer extends PureComponent {
 
         this.state = {
             ...structure,
-            zoomIn: false
+            orderStrings: props.text.split('\n').map((string) => string.length)
         };
 
         this.timerLinting = 0;
@@ -65,30 +65,29 @@ export default class WorkfieldContainer extends PureComponent {
         }
 
         if (text) {
-            fontReady(() => {
-                this.textLinting(text);
-            });
+            fontReady(this.textLintingHandler);
         }
 
-        window.addEventListener('resize', this.updateDimensions);
+        window.addEventListener('resize', this.textLintingHandler);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.updateDimensions);
+        window.removeEventListener('resize', this.textLintingHandler);
         if (this.textAnalizingWorker) {
             this.textAnalizingWorker.terminate();
         }
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.text !== prevProps.text) {
+        if (
+            this.props.text !== prevProps.text ||
+            this.props.zoomIn !== prevProps.zoomIn
+        ) {
             if (this.timerLinting) {
                 cancelAnimationFrame(this.timerLinting);
             }
 
-            this.timerLinting = requestAnimationFrame(() => {
-                this.textLinting(this.props.text);
-            });
+            this.timerLinting = requestAnimationFrame(this.textLintingHandler);
         }
     }
 
@@ -96,8 +95,6 @@ export default class WorkfieldContainer extends PureComponent {
         this.props.setMakeCaesuraHandler && this.props.setMakeCaesuraHandler(this.makeCaesura);
         this.props.setCopyToClipboardHandler &&
             this.props.setCopyToClipboardHandler(this.copyToClipboard);
-        this.props.setChangeZoomModeHandler &&
-            this.props.setChangeZoomModeHandler(this.changeZoomMode);
     }
 
     onUpdate = () => {
@@ -123,10 +120,6 @@ export default class WorkfieldContainer extends PureComponent {
                 resolve();
             });
         });
-    };
-
-    updateDimensions = () => {
-        this.textLinting(this.props.text);
     };
 
     handleTextInput = (e) => {
@@ -181,6 +174,8 @@ export default class WorkfieldContainer extends PureComponent {
             }
         }
     };
+
+    textLintingHandler = () => this.textLinting(this.props.text);
 
     makeCaesura = () => {
         makeCaesura(this.mainField.current, (text) => {
@@ -266,22 +261,6 @@ export default class WorkfieldContainer extends PureComponent {
         }
     };
 
-    changeZoomMode = async (zoomIn) => {
-        try {
-            await this.setStateAsync({
-                zoomIn
-            });
-
-            const text = this.props.text;
-            this.textLinting(text);
-        } catch (e) {
-            if (this.props.onError) {
-                const translation = translations[this.props.lang];
-                this.props.onError(translation['ERROR_WHAT']);
-            }
-        }
-    };
-
     accentHandler = async (signId, accent) => {
         let wordsDictionary = this.props.wordsDictionary || {};
 
@@ -338,7 +317,7 @@ export default class WorkfieldContainer extends PureComponent {
     doubleClickPaintFieldHandler = (e) => {
         e.preventDefault();
 
-        if (this.props.viewOnly) {
+        if (this.props.viewOnly || e.target.dataset.type === 'stub') {
             return false;
         }
 
@@ -422,6 +401,7 @@ export default class WorkfieldContainer extends PureComponent {
             placeHolder = '',
             onMouseMove,
             lang,
+            zoomIn,
             syllableOff,
             stringNumberOff
         } = this.props;
@@ -430,8 +410,7 @@ export default class WorkfieldContainer extends PureComponent {
             strings,
             elements,
             orderStrings,
-            tags,
-            zoomIn
+            tags
         } = this.state;
 
         return (
