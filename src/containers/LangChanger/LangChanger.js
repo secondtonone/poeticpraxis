@@ -16,12 +16,19 @@ const langOptions = [
 ];
 
 const LangChanger = ({ lang = 'ru', changeLang }) => {
-    const onChange = useCallback((e) => {
-        changeLang(e.target.value);
-        document.documentElement.lang = e.target.value;
-    }, [changeLang]);
 
     const isDevice = isTouchDevice();
+
+    const onChange = useCallback(
+        (e) => {
+            const lang = e.target.value
+                ? e.target.value
+                : e.target.dataset.value;
+            changeLang(lang);
+            document.documentElement.lang = lang;
+        },
+        [changeLang]
+    );
 
     return (
         <Flex justify="center">
