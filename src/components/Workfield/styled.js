@@ -403,6 +403,10 @@ const PaintField = styled.div`
     }}
 `;
 
+const Overflowed = styled.div`
+    overflow: hidden;
+`;
+
 export {
     Accent,
     StringPauseRelative,
@@ -418,5 +422,6 @@ export {
     AccentRelative,
     WorkField,
     FieldEditable,
-    PaintField
+    PaintField,
+    Overflowed
 };
