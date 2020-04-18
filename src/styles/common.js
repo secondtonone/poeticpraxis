@@ -15,6 +15,10 @@ export default css`
         -webkit-font-smoothing: subpixel-antialiased;
         background: ${theme.primaryWhite};
         height: 100%;
+
+        @media (max-width: 600px) {
+            overflow-x: hidden;
+        }
     }
 
     .fixed {
@@ -26,38 +30,6 @@ export default css`
     *::selection {
         color: ${theme.primaryWhite};
         background: ${theme.primaryBlack};
-    }
-
-    [data-tooltip] {
-        position: relative;
-    }
-
-    [data-tooltip]:before {
-        content: attr(data-tooltip);
-        white-space: nowrap;
-        text-align: center;
-        font-size: 10px;
-        font-weight: 300;
-        font-style: normal;
-        line-height: 1;
-        display: inline-block;
-        padding: 10px;
-        position: absolute;
-        z-index: 0;
-        top: 90%;
-        right: -350%;
-        pointer-events: none;
-        transition: all 0.3s 0.2s;
-        background-color: ${theme.primaryGray};
-        color: ${theme.primaryWhite};
-        visibility: hidden;
-        opacity: 0;
-    }
-
-    [data-tooltip]:hover:before {
-        visibility: visible;
-        z-index: 9999;
-        opacity: 0.9;
     }
 
     .first-paint {
@@ -80,7 +52,7 @@ export default css`
         text-transform: uppercase;
         color: ${theme.primaryWhite};
         animation-name: ${whited};
-        animation-duration: 1.5s;
+        animation-duration: 1s;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
         animation-timing-function: ease-in;
