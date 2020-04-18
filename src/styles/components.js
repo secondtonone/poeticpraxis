@@ -24,7 +24,7 @@ const LeftedLayout = styled.div`
     padding: 32px 0 0;
 
     @media (max-width: 600px) {
-        padding: 121px 0 0;
+        padding: 101px 0 0;
         margin: 0;
     }
 
@@ -172,6 +172,7 @@ const Mirrored = styled.span`
 
 const TextAccent = styled.span`
     color: ${(props) => props.theme.accentColor};
+    fill: ${(props) => props.theme.accentColor};
 `;
 
 const TextMinor = styled.span`
@@ -188,9 +189,6 @@ const TextConstructor = styled.span`
     }
 `;
 
-const PrimaryColor = styled.span`
-    background: ${(props) => props.theme.primaryColor};
-`;
 
 const Strong = styled.span`
     font-weight: 400;
@@ -218,20 +216,6 @@ const BetaSign = styled.div`
     }
 `;
 
-const TriangleButton = styled(Mirrored)`
-    font-size: 120px;
-    -moz-transform: scale(-2.9) translate(0, -9px);
-    color: ${(props) => props.theme.accentColor};
-    height: 152px;
-    position: absolute;
-    top: -75px;
-
-    @media (max-width: 600px) {
-        font-size: 94px;
-        top: -90px;
-    }
-`;
-
 export {
     Backdrop,
     SecondaryTitle,
@@ -256,7 +240,5 @@ export {
     ActionBar,
     Mirrored,
     HiddenSelect,
-    BetaSign,
-    TriangleButton,
-    PrimaryColor
+    BetaSign
 };
