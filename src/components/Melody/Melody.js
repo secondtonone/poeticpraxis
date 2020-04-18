@@ -30,6 +30,7 @@ const Melody = memo(({
     const [music, setMusic] = useState([]);
 
     const canvas = useRef();
+    const innerHeight = useRef(window.innerHeight);
 
     useScrollToTop();
 
@@ -43,7 +44,7 @@ const Melody = memo(({
         const followForIndicator = (index) => {
             const { vertical } = drawing.coords[index];
 
-            if (!index || window.innerHeight / 2.5 < vertical) {
+            if (!index || innerHeight.current / 2.5 < vertical) {
                 window.scrollTo({
                     top: 100 + vertical,
                     behavior: 'smooth'
