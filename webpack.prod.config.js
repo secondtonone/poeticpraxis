@@ -97,7 +97,7 @@ const config = {
                 /serviceworker/,
                 /\.webmanifest/
             ], */
-            include: /* 'allAssets' */ 'asyncChunks'
+            include: /* 'asyncChunks' */ 'initial',
         }),
         new CopyWebpackPlugin([
             {
