@@ -1,4 +1,8 @@
-export default function randomize() {
+export default function randomize(cb) {
+    if(cb) {
+        return cb();
+    }
+
     let length = 4;
     let chars = '0123456789';
     let result = '';
