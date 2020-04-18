@@ -1,6 +1,6 @@
 import structure from './structure';
 import textAnalizator from './textAnalizator';
-import tagMaker from './tagMaker';
+import tagMaker, { tagMakerPromise } from './tagMaker';
 import makeCaesura from './makeCaesura';
 import makeAccent from './makeAccent';
 import rhythmPresets from './rhythmPresets';
@@ -11,6 +11,7 @@ export {
     structure,
     textAnalizator,
     tagMaker,
+    tagMakerPromise,
     makeCaesura,
     makeAccent,
     rhythmPresets,

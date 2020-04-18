@@ -6,7 +6,7 @@
  * @param {Object} textAnalized
  * @returns {Object}
  */
-export default function tagMaker(node, textAnalized) {
+export default function tagMaker(node, textAnalized, cb) {
     const stringNodes = [...node];
 
     let tags = [];
@@ -71,9 +71,24 @@ export default function tagMaker(node, textAnalized) {
         }
     }
 
-    return {
-        elements,
-        strings,
-        tags
-    };
+    if (cb) {
+        cb({
+            elements,
+            strings,
+            tags,
+        });
+    } else {
+        return {
+            elements,
+            strings,
+            tags,
+        };
+    }
+}
+
+
+export function tagMakerPromise(node, textAnalized) {
+    return new Promise((resolve, reject) => {
+        tagMaker(node, textAnalized, resolve);
+    });
 }
