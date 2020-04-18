@@ -2,6 +2,7 @@ import { h, createRef } from 'preact';
 import { PureComponent } from 'preact/compat';
 
 import Workfield from './Workfield';
+import { Overflowed } from './styled';
 import {translations} from './translations';
 
 /* import hashFunction from '@utils/hashFunction'; */
@@ -14,6 +15,7 @@ import {
     structure,
     textAnalizator,
     tagMaker,
+    tagMakerPromise,
     makeCaesura,
     makeAccent,
     rhythmPresets,
@@ -32,6 +34,7 @@ export default class WorkfieldContainer extends PureComponent {
             orderStrings: props.text.split('\n').map((string) => string.length)
         };
 
+        this.timerLintingRAF = 0;
         this.timerLinting = 0;
 
         this.timerPaintFieldHandler = 0;
@@ -83,11 +86,7 @@ export default class WorkfieldContainer extends PureComponent {
             this.props.text !== prevProps.text ||
             this.props.zoomIn !== prevProps.zoomIn
         ) {
-            if (this.timerLinting) {
-                cancelAnimationFrame(this.timerLinting);
-            }
-
-            this.timerLinting = requestAnimationFrame(this.textLintingHandler);
+            this.textLintingHandler(true);
         }
     }
 
@@ -158,7 +157,7 @@ export default class WorkfieldContainer extends PureComponent {
 
             const children = this.fakeField.current.children;
 
-            const stringsLinted = tagMaker(children, analizedText);
+            const stringsLinted = await tagMakerPromise(children, analizedText);
 
             await this.setStateAsync({
                 ...stringsLinted
@@ -175,7 +174,25 @@ export default class WorkfieldContainer extends PureComponent {
         }
     };
 
-    textLintingHandler = () => this.textLinting(this.props.text);
+    textLintingHandler = (withoutRAF) => {
+        if (withoutRAF) {
+            if (this.timerLinting) {
+                clearTimeout(this.timerLinting);
+            }
+            this.timerLinting = setTimeout(
+                this.textLinting,
+                500,
+                this.props.text
+            ); 
+        } else {
+            if (this.timerLintingRAF) { 
+                cancelAnimationFrame(this.timerLintingRAF);  
+            }
+            this.timerLintingRAF = requestAnimationFrame(() =>
+                this.textLinting(this.props.text)
+            );
+        }
+    };
 
     makeCaesura = () => {
         makeCaesura(this.mainField.current, (text) => {
@@ -414,28 +431,30 @@ export default class WorkfieldContainer extends PureComponent {
         } = this.state;
 
         return (
-            <Workfield
-                lang={lang}
-                placeHolder={placeHolder}
-                value={text}
-                zoomIn={zoomIn}
-                readOnly={readOnly}
-                lineHeight={this.lineHeight}
-                syllableOff={syllableOff}
-                stringNumberOff={stringNumberOff}
-                strings={strings}
-                orderStrings={orderStrings}
-                tags={tags}
-                elements={elements}
-                onClick={this.paintFieldHandler}
-                onDoubleClick={this.doubleClickPaintFieldHandler}
-                onInput={this.handleTextInput}
-                onMouseMove={onMouseMove}
-                onFocus={this.workfieldFocusHandler}
-                onBlur={this.workfieldBlurHandler}
-                fakeFieldRef={this.fakeField}
-                getRef={this.getRef}
-            />
+            <Overflowed>
+                <Workfield
+                    lang={lang}
+                    placeHolder={placeHolder}
+                    value={text}
+                    zoomIn={zoomIn}
+                    readOnly={readOnly}
+                    lineHeight={this.lineHeight}
+                    syllableOff={syllableOff}
+                    stringNumberOff={stringNumberOff}
+                    strings={strings}
+                    orderStrings={orderStrings}
+                    tags={tags}
+                    elements={elements}
+                    onClick={this.paintFieldHandler}
+                    onDoubleClick={this.doubleClickPaintFieldHandler}
+                    onInput={this.handleTextInput}
+                    onMouseMove={onMouseMove}
+                    onFocus={this.workfieldFocusHandler}
+                    onBlur={this.workfieldBlurHandler}
+                    fakeFieldRef={this.fakeField}
+                    getRef={this.getRef}
+                />
+            </Overflowed>
         );
     }
 }
