@@ -1,9 +1,3 @@
-/**
- * @typedef {{size: 1 | 2 | 3, accent: 0 | 1 | 2 | 3, title: string }} RhythmPreset
- */
-/**
- * @type {Array<RhythmPreset>}
- */
 const rhythmPresets = [
     {
         size: 2,
