@@ -32,8 +32,11 @@ const PageHeader = styled.header`
             ),
             rgba(${(props) => hexToRgb(props.theme.primaryColor).join(',')}, 1)
         );
+    }
 
-        ${(props) => props.hidden && `transform: translateY(120%);`};
+    @media (max-width: 600px) and (max-height: ${(props) =>
+            props.boundHeight - 50}px) {
+        transform: translateY(120%);
     }
 `;
 

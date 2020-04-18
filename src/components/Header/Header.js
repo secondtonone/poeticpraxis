@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useEffect, useState, useContext } from 'preact/compat';
+import { useContext, useEffect, useState } from 'preact/compat';
 import { ThemeContext } from 'styled-components';
 
 import { PageHeader, ContentField, Logo, Block } from './styled';
@@ -10,7 +10,6 @@ import {
     BetaSign
 } from '@styles/components';
 
-import isTouchDevice from '@utils/isTouchDevice';
 import { translations } from './translations';
 
 import RouteLink from '@components/RouteLink';
@@ -21,21 +20,17 @@ import LogoPicWhite from '@public/img/Logo-white.svg';
 
 
 const Header = ({ children, lang = 'ru' }) => {
-    const initHeight = window.innerHeight;
     const themeContext = useContext(ThemeContext);
-    const [ actualHeight, setHeight ] = useState(initHeight);
+    const [boundHeight, setBoundHeight] = useState(800);
 
     useEffect(() => {
-        const updateDimensions = () => setHeight(window.innerHeight);
-
-        window.addEventListener('resize', updateDimensions);
-
-        return () => window.removeEventListener('resize', updateDimensions);
+        requestAnimationFrame(() => {
+            setBoundHeight(window.innerHeight);
+        });
     }, []);
 
     return (
-        <PageHeader
-            hidden={isTouchDevice() && actualHeight < initHeight}>
+        <PageHeader boundHeight={boundHeight}>
             <HoveredElement>
                 <Block>
                     <RouteLink to="/" exact>
