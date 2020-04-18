@@ -19,6 +19,10 @@ const HiddenMarks = ({ strings, orderStrings, elements }) => {
         if (strings[id]) {
             const string = strings[id];
 
+            if (!symbolsTags[id]) {
+                symbolsTags[id] = [];
+            }
+
             stringsOrders = [...stringsOrders, ...string.order];
         }
     }
@@ -38,10 +42,6 @@ const HiddenMarks = ({ strings, orderStrings, elements }) => {
             const accent = symbol.accent;
 
             let tag = char;
-
-            if (!symbolsTags[idString]) {
-                symbolsTags[idString] = [];
-            }
 
             if (symbol.type === 'v') {
                 tag = (
