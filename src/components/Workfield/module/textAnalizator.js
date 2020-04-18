@@ -23,7 +23,7 @@ import rhythmDetection from './rhythmDetection';
  */
 export default function textAnalizator(text, stringsDictionary, wordsDictionary) {
     const fieldStrings = text.split('\n');
-
+    
     let strings = {};
 
     let elements = {};
@@ -50,9 +50,12 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
     for (let index = 0; index < fieldStringsLength; index++) {
         const string = fieldStrings[index];
 
-        interator += index;
+        interator++;
 
-        let idString = `s${index}${randomize()}`;
+        /* let idString = `s${index}${randomize(() =>
+            hashFunction(string, ++interator)
+        )}`;  */
+        let idString = `s${interator}`;
 
         let vowel = [];
 
@@ -81,7 +84,9 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
 
             let type = 't';
 
-            let idToken = `t${index}${randomize()}`;
+            let idToken = `t${index}${randomize(() =>
+                hashFunction(token, ++interator)
+            )}`;
 
             let accent = 0;
 
@@ -90,7 +95,9 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
             let hashTokenId = '';
             /* символ */
             if (isLetter(token)) {
-                idToken = `w${index}${randomize()}`;
+                idToken = `w${index}${randomize(() =>
+                    hashFunction(token, ++interator)
+                )}`;
 
                 let vowelCounter = 0;
 
@@ -116,14 +123,18 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
 
                     const isLast = index === array.length - 1;
 
-                    let idSymbol = `c${index}${randomize()}`;
+                    let idSymbol = `c${index}${randomize(() =>
+                        hashFunction(char, ++interator)
+                    )}`;
 
                     let type = 'c';
 
                     accent = 0;
 
                     if (isVowel(char)) {
-                        idSymbol = `v${index}${randomize()}`;
+                        idSymbol = `v${index}${randomize(() =>
+                            hashFunction(char, ++interator)
+                        )}`;
 
                         type = 'v';
 
@@ -222,13 +233,17 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
                 if (isSpace(token)) {
                     type = 'sp';
 
-                    idToken = `${idString}${type}${index}${randomize()}`;
+                    idToken = `${idString}${type}${index}${randomize(() =>
+                        hashFunction(token, ++interator)
+                    )}`;
                 }
 
                 if (isPause(token)) {
                     type = 'p';
 
-                    idToken = `${idString}${type}${index}${randomize()}`;
+                    idToken = `${idString}${type}${index}${randomize(() =>
+                        hashFunction(token, ++interator)
+                    )}`;
 
                     soundGramma.push(idToken);
                 }
