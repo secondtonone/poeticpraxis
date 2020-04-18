@@ -14,7 +14,7 @@ import Reddit from '@icons/Reddit';
 import Vk from '@icons/Vk';
 import Email from '@icons/Convert';
 
-const AboutProject = ({ lang = 'ru', mediaQuery }) => {
+const AboutProject = ({ lang = 'ru', mediaQuery, boundHeight }) => {
     const [isHiddenPayment, setPaymentVisibility] = useState(false);
 
     const togglePayment = useCallback(() => {
@@ -28,7 +28,7 @@ const AboutProject = ({ lang = 'ru', mediaQuery }) => {
             direction="column"
             margin="150px 0 50px"
             justify="flex-start"
-            height={isHiddenPayment ? 'auto' : `${window.innerHeight - 80}px`}>
+            height={isHiddenPayment ? 'auto' : `${boundHeight - 80}px`}>
             <Container padding="9px 0 25px" height="auto">
                 <Text
                     size={mediaQuery ? 64 : 128}
@@ -53,11 +53,7 @@ const AboutProject = ({ lang = 'ru', mediaQuery }) => {
                     for poetic practice.
                 </Text>
             </Container>
-            <Flex
-                justify="space-between"
-                direction="column"
-                height="100px"
-                width="700px">
+            <Flex justify="space-between" direction="column" height="100px">
                 <Flex justify="space-around" width="300px">
                     <Link
                         target="_blank"
@@ -77,7 +73,6 @@ const AboutProject = ({ lang = 'ru', mediaQuery }) => {
                         href="https://instagram.com/poeticpraxis">
                         <Insta _big />
                     </Link>
-
                     <Link
                         target="_blank"
                         rel="noreferrer noopener"

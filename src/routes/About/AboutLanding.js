@@ -1,9 +1,9 @@
 import { h } from 'preact';
+import { useCallback } from 'preact/compat';
 
-import Button from '@components/Button';
+import TriangleButton from '@components/TriangleButton';
 import Logo from '@components/Logo';
 import Flex from '@components/Flex';
-import Container from '@components/Container';
 import Text from '@components/Text';
 
 import {
@@ -11,26 +11,24 @@ import {
     TextAccent,
     DesctopHiddenContainer,
     BetaSign,
-    TriangleButton,
-    PrimaryColor,
-    TextConstructor
+    TextConstructor,
 } from '@styles/components';
 
-const innerHeight = window.innerHeight;
+import theme from '@styles/theme';
 
-const reavelButtonHandler = () => {
-    window.scrollTo({
-        top: innerHeight,
-        behavior: 'smooth'
-    });
-};
-
-const AboutLanding = ({ lang = 'ru', mediaQuery }) => {
+const AboutLanding = ({ lang = 'ru', mediaQuery, boundHeight, variant }) => {
     const isRusLang = lang === 'ru';
+
+    const reavelButtonHandler = useCallback(() => {
+        window.scrollTo({
+            top: boundHeight,
+            behavior: 'smooth',
+        });
+    }, [boundHeight]);
 
     return (
         <LandingContainer>
-            <Flex direction="column" height={`${innerHeight}px`}>
+            <Flex direction="column" height={`${boundHeight}px`}>
                 <DesctopHiddenContainer>
                     <Flex direction="column" margin="16px 0 0">
                         <BetaSign>
@@ -74,24 +72,15 @@ const AboutLanding = ({ lang = 'ru', mediaQuery }) => {
                         )}
                     </Text>
                     <Flex direction="column" height="auto">
-                        <TriangleButton as="div">&#9653;</TriangleButton>
-                        <Container
-                            position="absolute"
-                            height="auto"
-                            width="auto">
-                            <Button
-                                _action
-                                _transparent
-                                width="200px"
-                                size={16}
-                                padding="0 0 8px 0"
-                                type="button"
-                                onClick={reavelButtonHandler}>
-                                <PrimaryColor>
-                                    {isRusLang ? `Явить сейчас` : `Reveal now`}
-                                </PrimaryColor>
-                            </Button>
-                        </Container>
+                        <TriangleButton
+                            width="200px"
+                            size={16}
+                            padding="0 0 8px 0"
+                            type="button"
+                            color={theme[variant].accentColor}
+                            onClick={reavelButtonHandler}>
+                            {isRusLang ? `Явить сейчас` : `Reveal now`}
+                        </TriangleButton>
                     </Flex>
                 </Flex>
             </Flex>

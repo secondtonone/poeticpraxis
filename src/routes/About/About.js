@@ -38,9 +38,8 @@ import {
 const daysFromNow = getDaysFromNow(new Date(2016, 4, 25));
 const engDateSuffix = engSuffixNumber(daysFromNow);
 
-const About = ({ lang = 'ru' }) => {
-    
-    useResizeUpdate();
+const About = ({ lang = 'ru', variant }) => {
+    const { innerHeight } = useResizeUpdate(800);
 
     const isRusLang = lang === 'ru';
     const title = isRusLang ? 'ГЛАВНАЯ' : 'HOME';
@@ -54,7 +53,12 @@ const About = ({ lang = 'ru' }) => {
 
     return (
         <section>
-            <AboutLanding lang={lang} mediaQuery={mediaQuery} />
+            <AboutLanding
+                variant={variant}
+                lang={lang}
+                mediaQuery={mediaQuery}
+                boundHeight={innerHeight}
+            />
 
             <AboutEngine lang={lang} mediaQuery={mediaQuery} />
 
@@ -63,7 +67,11 @@ const About = ({ lang = 'ru' }) => {
             </Suspense>
 
             <Suspense fallback={<Loader />}>
-                <AboutProject lang={lang} mediaQuery={mediaQuery} />
+                <AboutProject
+                    lang={lang}
+                    mediaQuery={mediaQuery}
+                    boundHeight={innerHeight}
+                />
             </Suspense>
 
             <Footer>
@@ -72,6 +80,6 @@ const About = ({ lang = 'ru' }) => {
             </Footer>
         </section>
     );
-}
+};
 
 export default About;
