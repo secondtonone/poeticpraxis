@@ -1,12 +1,12 @@
 export default function hashFunction(char, order) {
     let hash = order;
-    let chr;
+    let code;
 
     for (let i = 0; i < char.length; i++) {
-        chr = char.charCodeAt(i);
-        hash = (hash << 5) - hash + order + chr;
+        code = char.charCodeAt(i);
+        hash = (hash << 5) - hash + order + code;
         hash |= 0; // Convert to 32bit integer
     }
 
-    return hash;
+    return Math.abs(hash);
 }
