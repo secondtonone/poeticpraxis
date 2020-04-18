@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { withElements } from '@styles/helpers';
 
 const StyledIcon = styled.i.attrs((props) => ({
-    className: withElements(props)
+    className: withElements(props),
 }))`
     font-weight: normal;
     font-style: normal;
@@ -54,6 +54,16 @@ const StyledIcon = styled.i.attrs((props) => ({
             height: 32px;
 
             width: 32px;
+        }
+    }
+
+    &._xxxlarge {
+        font-size: 90px;
+
+        & svg {
+            height: 90px;
+
+            width: 90px;
         }
     }
 
