@@ -25,6 +25,7 @@ const StringPauseButton = styled.div`
     position: absolute;
     left: 13px;
     top: 66px;
+    will-change: transform;
     transform: translateY(0);
     transition: transform 0.5s 0.2s ease-out;
 
