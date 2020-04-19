@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useRef } from 'preact/compat';
+import { useRef, useCallback } from 'preact/compat';
 
 import wordByNumber from '@utils/wordByNumber';
 import isTouchDevice from '@utils/isTouchDevice';
@@ -43,29 +43,30 @@ const Main = ({
     const stringPauseButton = useRef();
     const sectionElement = useRef();
 
-    const mouseTracking = (e) => {
-        const sectionGap = sectionElement.current
-            ? sectionElement.current.offsetTop
-            : 196;
+    const mouseTracking = useCallback((e) => {
+        requestAnimationFrame(() => {
+            const sectionGap = sectionElement.current
+                ? sectionElement.current.offsetTop
+                : 196;
 
-        const beginButtonGap = stringPauseButton.current.offsetTop;
+            const beginButtonGap = stringPauseButton.current.offsetTop;
 
-        const buttonHeight = 19;
+            const buttonHeight = 19;
 
-        let transform = `translateY(${
-            e.pageY < sectionGap
-                ? 0
-                : Math.ceil(
-                      e.pageY - sectionGap - beginButtonGap - buttonHeight
-                  )
-        }px)`;
+            const position =
+                `${e.pageY < sectionGap
+                    ? 0
+                    : Math.ceil(
+                        e.pageY - sectionGap - beginButtonGap - buttonHeight
+                    )}px`;
 
-        if (stringPauseButton.current) {
-            requestAnimationFrame(() => {
+            let transform = `translateY(${position})`;
+
+            if (stringPauseButton.current) {
                 stringPauseButton.current.style.transform = transform;
-            });
-        }
-    };
+            }
+        });
+    }, []);
 
     const wordsNumberString = `${wordsCount} ${wordByNumber(
         lang,
