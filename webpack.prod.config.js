@@ -145,6 +145,7 @@ const config = {
 
 if (process.env.ANALIZE) {
     config.plugins.push(new BundleAnalyzerPlugin());
+    config.devtool = 'cheap-module-source-map';
 }
 
 module.exports = config;
