@@ -61,7 +61,7 @@ const AnimationDown = css`
 `;
 
 
-const DesctopHiddenContainer = styled.div`
+const DesktopHiddenContainer = styled.div`
     display: none;
     @media (max-width: 600px) {
         display: block;
@@ -236,7 +236,7 @@ export {
     HoveredElement,
     ShowOnHover,
     HideOnHover,
-    DesctopHiddenContainer,
+    DesktopHiddenContainer,
     ActionBar,
     Mirrored,
     HiddenSelect,
