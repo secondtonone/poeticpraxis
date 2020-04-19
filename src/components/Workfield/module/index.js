@@ -1,20 +1,20 @@
 import structure from './structure';
-import textAnalizator from './textAnalizator';
+import textAnalyzer from './textAnalyzer';
 import tagMaker, { tagMakerPromise } from './tagMaker';
 import makeCaesura from './makeCaesura';
 import makeAccent from './makeAccent';
 import rhythmPresets from './rhythmPresets';
 import accents from './accents';
-import getAnalizedTextFromWorker from './getAnalizedTextFromWorker';
+import getAnalyzedTextFromWorker from './getAnalyzedTextFromWorker';
 
 export {
     structure,
-    textAnalizator,
+    textAnalyzer,
     tagMaker,
     tagMakerPromise,
     makeCaesura,
     makeAccent,
     rhythmPresets,
     accents,
-    getAnalizedTextFromWorker,
+    getAnalyzedTextFromWorker,
 };

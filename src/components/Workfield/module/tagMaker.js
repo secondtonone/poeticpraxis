@@ -3,17 +3,17 @@
  *
  * @export
  * @param {Object} node
- * @param {Object} textAnalized
+ * @param {Object} textAnalyzed
  * @returns {Object}
  */
-export default function tagMaker(node, textAnalized, cb) {
+export default function tagMaker(node, textAnalyzed, cb) {
     const stringNodes = [...node];
 
     let tags = [];
 
     let symbols = [];
 
-    const { elements, strings } = textAnalized;
+    const { elements, strings } = textAnalyzed;
 
     let symbolsSet = [];
 
@@ -87,8 +87,8 @@ export default function tagMaker(node, textAnalized, cb) {
 }
 
 
-export function tagMakerPromise(node, textAnalized) {
-    return new Promise((resolve, reject) => {
-        tagMaker(node, textAnalized, resolve);
+export function tagMakerPromise(node, textAnalyzed) {
+    return new Promise((resolve) => {
+        tagMaker(node, textAnalyzed, resolve);
     });
 }
