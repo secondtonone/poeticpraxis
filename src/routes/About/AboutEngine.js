@@ -63,7 +63,7 @@ const AboutEngine = ({ lang = 'ru', mediaQuery }) => {
                             позволяет из любого набора слов
                             <TextMinor>(1)</TextMinor>, составлять случайные
                             пары<TextMinor>(2)</TextMinor>, получая неожиданные
-                            образы<TextMinor>(3)</TextMinor>.
+                            образы<TextMinor>(3)</TextMinor>. А образы очень важны для стихов.
                         </Text>
                         <Text isHidden={isRusLang}>
                             Reception editing changes the order of frames,
