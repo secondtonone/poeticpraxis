@@ -21,7 +21,7 @@ import rhythmDetection from './rhythmDetection';
  * @param {Object} wordsDictionary
  * @returns {Object}
  */
-export default function textAnalizator(text, stringsDictionary, wordsDictionary) {
+export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
     const fieldStrings = text.split('\n');
     
     let strings = {};
@@ -30,7 +30,7 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
 
     let hashTable = {};
 
-    let interator = 0;
+    let iterator = 0;
 
     let wordsCount = 0;
 
@@ -50,12 +50,12 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
     for (let index = 0; index < fieldStringsLength; index++) {
         const string = fieldStrings[index];
 
-        interator++;
+        iterator++;
 
         /* let idString = `s${index}${randomize(() =>
-            hashFunction(string, ++interator)
+            hashFunction(string, ++iterator)
         )}`;  */
-        let idString = `s${interator}`;
+        let idString = `s${iterator}`;
 
         let vowel = [];
 
@@ -85,7 +85,7 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
             let type = 't';
 
             let idToken = `t${index}${randomize(() =>
-                hashFunction(token, ++interator)
+                hashFunction(token, ++iterator)
             )}`;
 
             let accent = 0;
@@ -96,7 +96,7 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
             /* символ */
             if (isLetter(token)) {
                 idToken = `w${index}${randomize(() =>
-                    hashFunction(token, ++interator)
+                    hashFunction(token, ++iterator)
                 )}`;
 
                 let vowelCounter = 0;
@@ -119,12 +119,12 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
 
                     const array = letters;
 
-                    hashTokenId = hashFunction(char, ++interator);
+                    hashTokenId = hashFunction(char, ++iterator);
 
                     const isLast = index === array.length - 1;
 
                     let idSymbol = `c${index}${randomize(() =>
-                        hashFunction(char, ++interator)
+                        hashFunction(char, ++iterator)
                     )}`;
 
                     let type = 'c';
@@ -133,7 +133,7 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
 
                     if (isVowel(char)) {
                         idSymbol = `v${index}${randomize(() =>
-                            hashFunction(char, ++interator)
+                            hashFunction(char, ++iterator)
                         )}`;
 
                         type = 'v';
@@ -226,7 +226,7 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
 
                 ++wordsCount;
             } else {
-                hashTokenId = hashFunction(token, ++interator);
+                hashTokenId = hashFunction(token, ++iterator);
 
                 idToken = `${idString}${idToken}`;
 
@@ -234,7 +234,7 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
                     type = 'sp';
 
                     idToken = `${idString}${type}${index}${randomize(() =>
-                        hashFunction(token, ++interator)
+                        hashFunction(token, ++iterator)
                     )}`;
                 }
 
@@ -242,7 +242,7 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
                     type = 'p';
 
                     idToken = `${idString}${type}${index}${randomize(() =>
-                        hashFunction(token, ++interator)
+                        hashFunction(token, ++iterator)
                     )}`;
 
                     soundGramma.push(idToken);
@@ -270,9 +270,9 @@ export default function textAnalizator(text, stringsDictionary, wordsDictionary)
         stringLinks = makeListLinks(string, idString, stringLinks);
 
         totalStringAccents = soundGramma.filter(
-            (idElemet) =>
-                elements[idElemet].accent === 1 ||
-                elements[idElemet].accent === 2
+            (idElement) =>
+                elements[idElement].accent === 1 ||
+                elements[idElement].accent === 2
         );
 
         steps = stringOnSteps(soundGramma, totalStringAccents.length, elements);

@@ -1,4 +1,4 @@
-export default function getAnalizedTextFromWorker({ worker, text, stringsDictionary, wordsDictionary }) {
+export default function getAnalyzedTextFromWorker({ worker, text, stringsDictionary, wordsDictionary }) {
     return new Promise((resolve, reject) => {
         worker.postMessage({
             text,
@@ -7,8 +7,8 @@ export default function getAnalizedTextFromWorker({ worker, text, stringsDiction
         });
 
         worker.onmessage = (e) => {
-            let analizedText = e.data;
-            resolve(analizedText);
+            let analyzedText = e.data;
+            resolve(analyzedText);
         };
 
         worker.onerror = (e) => {

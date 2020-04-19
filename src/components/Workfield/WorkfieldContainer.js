@@ -9,18 +9,17 @@ import {translations} from './translations';
 import fontReady from '@utils/fontReady';
 import { copyFrom } from '@modules/copying';
 
-import AnalizeWorker from 'worker-loader!./analize-worker';
+import AnalyzeWorker from 'worker-loader!./analyze-worker';
 
 import {
     structure,
-    textAnalizator,
-    tagMaker,
+    textAnalyzer,
     tagMakerPromise,
     makeCaesura,
     makeAccent,
     rhythmPresets,
     accents,
-    getAnalizedTextFromWorker
+    getAnalyzedTextFromWorker
 } from './module';
 
 
@@ -40,7 +39,7 @@ export default class WorkfieldContainer extends PureComponent {
         this.timerPaintFieldHandler = 0;
         this.preventPaintFieldHandler = false;
 
-        this.textAnalizingWorker = null;
+        this.textAnalyzingWorker = null;
 
         this.mainField = createRef();
         this.fakeField = createRef();
@@ -60,7 +59,7 @@ export default class WorkfieldContainer extends PureComponent {
         let text = this.props.text;
 
         if (window.Worker) {
-            this.textAnalizingWorker = new AnalizeWorker();
+            this.textAnalyzingWorker = new AnalyzeWorker();
         }
 
         if (Array.isArray(text)) {
@@ -76,8 +75,8 @@ export default class WorkfieldContainer extends PureComponent {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.textLintingHandler);
-        if (this.textAnalizingWorker) {
-            this.textAnalizingWorker.terminate();
+        if (this.textAnalyzingWorker) {
+            this.textAnalyzingWorker.terminate();
         }
     }
 
@@ -134,17 +133,17 @@ export default class WorkfieldContainer extends PureComponent {
 
             let wordsDictionary = this.props.wordsDictionary || {};
 
-            let analizedText = {};
+            let analyzedText = {};
 
-            if (this.textAnalizingWorker) {
-                analizedText = await getAnalizedTextFromWorker({
-                    worker: this.textAnalizingWorker,
+            if (this.textAnalyzingWorker) {
+                analyzedText = await getAnalyzedTextFromWorker({
+                    worker: this.textAnalyzingWorker,
                     text,
                     stringsDictionary,
                     wordsDictionary,
                 });
             } else { 
-                analizedText = textAnalizator(
+                analyzedText = textAnalyzer(
                     text,
                     stringsDictionary,
                     wordsDictionary
@@ -152,12 +151,12 @@ export default class WorkfieldContainer extends PureComponent {
             }
 
             await this.setStateAsync({
-                ...analizedText
+                ...analyzedText
             });
 
             const children = this.fakeField.current.children;
 
-            const stringsLinted = await tagMakerPromise(children, analizedText);
+            const stringsLinted = await tagMakerPromise(children, analyzedText);
 
             await this.setStateAsync({
                 ...stringsLinted
@@ -220,7 +219,7 @@ export default class WorkfieldContainer extends PureComponent {
 
         const textSelected = this.props.text.substring(start, end);
 
-        // hashTokenId = hashFunction(token,++interator);
+        // hashTokenId = hashFunction(token,++iterator);
 
         textSelected.split('').forEach((char, index) => {
             let hashTokenId = hashFunction(char, index + start + 1);
