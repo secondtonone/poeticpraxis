@@ -9,7 +9,7 @@ import Text from '@components/Text';
 import {
     LandingContainer,
     TextAccent,
-    DesctopHiddenContainer,
+    DesktopHiddenContainer,
     BetaSign,
     TextConstructor,
 } from '@styles/components';
@@ -19,7 +19,7 @@ import theme from '@styles/theme';
 const AboutLanding = ({ lang = 'ru', mediaQuery, boundHeight, variant }) => {
     const isRusLang = lang === 'ru';
 
-    const reavelButtonHandler = useCallback(() => {
+    const revealButtonHandler = useCallback(() => {
         window.scrollTo({
             top: boundHeight,
             behavior: 'smooth',
@@ -29,13 +29,13 @@ const AboutLanding = ({ lang = 'ru', mediaQuery, boundHeight, variant }) => {
     return (
         <LandingContainer>
             <Flex direction="column" height={`${boundHeight}px`}>
-                <DesctopHiddenContainer>
+                <DesktopHiddenContainer>
                     <Flex direction="column" margin="16px 0 0">
                         <BetaSign>
                             <Logo height={36} />
                         </BetaSign>
                     </Flex>
-                </DesctopHiddenContainer>
+                </DesktopHiddenContainer>
                 <Flex direction="column" justify="space-evenly">
                     <Text
                         as="h1"
@@ -78,7 +78,7 @@ const AboutLanding = ({ lang = 'ru', mediaQuery, boundHeight, variant }) => {
                             padding="0 0 8px 0"
                             type="button"
                             color={theme[variant].accentColor}
-                            onClick={reavelButtonHandler}>
+                            onClick={revealButtonHandler}>
                             {isRusLang ? `Явить сейчас` : `Reveal now`}
                         </TriangleButton>
                     </Flex>
