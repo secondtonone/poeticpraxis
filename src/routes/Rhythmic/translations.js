@@ -1,6 +1,6 @@
 const ru = {
     placeholders: {
-        RHYTHMICS: 'Напишите или вставьте текст'
+        RHYTHMICS: 'Напишите или вставьте текст',
     },
     rhythmic: {
         COPY: 'Копировать в текстовый редактор',
@@ -10,7 +10,7 @@ const ru = {
         BLOCK: 'Блокировать',
         UNBLOCK: 'Разблокировать',
         CAESURA: 'Цезура',
-        WORDS_AMOUNT: ['слово', 'слова', 'слов']
+        WORDS_AMOUNT: ['слово', 'слова', 'слов'],
     },
     messages: {
         COPIED: 'Текст скопирован в буфер.',
@@ -18,17 +18,20 @@ const ru = {
         WRONG: 'Проверьте ссылку. Неверные параметры.',
         HOW_WORKS: 'Как это работает?',
         LEARN_MORE: 'Узнать больше.',
-        LINK_COPIED: 'Ссылка скопирована в буфер.'
+        LINK_COPIED: 'Ссылка скопирована в буфер.',
     },
     rhythmicMenu: {
         RHYTHMICS: 'Ритмика',
-        MELODY: 'Мелодия'
-    }
+        MELODY: 'Мелодия',
+    },
+    main: {
+        TITLE: 'ПРОСОДИЯ',
+    },
 };
 
 const en = {
     placeholders: {
-        RHYTHMICS: 'Write or paste text'
+        RHYTHMICS: 'Write or paste text',
     },
     rhythmic: {
         COPY: 'Copy to text editor',
@@ -38,7 +41,7 @@ const en = {
         BLOCK: 'Block',
         UNBLOCK: 'Unblock',
         CAESURA: 'Caesura',
-        WORDS_AMOUNT: ['word', 'words']
+        WORDS_AMOUNT: ['word', 'words'],
     },
     messages: {
         COPIED: 'Text copied to clipboard.',
@@ -46,12 +49,15 @@ const en = {
         WRONG: 'Wrong parameters. Check the link.',
         HOW_WORKS: 'How it works?',
         LEARN_MORE: 'Learn more.',
-        LINK_COPIED: 'Link copied to clipboard.'
+        LINK_COPIED: 'Link copied to clipboard.',
     },
     rhythmicMenu: {
         RHYTHMICS: 'Rhythmics',
-        MELODY: 'Melody'
-    }
+        MELODY: 'Melody',
+    },
+    main: {
+        TITLE: 'PROSODY',
+    },
 };
 
 const translations = {

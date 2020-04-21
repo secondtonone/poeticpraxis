@@ -1,17 +1,17 @@
 const ru = {
     engineMenu: {
         WORDS: 'Пары',
-        MATERIAL: 'Материал'
+        MATERIAL: 'Материал',
     },
     placeholders: {
-        ENGINE: 'Введите слова или вставьте текст'
+        ENGINE: 'Введите слова или вставьте текст',
     },
     engine: {
         MONTAGE: 'Собрать',
         CLEAR: 'Стереть текст',
         GET: 'Получить слова',
         RECORD: 'Запись',
-        WORDS_AMOUNT: ['слово', 'слова', 'слов']
+        WORDS_AMOUNT: ['слово', 'слова', 'слов'],
     },
     matchList: {
         FAVORITES: 'Выбранныe',
@@ -20,7 +20,7 @@ const ru = {
         PAIRS_HINT: ['Нажмите снова на', 'чтобы получить новые сочетаиния'],
         SEE_RHYTHM: 'Посмотреть ритм',
         RETURN: 'Вернуться наверх',
-        COPY: 'Копировать'
+        COPY: 'Копировать',
     },
     messages: {
         PAIR_ADDED: 'Словосочетание добавлено.',
@@ -28,24 +28,27 @@ const ru = {
         PAIRS_COPIED: 'Пары скопированы',
         HOW_WORKS: 'Как это работает?',
         LEARN_MORE: 'Узнать больше.',
-        CLICK_MORE: 'Нажмите еще раз для удаления'
+        CLICK_MORE: 'Нажмите еще раз для удаления',
+    },
+    main: {
+        TITLE: 'МАШИНА ОБРАЗОВ',
     }
 };
 
 const en = {
     engineMenu: {
         WORDS: 'Pairs',
-        MATERIAL: 'Material'
+        MATERIAL: 'Material',
     },
     placeholders: {
-        ENGINE: 'Write or paste words'
+        ENGINE: 'Write or paste words',
     },
     engine: {
         MONTAGE: 'Montaging',
         CLEAR: 'Delete text',
         GET: 'Get words',
         RECORD: 'Recording',
-        WORDS_AMOUNT: ['word', 'words']
+        WORDS_AMOUNT: ['word', 'words'],
     },
     matchList: {
         FAVORITES: 'Favorites',
@@ -54,7 +57,7 @@ const en = {
         PAIRS_HINT: ['Click on', 'to get more pairs'],
         SEE_RHYTHM: 'See rhythm',
         RETURN: 'Return',
-        COPY: 'Copy'
+        COPY: 'Copy',
     },
     messages: {
         PAIR_ADDED: 'A pair is added.',
@@ -62,8 +65,11 @@ const en = {
         PAIRS_COPIED: 'Pairs copied',
         HOW_WORKS: 'How it works?',
         LEARN_MORE: 'Learn more.',
-        CLICK_MORE: 'Click one more time for deleting'
-    }
+        CLICK_MORE: 'Click one more time for deleting',
+    },
+    main: {
+        TITLE: 'IMAGES ENGINE',
+    },
 };
 
 const translations = {
