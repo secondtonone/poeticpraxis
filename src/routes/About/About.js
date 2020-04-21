@@ -3,6 +3,7 @@ import { lazy, Suspense, useEffect } from 'preact/compat';
 
 import useResizeUpdate from '@hooks/useResizeUpdate';
 import useTitlePage from '@hooks/useTitlePage';
+import useChangeHreflang from '@hooks/useChangeHreflang';
 
 import scrollToAnchor from '@utils/scrollToAnchor';
 import maxMatchMedia from '@utils/maxMatchMedia';
@@ -45,6 +46,7 @@ const About = ({ lang = 'ru', variant }) => {
     const title = isRusLang ? 'ГЛАВНАЯ' : 'HOME';
     const mediaQuery = maxMatchMedia(800);
 
+    useChangeHreflang();
     useTitlePage(title);
 
     useEffect(() => {

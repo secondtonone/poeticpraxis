@@ -9,6 +9,8 @@ import {
 
 import useTitlePage from '@hooks/useTitlePage';
 import useMessage from '@hooks/useMessage';
+import useScrollToTop from '@hooks/useScrollToTop';
+import useChangeHreflang from '@hooks/useChangeHreflang';
 
 import isTouchDevice from '@utils/isTouchDevice';
 
@@ -77,16 +79,15 @@ const Rhythmic = ({
     const [ currentView, setView ] = useState('rhythmic');
 
     const isDevice = isTouchDevice();
-    const title = `${lang === 'ru' ? 'ПРОСОДИЯ' : 'PROSODY'}${
-            text
-                ? ` - ${text.substring(0, 30)}...`
-                : ''}`;
-
+    const title = `${translations[lang].main['TITLE']}${
+        text ? ` - ${text.substring(0, 30)}...` : ''
+    }`;
+    
+    useChangeHreflang('rhythmic');
     useTitlePage(title);
+    useScrollToTop();
 
     useEffect(async () => {
-        window.scrollTo(0, 0);
-
         if (URLSearchParams) {
             getShared();
         }

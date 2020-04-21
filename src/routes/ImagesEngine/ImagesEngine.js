@@ -4,6 +4,7 @@ import { lazy, Suspense, useState, useCallback } from 'preact/compat';
 import useTitlePage from '@hooks/useTitlePage';
 import useMessage from '@hooks/useMessage';
 import useScrollToTop from '@hooks/useScrollToTop';
+import useChangeHreflang from '@hooks/useChangeHreflang';
 
 import { imaged, stringToWords } from '@modules/imaged';
 import { getWords } from '@modules/dictionary';
@@ -65,10 +66,11 @@ const ImagesEngine = ({
         !result.length
     );
 
-    const title = `${lang === 'ru' ? 'МАШИНА ОБРАЗОВ' : 'EMAGES ENGINE'}${
+    const title = `${translations[lang].main['TITLE']}${
         text ? ` - ${text.substring(0, 30)}...` : ''
     }`;
 
+    useChangeHreflang('images-engine');
     useTitlePage(title);
     useScrollToTop();
 
