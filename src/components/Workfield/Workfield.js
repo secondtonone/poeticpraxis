@@ -52,7 +52,7 @@ export default function Workfield({
                 zoomIn={zoomIn}
                 onClick={onClick}
                 onDoubleClick={onDoubleClick}>
-                <StubMarks strings={strings} orderStrings={orderStrings} />
+                {value && <StubMarks strings={strings} orderStrings={orderStrings} />}
                 <Marks tags={tags} lang={lang} />
                 <InfoMarks
                     lang={lang}
