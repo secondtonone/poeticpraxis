@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 import changePageTitle from '@utils/changePageTitle';
 
 const useTitlePage = (title) => {
