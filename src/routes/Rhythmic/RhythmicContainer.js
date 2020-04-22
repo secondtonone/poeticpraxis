@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import { setRhytmicState, setWordsDictionary } from './RhythmicActions';
+import { setRhythmicState, setWordsDictionary } from './RhythmicActions';
 
 import Rhythmic from './Rhythmic';
 
 const mapDispatchToProps = {
-    setRhytmicState,
+    setRhythmicState: setRhythmicState,
     setWordsDictionary
 };
 

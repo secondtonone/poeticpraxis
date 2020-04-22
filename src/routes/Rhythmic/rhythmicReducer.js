@@ -1,11 +1,11 @@
 import {
-    SET_RHYTMIC_STATE,
+    SET_RHYTHMIC_STATE,
     SET_WORDS_DICTIONARY,
     SHARING_TEXT
 } from './RhythmicActions';
 
 const ACTION_HANDLERS = {
-    [SET_RHYTMIC_STATE]: (state, action) =>
+    [SET_RHYTHMIC_STATE]: (state, action) =>
         Object.assign({}, state, {
             currentRhythmicState: {
                 ...state.currentRhythmicState,

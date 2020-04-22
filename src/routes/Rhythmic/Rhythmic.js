@@ -58,7 +58,7 @@ let makeCaesura = () => {};
 let copyToClipboardHandler = () => {};
 
 const Rhythmic = ({
-    setRhytmicState,
+    setRhythmicState,
     setWordsDictionary,
     rhythmicState,
     wordsDictionary,
@@ -119,7 +119,7 @@ const Rhythmic = ({
                     ...stringsDictionary
                 };
 
-                setRhytmicState({
+                setRhythmicState({
                     text,
                     stringsDictionary
                 });
@@ -243,7 +243,7 @@ const Rhythmic = ({
                                     onMouseMove={mouseTracking}
                                     onError={showMessage}
                                     onFocus={focusHandler}
-                                    onUpdate={setRhytmicState}
+                                    onUpdate={setRhythmicState}
                                     onTextLintingStart={onTextLintingStart}
                                     onTextLintingEnd={onTextLintingEnd}
                                     setMakeCaesuraHandler={

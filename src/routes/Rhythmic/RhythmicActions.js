@@ -1,10 +1,10 @@
-export const SET_RHYTMIC_STATE = "SET_RHYTMIC_STATE";
+export const SET_RHYTHMIC_STATE = "SET_RHYTHMIC_STATE";
 export const SET_WORDS_DICTIONARY = "SET_WORDS_DICTIONARY";
 export const SHARING_TEXT = "SHARING_TEXT";
 
-export function setRhytmicState(payload) {
+export function setRhythmicState(payload) {
     return {
-        type: SET_RHYTMIC_STATE,
+        type: SET_RHYTHMIC_STATE,
         payload
     };
 }
