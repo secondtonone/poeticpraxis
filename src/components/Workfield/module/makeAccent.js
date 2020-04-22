@@ -17,7 +17,12 @@ export default function makeAccent({
     stringsDictionary,
     accent
 }) {
-    const element = elements[signId];
+    let clonedElements = Object.assign({}, elements);
+    let clonedStrings = Object.assign({}, strings);
+    let clonedWordsDictionary = Object.assign({}, wordsDictionary);
+    let clonedStringsDictionary = Object.assign({}, stringsDictionary);
+
+    const element = clonedElements[signId];
 
     const idString = element.idString;
 
@@ -27,7 +32,7 @@ export default function makeAccent({
 
     //let stringLinksTriggered = false;
 
-    let string = strings[idString];
+    let string = clonedStrings[idString];
 
     const stringLowerCased = string.string.toLowerCase();
 
@@ -35,49 +40,49 @@ export default function makeAccent({
 
     /* Удаление ударения */
 
-    if (elements[idWord].accents && elements[idWord].accents[0]) {
-        //const element = elements[idWord].accents[0];
+    if (clonedElements[idWord].accents && clonedElements[idWord].accents[0]) {
+        //const element = clonedElements[idWord].accents[0];
 
-        //elements[element].accent = 0;
+        //clonedElements[element].accent = 0;
 
-        elements[idWord].accents = [];
+        clonedElements[idWord].accents = [];
     }
 
     /* Работа с ударением */
 
-    elements[signId].accent = Number.isInteger(accent)
+    clonedElements[signId].accent = Number.isInteger(accent)
         ? accent
         : wordAccent(elementAccent);
 
-    if (elements[signId].accent === 1) {
-        elements[idWord].accents.push(signId);
+    if (clonedElements[signId].accent === 1) {
+        clonedElements[idWord].accents.push(signId);
     }
 
     /* Работа со словом */
 
-    wordsDictionary = updateWordsDictionary(idWord, wordsDictionary, elements);
+    clonedWordsDictionary = updateWordsDictionary(idWord, clonedWordsDictionary, clonedElements);
 
     /* Работа со строкой */
 
-    stringsDictionary = updateStringsDictionary(
+    clonedStringsDictionary = updateStringsDictionary(
         string,
-        stringsDictionary,
-        elements
+        clonedStringsDictionary,
+        clonedElements
     );
 
     /* Работа с нотой */
 
-    strings[idString].soundGramma = makeSoundGramma(
+    clonedStrings[idString].soundGramma = makeSoundGramma(
         signId,
         string,
-        elements[signId].accent
+        clonedElements[signId].accent
     );
 
     /* Работа с количеством ударений */
 
-    strings[idString].totalStringAccents = strings[idString].soundGramma.filter(
-        (idElemet) =>
-            elements[idElemet].accent === 1 || elements[idElemet].accent === 2
+    clonedStrings[idString].totalStringAccents = clonedStrings[idString].soundGramma.filter(
+        (idElement) =>
+            clonedElements[idElement].accent === 1 || clonedElements[idElement].accent === 2
     );
 
     /* баги*/
@@ -85,38 +90,38 @@ export default function makeAccent({
     if (stringLinks[stringLowerCased]) {
         const stringLink = stringLinks[stringLowerCased];
 
-        elements = updateElementsByStringLink({
-            elements,
+        clonedElements = updateElementsByStringLink({
+            elements: clonedElements,
             element,
             stringLink,
-            strings
+            strings: clonedStrings,
         });
     }
 
     /* Определение метра */
 
-    strings[idString].steps = stringOnSteps(
-        strings[idString].soundGramma,
-        strings[idString].totalStringAccents.length,
-        elements
+    clonedStrings[idString].steps = stringOnSteps(
+        clonedStrings[idString].soundGramma,
+        clonedStrings[idString].totalStringAccents.length,
+        clonedElements
     );
 
-    strings[idString].rhythmPreset = rhythmDetection(
-        strings[idString].steps,
-        elements
+    clonedStrings[idString].rhythmPreset = rhythmDetection(
+        clonedStrings[idString].steps,
+        clonedElements
     );
 
-    strings[idString].mainMeter = meterDetect(strings[idString].rhythmPreset);
+    clonedStrings[idString].mainMeter = meterDetect(clonedStrings[idString].rhythmPreset);
 
     /* if(!stringLinksTriggered && wordLinks[wordLowerCased]) {
             wordLinks[wordLowerCased].forEach( idWord => {
 
-                if(elements[idWord]) {
+                if(clonedElements[idWord]) {
 
-                    let idElement = elements[idWord].orderToken[element.index];
+                    let idElement = clonedElements[idWord].orderToken[element.index];
 
                     if(element.id != idElement) {
-                        elements[idElement].accent = elements[element.id].accent;
+                        clonedElements[idElement].accent = clonedElements[element.id].accent;
                     }
 
                 }
@@ -124,9 +129,9 @@ export default function makeAccent({
         }*/
 
     return {
-        elements,
-        strings,
-        wordsDictionary,
-        stringsDictionary
+        elements: clonedElements,
+        strings: clonedStrings,
+        wordsDictionary: clonedWordsDictionary,
+        stringsDictionary: clonedStringsDictionary,
     };
 }

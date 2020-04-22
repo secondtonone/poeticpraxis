@@ -13,7 +13,9 @@ export default function tagMaker(node, textAnalyzed, cb) {
 
     let symbols = [];
 
-    const { elements, strings } = textAnalyzed;
+    const strings = Object.assign({}, textAnalyzed.strings);
+
+    const elements = Object.assign({}, textAnalyzed.elements);
 
     let symbolsSet = [];
 
