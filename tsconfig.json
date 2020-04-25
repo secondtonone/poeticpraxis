@@ -1,0 +1,49 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": false,
+        "allowJs": true,
+        "baseUrl": "./",
+        "jsx": "react",
+        "paths": {
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@containers/*": [
+                "src/containers/*"
+            ],
+            "@utils/*": [
+                "src/utils/*"
+            ],
+            "@styles/*": [
+                "src/styles/*"
+            ],
+            "@modules/*": [
+                "src/modules/*"
+            ],
+            "@hooks/*": [
+                "src/hooks/*"
+            ],
+            "@routes/*": [
+                "src/routes/*"
+            ],
+            "@public/*": [
+                "public/*"
+            ],
+            "@icons/*": [
+                "src/components/IconSVG/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*",
+        "public/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        ".vscode"
+    ]
+}

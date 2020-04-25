@@ -2,20 +2,24 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: ['./src/index.js']
+        app: ['./src/index.js'],
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
         filename: '[name].[hash:8].js',
-        globalObject: 'this'
+        globalObject: 'this',
     },
     module: {
         rules: [
+            { 
+                test: /\.tsx?$/, 
+                use: ['ts-loader'] 
+            },
             {
                 test: /.js?$/,
                 use: ['babel-loader', 'eslint-loader'],
-                exclude: /node_modules/
+                exclude: /node_modules/,
             },
             {
                 test: /\.(svg)$/,
@@ -23,31 +27,31 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            limit: 5000
-                        }
-                    }
-                ]
+                            limit: 5000,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.(png|jpg|jpeg|gif|mp3|ogg|woff|woff2|eot|ttf|otf)$/,
-                use: ['file-loader']
+                use: ['file-loader'],
             },
             {
                 test: /\.worker\.js$/,
-                use: { loader: 'worker-loader' }
+                use: { loader: 'worker-loader' },
             },
             {
                 test: /\.webmanifest$/,
                 include: /public/,
                 loader: [
                     'file-loader?name=[name].[ext]',
-                    'webmanifest-loader'
-                ].join('!')
-            }
-        ]
+                    'webmanifest-loader',
+                ].join('!'),
+            },
+        ],
     },
     resolve: {
-        extensions: ['.js', '.json'],
+        extensions: ['.js', '.json', '.ts', '.tsx'],
         alias: {
             react: 'preact/compat',
             'react-dom/test-utils': 'preact/test-utils',
@@ -60,8 +64,8 @@ module.exports = {
             '@hooks': path.join(__dirname, 'src/hooks'),
             '@routes': path.join(__dirname, 'src/routes'),
             '@icons': path.join(__dirname, 'src/components/IconSVG'),
-            '@public': path.join(__dirname, 'public')
-        }
+            '@public': path.join(__dirname, 'public'),
+        },
     },
     optimization: {
         namedModules: true,
@@ -69,8 +73,8 @@ module.exports = {
         moduleIds: 'hashed',
         usedExports: true,
         splitChunks: {
-            chunks: 'all'
+            chunks: 'all',
         },
-        noEmitOnErrors: true
-    }
+        noEmitOnErrors: true,
+    },
 };
