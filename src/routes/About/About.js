@@ -43,7 +43,7 @@ const About = ({ lang = 'ru', variant }) => {
     const { innerHeight } = useResizeUpdate(800);
 
     const isRusLang = lang === 'ru';
-    const title = isRusLang ? 'ГЛАВНАЯ' : 'HOME';
+    const title = isRusLang ? 'Поэтическая практика - ГЛАВНАЯ' : 'HOME';
     const mediaQuery = maxMatchMedia(800);
 
     useChangeHreflang();
