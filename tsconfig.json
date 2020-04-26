@@ -3,10 +3,11 @@
         "module": "commonjs",
         "target": "es5",
         "noImplicitAny": false,
-        "sourceMap": false,
+        "sourceMap": true,
         "allowJs": true,
         "baseUrl": "./",
         "jsx": "react",
+        "jsxFactory": "h",
         "paths": {
             "@components/*": [
                 "src/components/*"
