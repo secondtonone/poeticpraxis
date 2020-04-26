@@ -1,5 +1,5 @@
 export const CHANGE_THEME = 'CHANGE_THEME';
-export const GHANGE_LANG = 'GHANGE_LANG';
+export const CHANGE_LANG = 'CHANGE_LANG';
 
 export function changeTheme(payload) {
     return {
@@ -10,7 +10,7 @@ export function changeTheme(payload) {
 
 export function changeLang(payload) {
     return {
-        type: GHANGE_LANG,
+        type: CHANGE_LANG,
         payload
     };
 }

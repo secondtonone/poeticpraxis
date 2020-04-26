@@ -1,4 +1,5 @@
-import { CHANGE_THEME, GHANGE_LANG } from './LayoutActions.js';
+import layoutModel from './layoutModel';
+import { CHANGE_THEME, CHANGE_LANG } from './layoutActions';
 
 const ACTION_HANDLERS = {
     [CHANGE_THEME]: (state, action) => {
@@ -16,17 +17,12 @@ const ACTION_HANDLERS = {
             variant
         });
     },
-    [GHANGE_LANG]: (state, action) => Object.assign({}, state, {
+    [CHANGE_LANG]: (state, action) => Object.assign({}, state, {
         lang: action.payload
     })
 };
 
-const initialState = {
-    variant: 'light',
-    lang: 'ru'
-};
-
-export default function layoutReducer(state = initialState, action) {
+export default function layoutReducer(state = layoutModel, action) {
     const handler = ACTION_HANDLERS[action.type];
 
     return handler ? handler(state, action) : state;

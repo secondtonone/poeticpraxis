@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Layout from './Layout';
-import { changeTheme, changeLang } from './LayoutActions';
+import { changeTheme, changeLang } from './layoutActions';
 
 const mapDispatchToProps = {
     changeTheme,

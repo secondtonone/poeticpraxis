@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changeTheme } from '@containers/Layout/LayoutActions';
+import { changeTheme } from '@containers/Layout/layoutActions';
 
 import ThemeTumbler from './ThemeTumbler';
 

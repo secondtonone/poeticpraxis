@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changeLang } from '@containers/Layout/LayoutActions';
+import { changeLang } from '@containers/Layout/layoutActions';
 
 import LangChanger from './LangChanger';
 
