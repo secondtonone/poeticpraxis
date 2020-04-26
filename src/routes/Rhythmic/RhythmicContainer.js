@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setRhythmicState, setWordsDictionary } from './RhythmicActions';
+import { setRhythmicState, setWordsDictionary } from './rhythmicActions';
 
 import Rhythmic from './Rhythmic';
 

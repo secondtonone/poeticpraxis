@@ -1,8 +1,9 @@
+import rhythmicModel from './rhythmicModel';
 import {
     SET_RHYTHMIC_STATE,
     SET_WORDS_DICTIONARY,
     SHARING_TEXT
-} from './RhythmicActions';
+} from './rhythmicActions';
 
 const ACTION_HANDLERS = {
     [SET_RHYTHMIC_STATE]: (state, action) =>
@@ -24,23 +25,7 @@ const ACTION_HANDLERS = {
         })
 };
 
-const initialState = {
-    currentRhythmicState: {
-        text: '',
-        stringsDictionary: {},
-        wordsCount: 0,
-        mainMeter: {
-            title: '',
-            inPercent: 0
-        },
-        strings: {},
-        elements: {},
-        orderStrings: []
-    },
-    wordsDictionary: {}
-};
-
-export default function rhythmicReducer(state = initialState, action) {
+export default function rhythmicReducer(state = rhythmicModel, action) {
     const handler = ACTION_HANDLERS[action.type];
 
     return handler ? handler(state, action) : state;
