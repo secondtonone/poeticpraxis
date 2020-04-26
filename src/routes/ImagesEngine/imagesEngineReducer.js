@@ -1,4 +1,5 @@
-import { SET_ENGINE_STATE } from './ImagesEngineActions.js';
+import imagesEngineModel from './imagesEngineModel';
+import { SET_ENGINE_STATE } from './imagesEngineActions';
 
 const ACTION_HANDLERS = {
     [SET_ENGINE_STATE]: (state, action) =>
@@ -10,17 +11,7 @@ const ACTION_HANDLERS = {
         })
 };
 
-const initialState = {
-    currentEngineState: {
-        result: [],
-        text: '',
-        pinned: [],
-        wordsNumber: 2,
-        currentView: 'material'
-    }
-};
-
-export default function engineReducer(state = initialState, action) {
+export default function engineReducer(state = imagesEngineModel, action) {
     const handler = ACTION_HANDLERS[action.type];
 
     return handler ? handler(state, action) : state;
