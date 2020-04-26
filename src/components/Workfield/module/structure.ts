@@ -1,13 +1,13 @@
 import { RhythmPresets } from './rhythmPresets';
 
-type IdString = string; //has format 's02874'
-type IdWord = string; //has format 's02874w09528'
-type IdWordToken = string; //has format 'w09528'
-type IdVowel = string; //has format 's02874w09528v11213'
-type IdConsonant = string; //has format 's02874w09528c47855'
-type IdSpace = string; //has format 's02874sp34205'
-type IdSymbol = string; //has format 's02874t57503'
-type IdPauseSymbol = string; //has format 's02874p34205'
+type IdString = string;                      //has format 's02874'
+type IdWord = string;                        //has format 's02874w09528'
+type IdWordToken = string;                   //has format 'w09528'
+type IdVowel = string;                       //has format 's02874w09528v11213'
+type IdConsonant = string;                   //has format 's02874w09528c47855'
+type IdSpace = string;                       //has format 's02874sp34205'
+type IdSymbol = string;                      //has format 's02874t57503'
+type IdPauseSymbol = string;                 //has format 's02874p34205'
 
 type IdElement =
     | IdWord
@@ -119,7 +119,7 @@ export interface IWordLinks {
 
 export interface IStructure {
     strings: IStrings;
-    orderStrings: string[];
+    orderStrings: IdElement[];
     elements: IElements;
     tags: Tags[];
     hashTable: IHashTable;
