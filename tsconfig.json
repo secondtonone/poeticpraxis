@@ -5,9 +5,20 @@
         "noImplicitAny": false,
         "sourceMap": true,
         "allowJs": true,
+        "lib": ["DOM", "ES2020"],
         "baseUrl": "./",
         "jsx": "react",
         "jsxFactory": "h",
+        "plugins": [
+            {
+                "name": "typescript-styled-plugin",
+                "tags": [
+                    "styled",
+                    "css",
+                    "sty"
+                ]
+            }
+        ],
         "paths": {
             "@components/*": [
                 "src/components/*"

@@ -1,6 +1,6 @@
-export default function hashFunction(char, order) {
-    let hash = order;
-    let code;
+export default function hashFunction(char: string, order: number): number{
+    let hash: number = order;
+    let code: number;
 
     for (let i = 0; i < char.length; i++) {
         code = char.charCodeAt(i);

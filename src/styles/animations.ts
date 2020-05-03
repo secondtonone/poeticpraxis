@@ -1,7 +1,7 @@
-import { keyframes } from 'styled-components';
+import { keyframes, Keyframes } from 'styled-components';
 import theme from './theme';
 
-const upAlt = keyframes`
+const upAlt: Keyframes = keyframes`
     50% {
         transform: translateY(1000%);
     }
@@ -10,7 +10,7 @@ const upAlt = keyframes`
     }
 `;
 
-const downAlt = keyframes`
+const downAlt: Keyframes = keyframes`
     50% {
         transform: translateY(-1000%);
     }
@@ -19,13 +19,13 @@ const downAlt = keyframes`
     }
 `;
 
-const up = keyframes`
+const up: Keyframes = keyframes`
     100% {
         transform: translateY(0);
     }
 `;
 
-const show = keyframes`
+const show: Keyframes = keyframes`
     50% {
         opacity: 0.2;
     }
@@ -34,13 +34,13 @@ const show = keyframes`
     }
 `;
 
-const loaded = keyframes`
+const loaded: Keyframes = keyframes`
     100% {
         transform: scaleY(19);
     }
 `;
 
-const whited = keyframes`
+const whited: Keyframes = keyframes`
     100% {
         background: ${theme.primaryWhite};
         color: ${theme.primaryWhite};

@@ -1,16 +1,23 @@
-import styled, { css } from 'styled-components';
+import styled, {
+    css,
+    FlattenSimpleInterpolation
+} from 'styled-components';
 
-import theme from './theme';
+import theme, { Theme } from './theme';
 import { show, upAlt, downAlt } from './animations';
 
-const SecondaryTitle = styled.h2`
+interface Themed {
+    theme: Theme;
+}
+
+const SecondaryTitle = styled.h2<Themed>`
     font-size: 18px;
     font-weight: 400;
     margin-bottom: 8px;
     color: ${(props) => props.theme.secondColor};
 `;
 
-const Hint = styled.div`
+const Hint = styled.div<Themed>`
     font-size: 14px;
     font-weight: 300;
     color: ${(props) => props.theme.secondColor};
@@ -33,7 +40,7 @@ const LeftedLayout = styled.div`
     }
 `;
 
-const AnimationShow = css`
+const AnimationShow: FlattenSimpleInterpolation = css`
     opacity: 0;
     animation-name: ${show};
     animation-duration: 1s;
@@ -42,7 +49,7 @@ const AnimationShow = css`
     animation-timing-function: ease-out;
 `;
 
-const AnimationUp = css`
+const AnimationUp: FlattenSimpleInterpolation = css`
     transform: translateY(1000%);
     animation-name: ${upAlt};
     animation-duration: 0.7s;
@@ -51,7 +58,7 @@ const AnimationUp = css`
     animation-timing-function: ease-out;
 `;
 
-const AnimationDown = css`
+const AnimationDown: FlattenSimpleInterpolation = css`
     transform: translateY(-1000%);
     animation-name: ${downAlt};
     animation-duration: 0.7s;
@@ -60,7 +67,6 @@ const AnimationDown = css`
     animation-timing-function: ease-out;
 `;
 
-
 const DesktopHiddenContainer = styled.div`
     display: none;
     @media (max-width: 600px) {
@@ -68,7 +74,7 @@ const DesktopHiddenContainer = styled.div`
     }
 `;
 
-const Link = styled.a`
+const Link = styled.a<Themed>`
     color: ${(props) => props.theme.accentColor};
     fill: ${(props) => props.theme.accentColor};
 `;
@@ -83,14 +89,13 @@ const Footer = styled.footer`
     text-align: center;
 `;
 
-const FieldLabel = styled.label`
+const FieldLabel = styled.label<{ isHidden: boolean }>`
     font-size: 18px;
     font-weight: 400;
-    margin-bottom: 8px;
     color: ${theme.primaryGray};
     font-family: ${theme.mainFont};
 
-    ${(props) => (props.isHidden ? props.isHidden : '')};
+    ${(props) => (props.isHidden ? 'opacity: 0;' : 'margin-bottom: 8px;')}
 `;
 
 const SimpleTextarea = styled.textarea``;
@@ -121,7 +126,7 @@ const HoveredElement = styled.div`
     }
 `;
 
-const ActionBar = styled.div`
+const ActionBar = styled.div<{ minHeight: number | string }>`
     display: none;
 
     & button {
@@ -143,13 +148,14 @@ const ActionBar = styled.div`
         z-index: 1002;
     }
 
-    @media (max-height: ${(props) => props.minHeight? props.minHeight: '0' }) {
+    @media (max-height: ${(props) =>
+            props.minHeight ? props.minHeight : '0'}) {
         transform: translateY(120%);
         display: none;
     }
 `;
 
-const Backdrop = styled.div`
+const Backdrop = styled.div<Themed>`
     position: fixed;
     height: 100vh;
     z-index: 9999;
@@ -170,16 +176,19 @@ const Mirrored = styled.span`
     transform: scale(-1);
 `;
 
-const TextAccent = styled.span`
+const TextAccent = styled.span<Themed>`
     color: ${(props) => props.theme.accentColor};
     fill: ${(props) => props.theme.accentColor};
 `;
 
-const TextMinor = styled.span`
+const TextMinor = styled.span<Themed>`
     color: ${(props) => props.theme.grayColor};
 `;
 
-const TextConstructor = styled.span`
+const TextConstructor = styled.span<{
+    letter: string | number;
+    word: string | number;
+}>`
     letter-spacing: ${(props) => (props.letter ? props.letter : '0')}px;
     word-spacing: ${(props) => (props.word ? props.word : '0')}px;
 
@@ -188,7 +197,6 @@ const TextConstructor = styled.span`
         word-spacing: inherit;
     }
 `;
-
 
 const Strong = styled.span`
     font-weight: 400;
@@ -203,7 +211,7 @@ const HiddenSelect = styled.select`
     position: absolute;
 `;
 
-const BetaSign = styled.div`
+const BetaSign = styled.div<Themed>`
     position: relative;
 
     &::after {
@@ -240,5 +248,5 @@ export {
     ActionBar,
     Mirrored,
     HiddenSelect,
-    BetaSign
+    BetaSign,
 };

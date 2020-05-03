@@ -1,4 +1,4 @@
-export default `html {
+const reset: string = `html {
     box-sizing: border-box;
 }
 
@@ -97,3 +97,5 @@ acronym {
 button:focus {
     outline: none;
 }`;
+
+export default reset;

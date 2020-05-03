@@ -1,4 +1,33 @@
-const light = {
+interface ThemeSettings {
+    primaryRed: string;
+    secondRed: string;
+    thirdRed: string;
+    primaryBlack: string;
+    primaryWhite: string;
+    secondWhite: string;
+    primaryGray: string;
+    secondGray: string;
+    path: '../../../public';
+
+    primaryColor: string;
+    secondColor: string;
+    accentColor: string;
+    grayColor: string;
+    lightGray: string;
+
+    mainFont: '"Montserrat", Verdana, sans-serif';
+}
+
+export interface Light extends ThemeSettings {
+    name: 'light';
+}
+
+export interface Dark extends ThemeSettings {
+    name: 'dark';
+    grayDarkColor: string;
+}
+
+const light: Light = {
     name: 'light',
     primaryRed: '#DE2420',
     secondRed: '#f5baba',
@@ -16,10 +45,10 @@ const light = {
     grayColor: '#d6d6d6',
     lightGray: 'rgba(162, 162, 162, 0.1)',
 
-    mainFont: '"Montserrat", Verdana, sans-serif'
+    mainFont: '"Montserrat", Verdana, sans-serif',
 };
 
-const dark = {
+const dark: Dark = {
     name: 'dark',
     primaryRed: '#DE2420',
     secondRed: '#f5baba',
@@ -38,10 +67,16 @@ const dark = {
     grayDarkColor: '#212121',
     lightGray: 'rgba(162, 162, 162, 0.1)',
 
-    mainFont: '"Montserrat", Verdana, sans-serif'
+    mainFont: '"Montserrat", Verdana, sans-serif',
 };
 
-const theme = {
+export interface Theme
+    extends Omit<ThemeSettings, 'grayColor' | 'accentColor' | 'lightGray'> {
+    light: Light;
+    dark: Dark;
+}
+
+const theme: Theme = {
     primaryRed: '#DE2420',
     secondRed: '#f5baba',
     thirdRed: '#92130e',
@@ -57,7 +92,7 @@ const theme = {
 
     mainFont: '"Montserrat", Verdana, sans-serif',
     light,
-    dark
+    dark,
 };
 
 export default theme;

@@ -1,4 +1,4 @@
-export default function wordAccent(accent) {
+export default function wordAccent(accent: number): number {
     if (accent < 3) {
         ++accent;
     } else {

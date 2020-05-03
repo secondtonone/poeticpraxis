@@ -1,8 +1,8 @@
 import theme from './theme';
 import { loaded, whited } from './animations';
-import { css } from 'styled-components';
+import { css, FlattenSimpleInterpolation } from 'styled-components';
 
-export default css`
+const common: FlattenSimpleInterpolation = css`
     body {
         padding: 0;
         margin: 0;
@@ -163,3 +163,4 @@ export default css`
         }
     }
 `;
+export default common;

@@ -1,9 +1,9 @@
-function wordByNumberRu(number, words = []) {
+function wordByNumberRu(number?: number, words: string[] = []):string {
     if (number === undefined || words.length === 0) {
         return '';
     }
 
-    const lastNumber = number % 10;
+    const lastNumber:number = number % 10;
 
     if (lastNumber === 1 && number !== 11) {
         return words[0];
@@ -24,7 +24,7 @@ function wordByNumberRu(number, words = []) {
     return words[2];
 }
 
-function wordByNumberEng(number, words = []) {
+function wordByNumberEng(number?: number, words: string[] = []):string {
     if (number === undefined || words.length === 0) {
         return '';
     }
@@ -36,7 +36,7 @@ function wordByNumberEng(number, words = []) {
     return words[1];
 }
 
-export default function wordByNumber(lang, number, words) {
+export default function wordByNumber(lang: string, number: number, words: string[]):string {
     if (lang === 'ru') {
         return wordByNumberRu(number, words);
     }

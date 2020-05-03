@@ -1,5 +1,5 @@
-export default function hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+export default function hexToRgb(hex: string): number[]|null {
+    var result: string[]= /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
         ? [
             parseInt(result[1], 16),
