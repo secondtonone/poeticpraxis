@@ -21,7 +21,7 @@ const AboutLanding = ({ lang = 'ru', mediaQuery, boundHeight, variant }) => {
 
     const revealButtonHandler = useCallback(() => {
         window.scrollTo({
-            top: boundHeight,
+            top: boundHeight + 32,
             behavior: 'smooth',
         });
     }, [boundHeight]);
