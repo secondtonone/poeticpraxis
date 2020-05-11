@@ -71,6 +71,7 @@ const Item = styled.li`
     display: block;
     padding: 16px;
     box-sizing: border-box;
+    cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 
     color: ${(props) => {
         if (props.active) {
