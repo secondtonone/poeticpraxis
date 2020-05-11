@@ -1,5 +1,11 @@
 import { h } from 'preact';
-import { lazy, Suspense, useState, useCallback } from 'preact/compat';
+import {
+    lazy,
+    Suspense,
+    useState,
+    useCallback,
+    useEffect,
+} from 'preact/compat';
 
 import useTitlePage from '@hooks/useTitlePage';
 import useMessage from '@hooks/useMessage';
@@ -24,10 +30,7 @@ import Widgets from '@icons/Widgets';
 import Delete from '@icons/Delete';
 import WordsIcon from '@icons/Words';
 
-import {
-    LeftedLayout,
-    ActionBar
-} from '@styles/components';
+import { LeftedLayout, ActionBar } from '@styles/components';
 
 import Help from './Help';
 import Menu from './Menu';
@@ -53,18 +56,18 @@ const ImagesEngine = ({
         text,
         pinned,
         currentView = 'material',
-        wordsNumber
+        wordsNumber,
     },
     lang = 'ru',
     sharingText,
-    history
+    history,
 }) => {
-
     const [words, setWords] = useState(stringToWords(text));
     const [textMessage, showMessage] = useMessage();
-    const [isDisabledWordsview, setIsDisabledWordsview] = useState(
+    /* const [isDisabledWordsview, setIsDisabledWordsview] = useState(
         !result.length
-    );
+    ); */
+    console.log(text, words);
 
     const title = `${translations[lang].main['TITLE']}${
         text ? ` - ${text.substring(0, 30)}...` : ''
@@ -74,56 +77,64 @@ const ImagesEngine = ({
     useTitlePage(title);
     useScrollToTop();
 
+    useEffect(() => setWords(stringToWords(text)), [text]);
+
     const getDictionaryWords = useCallback(async () => {
         try {
-            const prevText = text;
-            const wordsLength = words.length;
-
-            const newText = await getWords(prevText, wordsLength);
+            const newWords = await getWords(text, stringToWords(text));
 
             setEngineState({
-                text: newText
+                text: newWords,
             });
         } catch (error) {
             showMessage('Слова не хотят подбираться, попробуйте снова.');
         }
     }, [text, setEngineState]);
 
-    const handleTextInput = useCallback((e) => {
-        let text = e.target.value;
+    const handleTextInput = useCallback(
+        (e) =>
+            setEngineState({
+                text: e.target.value,
+            }),
+        [setEngineState]
+    );
 
-        setEngineState({
-            text
-        });
-
-        setWords(stringToWords(text));
-    }, [setEngineState]);
-
-    const changeView = useCallback((currentView) => {
-        setEngineState({
-            currentView
-        });
-    }, [setEngineState]);
+    const changeView = useCallback(
+        (nextView) =>
+            setEngineState({
+                currentView: nextView,
+            }),
+        [setEngineState]
+    );
 
     const getResult = useCallback(() => {
         /*let words = this.state.text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ\-]+/g) || [];*/
-        let words = stringToWords(text);
-
-        const result = imaged(words, wordsNumber);
-
+        console.log(text, words);
+        const result = imaged(stringToWords(text), wordsNumber);
+        
         toTheTop();
-
+        
         showMessage(translations[lang].messages['PAIRS_READY']);
-
+        
         changeView('words');
-
-        setIsDisabledWordsview(false);
-
+        
+        //setIsDisabledWordsview(false);
+        
         setEngineState({
-            result
+            result,
         });
     }, [text, wordsNumber, lang, setEngineState]);
-
+    
+    const menuHandler = useCallback(
+        (nextView) => {
+            if (nextView === 'words' && !result.length) {
+                getResult();
+            } else {
+                changeView(nextView);
+            }
+        },
+        [changeView, getResult, result]
+    );
     /* const setWordsNumber = (e) => {
         const wordsNumber = e.target.value;
 
@@ -141,14 +152,14 @@ const ImagesEngine = ({
             toTheTop();
 
             setEngineState({
-                text: ''
+                text: '',
             });
-
-            setWords([]);
         }
     }, [setEngineState, lang]);
 
-    const pushToHistory = useCallback((location) => history.push(location), [history]);
+    const pushToHistory = useCallback((location) => history.push(location), [
+        history,
+    ]);
 
     const toTheTop = () => {
         window.scrollTo(0, 0);
@@ -163,8 +174,13 @@ const ImagesEngine = ({
     return (
         <section>
             <Menu
-                isDisabledWordsview={isDisabledWordsview}
-                handler={changeView}
+                isDisabledWordsview={
+                    words.length < 4 && !result.length && !pinned.length
+                }
+                isResultReady={
+                    words.length > 3 && !result.length && !pinned.length
+                }
+                handler={menuHandler}
                 current={currentView}
                 lang={lang}
             />

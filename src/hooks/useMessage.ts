@@ -1,8 +1,8 @@
 import { useState } from 'preact/hooks';
 
-const useMessage = (ms = 2000) => {
-    const [textMessage, useTextMessage] = useState(null);
-    const showMessage = (textMessage) => {
+const useMessage = (ms: number = 2000) => {
+    const [textMessage, useTextMessage] = useState<string | null>(null);
+    const showMessage = (textMessage: string) => {
         useTextMessage(textMessage);
 
         setTimeout(() => {

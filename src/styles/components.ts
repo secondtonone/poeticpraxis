@@ -1,7 +1,4 @@
-import styled, {
-    css,
-    FlattenSimpleInterpolation
-} from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 import theme, { Theme } from './theme';
 import { show, upAlt, downAlt } from './animations';
@@ -89,7 +86,7 @@ const Footer = styled.footer`
     text-align: center;
 `;
 
-const FieldLabel = styled.label<{ isHidden: boolean }>`
+const FieldLabel = styled.label<{ isHidden?: boolean }>`
     font-size: 18px;
     font-weight: 400;
     color: ${theme.primaryGray};
@@ -126,7 +123,7 @@ const HoveredElement = styled.div`
     }
 `;
 
-const ActionBar = styled.div<{ minHeight: number | string }>`
+const ActionBar = styled.div<{ minHeight?: number | string }>`
     display: none;
 
     & button {
@@ -185,10 +182,11 @@ const TextMinor = styled.span<Themed>`
     color: ${(props) => props.theme.grayColor};
 `;
 
-const TextConstructor = styled.span<{
-    letter: string | number;
-    word: string | number;
-}>`
+interface ITextConstructor {
+    letter: string | number; word: string | number;
+}
+
+const TextConstructor = styled.span<ITextConstructor>`
     letter-spacing: ${(props) => (props.letter ? props.letter : '0')}px;
     word-spacing: ${(props) => (props.word ? props.word : '0')}px;
 
@@ -224,6 +222,31 @@ const BetaSign = styled.div<Themed>`
     }
 `;
 
+interface IBadge extends Themed {
+    top?: number | string; 
+    right?: number | string
+    isHidden?: boolean
+}
+
+const Badge = styled.span<IBadge>`
+    position: relative;
+    display: inline-block;
+
+    &::after {
+        position: absolute;
+        top: ${(props) => (props.top ? props.top : '-5px')};
+        right: ${(props) => (props.right ? props.right : '-5px')};
+        border: 1px solid ${(props) => props.theme.primaryColor};
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: ${(props) => props.theme.accentColor};
+        opacity: ${(props) => props.isHidden? 0 : 1};
+        transition: opacity 0.5s;
+    }
+`;
+
 export {
     Backdrop,
     SecondaryTitle,
@@ -249,4 +272,5 @@ export {
     Mirrored,
     HiddenSelect,
     BetaSign,
+    Badge,
 };

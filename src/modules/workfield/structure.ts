@@ -1,15 +1,15 @@
 import { RhythmPresets } from './rhythmPresets';
 
-type IdString = string;                      //has format 's02874'
-type IdWord = string;                        //has format 's02874w09528'
-type IdWordToken = string;                   //has format 'w09528'
-type IdVowel = string;                       //has format 's02874w09528v11213'
-type IdConsonant = string;                   //has format 's02874w09528c47855'
-type IdSpace = string;                       //has format 's02874sp34205'
-type IdSymbol = string;                      //has format 's02874t57503'
-type IdPauseSymbol = string;                 //has format 's02874p34205'
+export type IdString = string;                      //has format 's02874'
+export type IdWord = string;                        //has format 's02874w09528'
+export type IdWordToken = string;                   //has format 'w09528'
+export type IdVowel = string;                       //has format 's02874w09528v11213'
+export type IdConsonant = string;                   //has format 's02874w09528c47855'
+export type IdSpace = string;                       //has format 's02874sp34205'
+export type IdSymbol = string;                      //has format 's02874t57503'
+export type IdPauseSymbol = string;                 //has format 's02874p34205'
 
-type IdElement =
+export type IdElement =
     | IdWord
     | IdVowel
     | IdConsonant
@@ -17,7 +17,7 @@ type IdElement =
     | IdSymbol
     | IdPauseSymbol;
 
-type Type = 'sp' | 't' | 'p' | 'w' | 'c' | 'v';
+export type Type = 'sp' | 't' | 'p' | 'w' | 'c' | 'v';
 
 export interface ITag {
     height: number;
@@ -67,11 +67,14 @@ export interface ILetterElement extends IUnitaryElement {
     index: number;
     isLast: boolean;
     stringIndex: number;
+    prev: null | IdConsonant | IdVowel;
+    next: null | IdConsonant | IdVowel;
 }
 
 export interface ICLetterElement extends ILetterElement {
     id: IdConsonant;
     type: 'c';
+    isSolid: boolean;
 }
 
 export interface IVLetterElement extends ILetterElement {
@@ -80,16 +83,19 @@ export interface IVLetterElement extends ILetterElement {
     tag: ITag;
 }
 
+export type ISoundGramma = IdVowel[];
+
 export interface IStrings {
     [idString: string]: {
         id: IdString;
         order: IdElement[];
-        soundGramma: string[];
+        soundGramma: ISoundGramma;
         string: string;
+        steps: IdVowel[][];
         tag: ITag;
-        vowel: string[];
-        words: string[];
-        totalStringAccents: string[];
+        vowel: IdVowel[];
+        words: IdWord[];
+        totalStringAccents: IdVowel[];
         rhythmPresets: RhythmPresets;
     };
 }
@@ -103,7 +109,7 @@ export interface IElements {
         | IVLetterElement;
 }
 
-type Tags = IVLetterElement | IPauseElement;
+export type Tags = IVLetterElement | IPauseElement;
 
 export interface IHashTable {
     [hash: number]: { id: IdElement | IdString };

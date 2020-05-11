@@ -8,11 +8,13 @@ import isPause from './isPause';
 import isVowel from './isVowel';
 import isInDictionary from './isInDictionary';
 import isAccented from './isAccented';
-import isAccentedByRegExp from './isAccentedByRegExp';
 import isAccentedByPosition from './isAccentedByPosition';
 import makeListLinks from './makeListLinks';
 import stringOnSteps from './stringOnSteps';
 import rhythmDetection from './rhythmDetection';
+import getAccentedPosition from './getAccentedPosition';
+import isConsonantSolid from './isConsonantSolid';
+import isSoftSign from './isSoftSign';
 
 /**
  * @export
@@ -76,7 +78,7 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
         let order = [];
 
         let stringIndex = 0;
-        /* Слово */
+        /* Символьная последовательность */
         const tokensLength = tokens.length;
 
         for (let index = 0; index < tokensLength; index++) {
@@ -93,7 +95,7 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
             let accents = [];
 
             let hashTokenId = '';
-            /* символ */
+            /* слово */
             if (isLetter(token)) {
                 idToken = `w${index}${randomize(() =>
                     hashFunction(token, ++iterator)
@@ -106,6 +108,8 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
                 let prev = null;
 
                 let next = null;
+
+                const [accentedIndex] = getAccentedPosition(token);
 
                 /* Буквы */
                 const letters = [...token];
@@ -123,11 +127,11 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
 
                     const isLast = index === array.length - 1;
 
-                    let idSymbol = `c${index}${randomize(() =>
-                        hashFunction(char, ++iterator)
-                    )}`;
+                    let idSymbol = '';
 
                     let type = 'c';
+
+                    let isSolid = null;
 
                     accent = 0;
 
@@ -138,7 +142,7 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
 
                         type = 'v';
 
-                        ++vowelCounter;
+                        //++vowelCounter;
 
                         if (
                             isInDictionary(string, stringsDictionary) ||
@@ -153,8 +157,13 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
                                 : isAccented(token, index, wordsDictionary);
                         } else {
                             accent =
-                                isAccentedByRegExp('[ёЁ]', char) ||
-                                isAccentedByPosition(token, vowelCounter);
+                                accentedIndex === -1
+                                    ? isAccentedByPosition(token, ++vowelCounter)
+                                    : accentedIndex === index
+                                    ? 1
+                                    : 0;
+                                    /*isAccentedByRegExp('[ёЁ]', char) ||
+                                isAccentedByPosition(token, vowelCounter); */
                         }
 
                         const idVowel = `${idString}${idToken}${idSymbol}`;
@@ -171,6 +180,27 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
                             */
                             soundGramma.push(idVowel);
                             accents.push(idVowel);
+                        }
+
+                        if (
+                            elements[prev] &&
+                            elements[prev].type === 'c' &&
+                            !elements[prev].isSolid
+                        ) {
+                            elements[prev].isSolid = isConsonantSolid(char);
+                        }
+                    } else {
+                        idSymbol = `c${index}${randomize(() =>
+                            hashFunction(char, ++iterator)
+                        )}`;
+
+                        isSolid = isConsonantSolid(char);
+                        
+                        if (isSoftSign(char) &&
+                            elements[prev] &&
+                            elements[prev].type === 'c'
+                        ) {
+                            elements[prev].isSolid = false;
                         }
                     }
 
@@ -194,6 +224,10 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
                         stringIndex,
                         hashTokenId
                     };
+
+                    if(type === 'c') {
+                        elements[idSymbol].isSolid = isSolid;
+                    }
 
                     prev = idSymbol;
 

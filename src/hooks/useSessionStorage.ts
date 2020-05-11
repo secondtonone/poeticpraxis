@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks';
 
-const useSessionStorage = (key) => {
-    const [valueSessionStorage, setValueSessionStorage] = useState(
+const useSessionStorage = (key: string) => {
+    const [valueSessionStorage, setValueSessionStorage] = useState<string>(
         sessionStorage.getItem(key) || ''
     ); 
 

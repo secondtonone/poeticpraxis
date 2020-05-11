@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'preact/hooks';
 
-const useResizeUpdate = (initHeight = 800) => {
-
-    const [innerWidth, setInnerWidth] = useState();
-    const [innerHeight, setInnerHeight] = useState(initHeight);
+const useResizeUpdate = (initHeight: number = 800) => {
+    const [innerWidth, setInnerWidth] = useState<number>(0);
+    const [innerHeight, setInnerHeight] = useState<number>(initHeight);
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -14,13 +13,13 @@ const useResizeUpdate = (initHeight = 800) => {
         };
 
         updateDimensions();
-        
+
         window.addEventListener('resize', updateDimensions);
 
         return () => window.removeEventListener('resize', updateDimensions);
     }, []);
 
-    return {innerWidth, setInnerWidth, innerHeight, setInnerHeight};
+    return { innerWidth, setInnerWidth, innerHeight, setInnerHeight };
 };
 
 export default useResizeUpdate;

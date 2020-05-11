@@ -1,12 +1,5 @@
-import { IStructure } from '@components/Workfield/module/structure';
-
-export interface IDictionary {
-    [key: string]: {
-        accents: Array<{
-            type: 0 | 1 | 2 | 3;
-        }>
-    }
-}
+import { IStructure } from '@modules/workfield/structure';
+import { IDictionary } from '@modules/workfield/dictionary';
 
 export interface ICurrentRhythmicState
     extends Pick<

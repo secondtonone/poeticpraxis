@@ -1,24 +1,27 @@
-export let Tone = null;
-export let Instrument = null;
+export let Tone: any = null;
+export let Instrument: any = null;
 
-const instruments = {
+const instruments: {
+    piano: any;
+    poly: any;
+} = {
     piano: Piano,
-    poly: PolySynth
+    poly: PolySynth,
 };
 
-const baseUrl = './';
+const baseUrl: string = './';
 
-export function getToneModule() {
+export function getToneModule(): Promise<any> {
     return import(/* webpackChunkName: "Tone" */ 'tone').then(
         (ToneModule) => (Tone = ToneModule)
     );
 }
 
-export function PolySynth() {
+export function PolySynth(): Promise<any> {
     Instrument = new Tone.PolySynth(8, Tone.Synth, {
-        "oscillator": {
-            "partials": [0, 2, 3, 4],
-        }
+        oscillator: {
+            partials: [0, 2, 3, 4],
+        },
     });
 
     return new Promise((resolve) => {
@@ -26,7 +29,7 @@ export function PolySynth() {
     });
 }
 
-export function Piano() {
+export function Piano(): Promise<any> {
     Instrument = new Tone.Sampler(
         {
             /* A0: 'A0.[mp3|ogg]',
@@ -56,13 +59,13 @@ export function Piano() {
             A6: 'A6.[mp3|ogg]' /* * */,
             C7: 'C7.[mp3|ogg]' /* * */,
             'D#7': 'Ds7.[mp3|ogg]' /* * */,
-            'F#7': 'Fs7.[mp3|ogg]' /* * */
+            'F#7': 'Fs7.[mp3|ogg]' /* * */,
             /* A7: 'A7.[mp3|ogg]' ,
             C8: 'C8.[mp3|ogg]' */
         },
         {
             release: 1,
-            baseUrl
+            baseUrl,
         }
     );
 
@@ -71,27 +74,8 @@ export function Piano() {
     });
 }
 
-export function getInstrument(inst = 'piano') {
+export function getInstrument(inst: string = 'piano'): any {
     if (inst && instruments[inst]) {
         return instruments[inst]();
     }
 }
-
-export const mapLetterNote = {
-    а: { tone: 80, main: [755, 1360, 2500] },
-    е: { tone: 80, main: [385, 2025, 2700] },
-    у: { tone: 80, main: [305, 975, 2715] },
-    и: { tone: 80, main: [290, 2190, 2865] },
-    о: { tone: 80, main: [440, 825, 2495] },
-    ы: { tone: 80, main: [285, 1655, 2465] },
-    э: { tone: 80, main: [465, 1750, 2450] },
-    ё: { tone: 80, main: [390, 1200, 1940] },
-    ю: { tone: 80, main: [300, 800, 1975] },
-    я: { tone: 80, main: [780, 1490, 2400] },
-    a: { tone: 80, main: [755, 1360, 2500] },
-    u: { tone: 80, main: [305, 975, 2715] },
-    i: { tone: 80, main: [290, 2190, 2865] },
-    y: { tone: 80, main: [755, 1360, 2500] },
-    e: { tone: 80, main: [385, 2025, 2700] },
-    o: { tone: 80, main: [440, 825, 2495] }
-};
