@@ -2,7 +2,7 @@ import { h } from 'preact';
 
 import { Accent, StringPause, StringField } from './styled';
 
-import { accents } from './module';
+import { accents } from '@modules/workfield';
 
 const HiddenMarks = ({ strings, orderStrings, elements }) => {
     let stringsOrders = [];

@@ -11,9 +11,9 @@ import {
 
 import {
     rhythmPresets
-} from './module';
+} from '@modules/workfield';
 
-const makeAccentSizeIdicator = (size, accent) => {
+const makeAccentSizeIndicator = (size, accent) => {
     let scheme = [];
 
     for (let i = 1; i <= size; i++) {
@@ -88,7 +88,7 @@ const InfoMarks = ({
                         ) : null}
                         {string.soundGramma.length}
                         <Syllable.AccentType>
-                            {makeAccentSizeIdicator(size, accent)}
+                            {makeAccentSizeIndicator(size, accent)}
                         </Syllable.AccentType>
                     </Syllable>
                 ),

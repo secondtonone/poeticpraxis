@@ -1,3 +1,4 @@
+// @ts-nocheck
 const loading = (i, s, o, g, r, a, m) => {
     i['GoogleAnalyticsObject'] = r;
     (i[r] =

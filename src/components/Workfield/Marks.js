@@ -9,7 +9,7 @@ import { translations } from './translations';
 
 import {
     accents
-} from './module';
+} from '@modules/workfield';
 
 
 const Marks = ({tags, lang}) => {
@@ -21,7 +21,7 @@ const Marks = ({tags, lang}) => {
 
     const translation = translations[lang ? lang : 'ru'];
 
-    const decription = Object.values(translation);
+    const description = Object.values(translation);
 
     for (let index = 0; index < tagsLength; index++) {
         const sign = tags[index];
@@ -54,7 +54,7 @@ const Marks = ({tags, lang}) => {
                 id={sign.id}
                 style={style}
                 data-type={sign.type}
-                title={decription[sign.accent]}
+                title={description[sign.accent]}
             />
         );
     }

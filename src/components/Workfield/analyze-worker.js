@@ -1,4 +1,4 @@
-import { textAnalyzer } from './module';
+import { textAnalyzer } from '@modules/workfield';
 
 self.addEventListener('message', (e) => {
     const { text, stringsDictionary, wordsDictionary } = e.data;

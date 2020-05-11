@@ -20,7 +20,7 @@ import {
     rhythmPresets,
     accents,
     getAnalyzedTextFromWorker
-} from './module';
+} from '@modules/workfield';
 
 
 /* парсить по словам, сравнивать с предыдущим деревом */
