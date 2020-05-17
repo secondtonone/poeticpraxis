@@ -1,5 +1,5 @@
 import { cyrillicAlwaysSolid } from './consonantsList';
-import { vowelBeforeSoft, vowelBeforeSolid } from './vowelsList';
+import { vowelBeforeSolid } from './vowelsList';
 
 const getRegexp = (temp: string): RegExp => new RegExp(`[${temp}]`, 'i');
 

@@ -1,5 +1,5 @@
 const cyrillicAlwaysSolid: string = 'жшц';
-const cyrillicAlwaysSoft: string = 'чщй';
+const cyrillicAlwaysSoft: string = 'чщйьъ';
 const cyrillic: string =
     'кнгзхфвпрлдсмтб' + cyrillicAlwaysSolid + cyrillicAlwaysSoft;
 const latin: string = 'qwrtpsdfghjklzxcvbnmßñ';

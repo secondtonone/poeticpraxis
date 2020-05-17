@@ -14,7 +14,7 @@ import stringOnSteps from './stringOnSteps';
 import rhythmDetection from './rhythmDetection';
 import getAccentedPosition from './getAccentedPosition';
 import isConsonantSolid from './isConsonantSolid';
-import isSoftSign from './isSoftSign';
+import isLetterSign from './isLetterSign';
 
 /**
  * @export
@@ -196,7 +196,7 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
 
                         isSolid = isConsonantSolid(char);
                         
-                        if (isSoftSign(char) &&
+                        if (isLetterSign(char) &&
                             elements[prev] &&
                             elements[prev].type === 'c'
                         ) {

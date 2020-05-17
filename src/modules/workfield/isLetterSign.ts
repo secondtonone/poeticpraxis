@@ -1,5 +1,5 @@
 export default function isLetterSign(char: string): boolean {
-    return /[ьЬ]/.test(
+    return /[ьЬъЪ]/.test(
         char
     );
 }
