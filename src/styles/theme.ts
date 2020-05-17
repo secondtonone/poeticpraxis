@@ -1,4 +1,4 @@
-interface ThemeSettings {
+export interface ThemeSettings {
     primaryRed: string;
     secondRed: string;
     thirdRed: string;

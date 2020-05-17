@@ -2,12 +2,10 @@ import { h } from 'preact';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import Routes from '@routes';
-
-const App = ({ store }) => (
+const App = ({ store, children }) => (
     <Provider store={store}>
         <BrowserRouter>
-            <Routes />
+            {children}
         </BrowserRouter>
     </Provider>
 );

@@ -11,12 +11,12 @@ export interface ICurrentRhythmicState
     wordsCount: number;
 }
 
-interface IRhythmicModel {
+export interface IRhythmicModel {
     wordsDictionary: IDictionary;
     currentRhythmicState: ICurrentRhythmicState;
 }
 
-const rhythmicModel: IRhythmicModel = {
+const rhythmicModel: Readonly<IRhythmicModel> = {
     currentRhythmicState: {
         text: '',
         stringsDictionary: {},

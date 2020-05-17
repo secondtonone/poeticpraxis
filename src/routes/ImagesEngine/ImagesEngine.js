@@ -39,7 +39,6 @@ import Material from './Material';
 const PairsBench = lazy(() =>
     import(
         /* webpackChunkName: "PairsBench" */
-        /* webpackPreload: true */
         './PairsBench'
     )
 );

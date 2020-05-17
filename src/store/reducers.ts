@@ -6,7 +6,9 @@ import Layout from '@containers/Layout/layoutReducer';
 const reducers = combineReducers({
     ImagesEngine,
     Rhythmic,
-    Layout
+    Layout,
 });
+
+export type RootState = ReturnType<typeof reducers>
 
 export default reducers;

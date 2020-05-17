@@ -44,7 +44,6 @@ import List from '@components/List';
 const Melody = lazy(() =>
     import(
         /* webpackChunkName: "Melody" */
-        /* webpackPreload: true */
         '@components/Melody'
     )
 );

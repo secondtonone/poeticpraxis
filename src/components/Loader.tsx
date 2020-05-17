@@ -1,5 +1,7 @@
 import { h } from 'preact';
+import { FC } from 'preact/compat';
 import styled, { keyframes } from 'styled-components';
+import { ThemeSettings } from '@styles/theme';
 
 const stretch = keyframes`
     0%,
@@ -24,7 +26,7 @@ const Container = styled.div`
     position: relative;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{height?: string}>`
     height: ${(props) => (props.height ? props.height : '85vh')};
     width: 100%;
     display: flex;
@@ -33,7 +35,7 @@ const Wrapper = styled.div`
     margin: 0 auto;
 `;
 
-const Rect = styled.div`
+const Rect = styled.div<{color?: string; delay: number; theme: ThemeSettings}>`
     position: absolute;
     background-color: ${(props) =>
         props.color === 'accent'
@@ -49,16 +51,14 @@ const Rect = styled.div`
     animation: ${stretch} ${(props) => props.delay}s infinite ease-in-out;
 `;
 
-const Loader = ({ height }) => {
-    return (
-        <Wrapper height={height}>
-            <Container>
-                <Rect delay={0.8} />
-                <Rect delay={0.4} color="accent" />
-                <Rect delay={1} color="first" />
-            </Container>
-        </Wrapper>
-    );
-};
+const Loader: FC<{height?: string}> = ({ height }) => (
+    <Wrapper height={height}>
+        <Container>
+            <Rect delay={0.8} />
+            <Rect delay={0.4} color="accent" />
+            <Rect delay={1} color="first" />
+        </Container>
+    </Wrapper>
+);
 
 export default Loader;

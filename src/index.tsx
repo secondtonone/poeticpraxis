@@ -7,17 +7,22 @@ if (DEV) {
 import { h, render } from 'preact';
 
 import store from './store';
-import App from './containers/App';
+import App from '@containers/App';
+import Routes from '@routes';
 
-import analyticsInit from './modules/analytics';
-
+import analyticsInit from '@modules/analytics';
 
 const run = (Component) => {
     const rootElement = DEV
         ? document.body.lastElementChild
-        : document.getElementById('app'); 
+        : document.getElementById('app');
 
-    render(<Component store={store} />, rootElement);
+    render(
+        <Component store={store}>
+            <Routes />
+        </Component>,
+        rootElement
+    );
 };
 
 if (!DEV) {
@@ -35,14 +40,12 @@ if (!DEV) {
             onUpdated() {
                 console.log('updated');
                 location.reload();
-            }
+            },
         });
     })();
 }
 
-
 run(App);
-
 
 if (!DEV) {
     window.addEventListener('load', () => analyticsInit('yandex'));

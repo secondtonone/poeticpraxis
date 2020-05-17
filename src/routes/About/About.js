@@ -18,7 +18,6 @@ import AboutEngine from './AboutEngine';
 const AboutRhythmic = lazy(() =>
     import(
         /* webpackChunkName: "AboutRhythmic" */
-        /* webpackPreload: true */
         './AboutRhythmic'
     )
 );
@@ -26,7 +25,6 @@ const AboutRhythmic = lazy(() =>
 const AboutProject = lazy(() =>
     import(
         /* webpackChunkName: "AboutProject" */
-        /* webpackPreload: true */
         './AboutProject'
     )
 );

@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: ['./src/index.js'],
+        app: ['./src/index.tsx'],
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -60,6 +60,7 @@ module.exports = {
             '@containers': path.join(__dirname, 'src/containers'),
             '@utils': path.join(__dirname, 'src/utils'),
             '@styles': path.join(__dirname, 'src/styles'),
+            '@store': path.join(__dirname, 'src/store'),
             '@modules': path.join(__dirname, 'src/modules'),
             '@hooks': path.join(__dirname, 'src/hooks'),
             '@routes': path.join(__dirname, 'src/routes'),
