@@ -75,6 +75,8 @@ export interface ICLetterElement extends ILetterElement {
     id: IdConsonant;
     type: 'c';
     isSolid: boolean;
+    isNoisy: boolean;
+    isVoiced: boolean;
 }
 
 export interface IVLetterElement extends ILetterElement {

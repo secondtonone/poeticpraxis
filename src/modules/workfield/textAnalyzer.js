@@ -15,6 +15,8 @@ import rhythmDetection from './rhythmDetection';
 import getAccentedPosition from './getAccentedPosition';
 import isConsonantSolid from './isConsonantSolid';
 import isLetterSign from './isLetterSign';
+import isConsonantVoiced from './isConsonantVoiced';
+import isConsonantNoisy from './isConsonantNoisy';
 
 /**
  * @export
@@ -133,6 +135,10 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
 
                     let isSolid = null;
 
+                    let isVoiced = null;
+
+                    let isNoisy = null;
+
                     accent = 0;
 
                     if (isVowel(char)) {
@@ -187,20 +193,22 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
                             elements[prev].type === 'c' &&
                             !elements[prev].isSolid
                         ) {
-                            elements[prev].isSolid = isConsonantSolid(char);
+                            elements[prev].isSolid = isConsonantSolid(char, elements[prev].char);
                         }
                     } else {
                         idSymbol = `c${index}${randomize(() =>
                             hashFunction(char, ++iterator)
                         )}`;
 
-                        isSolid = isConsonantSolid(char);
+                        isSolid = isConsonantSolid('',char);
+                        isVoiced = isConsonantVoiced(char);
+                        isNoisy = isConsonantNoisy(char);
                         
-                        if (isLetterSign(char) &&
+                        if (
                             elements[prev] &&
                             elements[prev].type === 'c'
                         ) {
-                            elements[prev].isSolid = false;
+                            elements[prev].isSolid = isLetterSign(char) ? false : true;
                         }
                     }
 
@@ -227,6 +235,8 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
 
                     if(type === 'c') {
                         elements[idSymbol].isSolid = isSolid;
+                        elements[idSymbol].isNoisy = isNoisy;
+                        elements[idSymbol].isVoiced = isVoiced;
                     }
 
                     prev = idSymbol;
