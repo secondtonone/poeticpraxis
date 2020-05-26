@@ -1,11 +1,10 @@
-import { cyrillicAlwaysSolid } from './consonantsList';
 import { vowelBeforeSolid } from './vowelsList';
+import getRegexpFromString from '@utils/getRegexpFromString';
+import isConsonantAlwaysSolid from './isConsonantAlwaysSolid';
 
-const getRegexp = (temp: string): RegExp => new RegExp(`[${temp}]`, 'i');
-
-export default function(letter: string): boolean {
+export default function(letter: string, prevLetter: string): boolean {
     return (
-        getRegexp(cyrillicAlwaysSolid).test(letter) ||
-        getRegexp(vowelBeforeSolid).test(letter)
+        isConsonantAlwaysSolid(prevLetter) ||
+        getRegexpFromString(vowelBeforeSolid).test(letter)
     );
 }

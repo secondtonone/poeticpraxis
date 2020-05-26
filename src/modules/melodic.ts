@@ -4,9 +4,11 @@ import {
     IStrings,
     IStructure,
     IVLetterElement,
+    ICLetterElement,
+    ILetterElement,
     IdString,
 } from '@modules/workfield/structure';
-import formants from '@modules/formants';
+import { getGroup, calculateFormant } from '@modules/formants';
 
 const DURATION: number = 0.38; // 0.17;
 const ACCENTED_DURATION: number = DURATION * 1.5;
@@ -26,14 +28,27 @@ const stepSoundMultiply = (
     });
 };
 
-const getNote = (vowel: IVLetterElement): number[] => {
+
+const getNote = (
+    vowel: IVLetterElement,
+    prev: null | ICLetterElement | IVLetterElement,
+    next: null | ICLetterElement | IVLetterElement,
+    elements
+): number[] => {
     const isAccented: boolean = vowel.accent === 1;
     const char: string = vowel.char.toLowerCase();
 
-    const notes: number[] = isAccented
-        ? formants[char].accented.main
-        : formants[char].reduced.main;
+    const group = getGroup(char, isAccented);
 
+    //const predictedFormant = getFormant(prev, next);
+
+    const formant = calculateFormant({group, prev, next});//getFinalFormant(group, predictedFormant);
+
+    
+    let notes: number[] = group[formant];
+    console.log(prev,vowel,next);
+    console.table({'гласная':vowel.char, 'предыдущий':prev ?prev['isSolid']:'', 'следующий':next?next['isSolid']:'', 'итоговая': formant , 'ноты': notes ,'слово':elements[`${vowel.idString}${vowel.idToken}`].token});
+    
     return notes;
 };
 
@@ -93,8 +108,24 @@ const makeLetterGramma = ({
                 const vowel = elements[tokenId] as IVLetterElement;
                 const isAccented: boolean = vowel.accent === 1;
                 const char: string = vowel.char.toLowerCase();
+                const prev:
+                    | null
+                    | ICLetterElement
+                    | IVLetterElement = vowel.prev
+                    ? (elements[vowel.prev] as
+                          | ICLetterElement
+                          | IVLetterElement)
+                    : null;
+                const next:
+                    | null
+                    | ICLetterElement
+                    | IVLetterElement = vowel.next
+                    ? (elements[vowel.next] as
+                          | ICLetterElement
+                          | IVLetterElement)
+                    : null;
 
-                const notes: number[] = getNote(vowel);
+                const notes: number[] = getNote(vowel, prev, next, elements);
 
                 duration = isAccented ? ACCENTED_DURATION : duration;
 
