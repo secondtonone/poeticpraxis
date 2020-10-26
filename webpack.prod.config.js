@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackSkipAssetsPlugin = require('html-webpack-skip-assets-plugin').HtmlWebpackSkipAssetsPlugin;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -79,6 +80,9 @@ const config = {
                 Prod: true,
             },
         }),
+        //new HtmlWebpackSkipAssetsPlugin({
+        //    excludeAssets: [/tone.*/i]
+        //}),
         new ScriptExtHtmlWebpackPlugin({
             defer: /\.js$/,
         }),

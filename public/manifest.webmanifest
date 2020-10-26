@@ -37,5 +37,21 @@
     "display": "fullscreen",
     "orientation": "portrait",
     "theme_color": "#F9F8F7",
-    "background_color": "#F9F8F7"
+    "background_color": "#F9F8F7",
+    "shortcuts": [
+        {
+            "name": "Open Prosody Page",
+            "short_name": "Prosody",
+            "description": "View rhythm of lines and listen melody",
+            "url": "/rhythmic",
+            "icons": [{ "src": "img/Signx192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Open Images Engine",
+            "short_name": "Images Engine",
+            "description": "Get new images from Images Engine",
+            "url": "/images-engine",
+            "icons": [{ "src": "img/Signx192.png", "sizes": "192x192" }]
+        }
+    ]
 }

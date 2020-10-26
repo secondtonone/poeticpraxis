@@ -1,13 +1,13 @@
 import { RhythmPresets } from './rhythmPresets';
 
-export type IdString = string;                      //has format 's02874'
-export type IdWord = string;                        //has format 's02874w09528'
-export type IdWordToken = string;                   //has format 'w09528'
-export type IdVowel = string;                       //has format 's02874w09528v11213'
-export type IdConsonant = string;                   //has format 's02874w09528c47855'
-export type IdSpace = string;                       //has format 's02874sp34205'
-export type IdSymbol = string;                      //has format 's02874t57503'
-export type IdPauseSymbol = string;                 //has format 's02874p34205'
+export type IdString = string; //has format 's02874'
+export type IdWord = string; //has format 's02874w09528'
+export type IdWordToken = string; //has format 'w09528'
+export type IdVowel = string; //has format 's02874w09528v11213'
+export type IdConsonant = string; //has format 's02874w09528c47855'
+export type IdSpace = string; //has format 's02874sp34205'
+export type IdSymbol = string; //has format 's02874t57503'
+export type IdPauseSymbol = string; //has format 's02874p34205'
 
 export type IdElement =
     | IdWord
@@ -30,6 +30,7 @@ export interface ICoreElement {
     accent: number;
     idString: IdString;
     type: Type;
+    stringIndex: number;
 }
 
 export interface IUnitaryElement extends ICoreElement {
@@ -102,13 +103,15 @@ export interface IStrings {
     };
 }
 
+export type Element =
+    | ISymbolElement
+    | IPauseElement
+    | IWordElement
+    | ICLetterElement
+    | IVLetterElement;
+
 export interface IElements {
-    [idElement: string]:
-        | ISymbolElement
-        | IPauseElement
-        | IWordElement
-        | ICLetterElement
-        | IVLetterElement;
+    [idElement: string]: Element;
 }
 
 export type Tags = IVLetterElement | IPauseElement;

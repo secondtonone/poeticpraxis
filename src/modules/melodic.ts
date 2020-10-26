@@ -12,9 +12,12 @@ import { getGroup, calculateFormant } from '@modules/formants';
 
 const DURATION: number = 0.38; // 0.17;
 const ACCENTED_DURATION: number = DURATION * 1.5;
-/* длительность двух строк - 3.5
+/*  длительность двух строк - 3.5
  *  в строках 15 гласных на одну 0.23с = 230мс
  *  120 бпм 1/4 ноты в минуту
+ *  ударный - 300-150мс
+ *  безударных в первом предударном слоге - 100мс
+ *  во втором предударном – 50 – 60 мс
  */
 const stepSoundMultiply = (
     step: string[],

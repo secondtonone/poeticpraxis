@@ -75,6 +75,18 @@ module.exports = {
         usedExports: true,
         splitChunks: {
             chunks: 'all',
+            maxSize: 400000,
+            /* cacheGroups: {
+                tone: {
+                    test: (module) => {
+                        const context = module.context;
+                        const target = 'tone';
+                        return context && context.includes('node_modules') && context.includes(target);
+                    },
+                    name: 'tone',
+                    chunks: 'all'
+                }
+            }, */
         },
         noEmitOnErrors: true,
     },
