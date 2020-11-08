@@ -35,9 +35,13 @@ function wordToDictionary(wordCount) {
         wordsDictionariesMap
     };
 }
-async function getDictionary(id) {
+/* async function getDictionary(id) {
     const response = await fetch(`dictionary-${id}.json`);
     return response.json();
+} */
+async function getDictionary(id) {
+    const dictionary = await import(`@public/dictionary/dictionary-${id}.json`);
+    return dictionary;
 }
 
 async function requestMaker(dictionariesIds) {

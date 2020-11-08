@@ -34,7 +34,8 @@ const PairsBench = ({
     showMessage,
     sharingText,
     pushToHistory,
-    toTheTop
+    toTheTop,
+    rhythmicText
 }) => {
     const pinMatch = useCallback(
         (e) => {
@@ -95,11 +96,9 @@ const PairsBench = ({
 
     const toRhythmic = useCallback(() => {
         const sharedText = pinned.join('\n');
-
-        sharingText(sharedText);
-
+        sharingText({ text: `${rhythmicText}\n${sharedText}`});
         pushToHistory('/rhythmic');
-    }, [pinned, sharingText, pushToHistory]);
+    }, [pinned, sharingText, pushToHistory, rhythmicText]);
 
     const pairsCountByPlatform = isTouchDevice() ? 30 : 90;
 

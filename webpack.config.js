@@ -76,7 +76,7 @@ module.exports = {
         splitChunks: {
             chunks: 'all',
             maxSize: 400000,
-            /* cacheGroups: {
+            cacheGroups: {
                 tone: {
                     test: (module) => {
                         const context = module.context;
@@ -86,7 +86,7 @@ module.exports = {
                     name: 'tone',
                     chunks: 'all'
                 }
-            }, */
+            },
         },
         noEmitOnErrors: true,
     },

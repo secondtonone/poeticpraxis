@@ -1,18 +1,20 @@
 import { connect } from 'react-redux';
-import { setEngineState, sharingText } from './imagesEngineActions';
+import { setEngineState } from './imagesEngineActions';
+import { setRhythmicState } from '@routes/Rhythmic/rhythmicActions';
 import { changeTheme } from '@containers/Layout/layoutActions';
 
 import ImagesEngine from './ImagesEngine';
 
 const mapDispatchToProps = {
     setEngineState,
-    sharingText,
+    sharingText: setRhythmicState,
     changeTheme
 };
 
 const mapStateToProps = (state) => ({
     engineState: state.ImagesEngine.currentEngineState,
-    lang: state.Layout.lang
+    lang: state.Layout.lang,
+    rhythmicText: state.Rhythmic.currentRhythmicState.text
 });
 
 export default connect(

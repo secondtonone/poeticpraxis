@@ -57,6 +57,7 @@ const ImagesEngine = ({
         currentView = 'material',
         wordsNumber,
     },
+    rhythmicText,
     lang = 'ru',
     sharingText,
     history,
@@ -66,8 +67,6 @@ const ImagesEngine = ({
     /* const [isDisabledWordsview, setIsDisabledWordsview] = useState(
         !result.length
     ); */
-    console.log(text, words);
-
     const title = `${translations[lang].main['TITLE']}${
         text ? ` - ${text.substring(0, 30)}...` : ''
     }`;
@@ -80,7 +79,7 @@ const ImagesEngine = ({
 
     const getDictionaryWords = useCallback(async () => {
         try {
-            const newWords = await getWords(text, stringToWords(text));
+            const newWords = await getWords(text.trim(), stringToWords(text));
 
             setEngineState({
                 text: newWords,
@@ -266,6 +265,7 @@ const ImagesEngine = ({
                             result={result}
                             pinned={pinned}
                             lang={lang}
+                            rhythmicText={rhythmicText}
                             setEngineState={setEngineState}
                             sharingText={sharingText}
                             showMessage={showMessage}
