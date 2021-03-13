@@ -47,7 +47,7 @@ export default function Recorder(props) {
     useEffect(() => {
         if (recognition) { 
             recognition.setOnResultHandler(onTranslate);
-            recognition.setOnMessagetHandler(onError);
+            recognition.setOnMessageHandler(onError);
         }
     }, [onTranslate]);
 

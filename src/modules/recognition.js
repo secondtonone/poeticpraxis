@@ -11,7 +11,7 @@ export default class Recognition {
         this.isRecording = false;
 
         this.setOnResultHandler(onResult);
-        this.setOnMessagetHandler(onMessage);
+        this.setOnMessageHandler(onMessage);
 
         this.recognition.onspeechend = this.onSpeechEnd;
     }
@@ -22,7 +22,7 @@ export default class Recognition {
         }
     }
 
-    setOnMessagetHandler = (onMessage) => {
+    setOnMessageHandler = (onMessage) => {
         if (onMessage) {
             this.onMessage = onMessage;
         }
@@ -41,7 +41,7 @@ export default class Recognition {
 
             for (let i = event.resultIndex; i < event.results.length; i += 1) {
                 const transcriptionPiece = event.results[i][0].transcript;
-                // check for a finalised transciption in the cloud
+                // check for a finalized transcription in the cloud
                 if (event.results[i].isFinal) {
                     finalTranscript += transcriptionPiece;
                 }
@@ -53,7 +53,7 @@ export default class Recognition {
         };
     };
 
-    onError = (onError) => {
+    onError = () => {
         this.isRecording = false;
         return (event) => {
             if (event.error == 'no-speech') {

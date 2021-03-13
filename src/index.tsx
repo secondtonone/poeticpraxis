@@ -6,7 +6,8 @@ if (DEV) {
 
 import { h, render } from 'preact';
 
-import store from './store';
+import theme from '@styles/theme';
+import store from '@store';
 import App from '@containers/App';
 import Routes from '@routes';
 
@@ -48,5 +49,22 @@ if (!DEV) {
 run(App);
 
 if (!DEV) {
+    console.clear();
+    console.log(`%cPOETIC PRAXIS - ПОЭТИЧЕСКАЯ ПРАКТИКА.
+    POETIC PRAXIS - ЧТО СКРЫТО ЗА СЛОВАМИ? НОВЫЕ ИДЕИ И МУЗЫКА МЕЖДУ СТРОК. 
+    POETIC PRAXIS - СКРЫТО? НОВЫЕ. 
+    POETIC PRAXIS - СЛОВАМИ? ИДЕИ СТРОК.`, 
+    `color: ${theme.primaryBlack};
+    font-family: ${theme.mainFont};
+    font-size: 10em;
+    word-break: break-all;
+    font-weight: 500;
+    text-align: left;
+    padding: 0;
+    width: 100%;
+    line-height: 0.7;
+    letter-spacing: -0.099em;
+    text-transform: uppercase;
+    background: ${theme.primaryWhite};`);
     window.addEventListener('load', () => analyticsInit('yandex'));
 }
