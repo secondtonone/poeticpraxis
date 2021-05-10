@@ -22,18 +22,11 @@ const ru = {
         RETURN: 'Вернуться наверх',
         COPY: 'Копировать',
     },
-    messages: {
-        PAIR_ADDED: 'Словосочетание добавлено.',
-        PAIRS_READY: 'Словосочетания составлены.',
-        PAIRS_COPIED: 'Пары скопированы',
-        HOW_WORKS: 'Как это работает?',
-        LEARN_MORE: 'Узнать больше.',
-        CLICK_MORE: 'Нажмите еще раз для удаления',
-    },
+
     main: {
         TITLE: 'МАШИНА ОБРАЗОВ',
     }
-};
+} as const;
 
 const en = {
     engineMenu: {
@@ -59,22 +52,14 @@ const en = {
         RETURN: 'Return',
         COPY: 'Copy',
     },
-    messages: {
-        PAIR_ADDED: 'A pair is added.',
-        PAIRS_READY: 'Pairs are ready.',
-        PAIRS_COPIED: 'Pairs copied',
-        HOW_WORKS: 'How it works?',
-        LEARN_MORE: 'Learn more.',
-        CLICK_MORE: 'Click one more time for deleting',
-    },
     main: {
         TITLE: 'IMAGES ENGINE',
     },
-};
+} as const;
 
-const translations = {
+const engine = {
     ru,
     en
 };
 
-export { translations };
+export default engine;

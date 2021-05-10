@@ -6,7 +6,7 @@ import wordByNumber from '@utils/wordByNumber';
 import isSupportRecognition from '@utils/isSupportRecognition';
 import isTouchDevice from '@utils/isTouchDevice';
 
-import { translations } from './translations';
+import { enginePage } from '@translations';
 
 import Button from '@components/Button';
 import Flex from '@components/Flex';
@@ -19,6 +19,7 @@ import {
     TextMinor,
 } from '@styles/components';
 
+const translations = enginePage;
 
 const ImagesEngineMaterial = ({
     text,

@@ -43,7 +43,8 @@ const Header = ({ children, lang = 'ru' }) => {
                                             : LogoPicWhite
                                     }
                                     alt="Logo"
-                                    height="32"
+                                    height={32}
+                                    width={81}
                                 />
                             </BetaSign>
                         </HideOnHover>

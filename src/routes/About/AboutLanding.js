@@ -32,7 +32,7 @@ const AboutLanding = ({ lang = 'ru', mediaQuery, boundHeight, variant }) => {
                 <DesktopHiddenContainer>
                     <Flex direction="column" margin="16px 0 0">
                         <BetaSign>
-                            <Logo height={36} />
+                            <Logo height={36} width={92} />
                         </BetaSign>
                     </Flex>
                 </DesktopHiddenContainer>

@@ -1,21 +1,23 @@
 import { h } from 'preact';
 import { useState, useCallback, useEffect, useRef, memo } from 'preact/compat';
 import { translations } from './translations';
+import { messages } from '@translations';
 
 import useScrollToTop from '@hooks/useScrollToTop';
-import { Tone, Instrument } from '@modules/tone';
+import MelodyMaker from '@modules/tone';
 import Drawing from '@modules/drawing';
 import { makeLetterGramma } from '@modules/melodic';
 
 import Canvas from '@components/Canvas';
 import Player from '@components/Player';
 import Button from '@components/Button';
-
 import Flex from '@components/Flex';
 
 import { DownloadLink, Title, PlayerContainer } from './styled';
 
 const drawing = new Drawing();
+const tone = new MelodyMaker();
+const { getToneModule } = MelodyMaker; 
 const verticalOffset = 100;
 let notePlayed = 0;
 let sliderTimer = null;
@@ -23,6 +25,7 @@ let sliderTimer = null;
 const Melody = memo(({
     lang = 'ru',
     variant,
+    showMessage,
     rhythmicState: { strings, elements, orderStrings }
 }) => {
     const [progress, setProgress] = useState(0);
@@ -34,11 +37,11 @@ const Melody = memo(({
 
     useScrollToTop();
 
-    useEffect(() => {
+    useEffect(async () => {
         const setUpPlayer = () => {
-            Tone.Transport.loopEnd = 1;
-            Tone.Transport.loop = true;
-            Tone.Transport.bpm.value = parseInt(bpm);
+            MelodyMaker.Tone.Transport.loopEnd = 1;
+            MelodyMaker.Tone.Transport.loop = true;
+            MelodyMaker.Tone.Transport.bpm.value = parseInt(bpm);
         };
 
         const followForIndicator = (index) => {
@@ -55,7 +58,7 @@ const Melody = memo(({
         const partCallback = (time, notes) => {
             const vowelNotes = notes.vowelNotes;
 
-            Instrument.volume.value = Math.floor(notes.sound);
+            MelodyMaker.Instrument.volume.value = Math.floor(notes.sound);
 
             drawing.drawIndicator(notes.index);
             followForIndicator(notes.index);
@@ -63,46 +66,53 @@ const Melody = memo(({
             notePlayed = notes.index;
 
             vowelNotes.forEach((note) => {
-                Instrument.triggerAttackRelease(
-                    note.note,
-                    note.duration,
-                    time.toFixed(2)
-                );
+                MelodyMaker.Instrument.triggerAttackRelease(
+                        note.note,
+                        note.duration,
+                        time.toFixed(2)
+                    );
             });
         };
 
-        if (Instrument) {
-            Instrument.toMaster();
+        try {
+            await getToneModule(() => import(/* webpackChunkName: "Tone" */'tone'));
+
+            tone.getInstrument('piano');
+            //tone.getInstrument('poly');
+
+            MelodyMaker.Instrument.toMaster();
+
+            setUpPlayer();
+
+            const { music, time } = makeLetterGramma({
+                notesCount: 1 /* 2 */,
+                strings,
+                elements,
+                orderStrings,
+                frequencyToNote: (frequency) => MelodyMaker.Tone.Frequency(frequency, 'hz').toNote()
+            });
+
+            setMusic(music);
+
+            MelodyMaker.Tone.Transport.loopEnd = Math.round(time + 1);
+
+            new MelodyMaker.Tone.Part(partCallback, music).start('+0.1');
+
+            drawing.setCtx(canvas.current);
+            drawing.setVariant(variant);
+            drawing.updateChart(getHeightCanvas); 
+            drawing.drawNotes({music, verticalOffset});
+            drawing.drawIndicator(notePlayed);
+
+        } catch (e) {
+            showMessage(messages[lang].NET);
         }
-
-        setUpPlayer();
-
-        const { music, time } = makeLetterGramma({
-            notesCount: 1 /* 2 */,
-            strings,
-            elements,
-            orderStrings
-        });
-
-        //console.log(music, time);
-
-        setMusic(music);
-
-        Tone.Transport.loopEnd = Math.round(time + 1);
-
-        new Tone.Part(partCallback, music).start('+0.1');
-
-        drawing.setCtx(canvas.current);
-        drawing.setVariant(variant);
-        drawing.updateChart(getHeightCanvas); 
-        drawing.drawNotes({music, verticalOffset});
-        drawing.drawIndicator(notePlayed);
 
         return () => stop();
     }, []);
 
     useEffect(() => {
-        if (drawing.getVariant() !== variant) {
+        if (drawing.canvas && drawing.getVariant() !== variant) {
             drawing.setVariant(variant);
             drawing.drawNotes({ music, verticalOffset });
             drawing.drawIndicator(notePlayed);
@@ -110,7 +120,7 @@ const Melody = memo(({
     }, [variant]);
 
     const play = useCallback(() => {
-        Tone.Transport.start();
+        MelodyMaker.Tone.Transport.start();
         sliderTimer = requestAnimationFrame(calculateProgress);
     }, [calculateProgress]);
 
@@ -118,17 +128,17 @@ const Melody = memo(({
         drawing.clearIndicator(notePlayed);
         notePlayed = 0;
         cancelAnimationFrame(sliderTimer);
-        Tone.Transport.stop();
+        MelodyMaker.Tone.Transport.stop();
     }, []);
 
     const pause = useCallback(() => {
         cancelAnimationFrame(sliderTimer);
-        Tone.Transport.pause();
+        MelodyMaker.Tone.Transport.pause();
     }, []);
 
     const calculateProgress = useCallback(() => {
         setProgress(
-            Math.floor((Tone.Transport.seconds / Tone.Transport.loopEnd) * 100)
+            Math.floor((MelodyMaker.Tone.Transport.seconds / MelodyMaker.Tone.Transport.loopEnd) * 100)
         );
         sliderTimer = requestAnimationFrame(calculateProgress);
     }, []);
@@ -136,7 +146,7 @@ const Melody = memo(({
     const setBPM = useCallback(
         (e) => {
             setBpm(e.target.value);
-            Tone.Transport.bpm.value = parseInt(e.target.value);
+            MelodyMaker.Tone.Transport.bpm.value = parseInt(e.target.value);
         },
         []
     );

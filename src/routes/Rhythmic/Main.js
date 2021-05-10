@@ -4,7 +4,7 @@ import { useRef, useCallback } from 'preact/compat';
 import wordByNumber from '@utils/wordByNumber';
 import isTouchDevice from '@utils/isTouchDevice';
 
-import { translations } from './translations';
+import { rhythmicPage as translations } from '@translations';
 
 import Button from '@components/Button';
 import Flex from '@components/Flex';

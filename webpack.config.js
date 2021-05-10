@@ -64,6 +64,7 @@ module.exports = {
             '@modules': path.join(__dirname, 'src/modules'),
             '@hooks': path.join(__dirname, 'src/hooks'),
             '@routes': path.join(__dirname, 'src/routes'),
+            '@translations': path.join(__dirname, 'src/translations'),
             '@icons': path.join(__dirname, 'src/components/IconSVG'),
             '@public': path.join(__dirname, 'public'),
         },

@@ -14,7 +14,7 @@ import useChangeHreflang from '@hooks/useChangeHreflang';
 
 import isTouchDevice from '@utils/isTouchDevice';
 
-import { translations } from './translations';
+import { rhythmicPage as translations, messages } from '@translations';
 
 import {
     getLongLink,
@@ -22,13 +22,6 @@ import {
     encodeDictionary,
     linkToStateDecode
 } from '@modules/sharing';
-
-import {
-    getToneModule,
-    Tone,
-    getInstrument,
-    Instrument
-} from '@modules/tone';
 
 import Help from './Help';
 import RhythmicMenu from './Menu';
@@ -90,19 +83,6 @@ const Rhythmic = ({
         if (URLSearchParams) {
             getShared();
         }
-        /* для преждевременной загрузки звуков */
-        try {
-            if (!Tone) {
-                await getToneModule();
-            }
-
-            if (!Instrument) {
-                getInstrument('piano');
-                //getInstrument('poly');
-            }
-        } catch (e) {
-            showMessage(translations[lang].messages['NET']);
-        }
     }, []);
 
     const getShared = useCallback(() => {
@@ -124,14 +104,14 @@ const Rhythmic = ({
                 });
             },
             () => {
-                showMessage(translations[lang].messages['WRONG']);
+                showMessage(messages[lang].WRONG);
             }
         );
     }, [stringsDictionary, lang]);
 
     const copyToClipboard = useCallback(() => {
         copyToClipboardHandler();
-        showMessage(translations[lang].messages['COPIED']);
+        showMessage(messages[lang].COPIED);
     }, [lang]);
 
     const setCopyToClipboardHandler = useCallback((handler) => {
@@ -173,7 +153,7 @@ const Rhythmic = ({
 
         sharing(link);
 
-        showMessage(translations[lang].messages['LINK_COPIED']);
+        showMessage(messages[lang].LINK_COPIED);
     }, [text, stringsDictionary, lang]);
 
     const zoomHandler = useCallback(() => {
@@ -264,6 +244,7 @@ const Rhythmic = ({
                                 lang={lang}
                                 variant={variant}
                                 rhythmicState={rhythmicState}
+                                showMessage={showMessage}
                             />
                         </Suspense>
                     </List>

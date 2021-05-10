@@ -1,11 +1,13 @@
 import { h } from 'preact';
 
-import { translations } from './translations';
+import { enginePage } from '@translations';
 
 import SecondaryMenu from '@components/SecondaryMenu';
 import Subject from '@icons/Subject';
 import PlaylistAddCheck from '@icons/PlaylistAddCheck';
 import { Badge } from '@styles/components';
+
+const translations = enginePage;
 
 const secondMenu = (lang, [first, isDisabledWordsview, isHidden]) => [
     {

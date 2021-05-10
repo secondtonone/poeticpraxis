@@ -1,11 +1,9 @@
-import { Tone } from '@modules/tone';
 import {
     IElements,
     IStrings,
     IStructure,
     IVLetterElement,
     ICLetterElement,
-    ILetterElement,
     IdString,
 } from '@modules/workfield/structure';
 import { getGroup, calculateFormant } from '@modules/formants';
@@ -60,11 +58,13 @@ const makeLetterGramma = ({
     strings,
     elements,
     orderStrings,
+    frequencyToNote,
 }: {
     notesCount: number;
     strings: IStrings;
     elements: IElements;
     orderStrings: IStructure['orderStrings'];
+    frequencyToNote: (frequency: number) => string;
 }): {
     music: {
         string: IdString;
@@ -116,16 +116,16 @@ const makeLetterGramma = ({
                     | ICLetterElement
                     | IVLetterElement = vowel.prev
                     ? (elements[vowel.prev] as
-                          | ICLetterElement
-                          | IVLetterElement)
+                        | ICLetterElement
+                        | IVLetterElement)
                     : null;
                 const next:
                     | null
                     | ICLetterElement
                     | IVLetterElement = vowel.next
                     ? (elements[vowel.next] as
-                          | ICLetterElement
-                          | IVLetterElement)
+                        | ICLetterElement
+                        | IVLetterElement)
                     : null;
 
                 const notes: number[] = getNote(vowel, prev, next, elements);
@@ -137,7 +137,7 @@ const makeLetterGramma = ({
                         vowelNotes.push({
                             note,
                             duration,
-                            notation: Tone.Frequency(note, 'hz').toNote(),
+                            notation: frequencyToNote(note),
                         });
                     }
                 });

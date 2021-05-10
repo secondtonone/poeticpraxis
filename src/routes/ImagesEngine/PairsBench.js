@@ -5,7 +5,7 @@ import { copying } from '@modules/copying';
 
 import isTouchDevice from '@utils/isTouchDevice';
 
-import { translations } from './translations';
+import { messages, enginePage } from '@translations';
 
 import MatchList from '@components/MatchList';
 import Button from '@components/Button';
@@ -25,6 +25,7 @@ import {
 
 import { ButtonContainer } from './styled';
 
+const translations = enginePage;
 
 const PairsBench = ({
     result, 
@@ -51,7 +52,7 @@ const PairsBench = ({
 
             pinned.push(match);
 
-            showMessage(translations[lang].messages['PAIR_ADDED']);
+            showMessage(messages[lang].PAIR_ADDED);
 
             setEngineState({
                 pinned,
@@ -91,7 +92,7 @@ const PairsBench = ({
 
     const copyToClipboard = useCallback(() => {
         copying(pinned.join('\n'));
-        showMessage(translations[lang].messages['PAIRS_COPIED']);
+        showMessage(messages[lang].PAIRS_COPIED);
     }, [pinned, showMessage, lang]);
 
     const toRhythmic = useCallback(() => {

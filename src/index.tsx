@@ -51,8 +51,8 @@ run(App);
 if (!DEV) {
     console.clear();
     console.log(`%cPOETIC PRAXIS - ПОЭТИЧЕСКАЯ ПРАКТИКА.
-    POETIC PRAXIS - ЧТО СКРЫТО ЗА СЛОВАМИ? НОВЫЕ ИДЕИ И МУЗЫКА МЕЖДУ СТРОК. 
-    POETIC PRAXIS - СКРЫТО? НОВЫЕ. 
+    POETIC PRAXIS - ЧТО СКРЫТО ЗА СЛОВАМИ? ИДЕИ - МУЗЫКА МЕЖДУ СТРОК. 
+    POETIC PRAXIS - СКРЫТО? НОВОЕ. 
     POETIC PRAXIS - СЛОВАМИ? ИДЕИ СТРОК.`, 
     `color: ${theme.primaryBlack};
     font-family: ${theme.mainFont};
@@ -66,5 +66,5 @@ if (!DEV) {
     letter-spacing: -0.099em;
     text-transform: uppercase;
     background: ${theme.primaryWhite};`);
-    window.addEventListener('load', () => analyticsInit('yandex'));
+    window.addEventListener('load', () => setTimeout(analyticsInit, 3000, 'yandex'));
 }

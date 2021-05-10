@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { lazy, Suspense, useEffect } from 'preact/compat';
+import { useEffect } from 'preact/compat';
 
 import useResizeUpdate from '@hooks/useResizeUpdate';
 import useTitlePage from '@hooks/useTitlePage';
@@ -10,24 +10,10 @@ import maxMatchMedia from '@utils/maxMatchMedia';
 import getDaysFromNow from '@utils/getDaysFromNow';
 import engSuffixNumber from '@utils/engSuffixNumber';
 
-import Loader from '@components/Loader';
-
 import AboutLanding from './AboutLanding';
 import AboutEngine from './AboutEngine';
-
-const AboutRhythmic = lazy(() =>
-    import(
-        /* webpackChunkName: "AboutRhythmic" */
-        './AboutRhythmic'
-    )
-);
-
-const AboutProject = lazy(() =>
-    import(
-        /* webpackChunkName: "AboutProject" */
-        './AboutProject'
-    )
-);
+import AboutRhythmic from './AboutRhythmic';
+import AboutProject from './AboutProject';
 
 import {
     Footer
@@ -60,19 +46,21 @@ const About = ({ lang = 'ru', variant }) => {
                 boundHeight={innerHeight}
             />
 
-            <AboutEngine lang={lang} mediaQuery={mediaQuery} />
+            <AboutEngine
+                lang={lang}
+                mediaQuery={mediaQuery}
+            />
 
-            <Suspense fallback={<Loader />}>
-                <AboutRhythmic lang={lang} mediaQuery={mediaQuery} />
-            </Suspense>
+            <AboutRhythmic
+                lang={lang}
+                mediaQuery={mediaQuery}
+            />
 
-            <Suspense fallback={<Loader />}>
-                <AboutProject
-                    lang={lang}
-                    mediaQuery={mediaQuery}
-                    boundHeight={innerHeight}
-                />
-            </Suspense>
+            <AboutProject
+                lang={lang}
+                mediaQuery={mediaQuery}
+                boundHeight={innerHeight}
+            />
 
             <Footer>
                 &copy; POETIC PRAXIS {daysFromNow}

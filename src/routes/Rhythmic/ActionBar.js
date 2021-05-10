@@ -1,6 +1,6 @@
 import { h } from 'preact';
 
-import { translations } from './translations';
+import { rhythmicPage as translations } from '@translations';
 
 import Button from '@components/Button';
 

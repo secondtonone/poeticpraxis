@@ -110,9 +110,9 @@ const AboutProject = ({ lang = 'ru', mediaQuery, boundHeight }) => {
             <br />
             {isHiddenPayment ? (
                 <iframe
-                    src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0&targets-hint=&default-sum=400&button-text=11&payment-type-choice=on&hint=&successURL=&quickpay=shop&account=410014951905022"
+                    src="https://yoomoney.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0&targets-hint=&default-sum=100&button-text=12&payment-type-choice=on&hint=&successURL=https%3A%2F%2Fwww.poeticpraxis.ru&quickpay=shop&account=410014951905022"
                     width="300"
-                    height="220"
+                    height="222"
                     frameBorder="0"
                     allowTransparency="true"
                     scrolling="no"

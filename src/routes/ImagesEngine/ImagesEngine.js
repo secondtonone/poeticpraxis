@@ -17,7 +17,7 @@ import { getWords } from '@modules/dictionary';
 
 import isTouchDevice from '@utils/isTouchDevice';
 
-import { translations } from './translations';
+import { enginePage, messages } from '@translations';
 
 import Recorder from '@components/Recorder';
 import Textarea from '@components/Textarea';
@@ -47,6 +47,7 @@ import { MainButton } from './styled';
 
 let clearCount = false;
 const initHeight = window.innerHeight;
+const translation = enginePage;
 
 const ImagesEngine = ({
     setEngineState,
@@ -67,7 +68,7 @@ const ImagesEngine = ({
     /* const [isDisabledWordsview, setIsDisabledWordsview] = useState(
         !result.length
     ); */
-    const title = `${translations[lang].main['TITLE']}${
+    const title = `${translation[lang].main['TITLE']}${
         text ? ` - ${text.substring(0, 30)}...` : ''
     }`;
 
@@ -112,7 +113,7 @@ const ImagesEngine = ({
         
         toTheTop();
         
-        showMessage(translations[lang].messages['PAIRS_READY']);
+        showMessage(messages[lang].PAIRS_READY);
         
         changeView('words');
         
@@ -144,7 +145,7 @@ const ImagesEngine = ({
     const clearInput = useCallback(() => {
         if (!clearCount) {
             clearCount = true;
-            showMessage(translations[lang].messages['CLICK_MORE']);
+            showMessage(messages[lang].CLICK_MORE);
         } else {
             clearCount = false;
             toTheTop();
@@ -190,7 +191,7 @@ const ImagesEngine = ({
                         disabled={!text.length}
                         type="button"
                         onClick={clearInput}
-                        title={translations[lang].engine['CLEAR']}>
+                        title={translation[lang].engine['CLEAR']}>
                         <Delete _middle />
                     </Button>
                 )}
@@ -200,7 +201,7 @@ const ImagesEngine = ({
                         _transparent
                         type="button"
                         onClick={getDictionaryWords}
-                        title={translations[lang].engine['GET']}>
+                        title={translation[lang].engine['GET']}>
                         <WordsIcon _middle />
                     </Button>
                 )}
@@ -215,7 +216,7 @@ const ImagesEngine = ({
                     minHeight={`${heightForKeyboard}px`}
                     onClick={getResult}
                     disabled={!text}
-                    title={translations[lang].engine['MONTAGE']}>
+                    title={translation[lang].engine['MONTAGE']}>
                     <Widgets _big />
                 </MainButton>
             ) : (
@@ -228,7 +229,7 @@ const ImagesEngine = ({
                     type="button"
                     disabled={!text}
                     onClick={getResult}>
-                    <Widgets _small /> {translations[lang].engine['MONTAGE']}
+                    <Widgets _small /> {translation[lang].engine['MONTAGE']}
                 </MainButton>
             )}
 
@@ -242,7 +243,7 @@ const ImagesEngine = ({
                         recorder={
                             <Recorder
                                 lang={lang}
-                                title={translations[lang].engine['RECORD']}
+                                title={translation[lang].engine['RECORD']}
                                 text={text}
                                 transmitState={setEngineState}
                                 showMessage={showMessage}
@@ -253,7 +254,7 @@ const ImagesEngine = ({
                                 onInput={handleTextInput}
                                 value={text}
                                 Textarea={FieldEditableArea}
-                                placeHolder={`${translations[lang].placeholders['ENGINE']}...`}
+                                placeHolder={`${translation[lang].placeholders['ENGINE']}...`}
                             />
                         }
                     />
