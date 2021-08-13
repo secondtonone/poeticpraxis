@@ -9,7 +9,7 @@ const useSessionStorage = (key: string) => {
         sessionStorage.setItem(key, valueSessionStorage);
     }, [valueSessionStorage]);
 
-    return [valueSessionStorage, setValueSessionStorage];
+    return {valueSessionStorage, setValueSessionStorage};
 };
 
 export default useSessionStorage;

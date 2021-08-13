@@ -1,7 +1,6 @@
 import { h } from 'preact';
 
 import Textarea from '@components/Textarea';
-import FieldEditableArea from '@components/FieldEditableArea';
 
 import Marks from './Marks';
 import HiddenMarks from './HiddenMarks';
@@ -67,7 +66,6 @@ export default function Workfield({
             <Textarea
                 onInput={onInput}
                 value={value}
-                Textarea={FieldEditableArea}
                 readOnly={readOnly}
                 zoomIn={zoomIn}
                 onMouseMove={onMouseMove}

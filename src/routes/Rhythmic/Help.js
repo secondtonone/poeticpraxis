@@ -20,7 +20,7 @@ import {
 import { AccentRelative } from './styled';
 
 const helpState = () => {
-    const [valueSessionStorage, setValueSessionStorage] = useSessionStorage(
+    const {valueSessionStorage, setValueSessionStorage} = useSessionStorage(
         'isHideRhythmicHelp'
     );
 

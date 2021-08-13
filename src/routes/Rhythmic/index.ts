@@ -1,3 +1,3 @@
-import Rhythmic from './RhythmicContainer';
+import Rhythmic from './Rhythmic';
 
 export default Rhythmic;

@@ -1,13 +1,13 @@
-import { h } from 'preact';
+import { h, FunctionalComponent } from 'preact';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import AppContextContainer from './AppContextContainer';
 
-const App = ({ store, children }) => (
-    <Provider store={store}>
+const App: FunctionalComponent = ({ children }) => (
+    <AppContextContainer>
         <BrowserRouter>
             {children}
         </BrowserRouter>
-    </Provider>
+    </AppContextContainer>
 );
 
 export default App;

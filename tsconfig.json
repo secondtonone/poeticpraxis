@@ -3,6 +3,7 @@
         "module": "commonjs",
         "target": "es5",
         "noImplicitAny": false,
+        "moduleResolution": "node",
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
         "lib": ["DOM", "ES2020", "ES6", "ES7"],
@@ -40,6 +41,12 @@
             ],
             "@hooks/*": [
                 "src/hooks/*"
+            ],
+            "@typings/*": [
+                "src/typings/*"
+            ],
+            "@contexts/*": [
+                "src/contexts/*"
             ],
             "@routes/*": [
                 "src/routes/*"

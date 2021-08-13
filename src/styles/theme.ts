@@ -1,31 +1,4 @@
-export interface ThemeSettings {
-    primaryRed: string;
-    secondRed: string;
-    thirdRed: string;
-    primaryBlack: string;
-    primaryWhite: string;
-    secondWhite: string;
-    primaryGray: string;
-    secondGray: string;
-    path: '../../../public';
-
-    primaryColor: string;
-    secondColor: string;
-    accentColor: string;
-    grayColor: string;
-    lightGray: string;
-
-    mainFont: '"Montserrat", Verdana, sans-serif';
-}
-
-export interface Light extends ThemeSettings {
-    name: 'light';
-}
-
-export interface Dark extends ThemeSettings {
-    name: 'dark';
-    grayDarkColor: string;
-}
+import { Theme, Light, Dark } from 'styled-components';
 
 const light: Light = {
     name: 'light',
@@ -46,7 +19,7 @@ const light: Light = {
     lightGray: 'rgba(162, 162, 162, 0.1)',
 
     mainFont: '"Montserrat", Verdana, sans-serif',
-};
+} as const;
 
 const dark: Dark = {
     name: 'dark',
@@ -68,13 +41,7 @@ const dark: Dark = {
     lightGray: 'rgba(162, 162, 162, 0.1)',
 
     mainFont: '"Montserrat", Verdana, sans-serif',
-};
-
-export interface Theme
-    extends Omit<ThemeSettings, 'grayColor' | 'accentColor' | 'lightGray'> {
-    light: Light;
-    dark: Dark;
-}
+} as const;
 
 const theme: Theme = {
     primaryRed: '#DE2420',
@@ -93,6 +60,6 @@ const theme: Theme = {
     mainFont: '"Montserrat", Verdana, sans-serif',
     light,
     dark,
-};
+} as const;
 
 export default theme;

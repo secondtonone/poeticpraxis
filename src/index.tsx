@@ -4,10 +4,9 @@ if (DEV) {
     require('preact/debug');
 }
 
-import { h, render } from 'preact';
+import { h, hydrate } from 'preact';
 
 import theme from '@styles/theme';
-import store from '@store';
 import App from '@containers/App';
 import Routes from '@routes';
 
@@ -18,8 +17,8 @@ const run = (Component) => {
         ? document.body.lastElementChild
         : document.getElementById('app');
 
-    render(
-        <Component store={store}>
+    hydrate(
+        <Component>
             <Routes />
         </Component>,
         rootElement

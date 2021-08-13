@@ -1,12 +1,14 @@
 import { h } from 'preact';
 import {
-    useState,
-    useEffect,
-    useCallback,
     Suspense,
     lazy
 } from 'preact/compat';
 
+import { useContext, useEffect, useState, useCallback } from 'preact/hooks';
+
+import StateContext from '@contexts/stateContext';
+
+import useRhythmicActions from '@hooks/useRhythmicActions';
 import useTitlePage from '@hooks/useTitlePage';
 import useMessage from '@hooks/useMessage';
 import useScrollToTop from '@hooks/useScrollToTop';
@@ -49,18 +51,20 @@ import {
 let makeCaesura = () => {};
 let copyToClipboardHandler = () => {};
 
-const Rhythmic = ({
-    setRhythmicState,
-    setWordsDictionary,
-    rhythmicState,
-    wordsDictionary,
-    lang = 'ru',
-    variant = 'light'
-}) => {
-
+const Rhythmic = () => {
     const {
+        Layout: { lang, variant },
+        Rhythmic: {
+            currentRhythmicState: rhythmicState,
+        }
+    } = useContext(StateContext);
+
+    const { setRhythmicState, setWordsDictionary } = useRhythmicActions();
+
+    const { 
         text,
-        stringsDictionary
+        stringsDictionary,
+        wordsDictionary
     } = rhythmicState;
 
     const [ textMessage, showMessage ] = useMessage();

@@ -25,7 +25,7 @@ module.exports = {
                 test: /\.(svg)$/,
                 use: [
                     {
-                        loader: 'url-loader',
+                        loader: 'svg-url-loader',
                         options: {
                             limit: 5000,
                         },
@@ -63,6 +63,8 @@ module.exports = {
             '@store': path.join(__dirname, 'src/store'),
             '@modules': path.join(__dirname, 'src/modules'),
             '@hooks': path.join(__dirname, 'src/hooks'),
+            '@typings': path.join(__dirname, 'src/typings'),
+            '@contexts': path.join(__dirname, 'src/contexts'),
             '@routes': path.join(__dirname, 'src/routes'),
             '@translations': path.join(__dirname, 'src/translations'),
             '@icons': path.join(__dirname, 'src/components/IconSVG'),

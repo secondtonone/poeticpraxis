@@ -1,7 +1,6 @@
 import { h } from 'preact';
 import { FC } from 'preact/compat';
 import styled, { keyframes } from 'styled-components';
-import { ThemeSettings } from '@styles/theme';
 
 const stretch = keyframes`
     0%,
@@ -27,7 +26,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div<{height?: string}>`
-    height: ${(props) => (props.height ? props.height : '85vh')};
+    height: ${({height}) => (height ? height : '85vh')};
     width: 100%;
     display: flex;
     justify-content: center;
@@ -35,20 +34,23 @@ const Wrapper = styled.div<{height?: string}>`
     margin: 0 auto;
 `;
 
-const Rect = styled.div<{color?: string; delay: number; theme: ThemeSettings}>`
+const Rect = styled.div<{
+    color?: string
+    delay: number
+}>`
     position: absolute;
-    background-color: ${(props) =>
-        props.color === 'accent'
-            ? props.theme.accentColor
-            : props.color === 'first'
-            ? props.theme.primaryColor
-            : props.theme.secondColor};
-    height: ${(props) => props.delay * 100}%;
-    width: ${(props) => props.delay * 100}px;
-    color: ${(props) => props.theme.primaryColor};
+    background-color: ${({color, theme}) =>
+        color === 'accent'
+            ? theme.accentColor
+            : color === 'first'
+            ? theme.primaryColor
+            : theme.secondColor};
+    height: ${({delay}) => delay * 100}%;
+    width: ${({delay}) => delay * 100}px;
+    color: ${({theme}) => theme.primaryColor};
     font-size: 10px;
     transform-origin: 50% 50%;
-    animation: ${stretch} ${(props) => props.delay}s infinite ease-in-out;
+    animation: ${stretch} ${({delay}) => delay}s infinite ease-in-out;
 `;
 
 const Loader: FC<{height?: string}> = ({ height }) => (

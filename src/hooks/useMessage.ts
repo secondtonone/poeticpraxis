@@ -10,7 +10,7 @@ const useMessage = (ms: number = 2000) => {
         }, ms);
     };
 
-    return [textMessage, showMessage];
+    return [textMessage, showMessage] as const;
 };
 
 export default useMessage;

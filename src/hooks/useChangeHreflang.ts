@@ -1,7 +1,7 @@
 import { useEffect } from 'preact/hooks';
 import changeHreflang from '@utils/changeHreflang';
 
-const useChangeHreflang = (page: string): void => {
+const useChangeHreflang = (page?: string): void => {
     useEffect(() => {
         changeHreflang(page);
     }, []);

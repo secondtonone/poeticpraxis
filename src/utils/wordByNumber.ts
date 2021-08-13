@@ -1,8 +1,10 @@
-function wordByNumberRu(number?: number, words: string[] = []):string {
-    if (number === undefined || words.length === 0) {
-        return '';
-    }
+import { enginePage as translations } from '@translations/index';
+import Langs from '@typings/Langs';
 
+type WordsRU = typeof translations.ru.engine.WORDS_AMOUNT;
+type WordsEN = typeof translations.en.engine.WORDS_AMOUNT;
+
+function wordByNumberRu(number: number, words: WordsRU ):string {
     const lastNumber:number = number % 10;
 
     if (lastNumber === 1 && number !== 11) {
@@ -24,11 +26,7 @@ function wordByNumberRu(number?: number, words: string[] = []):string {
     return words[2];
 }
 
-function wordByNumberEng(number?: number, words: string[] = []):string {
-    if (number === undefined || words.length === 0) {
-        return '';
-    }
-
+function wordByNumberEng(number: number, words: WordsEN):string {
     if (number === 1) {
         return words[0];
     }
@@ -36,10 +34,10 @@ function wordByNumberEng(number?: number, words: string[] = []):string {
     return words[1];
 }
 
-export default function wordByNumber(lang: string, number: number, words: string[]):string {
+export default function wordByNumber(lang: Langs, number: number, words: WordsEN | WordsRU): string {
     if (lang === 'ru') {
-        return wordByNumberRu(number, words);
+        return wordByNumberRu(number, words as WordsRU);
     }
 
-    return wordByNumberEng(number, words);
+    return wordByNumberEng(number, words as WordsEN);
 }

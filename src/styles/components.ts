@@ -1,20 +1,16 @@
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
-import theme, { Theme } from './theme';
+import theme from './theme';
 import { show, upAlt, downAlt } from './animations';
 
-interface Themed {
-    theme: Theme;
-}
-
-const SecondaryTitle = styled.h2<Themed>`
+const SecondaryTitle = styled.h2`
     font-size: 18px;
     font-weight: 400;
     margin-bottom: 8px;
     color: ${(props) => props.theme.secondColor};
 `;
 
-const Hint = styled.div<Themed>`
+const Hint = styled.div`
     font-size: 14px;
     font-weight: 300;
     color: ${(props) => props.theme.secondColor};
@@ -71,7 +67,7 @@ const DesktopHiddenContainer = styled.div`
     }
 `;
 
-const Link = styled.a<Themed>`
+const Link = styled.a`
     color: ${(props) => props.theme.accentColor};
     fill: ${(props) => props.theme.accentColor};
 `;
@@ -95,7 +91,7 @@ const FieldLabel = styled.label<{ isHidden?: boolean }>`
     ${(props) => (props.isHidden ? 'opacity: 0;' : 'margin-bottom: 8px;')}
 `;
 
-const SimpleTextarea = styled.textarea``;
+const SimpleTextarea = styled.textarea<React.HTMLAttributes<HTMLTextAreaElement>>``;
 
 const ShowOnHover = styled.div`
     display: none;
@@ -152,7 +148,7 @@ const ActionBar = styled.div<{ minHeight?: number | string }>`
     }
 `;
 
-const Backdrop = styled.div<Themed>`
+const Backdrop = styled.div`
     position: fixed;
     height: 100vh;
     z-index: 9999;
@@ -173,17 +169,18 @@ const Mirrored = styled.span`
     transform: scale(-1);
 `;
 
-const TextAccent = styled.span<Themed>`
+const TextAccent = styled.span`
     color: ${(props) => props.theme.accentColor};
     fill: ${(props) => props.theme.accentColor};
 `;
 
-const TextMinor = styled.span<Themed>`
+const TextMinor = styled.span`
     color: ${(props) => props.theme.grayColor};
 `;
 
 interface ITextConstructor {
-    letter: string | number; word: string | number;
+    letter?: string | number
+    word?: string | number
 }
 
 const TextConstructor = styled.span<ITextConstructor>`
@@ -209,7 +206,7 @@ const HiddenSelect = styled.select`
     position: absolute;
 `;
 
-const BetaSign = styled.div<Themed>`
+const BetaSign = styled.div`
     position: relative;
 
     &::after {
@@ -222,7 +219,7 @@ const BetaSign = styled.div<Themed>`
     }
 `;
 
-interface IBadge extends Themed {
+interface IBadge {
     top?: number | string; 
     right?: number | string
     isHidden?: boolean

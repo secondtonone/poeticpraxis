@@ -1,16 +1,14 @@
-import { h } from 'preact';
-import { FC } from 'preact/compat';
-import { Route, Redirect, Switch } from 'react-router-dom';
-import { Store } from '@store';
+import { h, FunctionalComponent } from 'preact';
+import { Route, Redirect, Switch, RouteComponentProps } from 'react-router-dom';
 
 import Layout from '@containers/Layout';
 import Bundle from '@containers/Bundle';
 import Loader from '@components/Loader';
 
-const makeModule = (importModule: () => Promise<any>) => (props: Store) => (
+const makeModule = (importModule: () => Promise<any>) => (props: RouteComponentProps) => (
     <Bundle load={importModule}>
-        {(Component) =>
-            Component === null ? <Loader /> : <Component {...props} />
+        {(RoutComponent: React.ComponentType<RouteComponentProps>) =>
+            RoutComponent === null ? <Loader /> : <RoutComponent {...props} />
         }
     </Bundle>
 );
@@ -27,7 +25,7 @@ const ImagesEngine = makeModule(() =>
     import(/* webpackChunkName: "ImagesEngine" */ '../routes/ImagesEngine')
 );
 
-const Routes: FC<{}> = () => (
+const Routes: FunctionalComponent = () => (
     <Layout>
         <Switch>
             <Route path="/images-engine" component={ImagesEngine} />
