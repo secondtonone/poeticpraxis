@@ -12,7 +12,7 @@ import { ActionTypes } from '@store/actions';
 import DispatchContext from '@contexts/dispatchContext';
 import StateContext from '@contexts/stateContext';
 
-const storageName = '___PoeticPraxisAppTest___';
+const storageName = '___PoeticPraxisApp___';
 
 const persistedFromLocal = (slice: Slices) => <T,>(initial: T) =>
     typeof localStorage !== 'undefined' ? (JSON.parse(localStorage.getItem(storageName)))[slice] as T : initial;

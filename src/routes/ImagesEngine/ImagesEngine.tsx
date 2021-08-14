@@ -1,7 +1,7 @@
 import { h, FunctionalComponent } from 'preact';
 import { lazy, Suspense } from 'preact/compat';
 import { useContext, useEffect, useState, useCallback } from 'preact/hooks';
-import { RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import StateContext from '@contexts/stateContext';
 import useImagineEngineActions from '@hooks/useImagineEngineActions';
@@ -48,9 +48,7 @@ let clearCount = false;
 const initHeight = window.innerHeight;
 const translation = enginePage;
 
-const ImagesEngine: FunctionalComponent<RouteComponentProps> = ({
-    history,
-}) => {
+const ImagesEngine: FunctionalComponent = () => {
     const {
         Layout: { lang },
         Rhythmic: {
@@ -67,8 +65,9 @@ const ImagesEngine: FunctionalComponent<RouteComponentProps> = ({
         },
     } = useContext(StateContext);
 
+    const history = useHistory();
+
     const { setEngineState } = useImagineEngineActions();
-    const { setRhythmicState: sharingText } = useRhythmicActions();
 
     const [words, setWords] = useState<string[]>(stringToWords(text));
     const [textMessage, showMessage] = useMessage();
