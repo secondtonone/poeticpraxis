@@ -1,10 +1,8 @@
-import { h } from 'preact';
-import {
-    Suspense,
-    lazy
-} from 'preact/compat';
-
+import { h, FunctionalComponent } from 'preact';
+import { Suspense, lazy } from 'preact/compat';
 import { useContext, useEffect, useState, useCallback } from 'preact/hooks';
+
+import RhythmicViews from '@typings/RhythmicViews';
 
 import StateContext from '@contexts/stateContext';
 
@@ -51,11 +49,12 @@ import {
 let makeCaesura = () => {};
 let copyToClipboardHandler = () => {};
 
-const Rhythmic = () => {
+const Rhythmic: FunctionalComponent = () => {
     const {
-        Layout: { lang, variant },
+        Layout: { lang },
         Rhythmic: {
             currentRhythmicState: rhythmicState,
+            wordsDictionary
         }
     } = useContext(StateContext);
 
@@ -63,8 +62,7 @@ const Rhythmic = () => {
 
     const { 
         text,
-        stringsDictionary,
-        wordsDictionary
+        stringsDictionary
     } = rhythmicState;
 
     const [ textMessage, showMessage ] = useMessage();
@@ -72,7 +70,7 @@ const Rhythmic = () => {
     const [ isFocused, setFocus ] = useState(false);
     const [ isEditable, setEditableMode ] = useState(true);
     const [ isAnalyzeReady, setAnalyzeStatus] = useState(false);
-    const [ currentView, setView ] = useState('rhythmic');
+    const [ currentView, setView ] = useState<RhythmicViews>('rhythmic');
 
     const isDevice = isTouchDevice();
     const title = `${translations[lang].main['TITLE']}${
@@ -83,10 +81,12 @@ const Rhythmic = () => {
     useTitlePage(title);
     useScrollToTop();
 
-    useEffect(async () => {
-        if (URLSearchParams) {
-            getShared();
-        }
+    useEffect(() => {
+        (async () => {
+            if (URLSearchParams) {
+                getShared();
+            }
+        })();
     }, []);
 
     const getShared = useCallback(() => {
@@ -118,11 +118,11 @@ const Rhythmic = () => {
         showMessage(messages[lang].COPIED);
     }, [lang]);
 
-    const setCopyToClipboardHandler = useCallback((handler) => {
+    const setCopyToClipboardHandler = useCallback((handler: () => void) => {
         copyToClipboardHandler = handler;
     }, []);
 
-    const setMakeCaesuraHandler = useCallback((handler) => {
+    const setMakeCaesuraHandler = useCallback((handler: () => void) => {
         makeCaesura = handler;
     },[]);
 
@@ -141,7 +141,7 @@ const Rhythmic = () => {
         setZoom(zoomIn);
     }
 
-    const focusHandler = useCallback((isFocused) => {
+    const focusHandler = useCallback((isFocused: boolean) => {
         setTimeout(() => {
             setFocus(isEditable ? isFocused : false);
         }, 100);
@@ -186,7 +186,6 @@ const Rhythmic = () => {
                 handler={setView}
                 current={currentView}
                 lang={lang}
-                text={text}
                 isAnalyzeReady={isAnalyzeReady}
             />
             {currentView === 'rhythmic' && isDevice && !isFocused && (
@@ -202,18 +201,16 @@ const Rhythmic = () => {
                 />
             )}
             <LeftedLayout>
-                <Help lang={lang} />
+                <Help />
 
                 {currentView === 'rhythmic' && (
                     <Zoom onZoomIn={zoomHandler} onZoomOut={zoomHandler}>
                         <Workbench
-                            rhythmicState={rhythmicState}
-                            lang={lang}
                             copyToClipboard={copyToClipboard}
                             shareWithLink={shareWithLink}
                             makeCaesura={makeCaesura}
                             isFocused={isFocused}
-                            workfield={(mouseTracking) => (
+                            workfield={(mouseTracking: React.MouseEventHandler<HTMLTextAreaElement>) => (
                                 <Workfield
                                     text={text}
                                     placeHolder={`${translations[lang].placeholders['RHYTHMICS']}...`}
@@ -245,9 +242,6 @@ const Rhythmic = () => {
                     <List>
                         <Suspense fallback={<Loader />}>
                             <Melody
-                                lang={lang}
-                                variant={variant}
-                                rhythmicState={rhythmicState}
                                 showMessage={showMessage}
                             />
                         </Suspense>

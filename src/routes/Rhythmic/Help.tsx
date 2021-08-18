@@ -1,4 +1,7 @@
 import { h } from 'preact';
+import { useContext } from 'preact/hooks';
+
+import StateContext from '@contexts/stateContext';
 
 import { translations } from '@components/Workfield/translations';
 import useSessionStorage from '@hooks/useSessionStorage';
@@ -14,7 +17,8 @@ import {
     StringPause,
     TriangleElement,
     CircleElement,
-    Syllable
+    SyllableAccent,
+    SyllableAccentType
 } from '@components/Workfield/styled';
 
 import { AccentRelative } from './styled';
@@ -24,9 +28,12 @@ const helpState = () => {
         'isHideRhythmicHelp'
     );
 
-    return [valueSessionStorage, () => setValueSessionStorage(true)];
+    return [valueSessionStorage, () => setValueSessionStorage('true')] as const;
 };
-export default function Help({ lang = 'ru' }) {
+export default function Help() {
+    const {
+        Layout: { lang }
+    } = useContext(StateContext);
     const maxMedia600 = maxMatchMedia(600);
     const containerWidth = maxMedia600 ? '100%' : '33%';
     const isLangRU = lang === 'ru';
@@ -88,11 +95,11 @@ export default function Help({ lang = 'ru' }) {
                                 width="26px"
                                 height="38px"
                                 display="inline-block">
-                                <Syllable.Accent>7</Syllable.Accent>15
-                                <Syllable.AccentType>
+                                <SyllableAccent>7</SyllableAccent>15
+                                <SyllableAccentType>
                                     <CircleElement />
                                     <TriangleElement />
-                                </Syllable.AccentType>
+                                </SyllableAccentType>
                             </Container>{' '}
                             -{' '}
                             {isLangRU

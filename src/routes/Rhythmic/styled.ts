@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import AccentColors from '@typings/AccentColors';
 import theme from '@styles/theme';
 
 import { AnimationShow, AnimationUp, AnimationDown } from '@styles/components';
@@ -73,59 +74,55 @@ const ButtonContainer = styled.div`
 
 const CopyButtonMobile = styled(Button)``;
 
-const accentMixin = (color, accent) => {
-    return `
+const accentMixin = (color: string, accent: AccentColors) => `
+    position: relative;
+
+    &::after {
         position: relative;
+        right: 0;
+        margin: 0 auto;
+        width: 100%;
+        font-size: 19px;
+        height: 0;
+        text-align: center;
+        color: ${color};
 
-        &::after {
-            position: relative;
-            right: 0;
-            margin: 0 auto;
-            width: 100%;
-            font-size: 19px;
-            height: 0;
-            text-align: center;
-            color: ${color};
-
-            ${
-                accent == 'black' || accent == 'gray'
-                    ? `content: '\\25CF';
-                        top: 0;`
-                    : `content: '\\25BC';
-                transform: rotate(0deg) scale(1.7);
+        ${accent == 'black' || accent == 'gray'
+            ? `content: '\\25CF';
                 top: 0;`
-            }
-        }
+            : `content: '\\25BC';
+                transform: rotate(0deg) scale(1.7);
+                top: 0;`}
+    }
 
-        &:hover::before {
-            content: '';
-            position: relative;
-            left: 0;
-            right: 0;
-            top: 0;
-            margin: 0 auto;
-            width: 100%;
-            height: 1px;
-            border-bottom: 1px solid ${color};
-        }
-    `;
-};
+    &:hover::before {
+        content: '';
+        position: relative;
+        left: 0;
+        right: 0;
+        top: 0;
+        margin: 0 auto;
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px solid ${color};
+    }
+`;
 
-const AccentRelative = styled.span`
-    ${(props) => {
-        if (props.accent === 'red' || props.accent === 'red_secondary') {
+const AccentRelative = styled.span<{ accent: AccentColors }>`
+    ${({ accent, theme: { accentColor, secondColor, grayColor }}) => {
+        if (accent === 'red' || accent === 'red_secondary') {
             return accentMixin(
-                props.accent === 'red'
-                    ? props.theme.accentColor
+                accent === 'red'
+                    ? accentColor
                     : theme.secondRed,
-                props.accent
+                accent
             );
         }
-        if (props.accent === 'black') {
-            return accentMixin(props.theme.secondColor, props.accent);
+        if (accent === 'black') {
+            return accentMixin(secondColor, accent);
         }
-        if (props.accent === 'gray') {
-            return accentMixin(props.theme.grayColor, props.accent);
+        if (accent === 'gray') {
+            return accentMixin(grayColor, accent);
         }
     }}
 `;

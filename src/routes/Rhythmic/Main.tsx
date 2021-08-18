@@ -1,5 +1,7 @@
-import { h } from 'preact';
-import { useRef, useCallback } from 'preact/compat';
+import { h, FunctionalComponent } from 'preact';
+import { useContext, useRef, useCallback } from 'preact/hooks';
+
+import StateContext from '@contexts/stateContext';
 
 import wordByNumber from '@utils/wordByNumber';
 import isTouchDevice from '@utils/isTouchDevice';
@@ -23,27 +25,40 @@ import {
     FlexSided
 } from './styled';
 
-const Main = ({
-    rhythmicState: {
-        text,
-        wordsCount = 0,
-        mainMeter = {
-            title: '',
-            inPercent: 0
-        }
-    },
-    lang = 'ru',
+interface MainProps {
+    copyToClipboard: () => void
+    shareWithLink: () => void
+    makeCaesura: () => void
+    isFocused: boolean
+    workfield: (mouseTracking: React.MouseEventHandler<HTMLTextAreaElement>) => React.ReactNode
+}
+
+const Main: FunctionalComponent<MainProps> = ({
     copyToClipboard,
     shareWithLink,
     makeCaesura,
     isFocused,
     workfield
 }) => {
-    const isDevice = isTouchDevice();
-    const stringPauseButton = useRef();
-    const sectionElement = useRef();
+    const {
+        Layout: { lang },
+        Rhythmic: {
+            currentRhythmicState: {
+                text,
+                wordsCount = 0,
+                mainMeter = {
+                    title: '',
+                    inPercent: 0
+                }
+            }
+        }
+    } = useContext(StateContext);
 
-    const mouseTracking = useCallback((e) => {
+    const isDevice = isTouchDevice();
+    const stringPauseButton = useRef<HTMLDivElement>();
+    const sectionElement = useRef<HTMLDivElement>();
+
+    const mouseTracking: React.MouseEventHandler<HTMLTextAreaElement> = useCallback((e) => {
         requestAnimationFrame(() => {
             const sectionGap = sectionElement.current
                 ? sectionElement.current.offsetTop
@@ -90,7 +105,7 @@ const Main = ({
                 </StringPauseButtonMobile>
             )}
 
-            <List _animated sidePaddingMobile={'0'} ref={sectionElement}>
+            <List _animated sidePaddingMobile={0} ref={sectionElement}>
                 {!isDevice && (
                     <Flex margin="0 0 16px">
                         <UpperButton

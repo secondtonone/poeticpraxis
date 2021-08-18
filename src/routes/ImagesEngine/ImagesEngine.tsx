@@ -16,7 +16,7 @@ import { getWords } from '@modules/dictionary';
 
 import isTouchDevice from '@utils/isTouchDevice';
 
-import { enginePage, messages } from '@translations/index';
+import { enginePage, messages } from '@translations';
 
 import Recorder from '@components/Recorder';
 import Textarea from '@components/Textarea';

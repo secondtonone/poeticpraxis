@@ -5,7 +5,7 @@ import { copying } from '@modules/copying';
 
 import isTouchDevice from '@utils/isTouchDevice';
 
-import { messages, enginePage as translations } from '@translations/index';
+import { messages, enginePage as translations } from '@translations';
 
 import Langs from '@typings/Langs';
 import { Result } from '@typings/ImagesEngineModel';

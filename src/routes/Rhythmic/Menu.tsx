@@ -1,12 +1,16 @@
-import { h } from 'preact';
+import { h, FunctionalComponent } from 'preact';
 
 import { rhythmicPage as translations } from '@translations';
+
+import Langs from '@typings/Langs';
+import MenuItem from '@typings/MenuItem';
+import RhythmicViews from '@typings/RhythmicViews'
 
 import SecondaryMenu from '@components/SecondaryMenu';
 import MelodyIcon from '@icons/Melody';
 import RhythmIcon from '@icons/RhythmIcon';
 
-const secondMenu = (lang, [first, second]) => [
+const secondMenu = (lang: Langs, [first, second]: [boolean, boolean]): MenuItem<RhythmicViews>[] => [
     {
         value: 'rhythmic',
         title: translations[lang].rhythmicMenu.RHYTHMICS,
@@ -31,7 +35,14 @@ const secondMenu = (lang, [first, second]) => [
     }
 ];
 
-const RhythmicMenu = ({
+interface RhythmicMenuProps {
+    lang: Langs
+    current: RhythmicViews
+    handler: (value: RhythmicViews) => void
+    isAnalyzeReady: boolean
+}
+
+const RhythmicMenu: FunctionalComponent<RhythmicMenuProps> = ({
     lang = 'ru',
     current,
     handler,
@@ -39,7 +50,7 @@ const RhythmicMenu = ({
 }) => {
     
     return (
-        <SecondaryMenu
+        <SecondaryMenu<RhythmicViews>
             items={secondMenu(lang, [false, !isAnalyzeReady])}
             handler={handler}
             current={current}

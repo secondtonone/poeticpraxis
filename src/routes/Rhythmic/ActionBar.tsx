@@ -1,6 +1,8 @@
-import { h } from 'preact';
+import { h, FunctionalComponent } from 'preact';
 
 import { rhythmicPage as translations } from '@translations';
+
+import Langs from '@typings/Langs';
 
 import Button from '@components/Button';
 
@@ -15,7 +17,18 @@ import {
     ActionBar
 } from '@styles/components';
 
-const ActionButtonBar = ({
+interface ActionButtonBarProps {
+    text: string
+    lang: Langs
+    zoomIn: boolean
+    isEditable: boolean
+    copyToClipboard: () => void
+    shareWithLink: () => void
+    zoomHandler: () => void
+    changeMode: () => void
+}
+
+const ActionButtonBar: FunctionalComponent<ActionButtonBarProps> = ({
     text,
     lang = 'ru',
     zoomIn,

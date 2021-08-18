@@ -1,4 +1,5 @@
 import { h, FunctionalComponent } from 'preact';
+
 import { enginePage } from '@translations';
 
 import Langs from '@typings/Langs';
@@ -12,7 +13,7 @@ import { Badge } from '@styles/components';
 
 const translations = enginePage;
 
-const secondMenu = (lang: Langs, [first, isDisabledWordsview, isHidden]: [boolean, boolean, boolean]): MenuItem[] => [
+const secondMenu = (lang: Langs, [first, isDisabledWordsview, isHidden]: [boolean, boolean, boolean]): MenuItem<Views>[] => [
     {
         value: 'material',
         title: translations[lang].engineMenu['MATERIAL'],
@@ -56,7 +57,7 @@ const ImagesEngineMenu: FunctionalComponent<ImagesEngineMenuProps> = ({
     isResultReady,
 }) => {
     return (
-        <SecondaryMenu
+        <SecondaryMenu<Views>
             items={secondMenu(lang, [
                 false,
                 isDisabledWordsview,
