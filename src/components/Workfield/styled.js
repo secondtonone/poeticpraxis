@@ -142,7 +142,7 @@ const Syllable = styled.div`
     }
 `;
 
-Syllable.Accent = styled.span`
+const SyllableAccent = styled.span`
     color: ${(props) => props.theme.accentColor};
     pointer-events: none;
     &::after {
@@ -154,7 +154,7 @@ Syllable.Accent = styled.span`
     }
 `;
 
-Syllable.AccentType = styled.div`
+const SyllableAccentType = styled.div`
     position: absolute;
     bottom: -12px;
     text-align: center;
@@ -423,5 +423,7 @@ export {
     WorkField,
     FieldEditable,
     PaintField,
-    Overflowed
+    Overflowed,
+    SyllableAccent,
+    SyllableAccentType,
 };

@@ -6,10 +6,10 @@
         "moduleResolution": "node",
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
-        "lib": ["DOM", "ES2020", "ES6", "ES7"],
+        "lib": ["DOM", "ES2020", "ES6", "ES7", "ESNext", "WebWorker"],
         "baseUrl": "./",
-        "jsx": "react",
-        "jsxFactory": "h",
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact",
         "plugins": [
             {
                 "name": "typescript-styled-plugin",
@@ -33,6 +33,9 @@
             "@styles/*": [
                 "src/styles/*"
             ],
+            "@styles": [
+                "src/styles"
+            ],
             "@store/*": [
                 "src/store/*"
             ],
@@ -51,6 +54,9 @@
             "@routes/*": [
                 "src/routes/*"
             ],
+            "@routes": [
+                "src/routes"
+            ],
             "@public/*": [
                 "public/*"
             ],
@@ -59,6 +65,9 @@
             ],
             "@translations/*": [
                 "src/translations/*"
+            ],
+            "@translations": [
+                "src/translations"
             ]
         }
     },

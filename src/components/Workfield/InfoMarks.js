@@ -6,7 +6,9 @@ import {
     Syllable,
     StringNumber,
     TriangleElement,
-    CircleElement
+    CircleElement,
+    SyllableAccent,
+    SyllableAccentType
 } from './styled';
 
 import {
@@ -82,14 +84,14 @@ const InfoMarks = ({
                         key={`s-${tag.top}`}
                         style={{ top: tag.top + delta }}>
                         {vowelAccentCount ? (
-                            <Syllable.Accent>
+                            <SyllableAccent>
                                 {vowelAccentCount}
-                            </Syllable.Accent>
+                            </SyllableAccent>
                         ) : null}
                         {string.soundGramma.length}
-                        <Syllable.AccentType>
+                        <SyllableAccentType>
                             {makeAccentSizeIndicator(size, accent)}
-                        </Syllable.AccentType>
+                        </SyllableAccentType>
                     </Syllable>
                 ),
                 stringNumberOff || !string.words.length ? null : (

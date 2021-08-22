@@ -16,7 +16,8 @@ module.exports = {
         [
             'babel-plugin-styled-components',
             {
-                pure: true
+                pure: true,
+                ssr: true
             }
         ],
         '@babel/plugin-transform-runtime',

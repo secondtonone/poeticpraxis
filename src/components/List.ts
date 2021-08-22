@@ -5,7 +5,7 @@ import { withElements } from '@styles/helpers';
 
 interface ListProps {
     _animated?: boolean
-    sidePaddingMobile?: string
+    sidePaddingMobile?: string | number
 }
 
 const List = styled.div.attrs<ListProps>((props) => ({ className: withElements(props)}))<ListProps>`

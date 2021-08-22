@@ -250,7 +250,6 @@ const ImagesEngine: FunctionalComponent = () => {
                         recorder={
                             <Recorder
                                 lang={lang}
-                                title={translation[lang].engine['RECORD']}
                                 text={text}
                                 transmitState={setEngineState}
                                 showMessage={showMessage}

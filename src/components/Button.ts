@@ -4,7 +4,7 @@ import theme from '@styles/theme';
 import { AnimationUp } from '@styles/components';
 import { withElements } from '@styles/helpers';
 
-interface ButtonProps {
+export interface ButtonTypesProps {
     width?: string
     borderWidth?: string
     size?: number
@@ -37,7 +37,9 @@ interface ButtonProps {
     '_animated-up'?: boolean
 }
 
-const StyledButton = styled.button.attrs<ButtonProps>((props) => ({
+export type ButtonProps = ButtonTypesProps & React.HTMLAttributes<HTMLButtonElement> & {type?: 'button' | 'submit' | 'reset'};
+
+const StyledButton = styled.button.attrs<ButtonTypesProps>((props) => ({
     className: withElements(props)
 }))<ButtonProps>`
     &._rounded {

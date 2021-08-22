@@ -1,8 +1,6 @@
-import { Views } from '@typings/ImagesEngineModel';
-
-export default interface MenuItem {
+export default interface MenuItem<T> {
     content: React.ReactNode
     disabled: boolean
-    value: Views
+    value: T
     title: string
 }

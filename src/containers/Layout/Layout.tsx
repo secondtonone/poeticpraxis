@@ -57,13 +57,12 @@ const Layout: FunctionalComponent = ({ children }) => {
             <Page>
                 <Header lang={lang}>
                     <Menu
-                        inline
                         lang={lang}
                         items={[<ThemeTumbler />, <LangChanger />]}
                     />
                 </Header>
                 <MainContent>
-                    <ErrorBoundary>{children}</ErrorBoundary>
+                    <ErrorBoundary lang={lang}>{children}</ErrorBoundary>
                 </MainContent>
             </Page>
         </ThemeProvider>

@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 import {
     Menu,
@@ -8,7 +8,6 @@ import {
     LogoContainer,
 } from './styled';
 
-import { Views } from '@typings/ImagesEngineModel';
 import MenuItem from '@typings/MenuItem';
 
 import Logo from '@components/Logo';
@@ -19,19 +18,19 @@ const delta = 76;
 
 // let lastPosition = 0;
 
-interface SecondaryMenuProps {
+interface SecondaryMenuProps<T> {
     children?: React.ReactNode
-    items: Array<MenuItem>
-    handler: (value: Views) => void
-    current: Views
+    items: MenuItem<T>[]
+    handler: (value: T) => void
+    current: T
 }
 
-const SecondaryMenu: FunctionalComponent<SecondaryMenuProps> = ({
+const SecondaryMenu = <T extends string>({
     children,
     items,
     handler,
     current
-}) => {
+}: SecondaryMenuProps<T>) => {
     const [isTranslate, setTranslate] = useState(false);
 
     const countTab = items.length;
