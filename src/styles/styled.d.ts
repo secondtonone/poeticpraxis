@@ -32,7 +32,7 @@ declare module 'styled-components' {
     }
 
     export interface Theme
-        extends Omit<ThemeSettings, 'grayColor' | 'accentColor' | 'lightGray'> {
+        extends Omit<ThemeSettings, 'accentColor' | 'lightGray'> {
         light: Light;
         dark: Dark;
     }

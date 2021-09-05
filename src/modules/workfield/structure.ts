@@ -1,4 +1,5 @@
-import { RhythmPresets } from './rhythmPresets';
+import { AccentTypes } from './accents';
+import { IRhythmPreset } from './rhythmPresets';
 
 export type IdString = string; //has format 's02874'
 export type IdWord = string; //has format 's02874w09528'
@@ -27,10 +28,9 @@ export interface ITag {
 }
 
 export interface ICoreElement {
-    accent: number;
+    accent: AccentTypes;
     idString: IdString;
     type: Type;
-    stringIndex: number;
 }
 
 export interface IUnitaryElement extends ICoreElement {
@@ -50,7 +50,7 @@ export interface ISymbolElement extends ICoreElement {
 export interface IPauseElement extends IUnitaryElement {
     id: IdPauseSymbol;
     type: 'p';
-    tag: ITag;
+    tag?: ITag;
 }
 
 export interface IWordElement extends ICoreElement {
@@ -83,30 +83,41 @@ export interface ICLetterElement extends ILetterElement {
 export interface IVLetterElement extends ILetterElement {
     id: IdVowel;
     type: 'v';
-    tag: ITag;
+    tag?: ITag;
 }
 
 export type ISoundGramma = IdVowel[];
 
-export interface IStrings {
-    [idString: string]: {
-        id: IdString;
-        order: IdElement[];
-        soundGramma: ISoundGramma;
-        string: string;
-        steps: IdVowel[][];
-        tag: ITag;
-        vowel: IdVowel[];
-        words: IdWord[];
-        totalStringAccents: IdVowel[];
-        rhythmPresets: RhythmPresets;
-    };
+export type OrderStrings = IdElement[];
+
+export interface IString {
+    id: IdString;
+    order: OrderStrings;
+    soundGramma: ISoundGramma;
+    string: string;
+    steps: IdVowel[][];
+    tag?: ITag;
+    vowel: IdVowel[];
+    words: IdWord[];
+    totalStringAccents: IdVowel[];
+    rhythmPreset: number;
 }
+
+export interface IStrings {
+    [idString: string]: IString
+}
+
 
 export type Element =
     | ISymbolElement
     | IPauseElement
     | IWordElement
+    | ICLetterElement
+    | IVLetterElement;
+
+export type SymbolicElement =
+    | ISymbolElement
+    | IPauseElement
     | ICLetterElement
     | IVLetterElement;
 
@@ -128,19 +139,21 @@ export interface IWordLinks {
     [word: string]: IdWord[];
 }
 
+export interface MainMeter {
+    title: IRhythmPreset['title'] | '';
+    inPercent: number;
+}
+
 export interface IStructure {
     strings: IStrings;
-    orderStrings: IdElement[];
+    orderStrings: OrderStrings;
     elements: IElements;
     tags: Tags[];
     hashTable: IHashTable;
     stringLinks: IStringLinks;
     wordLinks: IWordLinks;
     wordsCount: number;
-    mainMeter: {
-        title: string;
-        inPercent: number;
-    };
+    mainMeter: MainMeter
 }
 
 const structure: IStructure = {

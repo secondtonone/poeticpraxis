@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const baseConfig = require('./webpack.config');
 
@@ -14,8 +15,9 @@ module.exports = {
     devtool: 'cheap-eval-source-map',
     output: {
         ...baseConfig.output,
-        sourceMapFilename: '[name].[hash:8].map',
-        chunkFilename: '[id].[hash:8].js'
+        filename: '[name].js',
+        sourceMapFilename: '[name].map',
+        chunkFilename: '[id].js'
     },
     module: {
         rules: [
@@ -39,6 +41,7 @@ module.exports = {
                 NODE_ENV: JSON.stringify('development')
             }
         }),
+        new ForkTsCheckerWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
             inject: 'head',

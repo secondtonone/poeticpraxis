@@ -58,7 +58,7 @@ const Rhythmic: FunctionalComponent = () => {
         }
     } = useContext(StateContext);
 
-    const { setRhythmicState, setWordsDictionary } = useRhythmicActions();
+    const { setRhythmicState } = useRhythmicActions();
 
     const { 
         text,
@@ -218,12 +218,11 @@ const Rhythmic: FunctionalComponent = () => {
                                     readOnly={!isEditable}
                                     lang={lang}
                                     wordsDictionary={wordsDictionary}
-                                    setWordsDictionary={setWordsDictionary}
                                     stringsDictionary={stringsDictionary}
                                     onMouseMove={mouseTracking}
                                     onError={showMessage}
-                                    onFocus={focusHandler}
-                                    onUpdate={setRhythmicState}
+                                    onFocusing={focusHandler}
+                                    isNotStandAlone
                                     onTextLintingStart={onTextLintingStart}
                                     onTextLintingEnd={onTextLintingEnd}
                                     setMakeCaesuraHandler={

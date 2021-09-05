@@ -1,10 +1,20 @@
-export let recorder = null;
+export let recorder: InstanceType<typeof MediaRecorder> = null;
 
-let chunks = [];
+let chunks: Blob[] = [];
 
-export const setUpRecorder = (Instrument, onStart, onStop) => {
+export const setUpRecorder = ({
+    context,
+    onStart,
+    onStop,
+    connect,
+}: {
+    context: AudioContext;
+    onStart: () => void;
+    onStop: (url: string) => void;
+    connect: (dest: MediaStreamAudioDestinationNode) => void;
+}) => {
     try {
-        const actx = Instrument.context;
+        const actx: AudioContext = context;
 
         const dest = actx.createMediaStreamDestination();
         recorder = new MediaRecorder(dest.stream);
@@ -12,7 +22,7 @@ export const setUpRecorder = (Instrument, onStart, onStop) => {
         recorder.ondataavailable = (e) => chunks.push(e.data);
         recorder.onstop = () => {
             let blob = new Blob(chunks, {
-                type: 'audio/wav'
+                type: 'audio/wav',
             });
 
             if (onStop) {
@@ -26,6 +36,6 @@ export const setUpRecorder = (Instrument, onStart, onStop) => {
             }
         };
 
-        Instrument.connect(dest);
+        connect(dest);
     } catch (e) {}
 };

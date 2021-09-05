@@ -1,11 +1,7 @@
-export function copyFrom(field) {
-    let range = {};
+export function copyFrom<T extends HTMLElement>(field: T) {
+    let range = {} as Range;
 
-    if (document.selection) {
-        range = document.body.createTextRange();
-        range.moveToElementText(field);
-        range.select().createTextRange();
-    } else if (window.getSelection) {
+    if (window.getSelection) {
         range = document.createRange();
         range.selectNodeContents(field);
         window.getSelection().removeAllRanges();
@@ -13,23 +9,21 @@ export function copyFrom(field) {
     }
 
     setTimeout(() => {
-        if (!document.execCommand('Copy')) {
-            copyToClipboard(field.innerHTML);
-        }
+        if (!document.execCommand('Copy')) copyToClipboard(field.innerHTML);
     }, 0);
 }
 
-export function makeTextarea(value) {
+export function makeTextarea(value: string) {
     let textArea = document.createElement('pre');
     let id = 'textAreaForCopy';
 
     textArea.id = id;
     textArea.style.position = 'fixed';
     textArea.style.top = '-2em';
-    textArea.style.left = 0;
+    textArea.style.left = '0';
     textArea.style.height = '2em';
     textArea.style.width = '2em';
-    textArea.style.padding = 0;
+    textArea.style.padding = '0';
     textArea.style.border = 'none';
     textArea.style.outline = 'none';
     textArea.style.boxShadow = 'none';
@@ -41,8 +35,8 @@ export function makeTextarea(value) {
     return { element: textArea, id };
 }
 
-export function copying(value) {
-    const { element, id } = makeTextarea(value);
+export function copying(value: string) {
+    const { element } = makeTextarea(value);
     document.body.appendChild(element);
     copyFrom(element);
 
@@ -51,7 +45,7 @@ export function copying(value) {
     }, 100);
 }
 
-export function copyToClipboard(text) {
+export function copyToClipboard(text: string) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text);
     }

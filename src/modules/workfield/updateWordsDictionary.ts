@@ -1,8 +1,14 @@
-export default function updateWordsDictionary(idWord, wordsDictionary, elements) {
-    const word = elements[idWord];
+import { AccentTypes } from './accents';
+import { IDictionary } from './dictionary';
+import { IElements, IWordElement } from './structure';
+
+export default function updateWordsDictionary(idWord: string, wordsDictionary: IDictionary, elements: IElements) {
+    const word = elements[idWord] as IWordElement;
     const wordLowerCased = word.token.toLowerCase();
 
-    let wordAccents = [];
+    let wordAccents: {
+        type: AccentTypes
+    }[] = [];
 
     const wordOrderTokenLength = word.orderToken.length;
 
@@ -17,5 +23,6 @@ export default function updateWordsDictionary(idWord, wordsDictionary, elements)
     wordsDictionary[wordLowerCased] = {
         accents: wordAccents
     };
+
     return wordsDictionary;
 }

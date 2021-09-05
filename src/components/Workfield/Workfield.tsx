@@ -1,17 +1,24 @@
-import { h } from 'preact';
+import { h, FunctionalComponent } from 'preact';
 
-import Textarea from '@components/Textarea';
+import Langs from '@typings/Langs';
+import Textarea, { TextareaProps } from '@components/Textarea';
 
-import Marks from './Marks';
-import HiddenMarks from './HiddenMarks';
-import InfoMarks from './InfoMarks';
-import StubMarks from './StubMarks';
+import Marks, { MarksProps } from './Marks';
+import HiddenMarks, { HiddenMarksProps } from './HiddenMarks';
+import InfoMarks, { InfoMarksProps } from './InfoMarks';
+import StubMarks, { StubMarksProps } from './StubMarks';
 
 import { FakeField, WorkField, PaintField } from './styled';
 
 /* парсить по словам, сравнивать с предыдущим деревом */
+export interface WorkfieldProps extends Omit<TextareaProps, 'onError' | 'onClick' | 'onDoubleClick'>, Partial<MarksProps>, Partial<StubMarksProps>, Partial<HiddenMarksProps>, Partial<InfoMarksProps> {
+    lang: Langs
+    fakeFieldRef?: React.Ref<HTMLDivElement>
+    onClick?: React.MouseEventHandler<HTMLDivElement>
+    onDoubleClick?: React.MouseEventHandler<HTMLDivElement>
+}
 
-export default function Workfield({
+const Workfield: FunctionalComponent<WorkfieldProps> = ({
     lang,
     placeHolder = '',
     value,
@@ -32,7 +39,7 @@ export default function Workfield({
     onBlur,
     fakeFieldRef,
     getRef
-}) {
+}) => {
     return (
         <WorkField>
             <FakeField
@@ -50,7 +57,8 @@ export default function Workfield({
                 data-id-comp="paintField"
                 zoomIn={zoomIn}
                 onClick={onClick}
-                onDoubleClick={onDoubleClick}>
+                onDoubleClick={onDoubleClick}
+            >
                 {value && <StubMarks strings={strings} orderStrings={orderStrings} />}
                 <Marks tags={tags} lang={lang} />
                 <InfoMarks
@@ -77,3 +85,5 @@ export default function Workfield({
         </WorkField>
     );
 }
+
+export default Workfield;

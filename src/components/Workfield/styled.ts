@@ -7,6 +7,11 @@ import blackTriangleSVG from './assets/black_triangle.svg';
 
 import redTrianglePNG from './assets/red_triangle.png';
 import redTriangleSVG from './assets/red_triangle.svg';
+import AccentColors from '@typings/AccentColors';
+
+interface ZoomProps {
+    zoomIn?: boolean
+}
 
 const field = css`
     font-family: ${theme.mainFont};
@@ -221,7 +226,7 @@ const StringNumber = styled.div`
     user-select: none;
 `;
 
-const FieldEditable = styled.div`
+const FieldEditable = styled.div<ZoomProps>`
     position: relative;
     ${field} &:focus {
         outline: none;
@@ -234,7 +239,7 @@ const FieldEditable = styled.div`
     }};
 `;
 
-const FakeField = styled.div`
+const FakeField = styled.div<ZoomProps>`
     position: absolute;
     top: 0;
     opacity: 0;
@@ -252,7 +257,7 @@ const FakeField = styled.div`
     }};
 `;
 
-const accentMixin = (color, imgSVG, imgPNG, accent) => {
+const accentMixin = (color: string, imgSVG: string, imgPNG: string, accent: AccentColors) => {
     return `
         position: absolute;
         z-index: 1000;
@@ -296,7 +301,7 @@ const accentMixin = (color, imgSVG, imgPNG, accent) => {
     `;
 };
 
-const AccentRelative = styled.span`
+const AccentRelative = styled.span<{accent: AccentColors}>`
     ${(props) => {
         if (props.accent === 'red' || props.accent === 'red_secondary') {
             return accentMixin(
@@ -327,7 +332,7 @@ const AccentRelative = styled.span`
     }}
 `;
 
-const Accent = styled.span`
+const Accent = styled.span<{accent: AccentColors}>`
     position: relative;
     margin: 0 -0.1px;
     padding: 0;
@@ -378,7 +383,7 @@ const MarkStub = styled.div`
     animation: ${flash} 0.5s infinite ease-in-out;
 `;
 
-const PaintField = styled.div`
+const PaintField = styled.div<ZoomProps>`
     position: relative;
 
     & span,

@@ -92,6 +92,7 @@ const AboutRhythmic: FunctionalComponent<AboutRhythmicProps> = ({lang, mediaQuer
                     }>
                     <Suspense fallback={<Loader height={'100%'} />}>
                         <Workfield
+                            lang={lang}
                             text={text}
                             stringsDictionary={stringsDictionary}
                             readOnly

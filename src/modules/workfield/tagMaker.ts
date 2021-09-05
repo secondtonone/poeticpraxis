@@ -1,28 +1,30 @@
-/**
- *
- *
- * @export
- * @param {Object} node
- * @param {Object} textAnalyzed
- * @returns {Object}
- */
-export default function tagMaker(node, textAnalyzed, cb) {
+import MarkupTypes from "@typings/MarkupTypes";
+import { IStrings, IElements, Tags } from "./structure";
+import { TextAnalyzerResult } from "./textAnalyzer";
+
+interface TagMakerResult {
+    elements: IElements
+    strings: IStrings
+    tags: Tags[]
+}
+
+export default function tagMaker(node: HTMLCollection, textAnalyzed: TextAnalyzerResult, cb: (value: TagMakerResult | PromiseLike<TagMakerResult>) => void) {
     const stringNodes = [...node];
 
-    let tags = [];
+    let tags: Tags[] = [];
 
-    let symbols = [];
+    let symbols: Element[] = [];
 
     const strings = Object.assign({}, textAnalyzed.strings);
 
     const elements = Object.assign({}, textAnalyzed.elements);
 
-    let symbolsSet = [];
+    let symbolsSet: Element[][] = [];
 
     const stringNodesLength = stringNodes.length;
 
     for (let i = 0; i < stringNodesLength; i++) {
-        const string = stringNodes[i];
+        const string = stringNodes[i] as HTMLDivElement;
 
         const symbols = [...string.children];
 
@@ -48,9 +50,9 @@ export default function tagMaker(node, textAnalyzed, cb) {
 
     if (symbolsLength) {
         for (let i = 0; i < symbolsLength; i++) {
-            const symbol = symbols[i];
+            const symbol = symbols[i] as HTMLSpanElement;
 
-            const type = symbol.dataset.type;
+            const type = symbol.dataset.type as MarkupTypes;
             if (
                 type === 'black' ||
                 type === 'red' ||
@@ -58,17 +60,18 @@ export default function tagMaker(node, textAnalyzed, cb) {
                 type === 'gray' ||
                 type === 'string-pause'
             ) {
-                const offsetLeft = symbol.parentNode.offsetLeft;
-                const offsetTop = symbol.parentNode.offsetTop;
+                const parent = symbol.parentNode as HTMLDivElement;
+                const offsetLeft = parent.offsetLeft;
+                const offsetTop = parent.offsetTop;
 
-                elements[symbol.id].tag = {
+                (elements[symbol.id] as Tags).tag = {
                     left: symbol.offsetLeft + offsetLeft,
                     top: symbol.offsetTop + offsetTop,
                     height: symbol.offsetHeight,
                     width: symbol.offsetWidth
                 };
 
-                tags.push(elements[symbol.id]);
+                tags.push(elements[symbol.id] as Tags);
             }
         }
     }
@@ -89,8 +92,8 @@ export default function tagMaker(node, textAnalyzed, cb) {
 }
 
 
-export function tagMakerPromise(node, textAnalyzed) {
-    return new Promise((resolve) => {
-        tagMaker(node, textAnalyzed, resolve);
+export function tagMakerPromise(node: HTMLCollection, textAnalyzedResult: TextAnalyzerResult) {
+    return new Promise<TagMakerResult>((resolve) => {
+        tagMaker(node, textAnalyzedResult, resolve);
     });
 }

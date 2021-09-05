@@ -1,29 +1,27 @@
-export default class MelodyMaker {
-    static Tone = null;
-    static Instrument = null;
-    baseUrl = './';
+import { ToneLib, Sampler, PolySynth } from "@typings/ToneTypes";
 
-    instruments: {
-        piano: any;
-        poly: any;
-    } = {
+export default class MelodyMaker {
+    static Tone: ToneLib = null;
+    static Instrument: Sampler | PolySynth = null;
+
+    instruments = {
         piano: this.Piano,
         poly: this.PolySynth,
     };
 
-    static async getToneModule(promise: () => Promise<any>): Promise<any> {
+    static async getToneModule(promise: () => Promise<ToneLib>): Promise<void> {
         if(!MelodyMaker.Tone) MelodyMaker.Tone = await promise();
     }
 
-    getInstrument(inst: string = 'piano'): any {
+    async getInstrument(inst: keyof typeof this.instruments = 'piano'): Promise<void | PolySynth> {
         if (inst && this.instruments[inst] && !MelodyMaker.Instrument) {
-            return this.instruments[inst]();
+            return await this.instruments[inst]();
         }
     }
 
-    Piano(): Promise<any> {
-        MelodyMaker.Instrument = new MelodyMaker.Tone.Sampler(
-            {
+    async Piano(): Promise<void> {
+        MelodyMaker.Instrument = new MelodyMaker.Tone.Sampler({
+            urls: {
                 /* A0: 'A0.[mp3|ogg]',
                 C1: 'C1.[mp3|ogg]',
                 'D#1': 'Ds1.[mp3|ogg]',
@@ -37,44 +35,40 @@ export default class MelodyMaker {
                 'D#3': 'Ds3.[mp3|ogg]',
                 'F#3': 'Fs3.[mp3|ogg]',
                 A3: 'A3.[mp3|ogg]', */
-                C4: 'C4.[mp3|ogg]' /* * */,
-                'D#4': 'Ds4.[mp3|ogg]' /* * */,
-                'F#4': 'Fs4.[mp3|ogg]' /* * */,
-                A4: 'A4.[mp3|ogg]' /* * */,
+                C4: 'C4.[mp3|ogg]',
+                'D#4': 'Ds4.[mp3|ogg]',
+                'F#4': 'Fs4.[mp3|ogg]',
+                A4: 'A4.[mp3|ogg]',
                 /* C5: 'C5.[mp3|ogg]',
                 'D#5': 'Ds5.[mp3|ogg]', */
-                'F#5': 'Fs5.[mp3|ogg]' /* * */,
-                A5: 'A5.[mp3|ogg]' /* * */,
+                'F#5': 'Fs5.[mp3|ogg]',
+                A5: 'A5.[mp3|ogg]',
                 /* C6: 'C6.[mp3|ogg]', */
-                'D#6': 'Ds6.[mp3|ogg]' /* * */,
-                'F#6': 'Fs6.[mp3|ogg]' /* * */,
-                A6: 'A6.[mp3|ogg]' /* * */,
-                C7: 'C7.[mp3|ogg]' /* * */,
-                'D#7': 'Ds7.[mp3|ogg]' /* * */,
-                'F#7': 'Fs7.[mp3|ogg]' /* * */,
+                'D#6': 'Ds6.[mp3|ogg]',
+                'F#6': 'Fs6.[mp3|ogg]',
+                A6: 'A6.[mp3|ogg]',
+                C7: 'C7.[mp3|ogg]',
+                'D#7': 'Ds7.[mp3|ogg]',
+                'F#7': 'Fs7.[mp3|ogg]',
                 /* A7: 'A7.[mp3|ogg]' ,
                 C8: 'C8.[mp3|ogg]' */
             },
-            {
-                release: 1,
-                baseUrl: this.baseUrl,
-            }
-        );
-    
-        return new Promise((resolve) => {
-            MelodyMaker.Tone.Buffer.on('load', () => resolve(MelodyMaker.Instrument));
+            baseUrl: './',
+            release: 1
         });
+
+        return await MelodyMaker.Tone.loaded();
     }
 
-    PolySynth(): Promise<any> {
-        MelodyMaker.Instrument = new MelodyMaker.Tone.PolySynth(8, MelodyMaker.Tone.Synth, {
+    PolySynth(): Promise<PolySynth> {
+        MelodyMaker.Instrument = new MelodyMaker.Tone.PolySynth(MelodyMaker.Tone.Synth, {
             oscillator: {
                 partials: [0, 2, 3, 4],
-            },
+            }
         });
     
-        return new Promise((resolve) => {
-            resolve(MelodyMaker.Instrument);
+        return new Promise<PolySynth>((resolve) => {
+            resolve(MelodyMaker.Instrument as PolySynth);
         });
     }
 }

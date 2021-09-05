@@ -8,6 +8,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const baseConfig = require('./webpack.config');
 
@@ -67,6 +68,7 @@ const config = {
                 NODE_ENV: JSON.stringify('production'),
             },
         }),
+        new ForkTsCheckerWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
             inject: 'head',

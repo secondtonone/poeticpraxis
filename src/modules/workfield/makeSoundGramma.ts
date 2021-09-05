@@ -1,4 +1,6 @@
-export default function makeSoundGramma(signId, string, accent) {
+import { ICoreElement, ISoundGramma, IString } from "./structure";
+
+export default function makeSoundGramma(signId: string, string: IString, accent: ICoreElement['accent']): ISoundGramma {
     let soundGramma = string.soundGramma;
 
     const indexSoundGramma = string.soundGramma.indexOf(signId);

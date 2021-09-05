@@ -1,13 +1,15 @@
-// @ts-nocheck
-const loading = (i, s, o, g, r, a, m) => {
+const loading = (i: Window, s: Document, o: string, g: string, r: string, a?: HTMLScriptElement, m?: HTMLScriptElement) => {
     i['GoogleAnalyticsObject'] = r;
     (i[r] =
         i[r] ||
         function() {
             (i[r].q = i[r].q || []).push(arguments);
         }),
+        // @ts-ignore
         (i[r].l = 1 * new Date());
+    // @ts-ignore
     (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+    // @ts-ignore
     a.async = 1;
     a.src = g;
     m.parentNode.insertBefore(a, m);
@@ -20,6 +22,7 @@ const yandexInit = () => {
             function() {
                 (m[i].a = m[i].a || []).push(arguments);
             };
+        // @ts-ignore
         m[i].l = 1 * new Date();
         (k = e.createElement(t)),
             (a = e.getElementsByTagName(t)[0]),
@@ -27,7 +30,7 @@ const yandexInit = () => {
             (k.src = r),
             a.parentNode.insertBefore(k, a);
     })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
-
+    // @ts-ignore
     ym(48473147, 'init', {
         clickmap: true,
         trackLinks: true,
@@ -72,7 +75,9 @@ const googleInit = () => {
         'https://www.google-analytics.com/analytics.js',
         'ga'
     );
+    // @ts-ignore
     ga('create', 'UA-77286868-1', 'auto');
+    // @ts-ignore
     ga('send', 'pageview');
 };
 

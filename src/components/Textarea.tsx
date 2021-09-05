@@ -13,7 +13,7 @@ import FieldEditableArea from '@components/FieldEditableArea';
 let delayHeightChange = null;
 const id = `i${randomize()}`;
 
-interface TextareaProps extends React.HTMLAttributes<HTMLTextAreaElement> {
+export interface TextareaProps extends React.HTMLAttributes<HTMLTextAreaElement> {
     readOnly?: boolean
     value?: string
     placeHolder?: string

@@ -1,9 +1,15 @@
 import { h } from 'preact';
+import { IStructure } from '@modules/workfield/structure';
 
 import { SyllableStub, MarkStub } from './styled';
 
-const StubMarks = ({ strings, orderStrings }) => {
-    let stubTags = [];
+export interface StubMarksProps {
+    orderStrings: IStructure['orderStrings']
+    strings: IStructure['strings']
+}
+
+const StubMarks = ({ strings, orderStrings }: StubMarksProps) => {
+    let stubTags: React.ReactNode[] = [];
     const lineHeight = 52;
     const widthSymbol = 10;
 
@@ -26,14 +32,14 @@ const StubMarks = ({ strings, orderStrings }) => {
                     key={`mark-stub-${index}`}
                     style={{
                         top: index * lineHeight,
-                        width: stringId * widthSymbol,
+                        width: +stringId * widthSymbol,
                     }}
                 />,
             ]);
         }
     }
 
-    return stubTags;
+    return <>{stubTags}</>;
 };
 
 export default StubMarks;

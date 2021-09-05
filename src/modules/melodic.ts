@@ -7,6 +7,7 @@ import {
     IdString,
 } from '@modules/workfield/structure';
 import { getGroup, calculateFormant } from '@modules/formants';
+import LetterGramma from '@typings/LetterGramma';
 
 const DURATION: number = 0.38; // 0.17;
 const ACCENTED_DURATION: number = DURATION * 1.5;
@@ -47,9 +48,10 @@ const getNote = (
 
     
     let notes: number[] = group[formant];
+
     console.log(prev,vowel,next);
     console.table({'гласная':vowel.char, 'предыдущий':prev ?prev['isSolid']:'', 'следующий':next?next['isSolid']:'', 'итоговая': formant , 'ноты': notes ,'слово':elements[`${vowel.idString}${vowel.idToken}`].token});
-    
+
     return notes;
 };
 
@@ -65,22 +67,7 @@ const makeLetterGramma = ({
     elements: IElements;
     orderStrings: IStructure['orderStrings'];
     frequencyToNote: (frequency: number) => string;
-}): {
-    music: {
-        string: IdString;
-        isAccented: boolean;
-        char: string;
-        time: number;
-        sound?: 0 | 2;
-        vowelNotes: {
-            note: number;
-            duration: number;
-            notation: string;
-        }[];
-        index: number;
-    }[];
-    time: number;
-} => {
+}): LetterGramma => {
     let music = [];
 
     let time: number = 0;

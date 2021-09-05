@@ -12,9 +12,22 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test: /\.worker\.js$/,
+                use: { 
+                    loader: 'worker-loader'
+                },
+            },
             { 
                 test: /\.tsx?$/, 
-                use: ['ts-loader'] 
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                        },
+                    }
+                ] 
             },
             {
                 test: /.js?$/,
@@ -35,10 +48,6 @@ module.exports = {
             {
                 test: /\.(png|jpg|jpeg|gif|mp3|ogg|woff|woff2|eot|ttf|otf)$/,
                 use: ['file-loader'],
-            },
-            {
-                test: /\.worker\.js$/,
-                use: { loader: 'worker-loader' },
             },
             {
                 test: /\.webmanifest$/,

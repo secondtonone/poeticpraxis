@@ -5,19 +5,24 @@ import {
     AccentRelative
 } from './styled';
 
+import { Tags } from '@modules/workfield/structure';
+import Langs from '@typings/Langs';
+
 import { translations } from './translations';
 
 import {
     accents
 } from '@modules/workfield';
 
+export interface MarksProps {
+    tags: Tags[]
+    lang: Langs
+}
 
-const Marks = ({tags, lang}) => {
-    const renderedTags = [];
+const Marks = ({tags, lang}: MarksProps) => {
+    const renderedTags: React.ReactNode[] = [];
 
     const tagsLength = tags.length;
-
-    const wordId = '';
 
     const translation = translations[lang ? lang : 'ru'];
 
@@ -59,7 +64,7 @@ const Marks = ({tags, lang}) => {
         );
     }
 
-    return renderedTags;
+    return <>{renderedTags}</>;
 };
 
 export default Marks;

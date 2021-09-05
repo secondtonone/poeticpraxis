@@ -1,12 +1,14 @@
+import { IElements, ISoundGramma } from "./structure";
+
 export default function stringOnSteps(
-    string = [],
+    string: ISoundGramma = [],
     totalAccents = 0,
-    elements = {}
+    elements: IElements = {}
 ) {
-    const isAccented = (id) =>
+    const isAccented = (id: string) =>
         id ? elements[id].accent === 1 || elements[id].accent === 2 : false;
 
-    const whichStep = (index, step = 2) => {
+    const whichStep = (index: number, step = 2): number => {
         if (string[index + step] && !isAccented(string[index + step])) {
             return whichStep(index, step + 1);
         }
@@ -15,9 +17,9 @@ export default function stringOnSteps(
 
     const elementCount = string.length;
 
-    let steps = [];
+    let steps: string[][] = [];
 
-    let step = [];
+    let step: string[] = [];
 
     let defaultStep = Math.floor(elementCount / totalAccents);
 

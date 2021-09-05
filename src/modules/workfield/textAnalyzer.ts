@@ -1,6 +1,9 @@
 import randomize from '@utils/randomize';
 import hashFunction from '@utils/hashFunction';
 
+import { IDictionary } from '@modules/workfield/dictionary';
+import { IStructure, IStrings, IElements, IHashTable, IWordLinks, IStringLinks, OrderStrings, MainMeter, IString, IWordElement, ICLetterElement, ILetterElement, Type, IPauseElement, ISymbolElement } from '@modules/workfield/structure';
+
 import meterDetection from './meterDetection';
 import isLetter from './isLetter';
 import isSpace from './isSpace';
@@ -17,22 +20,16 @@ import isConsonantSolid from './isConsonantSolid';
 import isLetterSign from './isLetterSign';
 import isConsonantVoiced from './isConsonantVoiced';
 import isConsonantNoisy from './isConsonantNoisy';
+import { AccentTypes } from './accents';
 
-/**
- * @export
- * @param {string} text
- * @param {Object} stringsDictionary
- * @param {Object} wordsDictionary
- * @returns {Object}
- */
-export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
+export default function textAnalyzer(text: string, stringsDictionary: IDictionary, wordsDictionary: IDictionary) {
     const fieldStrings = text.split('\n');
     
-    let strings = {};
+    const strings: IStrings = {};
 
-    let elements = {};
+    const elements: IElements = {};
 
-    let hashTable = {};
+    const hashTable: IHashTable = {};
 
     let iterator = 0;
 
@@ -40,14 +37,14 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
 
     const meterDetect = meterDetection();
 
-    let mainMeter = null;
+    let mainMeter: MainMeter = null;
 
-    let wordLinks = {};
+    let wordLinks: IWordLinks = {};
 
-    let stringLinks = {};
+    let stringLinks: IStringLinks = {};
 
     /* Строка */
-    let orderStrings = [];
+    const orderStrings: OrderStrings = [];
 
     const fieldStringsLength = fieldStrings.length;
 
@@ -61,23 +58,23 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
         )}`;  */
         let idString = `s${iterator}`;
 
-        let vowel = [];
+        let vowel: IString['vowel'] = [];
 
-        let soundGramma = [];
+        let soundGramma: IString['soundGramma'] = [];
 
-        let steps = [];
+        let steps: IString['steps'] = [];
 
         let rhythmPreset = 0;
 
-        let totalStringAccents = [];
+        let totalStringAccents: IString['totalStringAccents'] = [];
 
-        let words = [];
+        let words: IString['words'] = [];
 
         let tokens = string
             .split(/(\s|[a-zA-ZА-Яа-яёЁ-]+|[\.,\/#!$%\^&\*;:{}=\-_`~()⋀])/)
             .filter((n) => n);
 
-        let order = [];
+        let order: OrderStrings = [];
 
         let stringIndex = 0;
         /* Символьная последовательность */
@@ -86,17 +83,17 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
         for (let index = 0; index < tokensLength; index++) {
             const token = tokens[index];
 
-            let type = 't';
+            let type: Type = 't';
 
             let idToken = `t${index}${randomize(() =>
                 hashFunction(token, ++iterator)
             )}`;
 
-            let accent = 0;
+            let accent: AccentTypes = 0;
 
-            let accents = [];
+            let accents: IWordElement['accents'] = [];
 
-            let hashTokenId = '';
+            let hashTokenId = 0;
             /* слово */
             if (isLetter(token)) {
                 idToken = `w${index}${randomize(() =>
@@ -107,14 +104,15 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
 
                 type = 'w';
 
-                let prev = null;
+                let prev: null | string = null;
 
-                let next = null;
+                let next: null | string = null;
 
                 const [accentedIndex] = getAccentedPosition(token);
 
                 /* Буквы */
-                const letters = [...token];
+                // const letters = [...token];
+                const letters = token.split('');
 
                 const lettersLength = letters.length;
 
@@ -131,13 +129,13 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
 
                     let idSymbol = '';
 
-                    let type = 'c';
+                    let type: Type = 'c';
 
-                    let isSolid = null;
+                    let isSolid: boolean = null;
 
-                    let isVoiced = null;
+                    let isVoiced: boolean = null;
 
-                    let isNoisy = null;
+                    let isNoisy: boolean = null;
 
                     accent = 0;
 
@@ -191,9 +189,9 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
                         if (
                             elements[prev] &&
                             elements[prev].type === 'c' &&
-                            !elements[prev].isSolid
+                            !(elements[prev] as ICLetterElement).isSolid
                         ) {
-                            elements[prev].isSolid = isConsonantSolid(char, elements[prev].char);
+                            (elements[prev] as ICLetterElement).isSolid = isConsonantSolid(char, (elements[prev] as ICLetterElement).char);
                         }
                     } else {
                         idSymbol = `c${index}${randomize(() =>
@@ -208,17 +206,17 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
                             elements[prev] &&
                             elements[prev].type === 'c'
                         ) {
-                            elements[prev].isSolid = isLetterSign(char) ? false : true;
+                            (elements[prev] as ICLetterElement).isSolid = isLetterSign(char) ? false : true;
                         }
                     }
 
                     idSymbol = `${idString}${idToken}${idSymbol}`;
 
                     if (prev) {
-                        elements[prev].next = idSymbol;
+                        (elements[prev] as ILetterElement).next = idSymbol;
                     }
 
-                    elements[idSymbol] = {
+                    (elements[idSymbol] as ILetterElement) = {
                         isLast,
                         prev,
                         next,
@@ -234,9 +232,9 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
                     };
 
                     if(type === 'c') {
-                        elements[idSymbol].isSolid = isSolid;
-                        elements[idSymbol].isNoisy = isNoisy;
-                        elements[idSymbol].isVoiced = isVoiced;
+                        (elements[idSymbol]  as ICLetterElement).isSolid = isSolid;
+                        (elements[idSymbol] as ICLetterElement).isNoisy = isNoisy;
+                        (elements[idSymbol] as ICLetterElement).isVoiced = isVoiced;
                     }
 
                     prev = idSymbol;
@@ -258,7 +256,7 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
 
                 wordLinks = makeListLinks(token, idToken, wordLinks);
 
-                elements[idToken] = {
+                (elements[idToken] as IWordElement) = {
                     type,
                     token,
                     accent,
@@ -292,7 +290,7 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
                     soundGramma.push(idToken);
                 }
 
-                elements[idToken] = {
+                (elements[idToken] as IPauseElement | ISymbolElement) = {
                     type,
                     char: token,
                     id: idToken,
@@ -351,3 +349,5 @@ export default function textAnalyzer(text, stringsDictionary, wordsDictionary) {
         mainMeter
     };
 }
+
+export type TextAnalyzerResult = ReturnType<typeof textAnalyzer>;

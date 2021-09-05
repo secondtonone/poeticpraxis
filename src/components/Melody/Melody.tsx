@@ -1,6 +1,8 @@
 import { h } from 'preact';
 import { useState, useContext, useCallback, useEffect, useRef } from 'preact/hooks';
 import { memo } from 'preact/compat';
+
+import LetterGramma, { Note } from '@typings/LetterGramma';
 import { translations } from './translations';
 import { messages } from '@translations';
 
@@ -23,7 +25,7 @@ const tone = new MelodyMaker();
 const { getToneModule } = MelodyMaker; 
 const verticalOffset = 100;
 let notePlayed = 0;
-let sliderTimer = null;
+let sliderTimer = 0;
 
 interface MelodyProps {
     showMessage: (message: string) => void
@@ -39,7 +41,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
 
     const [progress, setProgress] = useState(0);
     const [bpm, setBpm] = useState(72);
-    const [music, setMusic] = useState([]);
+    const [music, setMusic] = useState<LetterGramma['music']>([]);
 
     const canvas = useRef<HTMLCanvasElement>();
     const innerHeight = useRef(window.innerHeight);
@@ -54,7 +56,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
                 MelodyMaker.Tone.Transport.bpm.value = bpm;
             };
 
-            const followForIndicator = (index) => {
+            const followForIndicator = (index: number) => {
                 const { vertical } = drawing.coords[index];
 
                 if (!index || innerHeight.current / 2.5 < vertical) {
@@ -65,15 +67,14 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
                 }
             };
 
-            const partCallback = (time, notes) => {
-                const vowelNotes = notes.vowelNotes;
+            const partCallback = (time: number, {vowelNotes, sound, index }: Note) => {
 
-                MelodyMaker.Instrument.volume.value = Math.floor(notes.sound);
+                MelodyMaker.Instrument.volume.value = Math.floor(sound);
 
-                drawing.drawIndicator(notes.index);
-                followForIndicator(notes.index);
+                drawing.drawIndicator(index);
+                followForIndicator(index);
 
-                notePlayed = notes.index;
+                notePlayed = index;
 
                 vowelNotes.forEach((note) => {
                     MelodyMaker.Instrument.triggerAttackRelease(
@@ -87,10 +88,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
             try {
                 await getToneModule(() => import(/* webpackChunkName: "Tone" */'tone'));
 
-                tone.getInstrument('piano');
-                //tone.getInstrument('poly');
-
-                MelodyMaker.Instrument.toMaster();
+                
 
                 setUpPlayer();
 
@@ -104,16 +102,20 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
 
                 setMusic(music);
 
-                MelodyMaker.Tone.Transport.loopEnd = Math.round(time + 1);
-
-                new MelodyMaker.Tone.Part(partCallback, music).start('+0.1');
-
                 drawing.setCtx(canvas.current);
                 drawing.setVariant(variant);
                 drawing.updateChart(getHeightCanvas); 
                 drawing.drawNotes({music, verticalOffset});
                 drawing.drawIndicator(notePlayed);
 
+                await tone.getInstrument('piano');
+                //tone.getInstrument('poly');
+
+                MelodyMaker.Instrument.toDestination();
+
+                MelodyMaker.Tone.Transport.loopEnd = Math.round(time + 1);
+
+                new MelodyMaker.Tone.Part(partCallback, music).start('+0.1');
             } catch (e) {
                 showMessage(messages[lang].NET);
             }
@@ -132,7 +134,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
 
     const calculateProgress = useCallback(() => {
         setProgress(
-            Math.floor((MelodyMaker.Tone.Transport.seconds / MelodyMaker.Tone.Transport.loopEnd) * 100)
+            Math.floor((MelodyMaker.Tone.Transport.seconds / (MelodyMaker.Tone.Transport.loopEnd as number)) * 100)
         );
         sliderTimer = requestAnimationFrame(calculateProgress);
     }, []);

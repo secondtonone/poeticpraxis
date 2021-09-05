@@ -4,7 +4,7 @@ const totalWords = 67774;
 const interval = 5000;
 const limitWords = 20;
 
-function findDictionary(wordId) {
+function findDictionary(wordId: number) {
     for (let i = 0; i < totalWords; i += interval) {
         if (wordId < i) {
             return i;
@@ -14,10 +14,10 @@ function findDictionary(wordId) {
     return totalWords;
 }
 
-function wordToDictionary(wordCount) {
+function wordToDictionary(wordCount: number) {
     const wordsIds = randomGenerator(totalWords, wordCount);
 
-    const wordsDictionariesMap = {};
+    const wordsDictionariesMap: {[key: string]: number[]} = {};
 
     wordsIds.forEach((id) => {
         const dictionaryId = findDictionary(id);
@@ -39,17 +39,17 @@ function wordToDictionary(wordCount) {
     const response = await fetch(`dictionary-${id}.json`);
     return response.json();
 } */
-async function getDictionary(id) {
-    const dictionary = await import(`@public/dictionary/dictionary-${id}.json`);
+async function getDictionary(id: string) {
+    const dictionary: string[] = await import(`@public/dictionary/dictionary-${id}.json`);
     return dictionary;
 }
 
-async function requestMaker(dictionariesIds) {
+async function requestMaker(dictionariesIds: string[]) {
     return Promise.all(dictionariesIds.map((id) => getDictionary(id)));
 }
 
-export async function getWords(text = '', wordsLength, cb) {
-    let words = [];
+export async function getWords(text = '', wordsLength: number, cb?:(result: string) => void) {
+    const words: string[] = [];
 
     const needWords =
         wordsLength > 0 && wordsLength < limitWords
@@ -74,7 +74,7 @@ export async function getWords(text = '', wordsLength, cb) {
 
     const result = `${text} ${words.join(' ')}`;
 
-    if (cb) {
+    if (typeof cb === 'function') {
         cb(result);
     } else {
         return Promise.resolve(result);

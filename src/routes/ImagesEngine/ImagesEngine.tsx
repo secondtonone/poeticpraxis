@@ -86,7 +86,7 @@ const ImagesEngine: FunctionalComponent = () => {
 
     const getDictionaryWords = useCallback(async () => {
         try {
-            const newWords = await getWords(text.trim(), stringToWords(text));
+            const newWords = await getWords(text.trim(), stringToWords(text).length);
 
             setEngineState({
                 text: newWords,

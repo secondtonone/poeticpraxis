@@ -1,4 +1,4 @@
-import { IElements, Element, IStrings, IdString } from './structure';
+import { IElements, IStrings, IdString, ILetterElement } from './structure';
 
 export default function updateElementsByStringLink({
     elements,
@@ -7,7 +7,7 @@ export default function updateElementsByStringLink({
     strings,
 }: {
     elements: IElements;
-    element: Element;
+    element: ILetterElement;
     stringLink: IdString[];
     strings: IStrings;
 }) {

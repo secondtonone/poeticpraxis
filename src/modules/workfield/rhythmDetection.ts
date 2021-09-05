@@ -1,29 +1,22 @@
 import findCommon from '@utils/findCommon';
-export default function rhythmDetection(steps, elements) {
-    let rhythmPresetHelper = {
-        '2': {
-            '0': 1,
-            '1': 2
-        },
-        '3': {
-            '0': 3,
-            '1': 4,
-            '2': 5
-        }
-    };
+import rhythmPresetHelper, { Meter, MeterSizes } from './rhythmicPresentHelper';
+import { IElements, IString } from './structure';
 
+
+
+export default function rhythmDetection(steps: IString['steps'], elements: IElements) {
     const stringPresetRhythm = steps.map((step) => {
         const stepLength = step.length;
 
         if (rhythmPresetHelper[stepLength]) {
-            const meter = rhythmPresetHelper[stepLength];
+            const meter: MeterSizes = rhythmPresetHelper[stepLength];
             const accent = step.findIndex(
                 (elementId) =>
                     elements[elementId].accent === 1 ||
                     elements[elementId].accent === 2
             );
 
-            return meter[accent];
+            return meter[accent] as Meter;
         }
 
         return 0;

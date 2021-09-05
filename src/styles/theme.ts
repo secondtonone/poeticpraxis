@@ -56,6 +56,7 @@ const theme: Theme = {
 
     primaryColor: '#F9F8F7',
     secondColor: '#181311',
+    grayColor: '#6d6c6c',
 
     mainFont: '"Montserrat", Verdana, sans-serif',
     light,

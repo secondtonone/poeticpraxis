@@ -1,6 +1,6 @@
 /* https://porfirevich.ru/ */
 
-export async function getResult({promt = '', length = 1, num_samples = 4} = request) {
+export async function getResult(request: {promt: string , length: number, num_samples: number}) {
     const response = await fetch('https://models.dobro.ai/gpt2/medium/', {
         credentials: 'omit',
         headers: {

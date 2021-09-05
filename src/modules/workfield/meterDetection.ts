@@ -1,9 +1,10 @@
 import rhythmPresets from './rhythmPresets';
+
 export default function meterDetection() {
     let map = [0, 0, 0, 0, 0, 0];
     let count = 0;
 
-    return (stringMeter) => {
+    return (stringMeter: number) => {
         map[stringMeter] = map[stringMeter] ? map[stringMeter] + 1 : 1;
 
         ++count;

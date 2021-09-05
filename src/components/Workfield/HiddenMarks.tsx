@@ -1,15 +1,25 @@
-import { h } from 'preact';
+import { FunctionalComponent, h } from 'preact';
 
+import { IStrings, OrderStrings, IElements, SymbolicElement } from '@modules/workfield/structure';
 import { Accent, StringPause, StringField } from './styled';
 
 import { accents } from '@modules/workfield';
+import React from 'react';
 
-const HiddenMarks = ({ strings, orderStrings, elements }) => {
-    let stringsOrders = [];
+export interface HiddenMarksProps {
+    strings: IStrings
+    orderStrings: OrderStrings
+    elements: IElements 
+}
 
-    let symbolsTags = {};
+const HiddenMarks: FunctionalComponent<HiddenMarksProps> = ({ strings, orderStrings, elements }) => {
+    let stringsOrders: OrderStrings = [];
 
-    let markingTags = [];
+    const symbolsTags: {
+        [key: string]: Array<React.ReactNode>
+    } = {};
+
+    const markingTags: Array<React.ReactNode> = [];
 
     const orderStringsLength = orderStrings.length;
 
@@ -35,13 +45,13 @@ const HiddenMarks = ({ strings, orderStrings, elements }) => {
         if (elements[id]) {
             const symbol = elements[id];
 
-            let char = symbol.char;
+            let char = (symbol as SymbolicElement).char;
 
             const idString = symbol.idString;
 
             const accent = symbol.accent;
 
-            let tag = char;
+            let tag: React.ReactNode = char;
 
             if (symbol.type === 'v') {
                 tag = (
@@ -83,7 +93,7 @@ const HiddenMarks = ({ strings, orderStrings, elements }) => {
         }
     }
 
-    return markingTags;
+    return <>{markingTags}</>;
 };
 
 export default HiddenMarks;

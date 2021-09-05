@@ -1,6 +1,8 @@
-import { h } from 'preact';
+import { h, FunctionalComponent } from 'preact';
 
 import { translations } from './translations';
+import { IStrings, OrderStrings, IElements } from '@modules/workfield/structure';
+import Langs from '@typings/Langs';
 
 import {
     Syllable,
@@ -11,12 +13,10 @@ import {
     SyllableAccentType
 } from './styled';
 
-import {
-    rhythmPresets
-} from '@modules/workfield';
+import rhythmPresets, { IRhythmPreset } from '@modules/workfield/rhythmPresets';
 
-const makeAccentSizeIndicator = (size, accent) => {
-    let scheme = [];
+const makeAccentSizeIndicator = (size: IRhythmPreset['size'], accent: IRhythmPreset['accent']) => {
+    let scheme: React.ReactNode[] = [];
 
     for (let i = 1; i <= size; i++) {
         if (i === accent) {
@@ -29,8 +29,17 @@ const makeAccentSizeIndicator = (size, accent) => {
     return scheme;
 };
 
+export interface InfoMarksProps {
+    strings: IStrings
+    orderStrings: OrderStrings
+    lineHeight: number
+    elements: IElements
+    syllableOff: boolean
+    stringNumberOff: boolean
+    lang: Langs
+}
 
-const InfoMarks = ({
+const InfoMarks: FunctionalComponent<InfoMarksProps> = ({
     strings,
     orderStrings,
     lineHeight = 0,
@@ -39,7 +48,7 @@ const InfoMarks = ({
     stringNumberOff,
     lang = 'ru'
 }) => {
-    let infoTags = [];
+    let infoTags: React.ReactNode[] = [];
 
     const translation = translations[lang];
 
@@ -106,7 +115,7 @@ const InfoMarks = ({
         } 
     }
 
-    return infoTags; 
+    return <>{infoTags}</>; 
 };
 
 export default InfoMarks;

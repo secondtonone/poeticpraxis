@@ -1,7 +1,13 @@
-export default function updateStringsDictionary(string, stringsDictionary, elements) {
+import { IString, IElements } from './structure';
+import { IDictionary } from './dictionary';
+import { AccentTypes } from './accents';
+
+export default function updateStringsDictionary(string: IString, stringsDictionary: IDictionary, elements: IElements) {
     const stringLowerCased = string.string.toLowerCase();
 
-    let stringAccents = [];
+    let stringAccents: {
+        type: AccentTypes
+    }[] = [];
 
     const stringOrderLength = string.order.length;
 
