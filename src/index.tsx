@@ -4,7 +4,7 @@ if (DEV) {
     require('preact/debug');
 }
 
-import { h, hydrate } from 'preact';
+import { FunctionalComponent, h, hydrate } from 'preact';
 
 import theme from '@styles/theme';
 import App from '@containers/App';
@@ -12,7 +12,7 @@ import Routes from '@routes';
 
 import analyticsInit from '@modules/analytics';
 
-const run = (Component) => {
+const run = (Component: FunctionalComponent<{}>) => {
     const rootElement = DEV
         ? document.body.lastElementChild
         : document.getElementById('app');

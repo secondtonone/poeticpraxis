@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "target": "es5",
-        "noImplicitAny": false,
+        "module": "esnext",
+        "target": "ES5",
+        "noImplicitAny": true,
+        "removeComments": false,
         "moduleResolution": "node",
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
@@ -73,8 +74,7 @@
         }
     },
     "include": [
-        "src/**/*",
-        "public/**/*"
+        "src/**/*"
     ],
     "exclude": [
         "node_modules",

@@ -10,11 +10,11 @@ interface BundleProps {
 }
 
 interface BundleState { 
-    component: ComponentDefault['default']
+    component: ComponentDefault['default'] | null;
 }
 
 class Bundle extends Component<BundleProps, BundleState> {
-    state = {
+    state: BundleState = {
         component: null
     };
 

@@ -108,7 +108,7 @@ const Range = styled.input<RangeProps>`
         height: 4px;
         ${(props) =>
             props.hideThumb
-                ? `background-color: ${(props) => props.theme.accentColor};`
+                ? `background-color: ${props.theme.accentColor};`
                 : ''};
     }
 
@@ -123,14 +123,14 @@ const Range = styled.input<RangeProps>`
     &::-ms-fill-lower {
         ${(props) =>
             props.hideThumb
-                ? `background-color: ${(props) => props.theme.accentColor};`
+                ? `background-color: ${props.theme.accentColor};`
                 : ''};
         border-radius: 4px;
     }
     &:focus::-ms-fill-lower {
         ${(props) =>
             props.hideThumb
-                ? `background-color: ${(props) => props.theme.accentColor};`
+                ? `background-color: ${props.theme.accentColor};`
                 : ''};
     }
     &::-ms-fill-upper {

@@ -82,7 +82,7 @@ const InfoMarks: FunctionalComponent<InfoMarksProps> = ({
 
             const lineNumber = translation['LINE_NUMBER'];
 
-            const accentsInfo = `${translation['ACCENT']}/${translation['COUNT_METER']} - ${translation[title]}`;
+            const accentsInfo = `${translation['ACCENT']}/${translation['COUNT_METER']} - ${title ? translation[title]: title}`;
 
             infoTags.push([
                 syllableOff || !vowels.length ? null : (

@@ -89,7 +89,9 @@ const Main: FunctionalComponent<MainProps> = ({
         translations[lang].rhythmic['WORDS_AMOUNT']
     )}`;
 
-    const mainMeterString = `, ${mainMeter.title} - ${mainMeter.inPercent}%`;
+    const mainMeterString = `, ${mainMeter.title 
+        ? translations[lang].meters[mainMeter.title]
+        : mainMeter.title} - ${mainMeter.inPercent}%`;
 
     return (
         <div>

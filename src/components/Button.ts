@@ -4,7 +4,7 @@ import theme from '@styles/theme';
 import { AnimationUp } from '@styles/components';
 import { withElements } from '@styles/helpers';
 
-export interface ButtonTypesProps {
+export type ButtonTypesProps = {
     width?: string
     borderWidth?: string
     size?: number
@@ -40,7 +40,7 @@ export interface ButtonTypesProps {
 export type ButtonProps = ButtonTypesProps & React.HTMLAttributes<HTMLButtonElement> & {type?: 'button' | 'submit' | 'reset'};
 
 const StyledButton = styled.button.attrs<ButtonTypesProps>((props) => ({
-    className: withElements(props)
+    className: withElements<ButtonTypesProps>(props)
 }))<ButtonProps>`
     &._rounded {
         background-color: /* ${(props) =>

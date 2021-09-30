@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { withElements } from '@styles/helpers';
 
-export interface IconProps {
+export type IconProps = {
     padding?: string
     rules?: string
     _small?: boolean
@@ -16,7 +16,7 @@ export interface IconProps {
 }
 
 const Icon = styled.i.attrs<IconProps>((props) => ({
-    className: withElements(props),
+    className: withElements<IconProps>(props),
 }))<IconProps>`
     font-weight: normal;
     font-style: normal;

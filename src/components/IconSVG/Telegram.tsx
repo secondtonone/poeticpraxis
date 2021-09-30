@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import Icon, { IconProps } from '@components/Icon';
 
-const Telegram  = (props) => {
+const Telegram  = (props: IconProps) => {
     return (
         <Icon {...props}>
             <svg

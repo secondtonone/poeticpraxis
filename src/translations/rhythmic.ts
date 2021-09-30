@@ -16,6 +16,14 @@ const ru = {
         RHYTHMICS: 'Ритмика',
         MELODY: 'Мелодия',
     },
+    meters: {
+        PYRRHIC: 'Пиррихий',
+        TROCHEE: 'Хорей',
+        IAMB: 'Ямб',
+        DACTYL: 'Дактиль',
+        AMPHIBRACHIUM: 'Амфибрахий',
+        ANAPAEST: 'Анапест',
+    },
     main: {
         TITLE: 'ПРОСОДИЯ',
     },
@@ -38,6 +46,14 @@ const en = {
     rhythmicMenu: {
         RHYTHMICS: 'Rhythmics',
         MELODY: 'Melody',
+    },
+    meters: {
+        PYRRHIC: 'Pyrrhic',
+        TROCHEE: 'Trochee',
+        IAMB: 'Iamb',
+        DACTYL: 'Dactyl',
+        AMPHIBRACHIUM: 'Amphibrachium',
+        ANAPAEST: 'Anapaest',
     },
     main: {
         TITLE: 'PROSODY',

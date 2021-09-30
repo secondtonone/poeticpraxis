@@ -10,7 +10,7 @@ import randomize from '@utils/randomize';
 import { FieldLabel } from '@styles/components';
 import FieldEditableArea from '@components/FieldEditableArea';
 
-let delayHeightChange = null;
+let delayHeightChange = 0;
 const id = `i${randomize()}`;
 
 export interface TextareaProps extends React.HTMLAttributes<HTMLTextAreaElement> {

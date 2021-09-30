@@ -7,7 +7,7 @@ import {
     IdString,
 } from '@modules/workfield/structure';
 import { getGroup, calculateFormant } from '@modules/formants';
-import LetterGramma from '@typings/LetterGramma';
+import LetterGramma, { Music } from '@typings/LetterGramma';
 
 const DURATION: number = 0.38; // 0.17;
 const ACCENTED_DURATION: number = DURATION * 1.5;
@@ -30,12 +30,11 @@ const stepSoundMultiply = (
     });
 };
 
-
 const getNote = (
     vowel: IVLetterElement,
     prev: null | ICLetterElement | IVLetterElement,
     next: null | ICLetterElement | IVLetterElement,
-    elements
+    elements: IElements
 ): number[] => {
     const isAccented: boolean = vowel.accent === 1;
     const char: string = vowel.char.toLowerCase();
@@ -44,13 +43,23 @@ const getNote = (
 
     //const predictedFormant = getFormant(prev, next);
 
-    const formant = calculateFormant({group, prev, next});//getFinalFormant(group, predictedFormant);
+    const formant = calculateFormant({ group, prev, next }); //getFinalFormant(group, predictedFormant);
 
-    
     let notes: number[] = group[formant];
 
-    console.log(prev,vowel,next);
-    console.table({'гласная':vowel.char, 'предыдущий':prev ?prev['isSolid']:'', 'следующий':next?next['isSolid']:'', 'итоговая': formant , 'ноты': notes ,'слово':elements[`${vowel.idString}${vowel.idToken}`].token});
+    console.log(prev, vowel, next);
+    // @ts-ignore
+    console.table({
+        гласная: vowel.char,
+        // @ts-ignore
+        предыдущий: prev ? prev['isSolid'] : '',
+        // @ts-ignore
+        следующий: next ? next['isSolid'] : '',
+        итоговая: formant,
+        ноты: notes,
+        // @ts-ignore
+        слово: elements[`${vowel.idString}${vowel.idToken}`].token,
+    });
 
     return notes;
 };
@@ -68,7 +77,7 @@ const makeLetterGramma = ({
     orderStrings: IStructure['orderStrings'];
     frequencyToNote: (frequency: number) => string;
 }): LetterGramma => {
-    let music = [];
+    const music: Music = [];
 
     let time: number = 0;
 
@@ -98,22 +107,18 @@ const makeLetterGramma = ({
                 const vowel = elements[tokenId] as IVLetterElement;
                 const isAccented: boolean = vowel.accent === 1;
                 const char: string = vowel.char.toLowerCase();
-                const prev:
-                    | null
-                    | ICLetterElement
-                    | IVLetterElement = vowel.prev
-                    ? (elements[vowel.prev] as
-                        | ICLetterElement
-                        | IVLetterElement)
-                    : null;
-                const next:
-                    | null
-                    | ICLetterElement
-                    | IVLetterElement = vowel.next
-                    ? (elements[vowel.next] as
-                        | ICLetterElement
-                        | IVLetterElement)
-                    : null;
+                const prev: null | ICLetterElement | IVLetterElement =
+                    vowel.prev
+                        ? (elements[vowel.prev] as
+                            | ICLetterElement
+                            | IVLetterElement)
+                        : null;
+                const next: null | ICLetterElement | IVLetterElement =
+                    vowel.next
+                        ? (elements[vowel.next] as
+                            | ICLetterElement
+                            | IVLetterElement)
+                        : null;
 
                 const notes: number[] = getNote(vowel, prev, next, elements);
 
@@ -133,7 +138,7 @@ const makeLetterGramma = ({
                     string: stringId,
                     isAccented,
                     char: char,
-                    time: time.toFixed(2),
+                    time: +time.toFixed(2),
                     sound,
                     vowelNotes,
                     index,

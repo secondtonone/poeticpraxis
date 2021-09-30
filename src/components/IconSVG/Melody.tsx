@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import Icon, { IconProps } from '@components/Icon';
 
-function Melody(props) {
+function Melody(props: IconProps) {
     return (
         <Icon {...props}>
             <svg

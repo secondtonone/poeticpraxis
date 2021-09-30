@@ -17,9 +17,10 @@ import Flex from '@components/Flex';
 
 import LogoPic from '@public/img/Logo.svg';
 import LogoPicWhite from '@public/img/Logo-white.svg';
+import Langs from '@typings/Langs';
 
 interface HeaderProps {
-    lang?: string
+    lang?: Langs
 }
 
 const Header: FunctionalComponent<HeaderProps> = ({ children, lang = 'ru' }) => {

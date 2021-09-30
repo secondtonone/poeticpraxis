@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import Icon, { IconProps } from '@components/Icon';
 
-export default function (props) {
+export default function (props: IconProps) {
     return (
         <Icon {...props}>
             <svg

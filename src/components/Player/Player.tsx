@@ -12,9 +12,10 @@ import PauseIcon from '@icons/PauseIcon';
 
 import Container from '@components/Container';
 import Flex from '@components/Flex';
+import Langs from '@typings/Langs';
 
 interface PlayerProps {
-    lang: string
+    lang: Langs
     bpm: number
     progress: number
     setBPM: React.FormEventHandler<HTMLInputElement>

@@ -13,14 +13,16 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.worker\.js$/,
+                test: /\.worker\.ts$/,
                 use: { 
-                    loader: 'worker-loader'
+                    loader: 'worker-loader',
+                    options: { publicPath: './' },
                 },
             },
             { 
                 test: /\.tsx?$/, 
                 use: [
+                    'babel-loader',
                     {
                         loader: 'ts-loader',
                         options: {
@@ -28,11 +30,6 @@ module.exports = {
                         },
                     }
                 ] 
-            },
-            {
-                test: /.js?$/,
-                use: ['babel-loader', 'eslint-loader'],
-                exclude: /node_modules/,
             },
             {
                 test: /\.(svg)$/,

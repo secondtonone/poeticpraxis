@@ -40,6 +40,8 @@ let preventPaintFieldHandler = false;
 let lineHeight = 1;
 let textAnalyzingWorker: Worker = null;
 
+type State = IStructure & { stage: 'lint' | 'children' };
+
 interface WorkfieldContainerProps extends WorkfieldProps {
     text: string;
     isNotStandAlone?: boolean;
@@ -86,17 +88,15 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
             mainMeter: { title, inPercent },
             stringLinks,
             wordLinks,
+            hashTable,
+            stage
         },
         setState,
-    ] = useState<IStructure>({
+    ] = useState<State>({
         ...structure,
+        stage: 'lint',
         orderStrings: text.split('\n').map((string) => `${string.length}`),
     });
-
-    const [
-        stage,
-        setStage,
-    ] = useState<string>('begin');
 
     const { setRhythmicState, setWordsDictionary } = useRhythmicActions();
 
@@ -131,6 +131,36 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
         textLintingHandler(true);
     }, [text, zoomIn]);
 
+    useEffect(() => {
+        if(stage === 'children') {
+            (async () => {
+                const children = fakeField.current.children;
+
+                const stringsLinted = await tagMakerPromise(
+                    children,
+                    {
+                        strings,
+                        orderStrings,
+                        elements,
+                        hashTable,
+                        wordLinks,
+                        stringLinks,
+                        wordsCount,
+                        mainMeter: { title, inPercent },
+                    }
+                );
+
+                setState((prevState) => ({
+                    ...prevState,
+                    ...stringsLinted,
+                    stage: 'lint'
+                }));
+
+                if (typeof onTextLintingEnd === 'function') onTextLintingEnd();
+            })();
+        }
+    }, [stage]);
+
     const setHandlers = useCallback(() => {
         if (typeof setMakeCaesuraHandler === 'function')
             setMakeCaesuraHandler(makeCaesuraHandler);
@@ -138,24 +168,22 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
             setCopyToClipboardHandler(copyToClipboard);
     }, [setMakeCaesuraHandler, setCopyToClipboardHandler]);
 
-    const onUpdate = useCallback(() => {
+    useEffect(() => {
         if (isNotStandAlone) {
-            const translation = translations[lang];
-
             setRhythmicState({
                 strings,
                 elements,
                 orderStrings,
                 wordsCount,
                 mainMeter: {
-                    title: translation[lang][title],
+                    title: title ? title : '',
                     inPercent,
                 },
             });
         }
-    }, [lang, title, inPercent, strings, elements, orderStrings, wordsCount]);
+    }, [lang, title, inPercent, strings, elements, orderStrings, wordsCount, isNotStandAlone]);
 
-    const setStateAsync = (newState: Partial<IStructure>) => {
+    const setStateAsync = (newState: Partial<State>) => {
         return new Promise((resolve) => {
             setState((prevState) => {
                 resolve(null);
@@ -193,23 +221,7 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
                     );
                 }
 
-                await setStateAsync({
-                    ...analyzedText,
-                });
-
-                const children = fakeField.current.children;
-
-                const stringsLinted = await tagMakerPromise(
-                    children,
-                    analyzedText
-                );
-
-                await setStateAsync({
-                    ...stringsLinted,
-                });
-
-                onUpdate();
-                if (typeof onTextLintingEnd === 'function') onTextLintingEnd();
+                setState((prevState) => ({ ...prevState, ...analyzedText, stage: 'children' }));
             } catch (e) {
                 if (typeof onError === 'function') {
                     const translation = translations[lang];
@@ -217,7 +229,7 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
                 }
             }
         },
-        [onError, lang, stringsDictionary, wordsDictionary]
+        [onError, lang, stringsDictionary, wordsDictionary, setState]
     );
 
     const textLintingHandler = useCallback(
@@ -279,7 +291,7 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
         // здесь мы высчитываем и сразу корректируем state.elements
     };*/
 
-    const changeRhythmHandler = async (stringId) => {
+    const changeRhythmHandler = async (stringId: string) => {
         const string = strings[stringId];
 
         if (string.rhythmPreset < rhythmPresets.length - 1) {
@@ -292,7 +304,6 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
             strings,
         });
 
-        onUpdate();
 
         const rhythmPresetIndex = strings[stringId].rhythmPreset;
 
@@ -343,7 +354,6 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
                 setWordsDictionary(result.wordsDictionary);
             }
 
-            onUpdate();
         },
         [
             wordsDictionary,
@@ -444,7 +454,6 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
                 setWordsDictionary(result.wordsDictionary);
             }
 
-            onUpdate();
         },
         [
             wordsDictionary,

@@ -6,7 +6,7 @@ const ctx: Worker = self as any;
 ctx.addEventListener('message', (e: MessageEvent<WorkerData>) => {
     const { text, stringsDictionary, wordsDictionary } = e.data;
     const analyzedText = textAnalyzer(text, stringsDictionary, wordsDictionary);
-    self.postMessage(analyzedText);
+    ctx.postMessage(analyzedText);
 });
 
-export default ctx;
+export default {} as typeof Worker & (new () => Worker);

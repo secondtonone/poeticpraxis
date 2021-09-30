@@ -8,9 +8,10 @@ import { translations } from './translations';
 
 import Container from '@components/Container';
 import Flex from '@components/Flex';
+import Langs from '@typings/Langs';
 
 interface InfoProps {
-    lang?: string
+    lang?: Langs
     foldedContent: React.ReactNode
     unfoldedContent: React.ReactNode
     onClose?: () => void;

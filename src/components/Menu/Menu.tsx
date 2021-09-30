@@ -19,7 +19,11 @@ import Container from '@components/Container';
 import { Backdrop } from '@styles/components';
 import Langs from '@typings/Langs';
 
-const menu = [
+const menu: {
+    url: string,
+    title: 'ENGINE' | 'RHYTHMICS',
+    icon: React.ReactNode
+}[] = [
     {
         url: 'images-engine',
         title: 'ENGINE',

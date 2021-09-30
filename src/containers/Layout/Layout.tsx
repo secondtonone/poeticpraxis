@@ -42,7 +42,7 @@ const Layout: FunctionalComponent = ({ children }) => {
             isLangEn = searchParams.get('lang') === 'en';
         }
 
-        if (isLangEn || !userLang().includes('ru')) {
+        if (isLangEn || !userLang().includes('ru-RU')) {
             changeLang('en');
             document.documentElement.lang = 'en';
         } else {

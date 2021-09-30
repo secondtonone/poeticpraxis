@@ -15,9 +15,8 @@ module.exports = {
     devtool: 'cheap-eval-source-map',
     output: {
         ...baseConfig.output,
-        filename: '[name].js',
-        sourceMapFilename: '[name].map',
-        chunkFilename: '[id].js'
+        sourceMapFilename: '[name].[hash:8].map',
+        chunkFilename: '[id].[hash:8].js'
     },
     module: {
         rules: [

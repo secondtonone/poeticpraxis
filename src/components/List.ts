@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { up } from '@styles/animations';
 import { withElements } from '@styles/helpers';
 
-interface ListProps {
+type ListProps = {
     _animated?: boolean
     sidePaddingMobile?: string | number
-}
+};
 
-const List = styled.div.attrs<ListProps>((props) => ({ className: withElements(props)}))<ListProps>`
+const List = styled.div.attrs<ListProps>((props) => ({ className: withElements<ListProps>(props)}))<ListProps>`
     position: relative;
     padding: 0 64px 80px;
     max-width: 794px;
