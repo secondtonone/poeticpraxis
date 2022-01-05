@@ -2,11 +2,11 @@ import { h, FunctionalComponent } from 'preact';
 import styled from 'styled-components';
 
 interface MessageBoxProps {
-    text: string
+    text?: string
     bottom: number
 }
 
-const MessageBox: FunctionalComponent<MessageBoxProps> = ({ text, bottom }) => (
+const MessageBox: FunctionalComponent<MessageBoxProps> = ({ text = '', bottom }) => (
     <StyledMessageBox bottom={bottom} text={text}>
         {text}
     </StyledMessageBox>

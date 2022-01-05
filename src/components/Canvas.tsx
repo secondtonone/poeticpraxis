@@ -5,7 +5,7 @@ const canvasStyle = { width: '100%' };
 
 interface CanvasProps {
     height: number
-    getRef: React.Ref<HTMLCanvasElement>
+    getRef: preact.Ref<HTMLCanvasElement>
 }
 
 const Canvas = memo<CanvasProps>(({ height, getRef }) => {

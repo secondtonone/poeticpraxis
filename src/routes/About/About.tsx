@@ -1,5 +1,6 @@
 import { h, FunctionalComponent } from 'preact';
-import { useContext, useEffect } from 'preact/hooks';
+import { useContext, useLayoutEffect } from 'preact/hooks';
+import { lazy, Suspense } from 'preact/compat';
 
 import StateContext from '@contexts/stateContext';
 
@@ -14,13 +15,19 @@ import engSuffixNumber from '@utils/engSuffixNumber';
 
 import AboutLanding from './AboutLanding';
 import AboutEngine from './AboutEngine';
-import AboutRhythmic from './AboutRhythmic';
-import AboutProject from './AboutProject';
 
 import {
     Footer
 } from '@styles/components';
+import Loader from '@components/Loader';
 
+const AboutRhythmic = lazy(() =>
+    import(/* webpackChunkName: "AboutRhythmic" */ './AboutRhythmic')
+);
+
+const AboutProject = lazy(() =>
+    import(/* webpackChunkName: "AboutProject" */ './AboutProject')
+);
 
 const daysFromNow = getDaysFromNow(new Date(2016, 4, 25));
 const engDateSuffix = engSuffixNumber(daysFromNow);
@@ -36,7 +43,7 @@ const About: FunctionalComponent = () => {
     useChangeHreflang();
     useTitlePage(title);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         scrollToAnchor();
     }, []);
 
@@ -54,16 +61,20 @@ const About: FunctionalComponent = () => {
                 mediaQuery={mediaQuery}
             />
 
-            <AboutRhythmic
-                lang={lang}
-                mediaQuery={mediaQuery}
-            />
+            <Suspense fallback={<Loader height={'100%'} />}>
+                <AboutRhythmic
+                    lang={lang}
+                    mediaQuery={mediaQuery}
+                />
+            </Suspense>
 
-            <AboutProject
-                lang={lang}
-                mediaQuery={mediaQuery}
-                boundHeight={innerHeight}
-            />
+            <Suspense fallback={<Loader height={'100%'} />}>
+                <AboutProject
+                    lang={lang}
+                    mediaQuery={mediaQuery}
+                    boundHeight={innerHeight}
+                />
+            </Suspense>
 
             <Footer>
                 &copy; POETIC PRAXIS {daysFromNow}

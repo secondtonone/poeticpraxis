@@ -43,7 +43,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
     const [bpm, setBpm] = useState(72);
     const [music, setMusic] = useState<LetterGramma['music']>([]);
 
-    const canvas = useRef<HTMLCanvasElement>();
+    const canvas = useRef<HTMLCanvasElement>(null);
     const innerHeight = useRef(window.innerHeight);
 
     useScrollToTop();
@@ -69,7 +69,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
 
             const partCallback = (time: number, {vowelNotes, sound, index }: Note) => {
 
-                MelodyMaker.Instrument.volume.value = Math.floor(sound);
+                if (sound !== undefined) MelodyMaker.Instrument.volume.value = Math.floor(sound);
 
                 drawing.drawIndicator(index);
                 followForIndicator(index);
@@ -102,7 +102,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
 
                 setMusic(music);
 
-                drawing.setCtx(canvas.current);
+                if (canvas.current) drawing.setCtx(canvas.current);
                 drawing.setVariant(variant);
                 drawing.updateChart(getHeightCanvas); 
                 drawing.drawNotes({music, verticalOffset});
@@ -186,9 +186,10 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
     );
 
     const downloadNote: React.MouseEventHandler<HTMLAnchorElement> = useCallback((e) => {
-        e.currentTarget.href = canvas.current.toDataURL('image/jpg');
+        if (canvas.current) e.currentTarget.href = canvas.current.toDataURL('image/jpg');
     }, []);
 
+    // @ts-ignore
     const getRef = useCallback((ref: HTMLCanvasElement) => canvas.current = ref, []);
 
     return (

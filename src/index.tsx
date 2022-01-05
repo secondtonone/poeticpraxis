@@ -17,12 +17,14 @@ const run = (Component: FunctionalComponent<{}>) => {
         ? document.body.lastElementChild
         : document.getElementById('app');
 
-    hydrate(
-        <Component>
-            <Routes />
-        </Component>,
-        rootElement
-    );
+    if(rootElement) {
+        hydrate(
+            <Component>
+                <Routes />
+            </Component>,
+            rootElement
+        );
+    }
 };
 
 if (!DEV) {
@@ -35,7 +37,6 @@ if (!DEV) {
                 console.log('update ready');
                 runtime.applyUpdate();
             },
-
             // Reload to get the new version:
             onUpdated() {
                 console.log('updated');

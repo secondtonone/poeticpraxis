@@ -4,8 +4,8 @@ export function copyFrom<T extends HTMLElement>(field: T) {
     if (window.getSelection) {
         range = document.createRange();
         range.selectNodeContents(field);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
+        window.getSelection()?.removeAllRanges();
+        window.getSelection()?.addRange(range);
     }
 
     setTimeout(() => {

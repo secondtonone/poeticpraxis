@@ -1,12 +1,12 @@
-import { useEffect } from 'preact/hooks';
+import { useLayoutEffect } from 'preact/hooks';
 import changePageTitle from '@utils/changePageTitle';
 
 const useTitlePage = (title: string) => {
-    useEffect(() => {
+    useLayoutEffect(() => {
         changePageTitle(title);
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         changePageTitle(title);
     }, [title]);
 };

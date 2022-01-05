@@ -4,7 +4,8 @@ module.exports = {
     settings: {
         'import/resolver': 'webpack',
         react: {
-            version: 'detect'
+            version: 'detect',
+            pragma: 'h'
         }
     },
     parser: 'babel-eslint',
@@ -19,7 +20,7 @@ module.exports = {
     rules: {
         'no-undef': 0,
         'no-console': 0,
-        'no-unused-vars': 0,
+        'no-unused-vars': 1,
         semi: 0,
         'eol-last': 0,
         indent: ['error', 4],

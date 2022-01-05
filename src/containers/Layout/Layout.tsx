@@ -1,5 +1,5 @@
 import { h, FunctionalComponent } from 'preact';
-import { useContext, useEffect } from 'preact/hooks';
+import { useContext, useLayoutEffect, useMemo } from 'preact/hooks';
 import { ThemeProvider } from 'styled-components';
 
 import { MainContent, Page } from './styled';
@@ -16,11 +16,13 @@ import LangChanger from '@containers/LangChanger';
 import ThemeTumbler from '@containers/ThemeTumbler';
 import ErrorBoundary from '@containers/ErrorBoundary';
 
+const menuItems = [<ThemeTumbler />, <LangChanger />];
+
 const Layout: FunctionalComponent = ({ children }) => {
-    const { Layout: { variant, lang } } = useContext(StateContext);
+    const { Layout: { variant, lang }} = useContext(StateContext);
     const { changeTheme, changeLang } = useLayoutActions();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const selector = '(prefers-color-scheme: dark)';
         const handler = (e: MediaQueryListEvent) => {
             const newColorScheme = e.matches ? 'dark' : 'light';
@@ -32,9 +34,9 @@ const Layout: FunctionalComponent = ({ children }) => {
         return () => {
             window.matchMedia(selector).removeEventListener('change', handler);
         }
-    });
+    }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let isLangEn = false;
 
         if (URLSearchParams) {
@@ -50,23 +52,26 @@ const Layout: FunctionalComponent = ({ children }) => {
         }
     }, [changeLang]);
 
-    console.log(variant);
-
-    return (
+    return useMemo(()  => (
         <ThemeProvider theme={theme[variant]}>
             <Page>
-                <Header lang={lang}>
+                <Header
+                    lang={lang}
+                    variant={variant}
+                >
                     <Menu
                         lang={lang}
-                        items={[<ThemeTumbler />, <LangChanger />]}
+                        items={menuItems}
                     />
                 </Header>
                 <MainContent>
-                    <ErrorBoundary lang={lang}>{children}</ErrorBoundary>
+                    <ErrorBoundary lang={lang}>
+                        {children}
+                    </ErrorBoundary>
                 </MainContent>
             </Page>
         </ThemeProvider>
-    );
+    ), [variant, lang]);
 };
 
 export default Layout;

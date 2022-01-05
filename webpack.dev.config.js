@@ -12,7 +12,7 @@ const PORT = 9000;
 module.exports = {
     ...baseConfig,
     mode: 'development',
-    devtool: 'cheap-eval-source-map',
+    devtool: 'eval-cheap-module-source-map',
     output: {
         ...baseConfig.output,
         sourceMapFilename: '[name].[hash:8].map',
@@ -56,25 +56,33 @@ module.exports = {
         new ScriptExtHtmlWebpackPlugin({
             defer: /\.js$/
         }),
-        new CopyWebpackPlugin([
-            {
-                from: 'public/audio',
-                ignore: ['.DS_Store']
-            },
-            {
-                from: 'public/dictionary',
-                ignore: ['.DS_Store']
-            }
-        ])
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: 'public/audio',
+                    globOptions: {
+                        ignore: ['.DS_Store']
+                    }
+                },
+                {
+                    from: 'public/dictionary',
+                    globOptions: {
+                        ignore: ['.DS_Store']
+                    }
+                }
+            ]
+        })
     ],
     devServer: {
-        contentBase: path.resolve(__dirname, 'dist'),
+        static: path.resolve(__dirname, 'dist'),
         port: PORT,
         historyApiFallback: true,
-        publicPath: '/',
-        watchOptions: {
-            aggregateTimeout: 1000,
-            poll: 1000
-        }
+        devMiddleware: {
+            publicPath: '/'
+        }  
+    },
+    watchOptions: {
+        aggregateTimeout: 1000,
+        poll: 1000
     }
 };

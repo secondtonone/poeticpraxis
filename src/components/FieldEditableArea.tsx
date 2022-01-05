@@ -29,11 +29,7 @@ const FieldEditableArea = styled.textarea<React.HTMLAttributes<HTMLTextAreaEleme
         outline: none;
     }
 
-    ${(props) => {
-        if (props.zoomIn) {
-            return `font-size: 28px;`;
-        }
-    }};
+    ${(props) => props.zoomIn ? `font-size: 28px;` : ''};
 `;
 
 export default FieldEditableArea;

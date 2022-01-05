@@ -24,7 +24,7 @@ const InlineInput: FunctionalComponent<InlineInputProps> = ({ onChange, value })
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
-            if (isEdit && !container.current.contains(target)) {
+            if (isEdit && !container.current?.contains(target)) {
                 toggleEdit();
             }
         };

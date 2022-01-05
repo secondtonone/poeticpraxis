@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { Component } from 'preact';
 import { RouteComponentProps } from 'react-router-dom';
 import ComponentType from '@typings/ComponentDefault';
 
@@ -6,7 +6,7 @@ type ComponentDefault = ComponentType<RouteComponentProps>;
 
 interface BundleProps { 
     load: () => Promise<ComponentDefault>
-    children: (component: ComponentDefault['default']) => JSX.Element
+    children: (component: ComponentDefault['default'] | null) => JSX.Element
 }
 
 interface BundleState { 

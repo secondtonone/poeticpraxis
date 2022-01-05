@@ -2,7 +2,7 @@ import randomize from '@utils/randomize';
 import hashFunction from '@utils/hashFunction';
 
 import { IDictionary } from '@modules/workfield/dictionary';
-import { IStructure, IStrings, IElements, IHashTable, IWordLinks, IStringLinks, OrderStrings, MainMeter, IString, IWordElement, ICLetterElement, ILetterElement, Type, IPauseElement, ISymbolElement } from '@modules/workfield/structure';
+import { IStrings, IElements, IHashTable, IWordLinks, IStringLinks, OrderStrings, MainMeter, IString, IWordElement, ICLetterElement, ILetterElement, Type, IPauseElement, ISymbolElement } from '@modules/workfield/structure';
 
 import meterDetection from './meterDetection';
 import isLetter from './isLetter';
@@ -37,7 +37,7 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
 
     const meterDetect = meterDetection();
 
-    let mainMeter: MainMeter = null;
+    let mainMeter = {} as MainMeter;
 
     let wordLinks: IWordLinks = {};
 
@@ -131,11 +131,11 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
 
                     let type: Type = 'c';
 
-                    let isSolid: boolean = null;
+                    let isSolid: boolean = false;
 
-                    let isVoiced: boolean = null;
+                    let isVoiced: boolean = false;
 
-                    let isNoisy: boolean = null;
+                    let isNoisy: boolean = false;
 
                     accent = 0;
 
@@ -187,6 +187,7 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
                         }
 
                         if (
+                            prev &&
                             elements[prev] &&
                             elements[prev].type === 'c' &&
                             !(elements[prev] as ICLetterElement).isSolid
@@ -203,6 +204,7 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
                         isNoisy = isConsonantNoisy(char);
                         
                         if (
+                            prev &&
                             elements[prev] &&
                             elements[prev].type === 'c'
                         ) {

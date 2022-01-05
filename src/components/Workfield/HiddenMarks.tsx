@@ -7,12 +7,12 @@ import { accents } from '@modules/workfield';
 import React from 'react';
 
 export interface HiddenMarksProps {
-    strings: IStrings
-    orderStrings: OrderStrings
-    elements: IElements 
+    strings?: IStrings
+    orderStrings?: OrderStrings
+    elements?: IElements 
 }
 
-const HiddenMarks: FunctionalComponent<HiddenMarksProps> = ({ strings, orderStrings, elements }) => {
+const HiddenMarks: FunctionalComponent<HiddenMarksProps> = ({ strings = {}, orderStrings = [], elements = {} }) => {
     let stringsOrders: OrderStrings = [];
 
     const symbolsTags: {

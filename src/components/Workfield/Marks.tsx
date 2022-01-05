@@ -15,11 +15,11 @@ import {
 } from '@modules/workfield';
 
 export interface MarksProps {
-    tags: Tags[]
+    tags?: Tags[]
     lang: Langs
 }
 
-const Marks = ({tags, lang}: MarksProps) => {
+const Marks = ({tags = [], lang}: MarksProps) => {
     const renderedTags: React.ReactNode[] = [];
 
     const tagsLength = tags.length;
@@ -32,10 +32,10 @@ const Marks = ({tags, lang}: MarksProps) => {
         const sign = tags[index];
 
         const style = {
-            top: sign.tag.top,
-            left: sign.tag.left,
-            height: sign.tag.height,
-            width: sign.tag.width
+            top: sign.tag?.top,
+            left: sign.tag?.left,
+            height: sign.tag?.height,
+            width: sign.tag?.width
         };
 
         if (sign.type === 'p') {

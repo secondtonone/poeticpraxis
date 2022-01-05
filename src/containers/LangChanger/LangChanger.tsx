@@ -30,7 +30,7 @@ const LangChanger: FunctionalComponent = () => {
                 ? (e.target as HTMLSelectElement).value
                 : (e.target as HTMLElement).dataset.value;
                 changeLang(newLang as typeof lang);
-            document.documentElement.lang = newLang;
+            if (newLang) document.documentElement.lang = newLang;
         },
         [changeLang]
     );

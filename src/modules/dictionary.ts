@@ -48,7 +48,7 @@ async function requestMaker(dictionariesIds: string[]) {
     return Promise.all(dictionariesIds.map((id) => getDictionary(id)));
 }
 
-export async function getWords(text = '', wordsLength: number, cb?:(result: string) => void) {
+export async function getWords(text = '', wordsLength: number) {
     const words: string[] = [];
 
     const needWords =
@@ -74,9 +74,5 @@ export async function getWords(text = '', wordsLength: number, cb?:(result: stri
 
     const result = `${text} ${words.join(' ')}`;
 
-    if (typeof cb === 'function') {
-        cb(result);
-    } else {
-        return Promise.resolve(result);
-    }
+    return Promise.resolve(result);
 }

@@ -1,5 +1,5 @@
 import { h, createRef, FunctionalComponent } from 'preact';
-import { useState, useReducer, useEffect, useCallback } from 'preact/hooks';
+import { useState, useEffect, useCallback, useLayoutEffect } from 'preact/hooks';
 
 import Workfield, { WorkfieldProps } from './Workfield';
 import { Overflowed } from './styled';
@@ -38,7 +38,7 @@ let timerPaintFieldHandler = 0;
 
 let preventPaintFieldHandler = false;
 let lineHeight = 1;
-let textAnalyzingWorker: Worker = null;
+let textAnalyzingWorker: Worker | null = null;
 
 type State = IStructure & { stage: 'lint' | 'children' };
 
@@ -103,14 +103,16 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
     const mainField = createRef<HTMLTextAreaElement>();
     const fakeField = createRef<HTMLDivElement>();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setHandlers();
 
-        lineHeight =
-            parseInt(
-                window.getComputedStyle(mainField.current, null).lineHeight,
-                10
-            ) || 1;
+        if (mainField.current) {
+            lineHeight =
+                parseInt(
+                    window.getComputedStyle(mainField.current, null).lineHeight,
+                    10
+                ) || 1;
+        }
 
         if (window.Worker) textAnalyzingWorker = new AnalyzeWorker();
 
@@ -127,14 +129,14 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
         };
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         textLintingHandler(true);
     }, [text, zoomIn]);
 
-    useEffect(() => {
-        if(stage === 'children') {
+    useLayoutEffect(() => {
+        if(stage === 'children' && fakeField.current) {
             (async () => {
-                const children = fakeField.current.children;
+                const children = (fakeField.current as HTMLDivElement).children;
 
                 const stringsLinted = await tagMakerPromise(
                     children,
@@ -252,17 +254,19 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
     );
 
     const makeCaesuraHandler = () => {
-        makeCaesura(mainField.current, (text: string) => {
-            isNotStandAlone &&
-                setRhythmicState({
-                    text,
-                });
-        });
-        mainField.current.focus();
+        if (mainField.current) {
+            makeCaesura(mainField.current, (text: string) => {
+                isNotStandAlone &&
+                    setRhythmicState({
+                        text,
+                    });
+            });
+            mainField.current.focus();
+        }
     };
 
     const copyToClipboard = () => {
-        copyFrom(fakeField.current);
+        if (fakeField.current) copyFrom(fakeField.current);
     };
 
     /*getSelection = () => {
@@ -372,24 +376,22 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
         e.persist();
         e.preventDefault();
 
-        if (viewOnly) {
-            return false;
-        }
-
-        timerPaintFieldHandler = window.setTimeout(() => {
-            const target = e.target as HTMLDivElement;
-            if (!preventPaintFieldHandler) {
-                switch (target.dataset.type) {
-                    case 'v':
-                        accentHandler(target.id);
-                        break;
-                    case 'a/q':
-                        changeRhythmHandler(target.id);
-                        break;
+        if (!viewOnly) {
+            timerPaintFieldHandler = window.setTimeout(() => {
+                const target = e.target as HTMLDivElement;
+                if (!preventPaintFieldHandler) {
+                    switch (target.dataset.type) {
+                        case 'v':
+                            accentHandler(target.id);
+                            break;
+                        case 'a/q':
+                            changeRhythmHandler(target.id);
+                            break;
+                    }
                 }
-            }
-            preventPaintFieldHandler = false;
-        }, 200);
+                preventPaintFieldHandler = false;
+            }, 200);
+        }
     };
 
     const doubleClickPaintFieldHandler: React.MouseEventHandler<HTMLDivElement> =
@@ -398,20 +400,18 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
 
             const target = e.target as HTMLDivElement;
 
-            if (viewOnly || target.dataset.type === 'stub') {
-                return false;
-            }
+            if (!(viewOnly || target.dataset.type === 'stub')) {
+                clearTimeout(timerPaintFieldHandler);
+                preventPaintFieldHandler = true;
 
-            clearTimeout(timerPaintFieldHandler);
-            preventPaintFieldHandler = true;
-
-            switch (target.dataset.accent) {
-                case accents[0]:
-                    changeAccentInWord(target.id);
-                    break;
-                default:
-                    accentHandler(target.id, 0);
-                    break;
+                switch (target.dataset.accent) {
+                    case accents[0]:
+                        changeAccentInWord(target.id);
+                        break;
+                    default:
+                        accentHandler(target.id, 0);
+                        break;
+                }
             }
         };
 

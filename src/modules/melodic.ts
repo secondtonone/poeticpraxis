@@ -4,7 +4,6 @@ import {
     IStructure,
     IVLetterElement,
     ICLetterElement,
-    IdString,
 } from '@modules/workfield/structure';
 import { getGroup, calculateFormant } from '@modules/formants';
 import LetterGramma, { Music } from '@typings/LetterGramma';
@@ -44,7 +43,7 @@ const getNote = (
     //const predictedFormant = getFormant(prev, next);
 
     const formant = calculateFormant({ group, prev, next }); //getFinalFormant(group, predictedFormant);
-
+    // @ts-ignore
     let notes: number[] = group[formant];
 
     console.log(prev, vowel, next);

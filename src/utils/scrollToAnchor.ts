@@ -4,7 +4,7 @@ export default function scrollToAnchor(): void {
 
     if (hashParts.length > 1) {
         const hash: string = hashParts.slice(-1)[0];
-        document.querySelector(`#${hash}`).scrollIntoView();
+        document.querySelector(`#${hash}`)?.scrollIntoView();
     } else {
         window.scrollTo(0, 0);
     }

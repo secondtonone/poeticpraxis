@@ -82,12 +82,6 @@ export default function tagMaker(node: HTMLCollection, textAnalyzed: TextAnalyze
             strings,
             tags,
         });
-    } else {
-        return {
-            elements,
-            strings,
-            tags,
-        };
     }
 }
 

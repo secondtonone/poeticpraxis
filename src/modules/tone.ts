@@ -1,8 +1,8 @@
 import { ToneLib, Sampler, PolySynth } from "@typings/ToneTypes";
 
 export default class MelodyMaker {
-    static Tone: ToneLib = null;
-    static Instrument: Sampler | PolySynth = null;
+    static Tone: ToneLib;
+    static Instrument: Sampler | PolySynth;
 
     instruments = {
         piano: this.Piano,

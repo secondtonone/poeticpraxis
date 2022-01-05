@@ -8,8 +8,10 @@ import App from './containers/AppPrerender';
 if (typeof window === 'undefined') {
     // @ts-ignore
     global.window = {
+        // @ts-ignore
         screen: {},
         document: {
+            // @ts-ignore
             documentElement:{}
         }
     };

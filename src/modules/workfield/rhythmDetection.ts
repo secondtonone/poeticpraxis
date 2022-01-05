@@ -1,5 +1,5 @@
 import findCommon from '@utils/findCommon';
-import rhythmPresetHelper, { Meter, MeterSizes, MeterSizesKeys, RhythmPresetHelper } from './rhythmicPresentHelper';
+import rhythmPresetHelper, { Meter, MeterSizesKeys, RhythmPresetHelper } from './rhythmicPresentHelper';
 import { IElements, IString } from './structure';
 
 

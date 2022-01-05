@@ -13,18 +13,18 @@ export default class Drawing {
     widthCell = 55;
     variant: ThemeVariants = 'light';
 
-    canvas: HTMLCanvasElement = null;
-    ctx: CanvasRenderingContext2D = null;
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
 
     calcRatio() {
         const ctx = document.createElement('canvas').getContext('2d');
         const dpr = window.devicePixelRatio || 1;
         const bsr =
-            ctx.webkitBackingStorePixelRatio ||
-            ctx.mozBackingStorePixelRatio ||
-            ctx.msBackingStorePixelRatio ||
-            ctx.oBackingStorePixelRatio ||
-            ctx.backingStorePixelRatio ||
+            ctx?.webkitBackingStorePixelRatio ||
+            ctx?.mozBackingStorePixelRatio ||
+            ctx?.msBackingStorePixelRatio ||
+            ctx?.oBackingStorePixelRatio ||
+            ctx?.backingStorePixelRatio ||
             1;
         return dpr / bsr;
     }
@@ -47,7 +47,7 @@ export default class Drawing {
 
     setCtx(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
+        if (canvas.getContext('2d')) this.ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     }
 
     setVariant(variant: ThemeVariants) {

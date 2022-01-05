@@ -48,7 +48,7 @@ const Menu: FunctionalComponent<MenuProps> = ({ items, lang = 'ru' }) => {
     
     const [ isMenuHidden, setMenuVisibility ] = useState(true);
     
-    const mobileNavMenu = useRef<HTMLUListElement>();
+    const mobileNavMenu = useRef<HTMLUListElement>(null);
 
     const toggleMenu = useCallback(() => {
         const isHidden = !isMenuHidden;

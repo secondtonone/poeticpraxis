@@ -17,7 +17,7 @@ interface MatchListProps {
     compact?: boolean
     changeItem?: (index: number, value: string) => void
     type: string
-    list: Array<string[] | string>
+    list: Array<Array<string | undefined> | string>
     handler: React.MouseEventHandler<HTMLButtonElement>
 }
 

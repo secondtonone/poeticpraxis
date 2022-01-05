@@ -55,8 +55,8 @@ const Main: FunctionalComponent<MainProps> = ({
     } = useContext(StateContext);
 
     const isDevice = isTouchDevice();
-    const stringPauseButton = useRef<HTMLDivElement>();
-    const sectionElement = useRef<HTMLDivElement>();
+    const stringPauseButton = useRef<HTMLDivElement>(null);
+    const sectionElement = useRef<HTMLDivElement>(null);
 
     const mouseTracking: React.MouseEventHandler<HTMLTextAreaElement> = useCallback((e) => {
         requestAnimationFrame(() => {
@@ -64,7 +64,7 @@ const Main: FunctionalComponent<MainProps> = ({
                 ? sectionElement.current.offsetTop
                 : 196;
 
-            const beginButtonGap = stringPauseButton.current.offsetTop;
+            const beginButtonGap = stringPauseButton.current?.offsetTop || 0;
 
             const buttonHeight = 19;
 

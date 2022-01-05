@@ -1,60 +1,41 @@
-import { h, FunctionalComponent } from 'preact';
-
+import { h } from 'preact';
+import { memo } from 'preact/compat';
 import { translations } from './translations';
 import { IStrings, OrderStrings, IElements } from '@modules/workfield/structure';
 import Langs from '@typings/Langs';
 
 import {
-    Syllable,
-    StringNumber,
-    TriangleElement,
-    CircleElement,
-    SyllableAccent,
-    SyllableAccentType
+    StringNumber
 } from './styled';
 
-import rhythmPresets, { IRhythmPreset } from '@modules/workfield/rhythmPresets';
+import StringAccents from './StringAccents';
 
-const makeAccentSizeIndicator = (size: IRhythmPreset['size'], accent: IRhythmPreset['accent']) => {
-    let scheme: React.ReactNode[] = [];
-
-    for (let i = 1; i <= size; i++) {
-        if (i === accent) {
-            scheme.push(<TriangleElement key={`tr-${i}`} />);
-        } else {
-            scheme.push(<CircleElement key={`cl-${i}`} />);
-        }
-    }
-
-    return scheme;
-};
+import rhythmPresets from '@modules/workfield/rhythmPresets';
 
 export interface InfoMarksProps {
-    strings: IStrings
-    orderStrings: OrderStrings
-    lineHeight: number
-    elements: IElements
-    syllableOff: boolean
-    stringNumberOff: boolean
+    strings?: IStrings
+    orderStrings?: OrderStrings
+    lineHeight?: number
+    elements?: IElements
+    syllableOff?: boolean
+    stringNumberOff?: boolean
     lang: Langs
 }
 
-const InfoMarks: FunctionalComponent<InfoMarksProps> = ({
-    strings,
-    orderStrings,
+const InfoMarks = memo<InfoMarksProps>(({
+    strings = {},
+    orderStrings = [],
     lineHeight = 0,
-    elements,
+    elements = {},
     syllableOff,
     stringNumberOff,
     lang = 'ru'
 }) => {
-    let infoTags: React.ReactNode[] = [];
-
     const translation = translations[lang];
 
-    let stringCounter = 0;
+    let infoTags: React.ReactNode[] = [];
 
-    const dataTypeAQ = 'a/q';
+    let stringCounter = 0;
 
     const orderStringsLength = orderStrings.length;
 
@@ -74,7 +55,7 @@ const InfoMarks: FunctionalComponent<InfoMarksProps> = ({
 
             const vowels = string.vowel;
 
-            const delta = tag.height - lineHeight;
+            const delta = (tag?.height || 0) - lineHeight;
 
             const vowelAccentCount = vowels.filter(
                 (id) => elements[id].accent === 1 || elements[id].accent === 2
@@ -84,30 +65,26 @@ const InfoMarks: FunctionalComponent<InfoMarksProps> = ({
 
             const accentsInfo = `${translation['ACCENT']}/${translation['COUNT_METER']} - ${title ? translation[title]: title}`;
 
+            const tagTop = tag?.top || 0;
+
             infoTags.push([
                 syllableOff || !vowels.length ? null : (
-                    <Syllable
+                    <StringAccents
                         id={stringId}
-                        data-type={dataTypeAQ}
                         title={accentsInfo}
-                        key={`s-${tag.top}`}
-                        style={{ top: tag.top + delta }}>
-                        {vowelAccentCount ? (
-                            <SyllableAccent>
-                                {vowelAccentCount}
-                            </SyllableAccent>
-                        ) : null}
-                        {string.soundGramma.length}
-                        <SyllableAccentType>
-                            {makeAccentSizeIndicator(size, accent)}
-                        </SyllableAccentType>
-                    </Syllable>
+                        top={tagTop}
+                        delta={delta}
+                        vowelAccentCount={vowelAccentCount}
+                        soundGrammaLength={string.soundGramma.length}
+                        size={size}
+                        accent={accent}
+                    />
                 ),
                 stringNumberOff || !string.words.length ? null : (
                     <StringNumber
-                        key={`n-${tag.top}`}
+                        key={`n-${tagTop}`}
                         title={lineNumber}
-                        style={{ top: tag.top }}>
+                        style={{ top: tagTop }}>
                         {++stringCounter}
                     </StringNumber>
                 )
@@ -116,6 +93,6 @@ const InfoMarks: FunctionalComponent<InfoMarksProps> = ({
     }
 
     return <>{infoTags}</>; 
-};
+});
 
 export default InfoMarks;

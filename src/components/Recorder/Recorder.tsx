@@ -9,7 +9,7 @@ import { translations } from './translations';
 import Button, { ButtonProps } from '@components/Button';
 import MicIcon from '@icons/Mic';
 
-let recognition: InstanceType<typeof Recognition> = null;
+let recognition: InstanceType<typeof Recognition>;
 
 interface RecorderProps extends ButtonProps {
     lang: Langs, 

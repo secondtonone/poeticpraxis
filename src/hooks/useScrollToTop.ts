@@ -1,7 +1,7 @@
-import { useEffect } from 'preact/hooks';
+import { useLayoutEffect } from 'preact/hooks';
 
 const useScrollToTop = () => {
-    useEffect(() => {
+    useLayoutEffect(() => {
         requestAnimationFrame(() => window.scrollTo(0, 0));
     }, [])
 };

@@ -22,7 +22,7 @@ interface SelectProps {
 }
 
 function Select(props: SelectProps) {
-    const select = useRef<HTMLSelectElement>();
+    const select = useRef<HTMLSelectElement>(null);
 
     const onClick = useCallback(() => {
         if (select.current) select.current.focus();
@@ -50,13 +50,9 @@ function Select(props: SelectProps) {
                 id={props.id}
                 value={props.value}
                 onChange={props.onChange}>
-                {props.options.map((option, index) => {
-                    if (!option.disabled) {
-                        return (
-                            <option key={`sopt-${index}`} value={option.value}>{option.title}</option>
-                        );
-                    }
-                })}
+                {props.options
+                    .filter((option) => !option.disabled)
+                    .map((option, index) => (<option key={`sopt-${index}`} value={option.value}>{option.title}</option>))}
             </StyledSelect>
         </Container>
     );

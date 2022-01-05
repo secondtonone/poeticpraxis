@@ -43,7 +43,7 @@ const Textarea = memo(({
     const textarea = useRef<HTMLTextAreaElement>(null);
 
     useLayoutEffect(() => {
-        getRef && getRef(textarea.current);
+        if(typeof getRef === 'function' && textarea.current) getRef(textarea.current);
         return () => cancelAnimationFrame(delayHeightChange);
     }, []);
 
@@ -52,9 +52,11 @@ const Textarea = memo(({
     }, [value, zoomIn]);
 
     const heightChange = useCallback(() => {
-        textarea.current.style.height = 'auto';
-        const scrollHeight = textarea.current.scrollHeight;
-        textarea.current.style.height = scrollHeight + 'px';
+        if (textarea.current) {
+            textarea.current.style.height = 'auto';
+            const scrollHeight = textarea.current.scrollHeight;
+            textarea.current.style.height = scrollHeight + 'px';
+        }
     },[]);
 
     return (

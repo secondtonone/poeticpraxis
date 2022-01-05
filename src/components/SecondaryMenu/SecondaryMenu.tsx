@@ -70,10 +70,7 @@ const SecondaryMenu = <T extends string>({
                                 count={countTab}
                                 key={`item-${index}`}
                                 onClick={() => {
-                                    if (item.disabled) {
-                                        return false;
-                                    }
-                                    handler(item.value);
+                                    if (!item.disabled) handler(item.value);
                                 }}
                                 disabled={item.disabled}
                                 active={current === item.value}>

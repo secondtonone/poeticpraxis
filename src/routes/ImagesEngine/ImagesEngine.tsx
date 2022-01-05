@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 
 import StateContext from '@contexts/stateContext';
 import useImagineEngineActions from '@hooks/useImagineEngineActions';
-import useRhythmicActions from '@hooks/useRhythmicActions';
 import useTitlePage from '@hooks/useTitlePage';
 import useMessage from '@hooks/useMessage';
 import useScrollToTop from '@hooks/useScrollToTop';

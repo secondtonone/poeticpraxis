@@ -1,4 +1,4 @@
-export let recorder: InstanceType<typeof MediaRecorder> = null;
+export let recorder: InstanceType<typeof MediaRecorder> | null = null;
 
 let chunks: Blob[] = [];
 

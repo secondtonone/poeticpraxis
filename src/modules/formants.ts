@@ -1,28 +1,34 @@
 import { IVLetterElement, ICLetterElement } from '@modules/workfield/structure';
 import isConsonantAlwaysSolid from '@modules/workfield/isConsonantAlwaysSolid';
 
+type FormantAccented = {
+    main: number[];
+    beforeSolid?: number[];
+    afterSoft?: number[];
+    beforeSoft?: number[];
+    circledBySoft?: number[];
+    beforeVowel?: number[];
+    afterAlwaysSolid?: number[];
+};
+
+type FormantReduced = {
+    main: number[];
+    afterAlwaysSolid?: number[];
+    afterSoft?: number[];
+    beforeSolid?: number[];
+};
+
 export interface IFormat {
-    tone: number;
-    reduced: {
-        main: number[];
-        afterAlwaysSolid?: number[];
-        afterSoft?: number[];
-        beforeSolid?: number[];
-    };
-    accented?: {
-        main: number[];
-        beforeSolid?: number[];
-        afterSoft?: number[];
-        beforeSoft?: number[];
-        circledBySoft?: number[];
-        beforeVowel?: number[];
-        afterAlwaysSolid?: number[];
-    };
+    tone: number
+    reduced: FormantReduced
+    accented: FormantAccented
 }
 
-type FormantList = keyof IFormat['reduced'] | keyof IFormat['accented'];
+type FormantList = keyof FormantAccented | keyof FormantReduced;
 
 type FormantListExtended = FormantList | '';
+
+type LetterElementExtended = ICLetterElement | IVLetterElement | null;
 
 export interface IFormants {
     [key: string]: IFormat;
@@ -163,45 +169,45 @@ const formants: IFormants = {
     },
 };
 
-const beforeVowel = (next: ICLetterElement | IVLetterElement): FormantListExtended =>
-    next['type'] === 'v' ? 'beforeVowel' : '';
-const beforeSolid = (next: ICLetterElement | IVLetterElement): FormantListExtended =>
+const beforeVowel = (next: LetterElementExtended): FormantListExtended =>
+    next && next['type'] === 'v' ? 'beforeVowel' : '';
+const beforeSolid = (next: LetterElementExtended): FormantListExtended =>
     (next as ICLetterElement)['isSolid'] === true ? 'beforeSolid' : '';
-const afterAlwaysSolid = (prev: ICLetterElement | IVLetterElement): FormantListExtended =>
-    (prev as ICLetterElement)['isSolid'] === true && isConsonantAlwaysSolid(prev['char'])
+const afterAlwaysSolid = (prev: LetterElementExtended): FormantListExtended =>
+    prev && (prev as ICLetterElement)['isSolid'] === true && isConsonantAlwaysSolid(prev['char'])
         ? 'afterAlwaysSolid'
         : '';
-const beforeSoft = (next: ICLetterElement | IVLetterElement): FormantListExtended =>
+const beforeSoft = (next: LetterElementExtended): FormantListExtended =>
     (next as ICLetterElement)['isSolid'] === false ? 'beforeSoft' : '';
-const afterSoft = (prev: ICLetterElement | IVLetterElement): FormantListExtended =>
+const afterSoft = (prev: LetterElementExtended): FormantListExtended =>
     (prev as ICLetterElement)['isSolid'] === false ? 'afterSoft' : '';
 const circledBySoft = (
-    prev: ICLetterElement | IVLetterElement,
-    next: ICLetterElement | IVLetterElement
+    prev: LetterElementExtended,
+    next: LetterElementExtended
 ): FormantListExtended => (afterSoft(prev) && beforeSoft(next) ? 'circledBySoft' : '');
 
-const forPrev = (prev: ICLetterElement | IVLetterElement): FormantListExtended =>
+const forPrev = (prev: LetterElementExtended): FormantListExtended =>
     prev ? afterSoft(prev) || afterAlwaysSolid(prev) : '';
-const forNext = (next: ICLetterElement | IVLetterElement): FormantListExtended =>
+const forNext = (next: LetterElementExtended): FormantListExtended =>
     next ? beforeSoft(next) || beforeSolid(next) || beforeVowel(next) : '';
 const forBoth = (
-    prev: ICLetterElement | IVLetterElement,
-    next: ICLetterElement | IVLetterElement
+    prev: LetterElementExtended,
+    next: LetterElementExtended
 ): FormantListExtended => (next && prev ? circledBySoft(prev, next) : '');
 
 const getFormant = (
-    prev: ICLetterElement | IVLetterElement,
-    next: ICLetterElement | IVLetterElement
+    prev: LetterElementExtended,
+    next: LetterElementExtended
 ): FormantList => forBoth(prev, next) || forNext(next) || forPrev(prev) || 'main';
 
 const getGroup = (
     char: string,
     isAccented: boolean
-): IFormat['reduced'] & IFormat['accented'] =>
+): FormantAccented | FormantReduced =>
     isAccented ? formants[char].accented : formants[char].reduced;
 
 const getFinalFormant = (
-    group: IFormat['reduced'] | IFormat['accented'],
+    group: FormantReduced | FormantAccented,
     predictedFormant: FormantList
 ): FormantList =>
     Object.keys(group).includes(predictedFormant) ? predictedFormant : 'main';
@@ -211,9 +217,9 @@ const calculateFormant = ({
     prev,
     next,
 }: {
-    group: IFormat['reduced'] | IFormat['accented'];
-    prev: ICLetterElement | IVLetterElement;
-    next: ICLetterElement | IVLetterElement;
+    group: FormantReduced | FormantAccented;
+    prev: LetterElementExtended;
+    next: LetterElementExtended;
 }): FormantList =>
     getFinalFormant(group, getFormant(prev, next));
 

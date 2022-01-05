@@ -1,6 +1,5 @@
 import { h, FunctionalComponent } from 'preact';
-import { useContext, useEffect, useState } from 'preact/compat';
-import { ThemeContext } from 'styled-components';
+import { useLayoutEffect, useState } from 'preact/compat';
 
 import { PageHeader, ContentField, Logo, Block } from './styled';
 import {
@@ -18,16 +17,17 @@ import Flex from '@components/Flex';
 import LogoPic from '@public/img/Logo.svg';
 import LogoPicWhite from '@public/img/Logo-white.svg';
 import Langs from '@typings/Langs';
+import ThemeVariants from '@typings/ThemeVariants';
 
 interface HeaderProps {
     lang?: Langs
+    variant: ThemeVariants
 }
 
-const Header: FunctionalComponent<HeaderProps> = ({ children, lang = 'ru' }) => {
-    const themeContext = useContext(ThemeContext);
+const Header: FunctionalComponent<HeaderProps> = ({ children, lang = 'ru', variant }) => {
     const [boundHeight, setBoundHeight] = useState<number>(800);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         requestAnimationFrame(() => {
             setBoundHeight(window.innerHeight);
         });
@@ -42,7 +42,7 @@ const Header: FunctionalComponent<HeaderProps> = ({ children, lang = 'ru' }) => 
                             <BetaSign>
                                 <Logo
                                     src={
-                                        themeContext.name === 'light'
+                                        variant === 'light'
                                             ? LogoPic
                                             : LogoPicWhite
                                     }

@@ -25,7 +25,7 @@ const Dropdown: FunctionalComponent<DropdownProps> = ({
     onChange,
 }) => {
     const [isListOpen, setVisibility] = useState<boolean>(isOpen);
-    const dropdown = useRef<HTMLUListElement>();
+    const dropdown = useRef<HTMLUListElement>(null);
     const lang = value;
 
     useEffect(() => {

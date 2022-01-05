@@ -105,32 +105,46 @@ const config = {
             ], */
             include: /* 'asyncChunks' */ 'initial',
         }),
-        new CopyWebpackPlugin([
-            {
-                from: 'public/robots.txt',
-                ignore: ['.DS_Store'],
-            },
-            {
-                from: 'public/sitemap.xml',
-                ignore: ['.DS_Store'],
-            },
-            {
-                from: 'public/.htaccess',
-                ignore: ['.DS_Store'],
-            },
-            {
-                from: 'public/img/Sign.svg',
-                ignore: ['.DS_Store'],
-            },
-            {
-                from: 'public/audio',
-                ignore: ['.DS_Store'],
-            },
-            {
-                from: 'public/dictionary',
-                ignore: ['.DS_Store'],
-            },
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: 'public/robots.txt',
+                    globOptions: {
+                        ignore: ['.DS_Store']
+                    }
+                },
+                {
+                    from: 'public/sitemap.xml',
+                    globOptions: {
+                        ignore: ['.DS_Store']
+                    }
+                },
+                {
+                    from: 'public/.htaccess',
+                    globOptions: {
+                        ignore: ['.DS_Store']
+                    }
+                },
+                {
+                    from: 'public/img/Sign.svg',
+                    globOptions: {
+                        ignore: ['.DS_Store']
+                    }
+                },
+                {
+                    from: 'public/audio',
+                    globOptions: {
+                        ignore: ['.DS_Store']
+                    }
+                },
+                {
+                    from: 'public/dictionary',
+                    globOptions: {
+                        ignore: ['.DS_Store']
+                    }
+                },
+            ]
+        }),
         new OfflinePlugin({
             appShell: '/',
             responseStrategy: 'network-first',

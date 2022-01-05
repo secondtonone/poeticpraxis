@@ -232,11 +232,7 @@ const FieldEditable = styled.div<ZoomProps>`
         outline: none;
     }
 
-    ${(props) => {
-        if (props.zoomIn) {
-            return `font-size: 28px;`;
-        }
-    }};
+    ${(props) => (props.zoomIn ? 'font-size: 28px;' : '')};
 `;
 
 const FakeField = styled.div<ZoomProps>`
@@ -250,11 +246,7 @@ const FakeField = styled.div<ZoomProps>`
         outline: none;
     }
 
-    ${(props) => {
-        if (props.zoomIn) {
-            return `font-size: 28px;`;
-        }
-    }};
+    ${(props) => (props.zoomIn ? 'font-size: 28px;' : '')};
 `;
 
 const accentMixin = (color: string, imgSVG: string, imgPNG: string, accent: AccentColors) => {
@@ -303,16 +295,6 @@ const accentMixin = (color: string, imgSVG: string, imgPNG: string, accent: Acce
 
 const AccentRelative = styled.span<{accent: AccentColors}>`
     ${(props) => {
-        if (props.accent === 'red' || props.accent === 'red_secondary') {
-            return accentMixin(
-                props.accent === 'red'
-                    ? props.theme.accentColor
-                    : theme.secondRed,
-                blackTriangleSVG,
-                blackTrianglePNG,
-                props.accent
-            );
-        }
         if (props.accent === 'black') {
             return accentMixin(
                 props.theme.secondColor,
@@ -329,6 +311,15 @@ const AccentRelative = styled.span<{accent: AccentColors}>`
                 props.accent
             );
         }
+
+        return accentMixin(
+            props.accent === 'red'
+                ? props.theme.accentColor
+                : theme.secondRed,
+            blackTriangleSVG,
+            blackTrianglePNG,
+            props.accent
+        );
     }}
 `;
 
@@ -339,28 +330,11 @@ const Accent = styled.span<{accent: AccentColors}>`
     border: 0;
 
     ${(props) => {
-        if (props.accent === 'red') {
-            return `
-                color: ${theme.primaryRed};
-                `;
-        }
-
-        if (props.accent === 'black') {
-            return `
-                color: ${theme.primaryBlack};
-                `;
-        }
-
-        if (props.accent === 'red_secondary') {
-            return `
-                color: ${theme.secondRed};
-                `;
-        }
-        if (props.accent === 'gray') {
-            return `
-                    color: ${theme.grayColor};
-                    `;
-        }
+        if (props.accent === 'red') return `color: ${theme.primaryRed};`;
+        if (props.accent === 'black') return `color: ${theme.primaryBlack};`;
+        if (props.accent === 'red_secondary') return `color: ${theme.secondRed};`;
+        if (props.accent === 'gray') return `color: ${theme.grayColor};`;
+        return '';
     }}
 `;
 
@@ -391,21 +365,18 @@ const PaintField = styled.div<ZoomProps>`
         outline: ${(props) => props.theme.primaryColor};
     }
 
-    ${(props) => {
-        if (props.zoomIn) {
-            return `
-                background: ${theme.primaryBlack};
-                font-size: 28px;
+    ${(props) => (props.zoomIn ? `
+        background: ${theme.primaryBlack};
+        font-size: 28px;
 
-                & span {
-                    font-size: inherit;
-                }
-                
-                & span:hover::before {
-                    top: 29px;
-                }`;
+        & span {
+            font-size: inherit;
         }
-    }}
+        
+        & span:hover::before {
+            top: 29px;
+        }` : '')
+    }
 `;
 
 const Overflowed = styled.div`

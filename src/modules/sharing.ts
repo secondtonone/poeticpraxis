@@ -62,7 +62,7 @@ export function decodeDictionary(text: string, dictionary: string) {
     return stringsDictionary;
 }
 
-export function linkToStateDecode(shared: string, onSuccess: (props: { text: string, stringsDictionary: IDictionary }) => void, onError: () => void) {
+export function linkToStateDecode(shared: string | null, onSuccess: (props: { text: string, stringsDictionary: IDictionary }) => void, onError: () => void) {
     if (!shared) {
         return;
     }

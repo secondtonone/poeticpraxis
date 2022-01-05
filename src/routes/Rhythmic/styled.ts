@@ -110,21 +110,16 @@ const accentMixin = (color: string, accent: AccentColors) => `
 
 const AccentRelative = styled.span<{ accent: AccentColors }>`
     ${({ accent, theme: { accentColor, secondColor, grayColor }}) => {
-        if (accent === 'red' || accent === 'red_secondary') {
-            return accentMixin(
-                accent === 'red'
-                    ? accentColor
-                    : theme.secondRed,
-                accent
-            );
-        }
-        if (accent === 'black') {
-            return accentMixin(secondColor, accent);
-        }
-        if (accent === 'gray') {
-            return accentMixin(grayColor, accent);
-        }
-    }}
+        if (accent === 'black') return accentMixin(secondColor, accent);
+        if (accent === 'gray') return accentMixin(grayColor, accent);
+
+        return accentMixin(
+            accent === 'red'
+                ? accentColor
+                : theme.secondRed,
+            accent
+        );
+}}
 `;
 
 export {

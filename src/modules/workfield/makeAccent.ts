@@ -3,7 +3,6 @@ import updateElementsByStringLink from './updateElementsByStringLink';
 import updateWordsDictionary from './updateWordsDictionary';
 import updateStringsDictionary from './updateStringsDictionary';
 import makeSoundGramma from './makeSoundGramma';
-import meterDetection from './meterDetection';
 import stringOnSteps from './stringOnSteps';
 import rhythmDetection from './rhythmDetection';
 import { IStructure, IVLetterElement, IWordElement } from './structure';
@@ -13,7 +12,7 @@ import { AccentTypes } from './accents';
 interface MakeAccentProps extends Pick<IStructure, 'elements' | 'strings' | 'stringLinks'> {
     wordsDictionary: IDictionary
     stringsDictionary: IDictionary
-    accent: AccentTypes
+    accent?: AccentTypes
     signId: string
 }
 
@@ -60,7 +59,7 @@ export default function makeAccent({
 
     /* Работа с ударением */
 
-    clonedElements[signId].accent = Number.isInteger(accent)
+    clonedElements[signId].accent = accent && Number.isInteger(accent)
         ? accent
         : wordAccent(elementAccent);
 
