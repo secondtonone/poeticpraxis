@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { useState, useCallback } from 'preact/hooks';
 
 import Langs from '@typings/Langs';

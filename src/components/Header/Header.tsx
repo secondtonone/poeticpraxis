@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { useLayoutEffect, useState } from 'preact/compat';
 
 import { PageHeader, ContentField, Logo, Block } from './styled';

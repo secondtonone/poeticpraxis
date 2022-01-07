@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { useState, useContext, useCallback, useEffect, useRef } from 'preact/hooks';
 import { memo } from 'preact/compat';
 

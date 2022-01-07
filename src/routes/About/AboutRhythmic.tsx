@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { lazy, Suspense } from 'preact/compat';
 
 import { NavLink } from 'react-router-dom';

@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { memo } from 'preact/compat';
 import styled from 'styled-components';
 

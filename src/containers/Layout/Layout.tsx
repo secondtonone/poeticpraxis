@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { useContext, useLayoutEffect, useMemo } from 'preact/hooks';
 import { ThemeProvider } from 'styled-components';
 

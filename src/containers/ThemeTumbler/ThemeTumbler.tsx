@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { useContext, useCallback } from 'preact/hooks';
 import StateContext from '@contexts/stateContext';
 

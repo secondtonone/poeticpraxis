@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 
 import useSessionStorage from '@hooks/useSessionStorage';
 import Langs from '@typings/Langs';

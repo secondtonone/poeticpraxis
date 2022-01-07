@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { memo } from 'preact/compat';
 
 const canvasStyle = { width: '100%' };

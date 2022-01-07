@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { FC } from 'preact/compat';
 import styled, { keyframes } from 'styled-components';
 

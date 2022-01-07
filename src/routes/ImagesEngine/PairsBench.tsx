@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { useCallback } from 'preact/hooks';
 
 import { copying } from '@modules/copying';

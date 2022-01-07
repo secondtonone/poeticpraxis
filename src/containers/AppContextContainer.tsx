@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { useEffect, useReducer, useMemo, useCallback } from 'preact/hooks';
 import { rhythmicModel, imagesEngineModel, layoutModel } from '@store/models';
 import { Slices } from '@typings/State';

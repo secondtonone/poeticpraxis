@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { Component } from 'preact';
 
 import Langs from '@typings/Langs';
 import MessageBox from '@components/MessageBox';

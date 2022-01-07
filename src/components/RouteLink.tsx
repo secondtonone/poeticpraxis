@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 import styled from 'styled-components';
 

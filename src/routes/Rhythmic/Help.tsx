@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { useContext } from 'preact/hooks';
 
 import StateContext from '@contexts/stateContext';

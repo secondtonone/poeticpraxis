@@ -25,9 +25,8 @@
             "ScriptHost"
         ],
         "baseUrl": "./",
-        "jsx": "preserve",
-        "jsxFactory": "h",
-        "jsxFragmentFactory": "Fragment",
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact",
         "types": ["preact", "node"],
         "plugins": [
             {

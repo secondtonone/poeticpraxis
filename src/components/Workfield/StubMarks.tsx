@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { IStructure } from '@modules/workfield/structure';
 
 import { SyllableStub, MarkStub } from './styled';

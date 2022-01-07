@@ -1,5 +1,4 @@
-import { h } from 'preact';
-import Icon, {IconProps} from '@components/Icon';
+import Icon, { IconProps } from '@components/Icon';
 
 export default function ({color = '', ...props}: IconProps & { color?: string }) {
     return (

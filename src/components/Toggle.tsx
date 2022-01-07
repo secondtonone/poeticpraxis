@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import styled from 'styled-components';
 
 import theme from '@styles/theme';

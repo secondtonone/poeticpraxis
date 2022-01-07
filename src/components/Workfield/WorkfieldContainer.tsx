@@ -1,4 +1,4 @@
-import { h, createRef, FunctionalComponent } from 'preact';
+import { createRef, FunctionalComponent } from 'preact';
 import { useState, useEffect, useCallback, useLayoutEffect } from 'preact/hooks';
 
 import Workfield, { WorkfieldProps } from './Workfield';

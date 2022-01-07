@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import Icon, { IconProps } from '@components/Icon';
 
 function Melody(props: IconProps) {

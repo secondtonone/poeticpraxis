@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import Icon, { IconProps } from '@components/Icon';
 
 const Telegram  = (props: IconProps) => {

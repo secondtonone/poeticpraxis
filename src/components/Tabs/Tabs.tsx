@@ -1,5 +1,3 @@
-import { h } from 'preact';
-
 import { Tab, Icon } from './styled';
 
 interface TabsProps {

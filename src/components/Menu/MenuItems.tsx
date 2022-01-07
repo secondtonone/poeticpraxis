@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { NavMenuItem } from './styled';
 
 interface MenuItemsProps<T> {

@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { memo } from 'preact/compat';
 import { useMemo } from 'preact/hooks';
 

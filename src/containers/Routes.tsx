@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { Route, Redirect, Switch, RouteComponentProps } from 'react-router-dom';
 import ComponentDefault from '@typings/ComponentDefault';
 

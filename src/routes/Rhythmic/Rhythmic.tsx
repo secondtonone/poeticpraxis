@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { Suspense, lazy } from 'preact/compat';
 import { useContext, useEffect, useState, useCallback } from 'preact/hooks';
 

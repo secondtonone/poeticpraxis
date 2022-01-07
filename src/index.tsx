@@ -4,7 +4,7 @@ if (DEV) {
     require('preact/debug');
 }
 
-import { FunctionalComponent, h, hydrate } from 'preact';
+import { FunctionalComponent, hydrate } from 'preact';
 
 import theme from '@styles/theme';
 import App from '@containers/App';

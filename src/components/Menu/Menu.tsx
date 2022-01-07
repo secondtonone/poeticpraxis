@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from 'preact';
+import { FunctionalComponent } from 'preact';
 import { useState, useCallback, useRef } from 'preact/hooks';
 
 import { NavBar, NavMenu, NavMenuBar, MobileNavMenu, NavMenuTitle, NavMenuItem } from './styled';
