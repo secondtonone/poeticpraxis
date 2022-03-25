@@ -9,20 +9,20 @@ interface WorkerProps {
 }
 
 export default function getAnalyzedTextFromWorker({ worker , text, stringsDictionary, wordsDictionary }: WorkerProps) {
-    return new Promise<TextAnalyzerResult>((resolve, reject) => {
-        worker.postMessage({
-            text,
-            stringsDictionary,
-            wordsDictionary,
-        });
-
-        worker.onmessage = (e: MessageEvent<TextAnalyzerResult>) => {
-            let analyzedText = e.data;
-            resolve(analyzedText);
-        };
-
-        worker.onerror = (e) => {
-            reject(e);
-        };
+  return new Promise<TextAnalyzerResult>((resolve, reject) => {
+    worker.postMessage({
+      text,
+      stringsDictionary,
+      wordsDictionary,
     });
+
+    worker.onmessage = (e: MessageEvent<TextAnalyzerResult>) => {
+      const analyzedText = e.data;
+      resolve(analyzedText);
+    };
+
+    worker.onerror = (e) => {
+      reject(e);
+    };
+  });
 }

@@ -9,7 +9,7 @@ interface RangeProps extends React.HTMLAttributes<HTMLInputElement> {
     disabled?: boolean
 }
 
-export default memo<RangeProps>((props) => <Range type="range" {...props} />)
+export default memo<RangeProps>((props) => <Range type="range" {...props} />);
 
 const Range = styled.input<RangeProps>`
     -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
@@ -18,7 +18,7 @@ const Range = styled.input<RangeProps>`
     background: transparent; /* Otherwise white in Chrome */
     height: 4px;
     ${(props) =>
-        props.hideThumb ? `overflow: hidden;` : ''} &::-webkit-slider-thumb {
+    props.hideThumb ? `overflow: hidden;` : ''} &::-webkit-slider-thumb {
         -webkit-appearance: none;
     }
 
@@ -53,7 +53,7 @@ const Range = styled.input<RangeProps>`
             0 2px 2px 0 rgba(0, 0, 0, 0.098),
             0 1px 5px 0 rgba(0, 0, 0, 0.084)
                 ${(props) =>
-                    props.hideThumb ? ' , -1000px 0 0 1000px #DE2420' : ''};
+    props.hideThumb ? ' , -1000px 0 0 1000px #DE2420' : ''};
     }
 
     /* All the same stuff for Firefox */
@@ -62,7 +62,7 @@ const Range = styled.input<RangeProps>`
             0 2px 2px 0 rgba(0, 0, 0, 0.098),
             0 1px 5px 0 rgba(0, 0, 0, 0.084)
                 ${(props) =>
-                    props.hideThumb ? ' , -1000px 0 0 1000px #DE2420' : ''};
+    props.hideThumb ? ' , -1000px 0 0 1000px #DE2420' : ''};
         height: ${(props) => (props.hideThumb ? `1px` : '16px')};
         width: ${(props) => (props.hideThumb ? `1px` : '16px')};
         border-radius: 50%;
@@ -106,9 +106,9 @@ const Range = styled.input<RangeProps>`
     &::-moz-range-progress {
         height: 4px;
         ${(props) =>
-            props.hideThumb
-                ? `background-color: ${props.theme.accentColor};`
-                : ''};
+    props.hideThumb
+      ? `background-color: ${props.theme.accentColor};`
+      : ''};
     }
 
     &::-ms-track {
@@ -121,16 +121,16 @@ const Range = styled.input<RangeProps>`
     }
     &::-ms-fill-lower {
         ${(props) =>
-            props.hideThumb
-                ? `background-color: ${props.theme.accentColor};`
-                : ''};
+    props.hideThumb
+      ? `background-color: ${props.theme.accentColor};`
+      : ''};
         border-radius: 4px;
     }
     &:focus::-ms-fill-lower {
         ${(props) =>
-            props.hideThumb
-                ? `background-color: ${props.theme.accentColor};`
-                : ''};
+    props.hideThumb
+      ? `background-color: ${props.theme.accentColor};`
+      : ''};
     }
     &::-ms-fill-upper {
         background-color: ${(props) => props.theme.grayColor};

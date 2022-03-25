@@ -1,13 +1,13 @@
 const rhythmPresetHelper = {
-    2: {
-        0: 1,
-        1: 2
-    },
-    3: {
-        0: 3,
-        1: 4,
-        2: 5
-    }
+  2: {
+    0: 1,
+    1: 2
+  },
+  3: {
+    0: 3,
+    1: 4,
+    2: 5
+  }
 } as const;
 
 export type RhythmPresetHelper = typeof rhythmPresetHelper;

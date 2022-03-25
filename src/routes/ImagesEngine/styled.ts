@@ -56,7 +56,7 @@ const MainButton = styled(Button)<{minHeight?: string}>`
 `;
 
 export {
-    MainSelect,
-    ButtonContainer,
-    MainButton,
+  MainSelect,
+  ButtonContainer,
+  MainButton,
 };

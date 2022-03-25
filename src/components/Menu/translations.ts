@@ -1,22 +1,22 @@
 const ru = {
-    menu: {
-        RHYTHMICS: 'Просодия',
-        ENGINE: 'Машина образов',
-        ABOUT: 'Главная'
-    }
+  menu: {
+    RHYTHMICS: 'Просодия',
+    ENGINE: 'Машина образов',
+    ABOUT: 'Главная'
+  }
 };
 
 const en = {
-    menu: {
-        RHYTHMICS: 'Prosody',
-        ENGINE: 'Images engine',
-        ABOUT: 'Home'
-    }
+  menu: {
+    RHYTHMICS: 'Prosody',
+    ENGINE: 'Images engine',
+    ABOUT: 'Home'
+  }
 };
 
 const translations = {
-    ru,
-    en
+  ru,
+  en
 };
 
 export { translations };

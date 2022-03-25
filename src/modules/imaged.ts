@@ -6,13 +6,13 @@
 } */
 
 function chunkArray(arr: string[], chunkSize: number) {
-    var results:[first?: string, second?: string][] = [];
+  const results:[first?: string, second?: string][] = [];
 
-    while (arr.length) {
-        results.push(arr.splice(0, chunkSize) as [first?: string, second?: string]);
-    }
+  while (arr.length) {
+    results.push(arr.splice(0, chunkSize) as [first?: string, second?: string]);
+  }
 
-    return results;
+  return results;
 }
 
 /*function shuffle(arr) {
@@ -22,11 +22,11 @@ function chunkArray(arr: string[], chunkSize: number) {
 }*/
 
 function shuffle(a: string[]) {
-    for (let i = a.length; i; i--) {
-        let j = Math.floor(Math.random() * i);
-        [a[i - 1], a[j]] = [a[j], a[i - 1]];
-    }
-    return a;
+  for (let i = a.length; i; i--) {
+    const j = Math.floor(Math.random() * i);
+    [a[i - 1], a[j]] = [a[j], a[i - 1]];
+  }
+  return a;
 }
 
 /* function zip(xs) {
@@ -42,15 +42,15 @@ function shuffle(a: string[]) {
 }*/
 
 export function imaged(words: string[], chunkSize = 2) {
-    return chunkArray(shuffle(shuffle(words)), chunkSize);
+  return chunkArray(shuffle(shuffle(words)), chunkSize);
 }
 
 export function stringToWords(text = '') {
-    const parsed = text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ'-]+/g);
+  const parsed = text.toLowerCase().match(/[a-zA-ZА-Яа-яёЁ'-]+/g);
 
-    return parsed
-        ? parsed.filter((n: string) => {
-            return /[^'-]/g.test(n);
-        }) || []
-        : [];
+  return parsed
+    ? parsed.filter((n: string) => {
+      return /[^'-]/g.test(n);
+    }) || []
+    : [];
 }

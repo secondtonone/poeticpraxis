@@ -17,112 +17,112 @@ interface MakeAccentProps extends Pick<IStructure, 'elements' | 'strings' | 'str
 }
 
 export default function makeAccent({
-    signId,
-    elements,
-    strings,
-    stringLinks,
-    /* wordLinks, */
-    wordsDictionary,
-    stringsDictionary,
-    accent
+  signId,
+  elements,
+  strings,
+  stringLinks,
+  /* wordLinks, */
+  wordsDictionary,
+  stringsDictionary,
+  accent
 }: MakeAccentProps) {
-    let clonedElements = Object.assign({}, elements);
-    let clonedStrings = Object.assign({}, strings);
-    let clonedWordsDictionary = Object.assign({}, wordsDictionary);
-    let clonedStringsDictionary = Object.assign({}, stringsDictionary);
+  let clonedElements = Object.assign({}, elements);
+  const clonedStrings = Object.assign({}, strings);
+  let clonedWordsDictionary = Object.assign({}, wordsDictionary);
+  let clonedStringsDictionary = Object.assign({}, stringsDictionary);
 
-    const element = clonedElements[signId] as IVLetterElement;
+  const element = clonedElements[signId] as IVLetterElement;
 
-    const idString = element.idString;
+  const idString = element.idString;
 
-    // const meterDetect = meterDetection();
+  // const meterDetect = meterDetection();
 
-    const idWord = `${idString}${element.idToken}`;
+  const idWord = `${idString}${element.idToken}`;
 
-    //let stringLinksTriggered = false;
+  //let stringLinksTriggered = false;
 
-    let string = clonedStrings[idString];
+  const string = clonedStrings[idString];
 
-    const stringLowerCased = string.string.toLowerCase();
+  const stringLowerCased = string.string.toLowerCase();
 
-    const elementAccent = element.accent;
+  const elementAccent = element.accent;
 
-    /* Удаление ударения */
+  /* Удаление ударения */
 
-    if ((clonedElements[idWord] as IWordElement).accents && (clonedElements[idWord] as IWordElement).accents[0]) {
-        //const element = clonedElements[idWord].accents[0];
+  if ((clonedElements[idWord] as IWordElement).accents && (clonedElements[idWord] as IWordElement).accents[0]) {
+    //const element = clonedElements[idWord].accents[0];
 
-        //clonedElements[element].accent = 0;
+    //clonedElements[element].accent = 0;
 
-        (clonedElements[idWord] as IWordElement).accents = [];
-    }
+    (clonedElements[idWord] as IWordElement).accents = [];
+  }
 
-    /* Работа с ударением */
+  /* Работа с ударением */
 
-    clonedElements[signId].accent = accent && Number.isInteger(accent)
-        ? accent
-        : wordAccent(elementAccent);
+  clonedElements[signId].accent = accent && Number.isInteger(accent)
+    ? accent
+    : wordAccent(elementAccent);
 
-    if (clonedElements[signId].accent === 1) {
-        (clonedElements[idWord] as IWordElement).accents.push(signId);
-    }
+  if (clonedElements[signId].accent === 1) {
+    (clonedElements[idWord] as IWordElement).accents.push(signId);
+  }
 
-    /* Работа со словом */
+  /* Работа со словом */
 
-    clonedWordsDictionary = updateWordsDictionary(idWord, clonedWordsDictionary, clonedElements);
+  clonedWordsDictionary = updateWordsDictionary(idWord, clonedWordsDictionary, clonedElements);
 
-    /* Работа со строкой */
+  /* Работа со строкой */
 
-    clonedStringsDictionary = updateStringsDictionary(
-        string,
-        clonedStringsDictionary,
-        clonedElements
-    );
+  clonedStringsDictionary = updateStringsDictionary(
+    string,
+    clonedStringsDictionary,
+    clonedElements
+  );
 
-    /* Работа с нотой */
+  /* Работа с нотой */
 
-    clonedStrings[idString].soundGramma = makeSoundGramma(
-        signId,
-        string,
-        clonedElements[signId].accent
-    );
+  clonedStrings[idString].soundGramma = makeSoundGramma(
+    signId,
+    string,
+    clonedElements[signId].accent
+  );
 
-    /* Работа с количеством ударений */
+  /* Работа с количеством ударений */
 
-    clonedStrings[idString].totalStringAccents = clonedStrings[idString].soundGramma.filter(
-        (idElement) =>
-            clonedElements[idElement].accent === 1 || clonedElements[idElement].accent === 2
-    );
+  clonedStrings[idString].totalStringAccents = clonedStrings[idString].soundGramma.filter(
+    (idElement) =>
+      clonedElements[idElement].accent === 1 || clonedElements[idElement].accent === 2
+  );
 
-    /* баги*/
+  /* баги*/
 
-    if (stringLinks[stringLowerCased]) {
-        const stringLink = stringLinks[stringLowerCased];
+  if (stringLinks[stringLowerCased]) {
+    const stringLink = stringLinks[stringLowerCased];
 
-        clonedElements = updateElementsByStringLink({
-            elements: clonedElements,
-            element,
-            stringLink,
-            strings: clonedStrings,
-        });
-    }
+    clonedElements = updateElementsByStringLink({
+      elements: clonedElements,
+      element,
+      stringLink,
+      strings: clonedStrings,
+    });
+  }
 
-    /* Определение метра */
+  /* Определение метра */
 
-    clonedStrings[idString].steps = stringOnSteps(
-        clonedStrings[idString].soundGramma,
-        clonedStrings[idString].totalStringAccents.length,
-        clonedElements
-    );
+  clonedStrings[idString].steps = stringOnSteps(
+    clonedStrings[idString].soundGramma,
+    clonedStrings[idString].totalStringAccents.length,
+    clonedElements
+  );
 
-    clonedStrings[idString].rhythmPreset = rhythmDetection(
-        clonedStrings[idString].steps,
-        clonedElements
-    );
+  clonedStrings[idString].rhythmPreset = rhythmDetection(
+    clonedStrings[idString].steps,
+    clonedElements
+  );
 
-    /* clonedStrings[idString].mainMeter = meterDetect(clonedStrings[idString].rhythmPreset); */
+  /* clonedStrings[idString].mainMeter = meterDetect(clonedStrings[idString].rhythmPreset); */
 
-    /* if(!stringLinksTriggered && wordLinks[wordLowerCased]) {
+  /* if(!stringLinksTriggered && wordLinks[wordLowerCased]) {
             wordLinks[wordLowerCased].forEach( idWord => {
 
                 if(clonedElements[idWord]) {
@@ -137,12 +137,12 @@ export default function makeAccent({
             });
         }*/
 
-    return {
-        elements: clonedElements,
-        strings: clonedStrings,
-        wordsDictionary: clonedWordsDictionary,
-        stringsDictionary: clonedStringsDictionary,
-    };
+  return {
+    elements: clonedElements,
+    strings: clonedStrings,
+    wordsDictionary: clonedWordsDictionary,
+    stringsDictionary: clonedStringsDictionary,
+  };
 }
 
 export type MakeAccentResult = ReturnType<typeof makeAccent>;

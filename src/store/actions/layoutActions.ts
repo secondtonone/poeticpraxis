@@ -1,7 +1,7 @@
 import ILayoutModel from '@typings/LayoutModel';
 
-export const CHANGE_THEME: string = 'CHANGE_THEME';
-export const CHANGE_LANG: string = 'CHANGE_LANG';
+export const CHANGE_THEME = 'CHANGE_THEME';
+export const CHANGE_LANG = 'CHANGE_LANG';
 
 export interface ChangeTheme {
     type: typeof CHANGE_THEME;
@@ -9,10 +9,10 @@ export interface ChangeTheme {
 }
 
 export function changeTheme(payload: ILayoutModel['variant']): ChangeTheme {
-    return {
-        type: CHANGE_THEME,
-        payload,
-    };
+  return {
+    type: CHANGE_THEME,
+    payload,
+  };
 }
 
 export interface ChangeLang {
@@ -21,10 +21,10 @@ export interface ChangeLang {
 }
 
 export function changeLang(payload: ILayoutModel['lang']): ChangeLang {
-    return {
-        type: CHANGE_LANG,
-        payload,
-    };
+  return {
+    type: CHANGE_LANG,
+    payload,
+  };
 }
 
 export type Payloads = ILayoutModel['variant'] | ILayoutModel['lang'];

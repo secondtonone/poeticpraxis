@@ -17,9 +17,9 @@ const StyledSecondaryMenu = styled.div<{ isTranslate: boolean }>`
         padding: 16px 8px 0;
         flex-direction: column;
         background-color: ${(props) =>
-            props.theme.name === 'dark'
-                ? props.theme.grayDarkColor
-                : props.theme.primaryColor};
+    props.theme.name === 'dark'
+      ? props.theme.grayDarkColor
+      : props.theme.primaryColor};
         box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
         transition: all 0.2s ease-in;
         ${(props) => (props.isTranslate ? 'transform: translateY(-44px);' : '')}
@@ -74,35 +74,35 @@ const Item = styled.li<{ disabled: boolean; active: boolean; count: number }>`
     cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 
     color: ${(props) => {
-        if (props.active) {
-            return props.theme.accentColor;
-        }
+    if (props.active) {
+      return props.theme.accentColor;
+    }
 
-        if (props.disabled) {
-            return theme.primaryGray;
-        }
+    if (props.disabled) {
+      return theme.primaryGray;
+    }
 
-        return props.theme.secondColor;
-    }};
+    return props.theme.secondColor;
+  }};
 
     fill: ${(props) => {
-        if (props.active) {
-            return props.theme.accentColor;
-        }
+    if (props.active) {
+      return props.theme.accentColor;
+    }
 
-        if (props.disabled) {
-            return theme.primaryGray;
-        }
+    if (props.disabled) {
+      return theme.primaryGray;
+    }
 
-        return props.theme.secondColor;
-    }};
+    return props.theme.secondColor;
+  }};
 
     @media (max-width: 600px) {
         width: ${(props) => (props.count === 2 ? `50%` : '33%')};
         border-bottom: ${(props) =>
-            props.active
-                ? `2px solid ${props.theme.accentColor}`
-                : '2px solid transparent'};
+    props.active
+      ? `2px solid ${props.theme.accentColor}`
+      : '2px solid transparent'};
 
         & > div {
             display: flex;
@@ -147,10 +147,10 @@ const Container = styled.div`
 `;
 
 export {
-    Menu,
-    Item,
-    StateSelect,
-    StyledSecondaryMenu,
-    Container,
-    LogoContainer,
+  Menu,
+  Item,
+  StateSelect,
+  StyledSecondaryMenu,
+  Container,
+  LogoContainer,
 };

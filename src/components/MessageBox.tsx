@@ -7,9 +7,9 @@ interface MessageBoxProps {
 }
 
 const MessageBox: FunctionalComponent<MessageBoxProps> = ({ text = '', bottom }) => (
-    <StyledMessageBox bottom={bottom} text={text}>
-        {text}
-    </StyledMessageBox>
+  <StyledMessageBox bottom={bottom} text={text}>
+    {text}
+  </StyledMessageBox>
 );
 
 const StyledMessageBox = styled.div<MessageBoxProps>`
@@ -37,9 +37,9 @@ const StyledMessageBox = styled.div<MessageBoxProps>`
     opacity: ${(props) => (props.text ? 1 : 0)};
     -webkit-font-smoothing: antialiased;
     ${(props) =>
-        props.theme.name === 'dark'
-            ? `background: ${props.theme.grayDarkColor}; color: ${props.theme.secondColor};`
-            : ''}
+    props.theme.name === 'dark'
+      ? `background: ${props.theme.grayDarkColor}; color: ${props.theme.secondColor};`
+      : ''}
     @media (max-width: 600px) {
         bottom: 0;
         transform: translateY(

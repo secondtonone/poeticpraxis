@@ -1,3 +1,3 @@
 export default function userLang(): string {
-    return window.navigator.language || 'ru';
+  return window.navigator.language || 'ru';
 }

@@ -15,32 +15,32 @@ interface ThemeTumblerProps {
 }
 
 const ThemeTumbler: FunctionalComponent<ThemeTumblerProps> = ({ onChange }) => {
-    const { Layout: { variant } } = useContext(StateContext);
-    const { changeTheme } = useLayoutActions();
+  const { Layout: { variant } } = useContext(StateContext);
+  const { changeTheme } = useLayoutActions();
 
-    const themeHandler = useCallback(() => {
-        changeTheme(variant === 'light' ? 'dark' : 'light');
-        if (onChange) {
-            onChange();
-        }
-    }, [changeTheme, onChange, variant]);
+  const themeHandler = useCallback(() => {
+    changeTheme(variant === 'light' ? 'dark' : 'light');
+    if (onChange) {
+      onChange();
+    }
+  }, [changeTheme, onChange, variant]);
 
-    return (
-        <Flex justify="center">
-            <Button
-                type="button"
-                _rounded
-                _transparent
-                _fit
-                onClick={themeHandler}>
-                {variant === 'light' ? (
-                    <BrightnessIcon _middle />
-                ) : (
-                    <Sunny _middle />
-                )}
-            </Button>
-        </Flex>
-    );
+  return (
+    <Flex justify="center">
+      <Button
+        type="button"
+        _rounded
+        _transparent
+        _fit
+        onClick={themeHandler}>
+        {variant === 'light' ? (
+          <BrightnessIcon _middle />
+        ) : (
+          <Sunny _middle />
+        )}
+      </Button>
+    </Flex>
+  );
 };
 
 export default ThemeTumbler;

@@ -1,38 +1,39 @@
 // @ts-nocheck
+/* eslint-disable */
 const loading = (i: Window, s: Document, o: string, g: string, r: string, a?: HTMLScriptElement, m?: HTMLScriptElement) => {
-    i['GoogleAnalyticsObject'] = r;
-    (i[r] =
+  i['GoogleAnalyticsObject'] = r;
+  (i[r] =
         i[r] ||
         function() {
-            (i[r].q = i[r].q || []).push(arguments);
+          (i[r].q = i[r].q || []).push(arguments);
         }),
-        (i[r].l = 1 * new Date());
-    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m);
+  (i[r].l = 1 * new Date());
+  (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+  a.async = 1;
+  a.src = g;
+  m.parentNode.insertBefore(a, m);
 };
 
 const yandexInit = () => {
-    (function(m, e, t, r, i, k, a) {
-        m[i] =
+  (function(m, e, t, r, i, k, a) {
+    m[i] =
             m[i] ||
             function() {
-                (m[i].a = m[i].a || []).push(arguments);
+              (m[i].a = m[i].a || []).push(arguments);
             };
-        m[i].l = 1 * new Date();
-        (k = e.createElement(t)),
-            (a = e.getElementsByTagName(t)[0]),
-            (k.async = 1),
-            (k.src = r),
-            a.parentNode.insertBefore(k, a);
-    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
-    ym(48473147, 'init', {
-        clickmap: true,
-        trackLinks: true,
-        accurateTrackBounce: true,
-        webvisor: true
-    });
+    m[i].l = 1 * new Date();
+    (k = e.createElement(t)),
+    (a = e.getElementsByTagName(t)[0]),
+    (k.async = 1),
+    (k.src = r),
+    a.parentNode.insertBefore(k, a);
+  })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+  ym(48473147, 'init', {
+    clickmap: true,
+    trackLinks: true,
+    accurateTrackBounce: true,
+    webvisor: true
+  });
 };
 /* (function(d, w, c) {
         (w[c] = w[c] || []).push(function() {
@@ -64,21 +65,21 @@ const yandexInit = () => {
     })(document, window, 'yandex_metrika_callbacks'); */
 
 const googleInit = () => {
-    loading(
-        window,
-        document,
-        'script',
-        'https://www.google-analytics.com/analytics.js',
-        'ga'
-    );
-    ga('create', 'UA-77286868-1', 'auto');
-    ga('send', 'pageview');
+  loading(
+    window,
+    document,
+    'script',
+    'https://www.google-analytics.com/analytics.js',
+    'ga'
+  );
+  ga('create', 'UA-77286868-1', 'auto');
+  ga('send', 'pageview');
 };
 
 export default function analyticsInit(provider = 'google') {
-    if (provider === 'google') {
-        googleInit();
-    } else {
-        yandexInit();
-    }
+  if (provider === 'google') {
+    googleInit();
+  } else {
+    yandexInit();
+  }
 }

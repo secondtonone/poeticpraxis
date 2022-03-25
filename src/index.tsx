@@ -1,7 +1,7 @@
 const DEV = process.env.NODE_ENV === 'development';
 
 if (DEV) {
-    require('preact/debug');
+  require('preact/debug');
 }
 
 import { FunctionalComponent, hydrate } from 'preact';
@@ -12,49 +12,49 @@ import Routes from '@routes';
 
 import analyticsInit from '@modules/analytics';
 
-const run = (Component: FunctionalComponent<{}>) => {
-    const rootElement = DEV
-        ? document.body.lastElementChild
-        : document.getElementById('app');
+const run = (Component: FunctionalComponent<Record<string, never>>) => {
+  const rootElement = DEV
+    ? document.body.lastElementChild
+    : document.getElementById('app');
 
-    if(rootElement) {
-        hydrate(
-            <Component>
-                <Routes />
-            </Component>,
-            rootElement
-        );
-    }
+  if(rootElement) {
+    hydrate(
+      <Component>
+        <Routes />
+      </Component>,
+      rootElement
+    );
+  }
 };
 
 if (!DEV) {
-    (async () => {
-        const runtime = await import('offline-plugin/runtime');
+  (async () => {
+    const runtime = await import('offline-plugin/runtime');
 
-        runtime.install({
-            // When an update is ready, tell ServiceWorker to take control immediately:
-            onUpdateReady() {
-                console.log('update ready');
-                runtime.applyUpdate();
-            },
-            // Reload to get the new version:
-            onUpdated() {
-                console.log('updated');
-                location.reload();
-            },
-        });
-    })();
+    runtime.install({
+      // When an update is ready, tell ServiceWorker to take control immediately:
+      onUpdateReady() {
+        console.log('update ready');
+        runtime.applyUpdate();
+      },
+      // Reload to get the new version:
+      onUpdated() {
+        console.log('updated');
+        location.reload();
+      },
+    });
+  })();
 }
 
 run(App);
 
 if (!DEV) {
-    console.clear();
-    console.log(`%cPOETIC PRAXIS - ПОЭТИЧЕСКАЯ ПРАКТИКА.
+  console.clear();
+  console.log(`%cPOETIC PRAXIS - ПОЭТИЧЕСКАЯ ПРАКТИКА.
     POETIC PRAXIS - ЧТО СКРЫТО ЗА СЛОВАМИ? ИДЕИ - МУЗЫКА МЕЖДУ СТРОК. 
     POETIC PRAXIS - СКРЫТО? НОВОЕ. 
     POETIC PRAXIS - СЛОВАМИ? ИДЕИ СТРОК.`, 
-    `color: ${theme.primaryBlack};
+  `color: ${theme.primaryBlack};
     font-family: ${theme.mainFont};
     font-size: 10em;
     word-break: break-all;
@@ -66,5 +66,5 @@ if (!DEV) {
     letter-spacing: -0.099em;
     text-transform: uppercase;
     background: ${theme.primaryWhite};`);
-    window.addEventListener('load', () => setTimeout(analyticsInit, 3000, 'yandex'));
+  window.addEventListener('load', () => setTimeout(analyticsInit, 3000, 'yandex'));
 }

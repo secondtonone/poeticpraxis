@@ -9,12 +9,12 @@ import Routes from '@routes';
 const GlobalStyle = createGlobalStyle`${styles}`;
 
 const App: FunctionalComponent = () => (
-    <AppContextContainer>
-        <GlobalStyle />
-        <StaticRouter location={'/'} context={{}}>
-            <Routes />
-        </StaticRouter>
-    </AppContextContainer>
+  <AppContextContainer>
+    <GlobalStyle />
+    <StaticRouter location={'/'} context={{}}>
+      <Routes />
+    </StaticRouter>
+  </AppContextContainer>
 );
 
 export default App;

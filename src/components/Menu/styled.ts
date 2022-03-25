@@ -31,9 +31,9 @@ const MobileNavMenu = styled.ul`
     list-style: none;
     display: none;
     background-color: ${(props) =>
-        props.theme.name === 'dark'
-            ? props.theme.grayDarkColor
-            : props.theme.primaryColor};
+    props.theme.name === 'dark'
+      ? props.theme.grayDarkColor
+      : props.theme.primaryColor};
     box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1);
 
     @media (max-width: 600px) {

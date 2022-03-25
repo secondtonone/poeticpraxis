@@ -10,18 +10,18 @@ interface TabsProps {
 }
 
 export default function Tabs({ items, handler, current }: TabsProps) {
-    return (
-        <>
-            {items
-                ? items.map((item, index) => {
-                    return (
-                        <Tab key={index} onClick={handler} active={current === item.title}>
-                            <Icon>{item.icon}</Icon>
-                            <div>{item.title}</div>
-                        </Tab>
-                    );
-                })
-                : null}
-        </>
-    );
+  return (
+    <>
+      {items
+        ? items.map((item, index) => {
+          return (
+            <Tab key={index} onClick={handler} active={current === item.title}>
+              <Icon>{item.icon}</Icon>
+              <div>{item.title}</div>
+            </Tab>
+          );
+        })
+        : null}
+    </>
+  );
 }

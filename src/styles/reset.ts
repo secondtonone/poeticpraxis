@@ -1,4 +1,4 @@
-const reset: string = `html {
+const reset = `html {
     box-sizing: border-box;
 }
 

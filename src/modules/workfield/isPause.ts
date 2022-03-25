@@ -1,3 +1,3 @@
 export default function isPause(char: string): boolean {
-    return /⋀/g.test(char);
+  return /⋀/g.test(char);
 }

@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import { withElements } from '@styles/helpers';
 
 export type IconProps = {
-    padding?: string
-    rules?: string
-    _small?: boolean
-    _big?: boolean
-    _xxxlarge?: boolean
-    _middle?: boolean
-    _invert?: boolean
-    _up?: boolean
-    '_rotate-right'?: boolean
-    '_rotate-left'?: boolean
-}
+  padding?: string
+  rules?: string
+  _small?: boolean
+  _big?: boolean
+  _xxxlarge?: boolean
+  _middle?: boolean
+  _invert?: boolean
+  _up?: boolean
+  '_rotate-right'?: boolean
+  '_rotate-left'?: boolean
+};
 
 const Icon = styled.i.attrs<IconProps>((props) => ({
-    className: withElements<IconProps>(props),
+  className: withElements<IconProps>(props),
 }))<IconProps>`
     font-weight: normal;
     font-style: normal;

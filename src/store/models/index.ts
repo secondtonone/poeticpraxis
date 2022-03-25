@@ -3,7 +3,7 @@ import imagesEngineModel from './imagesEngineModel';
 import layoutModel from './layoutModel';
 
 export {
-    rhythmicModel,
-    imagesEngineModel,
-    layoutModel,
+  rhythmicModel,
+  imagesEngineModel,
+  layoutModel,
 };

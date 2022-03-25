@@ -21,40 +21,40 @@ interface SelectProps {
 }
 
 function Select(props: SelectProps) {
-    const select = useRef<HTMLSelectElement>(null);
+  const select = useRef<HTMLSelectElement>(null);
 
-    const onClick = useCallback(() => {
-        if (select.current) select.current.focus();
-    }, []);
+  const onClick = useCallback(() => {
+    if (select.current) select.current.focus();
+  }, []);
 
-    return (
-        <Container
-            className={props.className}
-            size={props.size}
-            weight={props.weight}
-            onClick={onClick}>
-            {props.label && (
-                <Label htmlFor={props.id} className="input-container_label">
-                    {props.label}
-                </Label>
-            )}
-            <IconContainer>
-                <ArrowDropDown />
-            </IconContainer>
-            <StyledSelect
-                ref={select}
-                name={props.id}
-                fontSize={props.size}
-                weight={props.weight}
-                id={props.id}
-                value={props.value}
-                onChange={props.onChange}>
-                {props.options
-                    .filter((option) => !option.disabled)
-                    .map((option, index) => (<option key={`sopt-${index}`} value={option.value}>{option.title}</option>))}
-            </StyledSelect>
-        </Container>
-    );
+  return (
+    <Container
+      className={props.className}
+      size={props.size}
+      weight={props.weight}
+      onClick={onClick}>
+      {props.label && (
+        <Label htmlFor={props.id} className="input-container_label">
+          {props.label}
+        </Label>
+      )}
+      <IconContainer>
+        <ArrowDropDown />
+      </IconContainer>
+      <StyledSelect
+        ref={select}
+        name={props.id}
+        fontSize={props.size}
+        weight={props.weight}
+        id={props.id}
+        value={props.value}
+        onChange={props.onChange}>
+        {props.options
+          .filter((option) => !option.disabled)
+          .map((option, index) => (<option key={`sopt-${index}`} value={option.value}>{option.title}</option>))}
+      </StyledSelect>
+    </Container>
+  );
 }
 
 const Label = styled.label`

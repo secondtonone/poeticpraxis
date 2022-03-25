@@ -1,25 +1,25 @@
 import { useState, useLayoutEffect } from 'preact/hooks';
 
-const useResizeUpdate = (initHeight: number = 800) => {
-    const [innerWidth, setInnerWidth] = useState<number>(0);
-    const [innerHeight, setInnerHeight] = useState<number>(initHeight);
+const useResizeUpdate = (initHeight = 800) => {
+  const [innerWidth, setInnerWidth] = useState<number>(0);
+  const [innerHeight, setInnerHeight] = useState<number>(initHeight);
 
-    useLayoutEffect(() => {
-        const updateDimensions = () => {
-            requestAnimationFrame(() => {
-                setInnerHeight(window.innerHeight);
-                setInnerWidth(window.innerWidth);
-            });
-        };
+  useLayoutEffect(() => {
+    const updateDimensions = () => {
+      requestAnimationFrame(() => {
+        setInnerHeight(window.innerHeight);
+        setInnerWidth(window.innerWidth);
+      });
+    };
 
-        updateDimensions();
+    updateDimensions();
 
-        window.addEventListener('resize', updateDimensions);
+    window.addEventListener('resize', updateDimensions);
 
-        return () => window.removeEventListener('resize', updateDimensions);
-    }, []);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
 
-    return { innerWidth, setInnerWidth, innerHeight, setInnerHeight };
+  return { innerWidth, setInnerWidth, innerHeight, setInnerHeight };
 };
 
 export default useResizeUpdate;

@@ -11,16 +11,16 @@ const StyledTriangleButton = styled(Button)`
 `;
 
 const TriangleButton: FunctionalComponent<ButtonProps> = ({ children, ...props }) => {
-    return (
-        <StyledTriangleButton _action _transparent {...props}>
-            <Container position="absolute" top="-12px" left="0">
-                <TextAccent>
-                    <BigTriangle _xxxlarge />
-                </TextAccent>
-            </Container>
-            {children}
-        </StyledTriangleButton>
-    );
-}
+  return (
+    <StyledTriangleButton _action _transparent {...props}>
+      <Container position="absolute" top="-12px" left="0">
+        <TextAccent>
+          <BigTriangle _xxxlarge />
+        </TextAccent>
+      </Container>
+      {children}
+    </StyledTriangleButton>
+  );
+};
 
 export default TriangleButton;

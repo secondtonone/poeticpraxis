@@ -6,14 +6,14 @@ import theme from '@styles/theme';
 import randomize from '@utils/randomize';
 
 const  Toggle: FunctionalComponent<React.HTMLAttributes<HTMLInputElement>> = (props) => {
-    const id = `tog${randomize()}`;
-    return (
-        <Container>
-            <Input type="checkbox" id={id} {...props} />
-            <Label htmlFor={id} />
-        </Container>
-    );
-}
+  const id = `tog${randomize()}`;
+  return (
+    <Container>
+      <Input type="checkbox" id={id} {...props} />
+      <Label htmlFor={id} />
+    </Container>
+  );
+};
 
 const Label = styled.label`
     color: ${(props) => props.theme.secondColor};

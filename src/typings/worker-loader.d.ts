@@ -1,9 +1,9 @@
 declare module 'worker-loader!*' {
-    class WebpackWorker extends Worker {
-        constructor();
+  class WebpackWorker extends Worker {
+    constructor();
 
-        terminate(): void
-    }
+    terminate(): void;
+  }
 
-    export default WebpackWorker;
+  export default WebpackWorker;
 }

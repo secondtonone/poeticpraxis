@@ -3,26 +3,26 @@ import { IDictionary } from './dictionary';
 import { IElements, IWordElement } from './structure';
 
 export default function updateWordsDictionary(idWord: string, wordsDictionary: IDictionary, elements: IElements) {
-    const word = elements[idWord] as IWordElement;
-    const wordLowerCased = word.token.toLowerCase();
+  const word = elements[idWord] as IWordElement;
+  const wordLowerCased = word.token.toLowerCase();
 
-    let wordAccents: {
+  const wordAccents: {
         type: AccentTypes
     }[] = [];
 
-    const wordOrderTokenLength = word.orderToken.length;
+  const wordOrderTokenLength = word.orderToken.length;
 
-    for (let i = 0; i < wordOrderTokenLength; i++) {
-        const id = word.orderToken[i];
+  for (let i = 0; i < wordOrderTokenLength; i++) {
+    const id = word.orderToken[i];
 
-        wordAccents.push({
-            type: elements[id].accent
-        });
-    }
+    wordAccents.push({
+      type: elements[id].accent
+    });
+  }
 
-    wordsDictionary[wordLowerCased] = {
-        accents: wordAccents
-    };
+  wordsDictionary[wordLowerCased] = {
+    accents: wordAccents
+  };
 
-    return wordsDictionary;
+  return wordsDictionary;
 }

@@ -14,56 +14,56 @@ import isTouchDevice from '@utils/isTouchDevice';
 import LangIcon from '@icons/Lang';
 
 const langOptions = [
-    { title: 'Русский', value: 'ru' },
-    { title: 'English', value: 'en' }
+  { title: 'Русский', value: 'ru' },
+  { title: 'English', value: 'en' }
 ];
 
 const LangChanger: FunctionalComponent = () => {
-    const { Layout: { lang } } = useContext(StateContext);
-    const { changeLang } = useLayoutActions();
+  const { Layout: { lang } } = useContext(StateContext);
+  const { changeLang } = useLayoutActions();
 
-    const isDevice = isTouchDevice();
+  const isDevice = isTouchDevice();
 
-    const onChange = useCallback(
+  const onChange = useCallback(
         <T extends HTMLElement>(e: React.MouseEvent<T> | React.ChangeEvent<T>) => {
-            const newLang = (e.target as HTMLSelectElement).value
-                ? (e.target as HTMLSelectElement).value
-                : (e.target as HTMLElement).dataset.value;
-                changeLang(newLang as typeof lang);
-            if (newLang) document.documentElement.lang = newLang;
+          const newLang = (e.target as HTMLSelectElement).value
+            ? (e.target as HTMLSelectElement).value
+            : (e.target as HTMLElement).dataset.value;
+          changeLang(newLang as typeof lang);
+          if (newLang) document.documentElement.lang = newLang;
         },
         [changeLang]
-    );
+  );
 
-    return (
-        <Flex justify="center">
-            {isDevice ? (
-                <label htmlFor="lang">
-                    <LangIcon _middle />
-                    <HiddenSelect id="lang" value={lang} onChange={onChange}>
-                        {langOptions.map(({ title, value }, index) => {
-                            return (
-                                <option key={index} value={value}>
-                                    {title}
-                                </option>
-                            );
-                        })}
-                    </HiddenSelect>
-                </label>
-            ) : (
-                <Dropdown
-                    title={
-                        <Button type="button" _rounded _transparent _fit>
-                            <LangIcon _middle />
-                        </Button>
-                    }
-                    options={langOptions}
-                    value={lang}
-                    onChange={onChange}
-                />
-            )}
-        </Flex>
-    );
+  return (
+    <Flex justify="center">
+      {isDevice ? (
+        <label htmlFor="lang">
+          <LangIcon _middle />
+          <HiddenSelect id="lang" value={lang} onChange={onChange}>
+            {langOptions.map(({ title, value }, index) => {
+              return (
+                <option key={index} value={value}>
+                  {title}
+                </option>
+              );
+            })}
+          </HiddenSelect>
+        </label>
+      ) : (
+        <Dropdown
+          title={
+            <Button type="button" _rounded _transparent _fit>
+              <LangIcon _middle />
+            </Button>
+          }
+          options={langOptions}
+          value={lang}
+          onChange={onChange}
+        />
+      )}
+    </Flex>
+  );
 };
 
 export default LangChanger;

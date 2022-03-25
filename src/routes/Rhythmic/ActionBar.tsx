@@ -14,7 +14,7 @@ import LockOpen from '@icons/LockOpen';
 import ShareIcon from '@icons/Share';
 
 import {
-    ActionBar
+  ActionBar
 } from '@styles/components';
 
 interface ActionButtonBarProps {
@@ -29,64 +29,64 @@ interface ActionButtonBarProps {
 }
 
 const ActionButtonBar: FunctionalComponent<ActionButtonBarProps> = ({
-    text,
-    lang = 'ru',
-    zoomIn,
-    isEditable,
-    copyToClipboard,
-    shareWithLink,
-    zoomHandler,
-    changeMode
+  text,
+  lang = 'ru',
+  zoomIn,
+  isEditable,
+  copyToClipboard,
+  shareWithLink,
+  zoomHandler,
+  changeMode
 }) => {
-    return (
-        <ActionBar>
-            <Button
-                _rounded
-                _transparent
-                type="button"
-                disabled={!text}
-                onClick={copyToClipboard}
-                title={translations[lang].rhythmic['COPY']}>
-                <ContentCopy _middle />
-            </Button>
-            <Button
-                _rounded
-                _transparent
-                type="button"
-                disabled={!text}
-                onClick={shareWithLink}
-                title={translations[lang].rhythmic['SHARE']}>
-                <ShareIcon _big />
-            </Button>
+  return (
+    <ActionBar>
+      <Button
+        _rounded
+        _transparent
+        type="button"
+        disabled={!text}
+        onClick={copyToClipboard}
+        title={translations[lang].rhythmic['COPY']}>
+        <ContentCopy _middle />
+      </Button>
+      <Button
+        _rounded
+        _transparent
+        type="button"
+        disabled={!text}
+        onClick={shareWithLink}
+        title={translations[lang].rhythmic['SHARE']}>
+        <ShareIcon _big />
+      </Button>
 
-            <Button
-                type="button"
-                _rounded
-                _transparent
-                onClick={zoomHandler}
-                title={
-                    zoomIn
-                        ? translations[lang].rhythmic['ZOOMOUT']
-                        : translations[lang].rhythmic['ZOOMIN']
-                }>
-                {zoomIn ? <ZoomOut _big /> : <ZoomInIcon _big />}
-            </Button>
+      <Button
+        type="button"
+        _rounded
+        _transparent
+        onClick={zoomHandler}
+        title={
+          zoomIn
+            ? translations[lang].rhythmic['ZOOMOUT']
+            : translations[lang].rhythmic['ZOOMIN']
+        }>
+        {zoomIn ? <ZoomOut _big /> : <ZoomInIcon _big />}
+      </Button>
 
-            <Button
-                type="button"
-                _rounded
-                _transparent
-                disabled={!text}
-                onClick={changeMode}
-                title={
-                    isEditable
-                        ? translations[lang].rhythmic['BLOCK']
-                        : translations[lang].rhythmic['UNBLOCK']
-                }>
-                {isEditable ? <Lock _big /> : <LockOpen _big />}
-            </Button>
-        </ActionBar>
-    );
+      <Button
+        type="button"
+        _rounded
+        _transparent
+        disabled={!text}
+        onClick={changeMode}
+        title={
+          isEditable
+            ? translations[lang].rhythmic['BLOCK']
+            : translations[lang].rhythmic['UNBLOCK']
+        }>
+        {isEditable ? <Lock _big /> : <LockOpen _big />}
+      </Button>
+    </ActionBar>
+  );
 };
 
 export default ActionButtonBar;

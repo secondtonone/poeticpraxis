@@ -39,11 +39,11 @@ const Rect = styled.div<{
 }>`
     position: absolute;
     background-color: ${({color, theme}) =>
-        color === 'accent'
-            ? theme.accentColor
-            : color === 'first'
-            ? theme.primaryColor
-            : theme.secondColor};
+    color === 'accent'
+      ? theme.accentColor
+      : color === 'first'
+        ? theme.primaryColor
+        : theme.secondColor};
     height: ${({delay}) => delay * 100}%;
     width: ${({delay}) => delay * 100}px;
     color: ${({theme}) => theme.primaryColor};
@@ -53,13 +53,13 @@ const Rect = styled.div<{
 `;
 
 const Loader: FC<{height?: string}> = ({ height }) => (
-    <Wrapper height={height}>
-        <Container>
-            <Rect delay={0.8} />
-            <Rect delay={0.4} color="accent" />
-            <Rect delay={1} color="first" />
-        </Container>
-    </Wrapper>
+  <Wrapper height={height}>
+    <Container>
+      <Rect delay={0.8} />
+      <Rect delay={0.4} color="accent" />
+      <Rect delay={1} color="first" />
+    </Container>
+  </Wrapper>
 );
 
 export default Loader;

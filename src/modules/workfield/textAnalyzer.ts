@@ -23,333 +23,333 @@ import isConsonantNoisy from './isConsonantNoisy';
 import { AccentTypes } from './accents';
 
 export default function textAnalyzer(text: string, stringsDictionary: IDictionary, wordsDictionary: IDictionary) {
-    const fieldStrings = text.split('\n');
+  const fieldStrings = text.split('\n');
     
-    const strings: IStrings = {};
+  const strings: IStrings = {};
 
-    const elements: IElements = {};
+  const elements: IElements = {};
 
-    const hashTable: IHashTable = {};
+  const hashTable: IHashTable = {};
 
-    let iterator = 0;
+  let iterator = 0;
 
-    let wordsCount = 0;
+  let wordsCount = 0;
 
-    const meterDetect = meterDetection();
+  const meterDetect = meterDetection();
 
-    let mainMeter = {} as MainMeter;
+  let mainMeter = {} as MainMeter;
 
-    let wordLinks: IWordLinks = {};
+  let wordLinks: IWordLinks = {};
 
-    let stringLinks: IStringLinks = {};
+  let stringLinks: IStringLinks = {};
 
-    /* Строка */
-    const orderStrings: OrderStrings = [];
+  /* Строка */
+  const orderStrings: OrderStrings = [];
 
-    const fieldStringsLength = fieldStrings.length;
+  const fieldStringsLength = fieldStrings.length;
 
-    for (let index = 0; index < fieldStringsLength; index++) {
-        const string = fieldStrings[index];
+  for (let index = 0; index < fieldStringsLength; index++) {
+    const string = fieldStrings[index];
 
-        iterator++;
+    iterator++;
 
-        /* let idString = `s${index}${randomize(() =>
+    /* let idString = `s${index}${randomize(() =>
             hashFunction(string, ++iterator)
         )}`;  */
-        let idString = `s${iterator}`;
+    const idString = `s${iterator}`;
 
-        let vowel: IString['vowel'] = [];
+    const vowel: IString['vowel'] = [];
 
-        let soundGramma: IString['soundGramma'] = [];
+    const soundGramma: IString['soundGramma'] = [];
 
-        let steps: IString['steps'] = [];
+    let steps: IString['steps'] = [];
 
-        let rhythmPreset = 0;
+    let rhythmPreset = 0;
 
-        let totalStringAccents: IString['totalStringAccents'] = [];
+    let totalStringAccents: IString['totalStringAccents'] = [];
 
-        let words: IString['words'] = [];
+    const words: IString['words'] = [];
 
-        let tokens = string
-            .split(/(\s|[a-zA-ZА-Яа-яёЁ-]+|[\.,\/#!$%\^&\*;:{}=\-_`~()⋀])/)
-            .filter((n) => n);
+    const tokens = string
+      .split(/(\s|[a-zA-ZА-Яа-яёЁ-]+|[.,/#!$%^&*;:{}=\-_`~()⋀])/)
+      .filter((n) => n);
 
-        let order: OrderStrings = [];
+    const order: OrderStrings = [];
 
-        let stringIndex = 0;
-        /* Символьная последовательность */
-        const tokensLength = tokens.length;
+    let stringIndex = 0;
+    /* Символьная последовательность */
+    const tokensLength = tokens.length;
 
-        for (let index = 0; index < tokensLength; index++) {
-            const token = tokens[index];
+    for (let index = 0; index < tokensLength; index++) {
+      const token = tokens[index];
 
-            let type: Type = 't';
+      let type: Type = 't';
 
-            let idToken = `t${index}${randomize(() =>
-                hashFunction(token, ++iterator)
+      let idToken = `t${index}${randomize(() =>
+        hashFunction(token, ++iterator)
+      )}`;
+
+      let accent: AccentTypes = 0;
+
+      const accents: IWordElement['accents'] = [];
+
+      let hashTokenId = 0;
+      /* слово */
+      if (isLetter(token)) {
+        idToken = `w${index}${randomize(() =>
+          hashFunction(token, ++iterator)
+        )}`;
+
+        let vowelCounter = 0;
+
+        type = 'w';
+
+        let prev: null | string = null;
+
+        const next: null | string = null;
+
+        const [accentedIndex] = getAccentedPosition(token);
+
+        /* Буквы */
+        // const letters = [...token];
+        const letters = token.split('');
+
+        const lettersLength = letters.length;
+
+        const orderToken = [];
+
+        for (let index = 0; index < lettersLength; index++) {
+          const char = letters[index];
+
+          const array = letters;
+
+          hashTokenId = hashFunction(char, ++iterator);
+
+          const isLast = index === array.length - 1;
+
+          let idSymbol = '';
+
+          let type: Type = 'c';
+
+          let isSolid = false;
+
+          let isVoiced = false;
+
+          let isNoisy = false;
+
+          accent = 0;
+
+          if (isVowel(char)) {
+            idSymbol = `v${index}${randomize(() =>
+              hashFunction(char, ++iterator)
             )}`;
 
-            let accent: AccentTypes = 0;
+            type = 'v';
 
-            let accents: IWordElement['accents'] = [];
+            //++vowelCounter;
 
-            let hashTokenId = 0;
-            /* слово */
-            if (isLetter(token)) {
-                idToken = `w${index}${randomize(() =>
-                    hashFunction(token, ++iterator)
-                )}`;
-
-                let vowelCounter = 0;
-
-                type = 'w';
-
-                let prev: null | string = null;
-
-                let next: null | string = null;
-
-                const [accentedIndex] = getAccentedPosition(token);
-
-                /* Буквы */
-                // const letters = [...token];
-                const letters = token.split('');
-
-                const lettersLength = letters.length;
-
-                let orderToken = [];
-
-                for (let index = 0; index < lettersLength; index++) {
-                    const char = letters[index];
-
-                    const array = letters;
-
-                    hashTokenId = hashFunction(char, ++iterator);
-
-                    const isLast = index === array.length - 1;
-
-                    let idSymbol = '';
-
-                    let type: Type = 'c';
-
-                    let isSolid: boolean = false;
-
-                    let isVoiced: boolean = false;
-
-                    let isNoisy: boolean = false;
-
-                    accent = 0;
-
-                    if (isVowel(char)) {
-                        idSymbol = `v${index}${randomize(() =>
-                            hashFunction(char, ++iterator)
-                        )}`;
-
-                        type = 'v';
-
-                        //++vowelCounter;
-
-                        if (
-                            isInDictionary(string, stringsDictionary) ||
+            if (
+              isInDictionary(string, stringsDictionary) ||
                             isInDictionary(token, wordsDictionary)
-                        ) {
-                            accent = isInDictionary(string, stringsDictionary)
-                                ? isAccented(
-                                    string,
-                                    stringIndex,
-                                    stringsDictionary
-                                )
-                                : isAccented(token, index, wordsDictionary);
-                        } else {
-                            accent =
+            ) {
+              accent = isInDictionary(string, stringsDictionary)
+                ? isAccented(
+                  string,
+                  stringIndex,
+                  stringsDictionary
+                )
+                : isAccented(token, index, wordsDictionary);
+            } else {
+              accent =
                                 accentedIndex === -1
-                                    ? isAccentedByPosition(token, ++vowelCounter)
-                                    : accentedIndex === index
+                                  ? isAccentedByPosition(token, ++vowelCounter)
+                                  : accentedIndex === index
                                     ? 1
                                     : 0;
-                                    /*isAccentedByRegExp('[ёЁ]', char) ||
+              /*isAccentedByRegExp('[ёЁ]', char) ||
                                 isAccentedByPosition(token, vowelCounter); */
-                        }
+            }
 
-                        const idVowel = `${idString}${idToken}${idSymbol}`;
+            const idVowel = `${idString}${idToken}${idSymbol}`;
 
-                        vowel.push(idVowel);
+            vowel.push(idVowel);
 
-                        if (accent !== 3) {
-                            /* if (!soundGramma.length) {
+            if (accent !== 3) {
+              /* if (!soundGramma.length) {
                                 const step = [idVowel];
                                 soundGramma.push(step);
                             } else {
                                 soundGramma[soundGramma.length-1].push(idVowel);
                             } 
                             */
-                            soundGramma.push(idVowel);
-                            accents.push(idVowel);
-                        }
+              soundGramma.push(idVowel);
+              accents.push(idVowel);
+            }
 
-                        if (
-                            prev &&
+            if (
+              prev &&
                             elements[prev] &&
                             elements[prev].type === 'c' &&
                             !(elements[prev] as ICLetterElement).isSolid
-                        ) {
-                            (elements[prev] as ICLetterElement).isSolid = isConsonantSolid(char, (elements[prev] as ICLetterElement).char);
-                        }
-                    } else {
-                        idSymbol = `c${index}${randomize(() =>
-                            hashFunction(char, ++iterator)
-                        )}`;
+            ) {
+              (elements[prev] as ICLetterElement).isSolid = isConsonantSolid(char, (elements[prev] as ICLetterElement).char);
+            }
+          } else {
+            idSymbol = `c${index}${randomize(() =>
+              hashFunction(char, ++iterator)
+            )}`;
 
-                        isSolid = isConsonantSolid('',char);
-                        isVoiced = isConsonantVoiced(char);
-                        isNoisy = isConsonantNoisy(char);
+            isSolid = isConsonantSolid('',char);
+            isVoiced = isConsonantVoiced(char);
+            isNoisy = isConsonantNoisy(char);
                         
-                        if (
-                            prev &&
+            if (
+              prev &&
                             elements[prev] &&
                             elements[prev].type === 'c'
-                        ) {
-                            (elements[prev] as ICLetterElement).isSolid = isLetterSign(char) ? false : true;
-                        }
-                    }
-
-                    idSymbol = `${idString}${idToken}${idSymbol}`;
-
-                    if (prev) {
-                        (elements[prev] as ILetterElement).next = idSymbol;
-                    }
-
-                    (elements[idSymbol] as ILetterElement) = {
-                        isLast,
-                        prev,
-                        next,
-                        type,
-                        char,
-                        accent,
-                        index,
-                        id: idSymbol,
-                        idString,
-                        idToken,
-                        stringIndex,
-                        hashTokenId
-                    };
-
-                    if(type === 'c') {
-                        (elements[idSymbol]  as ICLetterElement).isSolid = isSolid;
-                        (elements[idSymbol] as ICLetterElement).isNoisy = isNoisy;
-                        (elements[idSymbol] as ICLetterElement).isVoiced = isVoiced;
-                    }
-
-                    prev = idSymbol;
-
-                    hashTable[hashTokenId] = {
-                        id: idSymbol
-                    };
-
-                    order.push(idSymbol);
-
-                    ++stringIndex;
-
-                    orderToken.push(idSymbol);
-                }
-
-                idToken = `${idString}${idToken}`;
-
-                words.push(idToken);
-
-                wordLinks = makeListLinks(token, idToken, wordLinks);
-
-                (elements[idToken] as IWordElement) = {
-                    type,
-                    token,
-                    accent,
-                    accents,
-                    orderToken,
-                    id: idToken,
-                    idString
-                };
-
-                ++wordsCount;
-            } else {
-                hashTokenId = hashFunction(token, ++iterator);
-
-                idToken = `${idString}${idToken}`;
-
-                if (isSpace(token)) {
-                    type = 'sp';
-
-                    idToken = `${idString}${type}${index}${randomize(() =>
-                        hashFunction(token, ++iterator)
-                    )}`;
-                }
-
-                if (isPause(token)) {
-                    type = 'p';
-
-                    idToken = `${idString}${type}${index}${randomize(() =>
-                        hashFunction(token, ++iterator)
-                    )}`;
-
-                    soundGramma.push(idToken);
-                }
-
-                (elements[idToken] as IPauseElement | ISymbolElement) = {
-                    type,
-                    char: token,
-                    id: idToken,
-                    idString,
-                    hashTokenId,
-                    accent
-                };
-
-                hashTable[hashTokenId] = {
-                    id: idToken
-                };
-
-                order.push(idToken);
-
-                ++stringIndex;
+            ) {
+              (elements[prev] as ICLetterElement).isSolid = isLetterSign(char) ? false : true;
             }
+          }
+
+          idSymbol = `${idString}${idToken}${idSymbol}`;
+
+          if (prev) {
+            (elements[prev] as ILetterElement).next = idSymbol;
+          }
+
+          (elements[idSymbol] as ILetterElement) = {
+            isLast,
+            prev,
+            next,
+            type,
+            char,
+            accent,
+            index,
+            id: idSymbol,
+            idString,
+            idToken,
+            stringIndex,
+            hashTokenId
+          };
+
+          if(type === 'c') {
+            (elements[idSymbol]  as ICLetterElement).isSolid = isSolid;
+            (elements[idSymbol] as ICLetterElement).isNoisy = isNoisy;
+            (elements[idSymbol] as ICLetterElement).isVoiced = isVoiced;
+          }
+
+          prev = idSymbol;
+
+          hashTable[hashTokenId] = {
+            id: idSymbol
+          };
+
+          order.push(idSymbol);
+
+          ++stringIndex;
+
+          orderToken.push(idSymbol);
         }
 
-        stringLinks = makeListLinks(string, idString, stringLinks);
+        idToken = `${idString}${idToken}`;
 
-        totalStringAccents = soundGramma.filter(
-            (idElement) =>
-                elements[idElement].accent === 1 ||
-                elements[idElement].accent === 2
-        );
+        words.push(idToken);
 
-        steps = stringOnSteps(soundGramma, totalStringAccents.length, elements);
+        wordLinks = makeListLinks(token, idToken, wordLinks);
 
-        rhythmPreset = rhythmDetection(steps, elements);
-
-        mainMeter = meterDetect(rhythmPreset);
-
-        strings[idString] = {
-            order,
-            string,
-            words,
-            vowel,
-            totalStringAccents,
-            soundGramma,
-            steps,
-            rhythmPreset,
-            id: idString
+        (elements[idToken] as IWordElement) = {
+          type,
+          token,
+          accent,
+          accents,
+          orderToken,
+          id: idToken,
+          idString
         };
 
-        orderStrings.push(idString);
+        ++wordsCount;
+      } else {
+        hashTokenId = hashFunction(token, ++iterator);
+
+        idToken = `${idString}${idToken}`;
+
+        if (isSpace(token)) {
+          type = 'sp';
+
+          idToken = `${idString}${type}${index}${randomize(() =>
+            hashFunction(token, ++iterator)
+          )}`;
+        }
+
+        if (isPause(token)) {
+          type = 'p';
+
+          idToken = `${idString}${type}${index}${randomize(() =>
+            hashFunction(token, ++iterator)
+          )}`;
+
+          soundGramma.push(idToken);
+        }
+
+        (elements[idToken] as IPauseElement | ISymbolElement) = {
+          type,
+          char: token,
+          id: idToken,
+          idString,
+          hashTokenId,
+          accent
+        };
+
+        hashTable[hashTokenId] = {
+          id: idToken
+        };
+
+        order.push(idToken);
+
+        ++stringIndex;
+      }
     }
 
-    return {
-        strings,
-        orderStrings,
-        elements,
-        hashTable,
-        wordLinks,
-        stringLinks,
-        wordsCount,
-        mainMeter
+    stringLinks = makeListLinks(string, idString, stringLinks);
+
+    totalStringAccents = soundGramma.filter(
+      (idElement) =>
+        elements[idElement].accent === 1 ||
+                elements[idElement].accent === 2
+    );
+
+    steps = stringOnSteps(soundGramma, totalStringAccents.length, elements);
+
+    rhythmPreset = rhythmDetection(steps, elements);
+
+    mainMeter = meterDetect(rhythmPreset);
+
+    strings[idString] = {
+      order,
+      string,
+      words,
+      vowel,
+      totalStringAccents,
+      soundGramma,
+      steps,
+      rhythmPreset,
+      id: idString
     };
+
+    orderStrings.push(idString);
+  }
+
+  return {
+    strings,
+    orderStrings,
+    elements,
+    hashTable,
+    wordLinks,
+    stringLinks,
+    wordsCount,
+    mainMeter
+  };
 }
 
 export type TextAnalyzerResult = ReturnType<typeof textAnalyzer>;

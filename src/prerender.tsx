@@ -5,28 +5,28 @@ import App from './containers/AppPrerender';
 
 
 if (typeof window === 'undefined') {
+  // @ts-ignore
+  global.window = {
     // @ts-ignore
-    global.window = {
-        // @ts-ignore
-        screen: {},
-        document: {
-            // @ts-ignore
-            documentElement:{}
-        }
-    };
+    screen: {},
+    document: {
+      // @ts-ignore
+      documentElement:{}
+    }
+  };
 }
 
 const prerender = () => {
-    const sheet = new ServerStyleSheet();
-    // @ts-ignore
-    const html = render(sheet.collectStyles(<App />));
+  const sheet = new ServerStyleSheet();
+  // @ts-ignore
+  const html = render(sheet.collectStyles(<App />));
 
-    const styles = sheet.getStyleTags();
+  const styles = sheet.getStyleTags();
 
-    return {
-        html,
-        styles
-    };
+  return {
+    html,
+    styles
+  };
 };
 
 export default prerender;

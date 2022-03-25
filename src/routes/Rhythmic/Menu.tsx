@@ -4,35 +4,35 @@ import { rhythmicPage as translations } from '@translations';
 
 import Langs from '@typings/Langs';
 import MenuItem from '@typings/MenuItem';
-import RhythmicViews from '@typings/RhythmicViews'
+import RhythmicViews from '@typings/RhythmicViews';
 
 import SecondaryMenu from '@components/SecondaryMenu';
 import MelodyIcon from '@icons/Melody';
 import RhythmIcon from '@icons/RhythmIcon';
 
 const secondMenu = (lang: Langs, [first, second]: [boolean, boolean]): MenuItem<RhythmicViews>[] => [
-    {
-        value: 'rhythmic',
-        title: translations[lang].rhythmicMenu.RHYTHMICS,
-        content: (
-            <div>
-                <RhythmIcon />
-                <div>{translations[lang].rhythmicMenu.RHYTHMICS}</div>
-            </div>
-        ),
-        disabled: first
-    },
-    {
-        value: 'melody',
-        title: translations[lang].rhythmicMenu.MELODY,
-        content: (
-            <div>
-                <MelodyIcon />
-                <div>{translations[lang].rhythmicMenu.MELODY}</div>
-            </div>
-        ),
-        disabled: second
-    }
+  {
+    value: 'rhythmic',
+    title: translations[lang].rhythmicMenu.RHYTHMICS,
+    content: (
+      <div>
+        <RhythmIcon />
+        <div>{translations[lang].rhythmicMenu.RHYTHMICS}</div>
+      </div>
+    ),
+    disabled: first
+  },
+  {
+    value: 'melody',
+    title: translations[lang].rhythmicMenu.MELODY,
+    content: (
+      <div>
+        <MelodyIcon />
+        <div>{translations[lang].rhythmicMenu.MELODY}</div>
+      </div>
+    ),
+    disabled: second
+  }
 ];
 
 interface RhythmicMenuProps {
@@ -43,19 +43,19 @@ interface RhythmicMenuProps {
 }
 
 const RhythmicMenu: FunctionalComponent<RhythmicMenuProps> = ({
-    lang = 'ru',
-    current,
-    handler,
-    isAnalyzeReady
+  lang = 'ru',
+  current,
+  handler,
+  isAnalyzeReady
 }) => {
     
-    return (
-        <SecondaryMenu<RhythmicViews>
-            items={secondMenu(lang, [false, !isAnalyzeReady])}
-            handler={handler}
-            current={current}
-        />
-    );
+  return (
+    <SecondaryMenu<RhythmicViews>
+      items={secondMenu(lang, [false, !isAnalyzeReady])}
+      handler={handler}
+      current={current}
+    />
+  );
 };
 
 export default RhythmicMenu;

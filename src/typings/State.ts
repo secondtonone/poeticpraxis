@@ -3,9 +3,9 @@ import RhythmicModel from './RhythmicModel';
 import LayoutModel from './LayoutModel';
 
 export default interface State {
-    ImagesEngine: ImagesEngineModel
-    Layout: LayoutModel
-    Rhythmic: RhythmicModel
+  ImagesEngine: ImagesEngineModel
+  Layout: LayoutModel
+  Rhythmic: RhythmicModel
 };
 
 export type Slices = keyof State;

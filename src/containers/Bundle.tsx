@@ -14,21 +14,21 @@ interface BundleState {
 }
 
 class Bundle extends Component<BundleProps, BundleState> {
-    state: BundleState = {
-        component: null
-    };
+  state: BundleState = {
+    component: null
+  };
 
-    async componentDidMount() {
-        const component = await this.props.load();
+  async componentDidMount() {
+    const component = await this.props.load();
         
-        this.setState({
-            component: component.default
-        });
-    }
+    this.setState({
+      component: component.default
+    });
+  }
 
-    render() {
-        return this.props.children(this.state.component);
-    }
+  render() {
+    return this.props.children(this.state.component);
+  }
 }
 
 export default Bundle;

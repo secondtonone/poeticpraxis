@@ -5,46 +5,46 @@ import { AnimationUp } from '@styles/components';
 import { withElements } from '@styles/helpers';
 
 export type ButtonTypesProps = {
-    width?: string
-    borderWidth?: string
-    size?: number
-    margin?: string
-    padding?: string
-    _rounded?: boolean
-    _small?: boolean
-    _middle?: boolean
-    _big?: boolean
-    _fit?: boolean
-    _flat?: boolean
-    _main?: boolean
-    '_action--outlined'?: boolean
-    _action?: boolean
-    _transparent?: boolean
-    _common?: boolean
-    _centred?: boolean
-    _oval?: boolean
-    _white?: boolean
-    _black?: boolean
-    _gray?: boolean
-    _accent?: boolean
-    '_light-gray'?: boolean
-    _long?: boolean
-    _second?: boolean
-    _third?: boolean
-    '_top-centred'?: boolean
-    '_white-icon'?: boolean
-    '_black-icon'?: boolean
-    '_animated-up'?: boolean
-}
+  width?: string
+  borderWidth?: string
+  size?: number
+  margin?: string
+  padding?: string
+  _rounded?: boolean
+  _small?: boolean
+  _middle?: boolean
+  _big?: boolean
+  _fit?: boolean
+  _flat?: boolean
+  _main?: boolean
+  '_action--outlined'?: boolean
+  _action?: boolean
+  _transparent?: boolean
+  _common?: boolean
+  _centred?: boolean
+  _oval?: boolean
+  _white?: boolean
+  _black?: boolean
+  _gray?: boolean
+  _accent?: boolean
+  '_light-gray'?: boolean
+  _long?: boolean
+  _second?: boolean
+  _third?: boolean
+  '_top-centred'?: boolean
+  '_white-icon'?: boolean
+  '_black-icon'?: boolean
+  '_animated-up'?: boolean
+};
 
 export type ButtonProps = ButtonTypesProps & React.HTMLAttributes<HTMLButtonElement> & {type?: 'button' | 'submit' | 'reset'};
 
 const StyledButton = styled.button.attrs<ButtonTypesProps>((props) => ({
-    className: withElements<ButtonTypesProps>(props)
+  className: withElements<ButtonTypesProps>(props)
 }))<ButtonProps>`
     &._rounded {
         background-color: /* ${(props) =>
-            props.theme.primaryColor} */ transparent;
+    props.theme.primaryColor} */ transparent;
         /* box-shadow: 2px 1px 20px 0px rgba(0, 0, 0, 0.1); */
         color: ${(props) => props.theme.secondColor};
         fill: ${(props) => props.theme.secondColor};
@@ -137,8 +137,8 @@ const StyledButton = styled.button.attrs<ButtonTypesProps>((props) => ({
         cursor: pointer;
         font-weight: 400;
         border: ${(props) =>
-            props.borderWidth ? props.borderWidth : '1'}px solid ${(props) =>
-    props.theme.accentColor};
+    props.borderWidth ? props.borderWidth : '1'}px solid ${(props) =>
+  props.theme.accentColor};
         width: ${(props) => (props.width ? props.width : 'auto')};
         display: inline-block;
         font-size: ${(props) => (props.size ? `${props.size}px` : '24px')};
@@ -159,7 +159,7 @@ const StyledButton = styled.button.attrs<ButtonTypesProps>((props) => ({
         border: none;
         font-weight: 400;
         border-radius: ${(props) =>
-            props.size ? `${props.size * 2}px` : '32px'};
+    props.size ? `${props.size * 2}px` : '32px'};
         width: ${(props) => (props.width ? props.width : 'auto')};
         height: auto;
         display: inline-block;
@@ -221,9 +221,9 @@ const StyledButton = styled.button.attrs<ButtonTypesProps>((props) => ({
         fill: ${theme.primaryWhite};
         
         ${(props) =>
-            props.theme.name === 'dark'
-                ? `background: ${props.theme.grayDarkColor};`
-                : `background-color: ${theme.primaryBlack};`} 
+    props.theme.name === 'dark'
+      ? `background: ${props.theme.grayDarkColor};`
+      : `background-color: ${theme.primaryBlack};`} 
     }
 
     &._gray {

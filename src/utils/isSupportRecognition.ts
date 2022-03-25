@@ -1,3 +1,3 @@
 export default function isSupportRecognition():boolean {
-    return !!(window.SpeechRecognition || window['webkitSpeechRecognition']);
+  return !!(window.SpeechRecognition || window['webkitSpeechRecognition']);
 }

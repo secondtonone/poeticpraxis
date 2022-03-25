@@ -10,79 +10,79 @@ const baseConfig = require('./webpack.config');
 const PORT = 9000;
 
 module.exports = {
-    ...baseConfig,
-    mode: 'development',
-    devtool: 'eval-cheap-module-source-map',
-    output: {
-        ...baseConfig.output,
-        sourceMapFilename: '[name].[hash:8].map',
-        chunkFilename: '[id].[hash:8].js'
-    },
-    module: {
-        rules: [
-            ...baseConfig.module.rules,
-            {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader'
-                    }
-                ]
-            }
-        ]
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('development')
-            }
-        }),
-        new ForkTsCheckerWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            template: './public/index.html',
-            inject: 'head',
-            minify: {
-                minifyCSS: true,
-                minifyJS: true,
-                removeComments: true
-            },
-            env: {
-                Prod: false
-            }
-        }),
-        new ScriptExtHtmlWebpackPlugin({
-            defer: /\.js$/
-        }),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: 'public/audio',
-                    globOptions: {
-                        ignore: ['.DS_Store']
-                    }
-                },
-                {
-                    from: 'public/dictionary',
-                    globOptions: {
-                        ignore: ['.DS_Store']
-                    }
-                }
-            ]
-        })
+  ...baseConfig,
+  mode: 'development',
+  devtool: 'eval-cheap-module-source-map',
+  output: {
+    ...baseConfig.output,
+    sourceMapFilename: '[name].[hash:8].map',
+    chunkFilename: '[id].[hash:8].js',
+  },
+  module: {
+    rules: [
+      ...baseConfig.module.rules,
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+        ],
+      },
     ],
-    devServer: {
-        static: path.resolve(__dirname, 'dist'),
-        port: PORT,
-        historyApiFallback: true,
-        devMiddleware: {
-            publicPath: '/'
-        }  
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development'),
+      },
+    }),
+    new ForkTsCheckerWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      inject: 'head',
+      minify: {
+        minifyCSS: true,
+        minifyJS: true,
+        removeComments: true,
+      },
+      env: {
+        Prod: false,
+      },
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      defer: /\.js$/,
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'public/audio',
+          globOptions: {
+            ignore: ['.DS_Store'],
+          },
+        },
+        {
+          from: 'public/dictionary',
+          globOptions: {
+            ignore: ['.DS_Store'],
+          },
+        },
+      ],
+    }),
+  ],
+  devServer: {
+    static: path.resolve(__dirname, 'dist'),
+    port: PORT,
+    historyApiFallback: true,
+    devMiddleware: {
+      publicPath: '/',
     },
-    watchOptions: {
-        aggregateTimeout: 1000,
-        poll: 1000
-    }
+  },
+  watchOptions: {
+    aggregateTimeout: 1000,
+    poll: 1000,
+  },
 };

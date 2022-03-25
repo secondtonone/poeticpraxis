@@ -88,9 +88,9 @@ const accentMixin = (color: string, accent: AccentColors) => `
         color: ${color};
 
         ${accent == 'black' || accent == 'gray'
-            ? `content: '\\25CF';
+    ? `content: '\\25CF';
                 top: 0;`
-            : `content: '\\25BC';
+    : `content: '\\25BC';
                 transform: rotate(0deg) scale(1.7);
                 top: 0;`}
     }
@@ -110,25 +110,25 @@ const accentMixin = (color: string, accent: AccentColors) => `
 
 const AccentRelative = styled.span<{ accent: AccentColors }>`
     ${({ accent, theme: { accentColor, secondColor, grayColor }}) => {
-        if (accent === 'black') return accentMixin(secondColor, accent);
-        if (accent === 'gray') return accentMixin(grayColor, accent);
+    if (accent === 'black') return accentMixin(secondColor, accent);
+    if (accent === 'gray') return accentMixin(grayColor, accent);
 
-        return accentMixin(
-            accent === 'red'
-                ? accentColor
-                : theme.secondRed,
-            accent
-        );
-}}
+    return accentMixin(
+      accent === 'red'
+        ? accentColor
+        : theme.secondRed,
+      accent
+    );
+  }}
 `;
 
 export {
-    ChangeModeButton,
-    StringPauseButton,
-    StringPauseButtonMobile,
-    UpperButton,
-    CopyButtonMobile,
-    ButtonContainer,
-    AccentRelative,
-    FlexSided
+  ChangeModeButton,
+  StringPauseButton,
+  StringPauseButtonMobile,
+  UpperButton,
+  CopyButtonMobile,
+  ButtonContainer,
+  AccentRelative,
+  FlexSided
 };

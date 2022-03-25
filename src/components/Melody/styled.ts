@@ -8,9 +8,9 @@ export const PlayerContainer = styled.div`
     bottom: 0;
     margin: 0 auto;
     background: ${(props) =>
-        props.theme.name === 'dark'
-            ? 'linear-gradient( rgba(25,25,25,.1),rgba(25,25,25,.9) )'
-            : 'linear-gradient(rgba(249,248,247,.1),rgba(249,248,247,.9))'};
+    props.theme.name === 'dark'
+      ? 'linear-gradient( rgba(25,25,25,.1),rgba(25,25,25,.9) )'
+      : 'linear-gradient(rgba(249,248,247,.1),rgba(249,248,247,.9))'};
     @media (max-width: 600px) {
         bottom: 52px;
         width: 100%;

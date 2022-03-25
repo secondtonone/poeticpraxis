@@ -1,18 +1,18 @@
 const ru = {
-    menu: {
-        ABOUT: 'ГЛАВНАЯ'
-    }
+  menu: {
+    ABOUT: 'ГЛАВНАЯ'
+  }
 };
 
 const en = {
-    menu: {
-        ABOUT: 'HOME'
-    }
+  menu: {
+    ABOUT: 'HOME'
+  }
 };
 
 const translations = {
-    ru,
-    en
+  ru,
+  en
 };
 
 export { translations };

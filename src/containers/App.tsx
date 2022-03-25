@@ -8,12 +8,12 @@ import styles from '@styles';
 const GlobalStyle = createGlobalStyle`${styles}`;
 
 const App: FunctionalComponent = ({ children }) => (
-    <AppContextContainer>
-        <GlobalStyle />
-        <BrowserRouter>
-            {children}
-        </BrowserRouter>
-    </AppContextContainer>
+  <AppContextContainer>
+    <GlobalStyle />
+    <BrowserRouter>
+      {children}
+    </BrowserRouter>
+  </AppContextContainer>
 );
 
 export default App;

@@ -35,7 +35,7 @@ const PageHeader = styled.header<{boundHeight: number}>`
     }
 
     @media (max-width: 600px) and (max-height: ${({boundHeight}) =>
-            boundHeight - 50}px) {
+    boundHeight - 50}px) {
         transform: translateY(120%);
     }
 `;

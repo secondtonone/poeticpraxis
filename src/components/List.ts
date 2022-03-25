@@ -49,7 +49,7 @@ const List = styled.div.attrs<ListProps>((props) => ({ className: withElements<L
     @media (max-width: 600px) {
         padding: 24px
             ${(props) =>
-                props.sidePaddingMobile ? props.sidePaddingMobile : '24px'}
+    props.sidePaddingMobile ? props.sidePaddingMobile : '24px'}
             64px;
     }
 `;

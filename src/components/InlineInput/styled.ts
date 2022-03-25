@@ -29,8 +29,8 @@ export const InputButton = styled(Button)<{pinned?:boolean}>`
     
     &:hover {
         color: ${(props) =>
-            props.pinned ? props.theme.accentColor : props.theme.secondColor};
+    props.pinned ? props.theme.accentColor : props.theme.secondColor};
         fill: ${(props) =>
-            props.pinned ? props.theme.accentColor : props.theme.secondColor};
+    props.pinned ? props.theme.accentColor : props.theme.secondColor};
     }
 `;

@@ -1,19 +1,19 @@
-const sonor: string = 'лмнрй';
+const sonor = 'лмнрй';
 
-const blankPaired: string = 'пфктшс';
+const blankPaired = 'пфктшс';
 const blank: string = blankPaired + 'чцчщ';
 
-const voicedPaired: string = 'бвгджз';
+const voicedPaired = 'бвгджз';
 const voiced: string = voicedPaired + sonor;
 
 const noisy: string = voicedPaired + blank;
 
-const cyrillicAlwaysSolid: string = 'жшц';
-const cyrillicAlwaysSoft: string = 'чщйьъ';
+const cyrillicAlwaysSolid = 'жшц';
+const cyrillicAlwaysSoft = 'чщйьъ';
 
 const cyrillic: string =
     'кнгзхфвпрлдсмтб' + cyrillicAlwaysSolid + cyrillicAlwaysSoft;
-const latin: string = 'qwrtpsdfghjklzxcvbnmßñ';
+const latin = 'qwrtpsdfghjklzxcvbnmßñ';
 
 const consonantsList: string = cyrillic + latin;
 

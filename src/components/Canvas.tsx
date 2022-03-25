@@ -8,7 +8,7 @@ interface CanvasProps {
 }
 
 const Canvas = memo<CanvasProps>(({ height, getRef }) => {
-    return <canvas style={canvasStyle} height={height} ref={getRef} />;
+  return <canvas style={canvasStyle} height={height} ref={getRef} />;
 });
 
 export default Canvas;

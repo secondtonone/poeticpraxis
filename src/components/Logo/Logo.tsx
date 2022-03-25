@@ -12,16 +12,16 @@ interface LogoProps {
 }
 
 const Logo:FunctionalComponent<LogoProps> = ({ height = 24, width = 62 }) => {
-    const { Layout: { variant } } = useContext(StateContext);
+  const { Layout: { variant } } = useContext(StateContext);
 
-    return (<RouteLink to="/">
-        <img
-            height={height}
-            width={width}
-            src={variant === 'light' ? LogoBlack : LogoWhite}
-            alt="Logo"
-        />
-    </RouteLink>
-)};
+  return (<RouteLink to="/">
+    <img
+      height={height}
+      width={width}
+      src={variant === 'light' ? LogoBlack : LogoWhite}
+      alt="Logo"
+    />
+  </RouteLink>
+  );};
 
 export default Logo;

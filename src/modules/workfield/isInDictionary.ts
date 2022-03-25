@@ -1,7 +1,7 @@
 import { IDictionary, DictionaryAccents } from './dictionary';
 
 export default function isInDictionary(token: string, dictionary: IDictionary = {}): DictionaryAccents {
-    let lowerCased = token.toLowerCase();
+  const lowerCased = token.toLowerCase();
 
-    return dictionary[lowerCased];
+  return dictionary[lowerCased];
 }

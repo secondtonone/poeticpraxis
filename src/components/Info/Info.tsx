@@ -18,54 +18,54 @@ interface InfoProps {
 }
 
 const Info: FunctionalComponent<InfoProps> = ({ lang = 'ru', foldedContent, unfoldedContent, onClose }) => {
-    const [isInfoHidden, setVisibility] = useState<boolean>(true);
+  const [isInfoHidden, setVisibility] = useState<boolean>(true);
 
-    const toggleInfo = useCallback(() => {
-        setVisibility(!isInfoHidden);
-    }, [isInfoHidden]);
+  const toggleInfo = useCallback(() => {
+    setVisibility(!isInfoHidden);
+  }, [isInfoHidden]);
 
-    const hideInfo = useCallback(() => {
-        if (onClose) {
-            onClose();
-        }
-    }, [onClose]);
+  const hideInfo = useCallback(() => {
+    if (onClose) {
+      onClose();
+    }
+  }, [onClose]);
 
-    return (
-        <StyledBox
-            justify="stretch"
-            direction={isInfoHidden ? 'row' : 'column'}>
-            <Container minWidth="300px" margin="0 0 8px 0">
-                {isInfoHidden ? foldedContent : unfoldedContent}
-            </Container>
-            <Flex justify="flex-end" minWidth="300px">
-                <Button
-                    _flat
-                    _transparent
-                    type="button"
-                    margin="0 8px 0"
-                    onClick={hideInfo}>
-                    {translations[lang].CLOSE}{' '}
-                </Button>
-                {isInfoHidden ? (
-                    <Button
-                        _flat
-                        _transparent
-                        type="button"
-                        onClick={toggleInfo}>
-                        {translations[lang].SHOW}{' '}
-                    </Button>
-                ) : (
-                    <Button
-                        _flat
-                        _transparent
-                        type="button"
-                        onClick={toggleInfo}>
-                        {translations[lang].HIDE}{' '}
-                    </Button>
-                )}
-            </Flex>
-        </StyledBox>
-    );
+  return (
+    <StyledBox
+      justify="stretch"
+      direction={isInfoHidden ? 'row' : 'column'}>
+      <Container minWidth="300px" margin="0 0 8px 0">
+        {isInfoHidden ? foldedContent : unfoldedContent}
+      </Container>
+      <Flex justify="flex-end" minWidth="300px">
+        <Button
+          _flat
+          _transparent
+          type="button"
+          margin="0 8px 0"
+          onClick={hideInfo}>
+          {translations[lang].CLOSE}{' '}
+        </Button>
+        {isInfoHidden ? (
+          <Button
+            _flat
+            _transparent
+            type="button"
+            onClick={toggleInfo}>
+            {translations[lang].SHOW}{' '}
+          </Button>
+        ) : (
+          <Button
+            _flat
+            _transparent
+            type="button"
+            onClick={toggleInfo}>
+            {translations[lang].HIDE}{' '}
+          </Button>
+        )}
+      </Flex>
+    </StyledBox>
+  );
 };
 
 const StyledBox = styled(Flex)`

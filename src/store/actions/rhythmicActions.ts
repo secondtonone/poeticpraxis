@@ -1,8 +1,8 @@
 import { ICurrentRhythmicState } from '@typings/RhythmicModel';
 import { IDictionary } from '@modules/workfield/dictionary';
 
-export const SET_RHYTHMIC_STATE: string = 'SET_RHYTHMIC_STATE';
-export const SET_WORDS_DICTIONARY: string = 'SET_WORDS_DICTIONARY';
+export const SET_RHYTHMIC_STATE = 'SET_RHYTHMIC_STATE';
+export const SET_WORDS_DICTIONARY = 'SET_WORDS_DICTIONARY';
 
 export interface SetRhythmicState {
     type: typeof SET_RHYTHMIC_STATE;
@@ -10,12 +10,12 @@ export interface SetRhythmicState {
 }
 
 export function setRhythmicState(
-    payload: Partial<ICurrentRhythmicState>
+  payload: Partial<ICurrentRhythmicState>
 ): SetRhythmicState {
-    return {
-        type: SET_RHYTHMIC_STATE,
-        payload,
-    };
+  return {
+    type: SET_RHYTHMIC_STATE,
+    payload,
+  };
 }
 
 export interface SetWordsDictionary {
@@ -24,10 +24,10 @@ export interface SetWordsDictionary {
 }
 
 export function setWordsDictionary(payload: IDictionary): SetWordsDictionary {
-    return {
-        type: SET_WORDS_DICTIONARY,
-        payload,
-    };
+  return {
+    type: SET_WORDS_DICTIONARY,
+    payload,
+  };
 }
 
 export type RhythmicActionTypes = SetRhythmicState | SetWordsDictionary;

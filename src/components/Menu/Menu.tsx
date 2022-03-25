@@ -24,16 +24,16 @@ const menu: {
     title: 'ENGINE' | 'RHYTHMICS',
     icon: React.ReactNode
 }[] = [
-    {
-        url: 'images-engine',
-        title: 'ENGINE',
-        icon: <Widgets />
-    },
-    {
-        url: 'rhythmic',
-        title: 'RHYTHMICS',
-        icon: <ChangeHistory />
-    }
+  {
+    url: 'images-engine',
+    title: 'ENGINE',
+    icon: <Widgets />
+  },
+  {
+    url: 'rhythmic',
+    title: 'RHYTHMICS',
+    icon: <ChangeHistory />
+  }
 ];
 
 let initialY = 0;
@@ -46,130 +46,130 @@ interface MenuProps {
 
 const Menu: FunctionalComponent<MenuProps> = ({ items, lang = 'ru' }) => {
     
-    const [ isMenuHidden, setMenuVisibility ] = useState(true);
+  const [ isMenuHidden, setMenuVisibility ] = useState(true);
     
-    const mobileNavMenu = useRef<HTMLUListElement>(null);
+  const mobileNavMenu = useRef<HTMLUListElement>(null);
 
-    const toggleMenu = useCallback(() => {
-        const isHidden = !isMenuHidden;
-        if (isHidden) {
-            document.body.classList.remove('fixed');
-        } else {
-            document.body.classList.add('fixed');
-        } 
-        setMenuVisibility(isHidden);
-    }, [isMenuHidden]);
+  const toggleMenu = useCallback(() => {
+    const isHidden = !isMenuHidden;
+    if (isHidden) {
+      document.body.classList.remove('fixed');
+    } else {
+      document.body.classList.add('fixed');
+    } 
+    setMenuVisibility(isHidden);
+  }, [isMenuHidden]);
 
-    const onTouchToggle: React.TouchEventHandler<HTMLUListElement> = useCallback(
-        (e) => {
-            if (e.type === 'touchstart') {
-                initialY = e.touches[0].clientY;
-            }
+  const onTouchToggle: React.TouchEventHandler<HTMLUListElement> = useCallback(
+    (e) => {
+      if (e.type === 'touchstart') {
+        initialY = e.touches[0].clientY;
+      }
 
-            if (e.type === 'touchend' && deltaY > 0 && !isMenuHidden) {
-                deltaY = 0;
-                toggleMenu();
-            }
-        },
-        [isMenuHidden]
-    );
+      if (e.type === 'touchend' && deltaY > 0 && !isMenuHidden) {
+        deltaY = 0;
+        toggleMenu();
+      }
+    },
+    [isMenuHidden]
+  );
 
-    const onTouchMove: React.TouchEventHandler<HTMLUListElement> = useCallback(
-        (e) => {
-            deltaY = e.touches[0].clientY - initialY;
-            if (mobileNavMenu.current) {
-                mobileNavMenu.current.style.transform = `translateY(${
-                    deltaY < 0 ? 0 : deltaY
-                }px)`;
+  const onTouchMove: React.TouchEventHandler<HTMLUListElement> = useCallback(
+    (e) => {
+      deltaY = e.touches[0].clientY - initialY;
+      if (mobileNavMenu.current) {
+        mobileNavMenu.current.style.transform = `translateY(${
+          deltaY < 0 ? 0 : deltaY
+        }px)`;
 
-                if (
-                    deltaY > mobileNavMenu.current.offsetHeight * 0.85 &&
+        if (
+          deltaY > mobileNavMenu.current.offsetHeight * 0.85 &&
                     !isMenuHidden
-                ) {
-                    deltaY = 0;
-                    toggleMenu();
-                }
-            }
-        },
-        [isMenuHidden]
-    );
+        ) {
+          deltaY = 0;
+          toggleMenu();
+        }
+      }
+    },
+    [isMenuHidden]
+  );
 
-    return (
-        <NavBar id="nav">
-            <NavMenuBar>
-                <Button _rounded _flat _transparent onClick={toggleMenu}>
-                    <Burger />
-                </Button>
-                {!isMenuHidden ? (
-                    <Portal id="portal-menu">
-                        <Backdrop>
-                            <MobileNavMenu
-                                ref={mobileNavMenu}
-                                onTouchMove={onTouchMove}
-                                onTouchStart={onTouchToggle}
-                                onTouchEnd={onTouchToggle}>
-                                <NavMenuItem>
-                                    <RouteLink
-                                        to={'/'}
-                                        exact
-                                        onClick={toggleMenu}>
-                                        <NavMenuTitle>
-                                            {
-                                                translations[lang].menu[
-                                                    'ABOUT'
-                                                ]
-                                            }
-                                        </NavMenuTitle>
-                                    </RouteLink>
-                                </NavMenuItem>
-                                <MenuItems
-                                    items={menu}
-                                    render={(item) => (
-                                        <RouteLink
-                                            to={`/${item.url}`}
-                                            onClick={toggleMenu}>
-                                            <NavMenuTitle>
-                                                {
-                                                    translations[lang].menu[
-                                                        item.title
-                                                    ]
-                                                }
-                                            </NavMenuTitle>
-                                        </RouteLink>
-                                    )}
-                                />
-                                <NavMenuItem />
-                                <NavMenuItem>
-                                    <Flex justify="space-between">
-                                        {items.map((item, index) => (
-                                            <Container
-                                                width="40%"
-                                                key={`item-${index}`}>
-                                                {item}
-                                            </Container>
-                                        ))}
-                                    </Flex>
-                                </NavMenuItem>
-                            </MobileNavMenu>
-                        </Backdrop>
-                    </Portal>
-                ) : null}
-            </NavMenuBar>
-            <NavMenu>
+  return (
+    <NavBar id="nav">
+      <NavMenuBar>
+        <Button _rounded _flat _transparent onClick={toggleMenu}>
+          <Burger />
+        </Button>
+        {!isMenuHidden ? (
+          <Portal id="portal-menu">
+            <Backdrop>
+              <MobileNavMenu
+                ref={mobileNavMenu}
+                onTouchMove={onTouchMove}
+                onTouchStart={onTouchToggle}
+                onTouchEnd={onTouchToggle}>
+                <NavMenuItem>
+                  <RouteLink
+                    to={'/'}
+                    exact
+                    onClick={toggleMenu}>
+                    <NavMenuTitle>
+                      {
+                        translations[lang].menu[
+                          'ABOUT'
+                        ]
+                      }
+                    </NavMenuTitle>
+                  </RouteLink>
+                </NavMenuItem>
                 <MenuItems
-                    items={menu}
-                    render={(item) => (
-                        <RouteLink to={`/${item.url}`}>
-                            <NavMenuTitle>
-                                {translations[lang].menu[item.title]}
-                            </NavMenuTitle>
-                        </RouteLink>
-                    )}
+                  items={menu}
+                  render={(item) => (
+                    <RouteLink
+                      to={`/${item.url}`}
+                      onClick={toggleMenu}>
+                      <NavMenuTitle>
+                        {
+                          translations[lang].menu[
+                            item.title
+                          ]
+                        }
+                      </NavMenuTitle>
+                    </RouteLink>
+                  )}
                 />
-                <MenuItems items={items} />
-            </NavMenu>
-        </NavBar>
-    );
-}
+                <NavMenuItem />
+                <NavMenuItem>
+                  <Flex justify="space-between">
+                    {items.map((item, index) => (
+                      <Container
+                        width="40%"
+                        key={`item-${index}`}>
+                        {item}
+                      </Container>
+                    ))}
+                  </Flex>
+                </NavMenuItem>
+              </MobileNavMenu>
+            </Backdrop>
+          </Portal>
+        ) : null}
+      </NavMenuBar>
+      <NavMenu>
+        <MenuItems
+          items={menu}
+          render={(item) => (
+            <RouteLink to={`/${item.url}`}>
+              <NavMenuTitle>
+                {translations[lang].menu[item.title]}
+              </NavMenuTitle>
+            </RouteLink>
+          )}
+        />
+        <MenuItems items={items} />
+      </NavMenu>
+    </NavBar>
+  );
+};
 
 export default Menu;

@@ -8,13 +8,13 @@ import accents from './accents';
 import getAnalyzedTextFromWorker from './getAnalyzedTextFromWorker';
 
 export {
-    structure,
-    textAnalyzer,
-    tagMaker,
-    tagMakerPromise,
-    makeCaesura,
-    makeAccent,
-    rhythmPresets,
-    accents,
-    getAnalyzedTextFromWorker,
+  structure,
+  textAnalyzer,
+  tagMaker,
+  tagMakerPromise,
+  makeCaesura,
+  makeAccent,
+  rhythmPresets,
+  accents,
+  getAnalyzedTextFromWorker,
 };

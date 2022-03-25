@@ -1,41 +1,41 @@
 export let recorder: InstanceType<typeof MediaRecorder> | null = null;
 
-let chunks: Blob[] = [];
+const chunks: Blob[] = [];
 
 export const setUpRecorder = ({
-    context,
-    onStart,
-    onStop,
-    connect,
+  context,
+  onStart,
+  onStop,
+  connect,
 }: {
     context: AudioContext;
     onStart: () => void;
     onStop: (url: string) => void;
     connect: (dest: MediaStreamAudioDestinationNode) => void;
 }) => {
-    try {
-        const actx: AudioContext = context;
+  try {
+    const actx: AudioContext = context;
 
-        const dest = actx.createMediaStreamDestination();
-        recorder = new MediaRecorder(dest.stream);
+    const dest = actx.createMediaStreamDestination();
+    recorder = new MediaRecorder(dest.stream);
 
-        recorder.ondataavailable = (e) => chunks.push(e.data);
-        recorder.onstop = () => {
-            let blob = new Blob(chunks, {
-                type: 'audio/wav',
-            });
+    recorder.ondataavailable = (e) => chunks.push(e.data);
+    recorder.onstop = () => {
+      const blob = new Blob(chunks, {
+        type: 'audio/wav',
+      });
 
-            if (onStop) {
-                onStop(URL.createObjectURL(blob));
-            }
-        };
+      if (onStop) {
+        onStop(URL.createObjectURL(blob));
+      }
+    };
 
-        recorder.onstart = () => {
-            if (onStart) {
-                onStart();
-            }
-        };
+    recorder.onstart = () => {
+      if (onStart) {
+        onStart();
+      }
+    };
 
-        connect(dest);
-    } catch (e) {}
+    connect(dest);
+  } catch (e) {}
 };

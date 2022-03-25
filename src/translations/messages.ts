@@ -1,32 +1,32 @@
 const ru = {
-    COPIED: 'Текст скопирован в буфер.',
-    NET: 'Проверьте подключение к интернету.',
-    WRONG: 'Проверьте ссылку. Неверные параметры.',
-    HOW_WORKS: 'Как это работает?',
-    LEARN_MORE: 'Узнать больше.',
-    LINK_COPIED: 'Ссылка скопирована в буфер.',
-    PAIR_ADDED: 'Словосочетание добавлено.',
-    PAIRS_READY: 'Словосочетания составлены.',
-    PAIRS_COPIED: 'Пары скопированы',
-    CLICK_MORE: 'Нажмите еще раз для удаления',
+  COPIED: 'Текст скопирован в буфер.',
+  NET: 'Проверьте подключение к интернету.',
+  WRONG: 'Проверьте ссылку. Неверные параметры.',
+  HOW_WORKS: 'Как это работает?',
+  LEARN_MORE: 'Узнать больше.',
+  LINK_COPIED: 'Ссылка скопирована в буфер.',
+  PAIR_ADDED: 'Словосочетание добавлено.',
+  PAIRS_READY: 'Словосочетания составлены.',
+  PAIRS_COPIED: 'Пары скопированы',
+  CLICK_MORE: 'Нажмите еще раз для удаления',
 } as const;
 
 const en = {
-    COPIED: 'Text copied to clipboard.',
-    NET: 'Check your connection',
-    WRONG: 'Wrong parameters. Check the link.',
-    HOW_WORKS: 'How it works?',
-    LEARN_MORE: 'Learn more.',
-    LINK_COPIED: 'Link copied to clipboard.',
-    PAIR_ADDED: 'A pair is added.',
-    PAIRS_READY: 'Pairs are ready.',
-    PAIRS_COPIED: 'Pairs copied',
-    CLICK_MORE: 'Click one more time for deleting',
+  COPIED: 'Text copied to clipboard.',
+  NET: 'Check your connection',
+  WRONG: 'Wrong parameters. Check the link.',
+  HOW_WORKS: 'How it works?',
+  LEARN_MORE: 'Learn more.',
+  LINK_COPIED: 'Link copied to clipboard.',
+  PAIR_ADDED: 'A pair is added.',
+  PAIRS_READY: 'Pairs are ready.',
+  PAIRS_COPIED: 'Pairs copied',
+  CLICK_MORE: 'Click one more time for deleting',
 } as const;
 
 const messages = {
-    ru,
-    en
+  ru,
+  en
 };
 
 export default messages;

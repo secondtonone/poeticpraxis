@@ -24,9 +24,9 @@ import ContentCopy from '@icons/ContentCopy';
 import List from '@components/List';
 
 import {
-    Hint,
-    SecondaryTitle,
-    TextMinor,
+  Hint,
+  SecondaryTitle,
+  TextMinor,
 } from '@styles/components';
 
 import { ButtonContainer } from './styled';
@@ -42,160 +42,160 @@ interface PairsBenchProps {
 }
 
 const PairsBench: FunctionalComponent<PairsBenchProps> = ({
-    result, 
-    pinned,
-    lang,
-    showMessage,
-    pushToHistory,
-    toTheTop,
-    rhythmicText
+  result, 
+  pinned,
+  lang,
+  showMessage,
+  pushToHistory,
+  toTheTop,
+  rhythmicText
 }) => {
-    const { setEngineState } = useImagineEngineActions();
-    const { setRhythmicState: sharingText } = useRhythmicActions();
+  const { setEngineState } = useImagineEngineActions();
+  const { setRhythmicState: sharingText } = useRhythmicActions();
 
-    const pinMatch: React.MouseEventHandler<HTMLButtonElement> = useCallback(
-        (e) => {
-            const { index } = (e.target as HTMLButtonElement).dataset;
+  const pinMatch: React.MouseEventHandler<HTMLButtonElement> = useCallback(
+    (e) => {
+      const { index } = (e.target as HTMLButtonElement).dataset;
 
-            if (index) {
-                const words = result.splice(parseInt(index, 10), 1);
+      if (index) {
+        const words = result.splice(parseInt(index, 10), 1);
 
-                const match = words[0].join(' ');
+        const match = words[0].join(' ');
 
-                pinned.push(match);
+        pinned.push(match);
 
-                showMessage(messages[lang].PAIR_ADDED);
+        showMessage(messages[lang].PAIR_ADDED);
 
-                setEngineState({
-                    pinned,
-                    result
-                });
-                }
-        },
-        [result, pinned, showMessage, setEngineState, lang]
-    );
+        setEngineState({
+          pinned,
+          result
+        });
+      }
+    },
+    [result, pinned, showMessage, setEngineState, lang]
+  );
 
-    const changePin = useCallback(
-        (index: number, value: string) => {
-            pinned[index] = value;
+  const changePin = useCallback(
+    (index: number, value: string) => {
+      pinned[index] = value;
 
-            setEngineState({
-                pinned
-            });
-        },
-        [pinned, setEngineState]
-    );
+      setEngineState({
+        pinned
+      });
+    },
+    [pinned, setEngineState]
+  );
 
-    const deleteMatch: React.MouseEventHandler<HTMLButtonElement> = useCallback(
-        (e) => {
-            const { index } = (e.target as HTMLButtonElement).dataset;
+  const deleteMatch: React.MouseEventHandler<HTMLButtonElement> = useCallback(
+    (e) => {
+      const { index } = (e.target as HTMLButtonElement).dataset;
 
-            if (index) {
-                pinned.splice(parseInt(index, 10), 1);
+      if (index) {
+        pinned.splice(parseInt(index, 10), 1);
 
-                setEngineState({
-                    pinned
-                });
-            }
-        },
-        [pinned, setEngineState]
-    );
+        setEngineState({
+          pinned
+        });
+      }
+    },
+    [pinned, setEngineState]
+  );
 
-    const copyToClipboard = useCallback(() => {
-        copying(pinned.join('\n'));
-        showMessage(messages[lang].PAIRS_COPIED);
-    }, [pinned, showMessage, lang]);
+  const copyToClipboard = useCallback(() => {
+    copying(pinned.join('\n'));
+    showMessage(messages[lang].PAIRS_COPIED);
+  }, [pinned, showMessage, lang]);
 
-    const toRhythmic = useCallback(() => {
-        const sharedText = pinned.join('\n');
-        sharingText({ text: `${rhythmicText}\n${sharedText}`});
-        pushToHistory('/rhythmic');
-    }, [pinned, sharingText, pushToHistory, rhythmicText]);
+  const toRhythmic = useCallback(() => {
+    const sharedText = pinned.join('\n');
+    sharingText({ text: `${rhythmicText}\n${sharedText}`});
+    pushToHistory('/rhythmic');
+  }, [pinned, sharingText, pushToHistory, rhythmicText]);
 
-    const pairsCountByPlatform = isTouchDevice() ? 30 : 90;
+  const pairsCountByPlatform = isTouchDevice() ? 30 : 90;
 
-    return (
-        <List _animated>
-            <Container margin="0 0 32px">
-                <SecondaryTitle>
-                    {translations[lang].matchList['FAVORITES']}{' '}
-                    <TextMinor>({pinned.length})</TextMinor>
-                </SecondaryTitle>
+  return (
+    <List _animated>
+      <Container margin="0 0 32px">
+        <SecondaryTitle>
+          {translations[lang].matchList['FAVORITES']}{' '}
+          <TextMinor>({pinned.length})</TextMinor>
+        </SecondaryTitle>
 
-                <MatchList
-                    handler={deleteMatch}
-                    list={pinned}
-                    type={'cancel'}
-                    changeItem={changePin}
-                />
+        <MatchList
+          handler={deleteMatch}
+          list={pinned}
+          type={'cancel'}
+          changeItem={changePin}
+        />
 
-                {pinned.length ? null : (
-                    <Hint>{translations[lang].matchList['FAVOR_HINT']}</Hint>
-                )}
-                {pinned.length ? (
-                    <ButtonContainer>
-                        <Button
-                            _flat
-                            _transparent
-                            type="button"
-                            margin="8px 8px"
-                            onClick={copyToClipboard}>
-                            {translations[lang].matchList['COPY']}{' '}
-                            <ContentCopy _small padding="0 0 0 8px" />
-                        </Button>
-                        <Button
-                            _flat
-                            _transparent
-                            _light-gray
-                            type="button"
-                            margin="8px 8px"
-                            onClick={toRhythmic}>
-                            {translations[lang].matchList['SEE_RHYTHM']}{' '}
-                            <ArrowBack
-                                _small
-                                _rotate-left
-                                padding="0 8px 0 0"
-                            />
-                        </Button>
-                    </ButtonContainer>
-                ) : null}
-            </Container>
+        {pinned.length ? null : (
+          <Hint>{translations[lang].matchList['FAVOR_HINT']}</Hint>
+        )}
+        {pinned.length ? (
+          <ButtonContainer>
+            <Button
+              _flat
+              _transparent
+              type="button"
+              margin="8px 8px"
+              onClick={copyToClipboard}>
+              {translations[lang].matchList['COPY']}{' '}
+              <ContentCopy _small padding="0 0 0 8px" />
+            </Button>
+            <Button
+              _flat
+              _transparent
+              _light-gray
+              type="button"
+              margin="8px 8px"
+              onClick={toRhythmic}>
+              {translations[lang].matchList['SEE_RHYTHM']}{' '}
+              <ArrowBack
+                _small
+                _rotate-left
+                padding="0 8px 0 0"
+              />
+            </Button>
+          </ButtonContainer>
+        ) : null}
+      </Container>
 
-            <Container margin="0 0 32px">
-                <SecondaryTitle>
-                    {translations[lang].matchList['PAIRS']}{' '}
-                    <TextMinor>({result.length})</TextMinor>
-                </SecondaryTitle>
-                {result.length ? null : (
-                    <Hint>
-                        {translations[lang].matchList['PAIRS_HINT'][0]}{' '}
-                        <Widgets _small />,<br />{' '}
-                        {translations[lang].matchList['PAIRS_HINT'][1]}
-                    </Hint>
-                )}
-                <MatchList
-                    handler={pinMatch}
-                    list={result}
-                    type={'add'}
-                    compact
-                />
+      <Container margin="0 0 32px">
+        <SecondaryTitle>
+          {translations[lang].matchList['PAIRS']}{' '}
+          <TextMinor>({result.length})</TextMinor>
+        </SecondaryTitle>
+        {result.length ? null : (
+          <Hint>
+            {translations[lang].matchList['PAIRS_HINT'][0]}{' '}
+            <Widgets _small />,<br />{' '}
+            {translations[lang].matchList['PAIRS_HINT'][1]}
+          </Hint>
+        )}
+        <MatchList
+          handler={pinMatch}
+          list={result}
+          type={'add'}
+          compact
+        />
 
-                {result.length > pairsCountByPlatform ? (
-                    <Flex justify={'center'} margin="8px 0 0">
-                        <Button
-                            _flat
-                            _transparent
-                            _light-gray
-                            type="button"
-                            onClick={toTheTop}>
-                            {translations[lang].matchList['RETURN']}{' '}
-                            <ArrowBack _small _rotate-right />
-                        </Button>
-                    </Flex>
-                ) : null}
-            </Container>
-        </List>
-    );
+        {result.length > pairsCountByPlatform ? (
+          <Flex justify={'center'} margin="8px 0 0">
+            <Button
+              _flat
+              _transparent
+              _light-gray
+              type="button"
+              onClick={toTheTop}>
+              {translations[lang].matchList['RETURN']}{' '}
+              <ArrowBack _small _rotate-right />
+            </Button>
+          </Flex>
+        ) : null}
+      </Container>
+    </List>
+  );
 };
 
 export default PairsBench;

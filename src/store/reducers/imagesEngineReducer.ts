@@ -1,9 +1,9 @@
 import imagesEngineModel from '@store/models/imagesEngineModel';
 import IImagesEngineModel from '@typings/ImagesEngineModel';
 import {
-    SET_ENGINE_STATE,
-    SetEngineState,
-    ImagesEngineActionTypes,
+  SET_ENGINE_STATE,
+  SetEngineState,
+  ImagesEngineActionTypes,
 } from '@store/actions/imagesEngineActions';
 
 type Handler = (
@@ -14,13 +14,13 @@ type Handler = (
 const ACTION_HANDLERS: {
     [key: string]: Handler;
 } = {
-    [SET_ENGINE_STATE]: (state: IImagesEngineModel, action: SetEngineState) =>
-        Object.assign({}, state, {
-            currentEngineState: {
-                ...state.currentEngineState,
-                ...action.payload,
-            },
-        }),
+  [SET_ENGINE_STATE]: (state: IImagesEngineModel, action: SetEngineState) =>
+    Object.assign({}, state, {
+      currentEngineState: {
+        ...state.currentEngineState,
+        ...action.payload,
+      },
+    }),
 };
 
 export type EngineReducer = (
@@ -29,12 +29,12 @@ export type EngineReducer = (
 ) => IImagesEngineModel;
 
 const engineReducer: EngineReducer = (
-    state = imagesEngineModel,
-    action
+  state = imagesEngineModel,
+  action
 ) => {
-    const handler: Handler = ACTION_HANDLERS[action.type];
+  const handler: Handler = ACTION_HANDLERS[action.type];
 
-    return handler ? handler(state, action) : state;
-}
+  return handler ? handler(state, action) : state;
+};
 
 export default engineReducer;

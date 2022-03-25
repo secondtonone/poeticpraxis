@@ -250,7 +250,7 @@ const FakeField = styled.div<ZoomProps>`
 `;
 
 const accentMixin = (color: string, imgSVG: string, imgPNG: string, accent: AccentColors) => {
-    return `
+  return `
         position: absolute;
         z-index: 1000;
         cursor: url('${imgSVG}'), url('${imgPNG}'), pointer;
@@ -266,13 +266,13 @@ const accentMixin = (color: string, imgSVG: string, imgPNG: string, accent: Acce
             color: ${color};
 
             ${
-                accent == 'black' || accent == 'gray'
-                    ? `content: '\\25CF';
+  accent == 'black' || accent == 'gray'
+    ? `content: '\\25CF';
                         top: -16px;`
-                    : `content: '\\25BC';
+    : `content: '\\25BC';
                 transform: rotate(0deg) scale(1.7);
                 top: -23px;`
-            }
+}
         }
 
         &:hover::before {
@@ -295,32 +295,32 @@ const accentMixin = (color: string, imgSVG: string, imgPNG: string, accent: Acce
 
 const AccentRelative = styled.span<{accent: AccentColors}>`
     ${(props) => {
-        if (props.accent === 'black') {
-            return accentMixin(
-                props.theme.secondColor,
-                redTriangleSVG,
-                redTrianglePNG,
-                props.accent
-            );
-        }
-        if (props.accent === 'gray') {
-            return accentMixin(
-                props.theme.grayColor,
-                blackTriangleSVG,
-                blackTrianglePNG,
-                props.accent
-            );
-        }
+    if (props.accent === 'black') {
+      return accentMixin(
+        props.theme.secondColor,
+        redTriangleSVG,
+        redTrianglePNG,
+        props.accent
+      );
+    }
+    if (props.accent === 'gray') {
+      return accentMixin(
+        props.theme.grayColor,
+        blackTriangleSVG,
+        blackTrianglePNG,
+        props.accent
+      );
+    }
 
-        return accentMixin(
-            props.accent === 'red'
-                ? props.theme.accentColor
-                : theme.secondRed,
-            blackTriangleSVG,
-            blackTrianglePNG,
-            props.accent
-        );
-    }}
+    return accentMixin(
+      props.accent === 'red'
+        ? props.theme.accentColor
+        : theme.secondRed,
+      blackTriangleSVG,
+      blackTrianglePNG,
+      props.accent
+    );
+  }}
 `;
 
 const Accent = styled.span<{accent: AccentColors}>`
@@ -330,12 +330,12 @@ const Accent = styled.span<{accent: AccentColors}>`
     border: 0;
 
     ${(props) => {
-        if (props.accent === 'red') return `color: ${theme.primaryRed};`;
-        if (props.accent === 'black') return `color: ${theme.primaryBlack};`;
-        if (props.accent === 'red_secondary') return `color: ${theme.secondRed};`;
-        if (props.accent === 'gray') return `color: ${theme.grayColor};`;
-        return '';
-    }}
+    if (props.accent === 'red') return `color: ${theme.primaryRed};`;
+    if (props.accent === 'black') return `color: ${theme.primaryBlack};`;
+    if (props.accent === 'red_secondary') return `color: ${theme.secondRed};`;
+    if (props.accent === 'gray') return `color: ${theme.grayColor};`;
+    return '';
+  }}
 `;
 
 const MarkStub = styled.div`
@@ -376,7 +376,7 @@ const PaintField = styled.div<ZoomProps>`
         & span:hover::before {
             top: 29px;
         }` : '')
-    }
+}
 `;
 
 const Overflowed = styled.div`
@@ -384,22 +384,22 @@ const Overflowed = styled.div`
 `;
 
 export {
-    Accent,
-    StringPauseRelative,
-    StringPause,
-    StringField,
-    Syllable,
-    SyllableStub,
-    MarkStub,
-    TriangleElement,
-    CircleElement,
-    StringNumber,
-    FakeField,
-    AccentRelative,
-    WorkField,
-    FieldEditable,
-    PaintField,
-    Overflowed,
-    SyllableAccent,
-    SyllableAccentType,
+  Accent,
+  StringPauseRelative,
+  StringPause,
+  StringField,
+  Syllable,
+  SyllableStub,
+  MarkStub,
+  TriangleElement,
+  CircleElement,
+  StringNumber,
+  FakeField,
+  AccentRelative,
+  WorkField,
+  FieldEditable,
+  PaintField,
+  Overflowed,
+  SyllableAccent,
+  SyllableAccentType,
 };

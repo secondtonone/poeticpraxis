@@ -3,16 +3,16 @@ import { setWordsDictionary, setRhythmicState, RhythmicActions } from '@store/ac
 import DispatchContext from '@contexts/dispatchContext';
 
 const useRhythmicActions = () => {
-    const dispatch = useContext(DispatchContext);
+  const dispatch = useContext(DispatchContext);
 
-    const actionMaker = <T extends RhythmicActions>(action: T) => (payload: Parameters<RhythmicActions>[0]) => dispatch(action(payload)); 
+  const actionMaker = <T extends RhythmicActions>(action: T) => (payload: Parameters<RhythmicActions>[0]) => dispatch(action(payload)); 
 
-    const actions = useMemo(() => ({
-        setWordsDictionary: actionMaker(setWordsDictionary),
-        setRhythmicState: actionMaker(setRhythmicState)
-    }), [dispatch]);
+  const actions = useMemo(() => ({
+    setWordsDictionary: actionMaker(setWordsDictionary),
+    setRhythmicState: actionMaker(setRhythmicState)
+  }), [dispatch]);
 
-    return actions;
+  return actions;
 }; 
 
 export default useRhythmicActions;

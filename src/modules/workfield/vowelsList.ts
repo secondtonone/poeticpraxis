@@ -1,5 +1,5 @@
-const vowelBeforeSoft: string = 'иеёюя';
-const vowelBeforeSolid: string = 'аоуыэ';
+const vowelBeforeSoft = 'иеёюя';
+const vowelBeforeSolid = 'аоуыэ';
 const vowelsList: string =
     vowelBeforeSoft + vowelBeforeSolid + 'eyuioaäöüéàèùâêîôûïüÿìíòóúęąєў';
 

@@ -48,10 +48,10 @@ const whited: Keyframes = keyframes`
 `;
 
 export {
-    upAlt,
-    downAlt,
-    up,
-    show,
-    loaded,
-    whited
+  upAlt,
+  downAlt,
+  up,
+  show,
+  loaded,
+  whited
 };

@@ -157,18 +157,18 @@ export interface IStructure {
 }
 
 const structure: IStructure = {
-    strings: {},
-    orderStrings: [],
-    elements: {},
-    tags: [],
-    hashTable: {},
-    stringLinks: {},
-    wordLinks: {},
-    wordsCount: 0,
-    mainMeter: {
-        title: '',
-        inPercent: 0,
-    },
+  strings: {},
+  orderStrings: [],
+  elements: {},
+  tags: [],
+  hashTable: {},
+  stringLinks: {},
+  wordLinks: {},
+  wordsCount: 0,
+  mainMeter: {
+    title: '',
+    inPercent: 0,
+  },
 };
 
 export default structure;
