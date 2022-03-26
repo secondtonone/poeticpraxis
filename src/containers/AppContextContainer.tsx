@@ -42,9 +42,9 @@ const AppContextContainer: FunctionalComponent = ({ children }) => {
 
   const combinedDispatch = useCallback(
     (action: ActionTypes) =>
-      [dispatchImagesEngine, dispatchRhythmic, dispatchLayout].forEach(
-        (dispatch) => dispatch(action)
-      ),
+      [dispatchImagesEngine, dispatchRhythmic, dispatchLayout]
+        // @ts-ignore
+        .forEach((dispatch) => dispatch(action)),
     [dispatchImagesEngine, dispatchRhythmic, dispatchLayout]
   );
 

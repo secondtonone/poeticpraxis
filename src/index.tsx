@@ -12,7 +12,7 @@ import Routes from '@routes';
 
 import analyticsInit from '@modules/analytics';
 
-const run = (Component: FunctionalComponent<Record<string, never>>) => {
+const run = (Component: FunctionalComponent) => {
   const rootElement = DEV
     ? document.body.lastElementChild
     : document.getElementById('app');
