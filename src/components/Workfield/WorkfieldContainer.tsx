@@ -108,10 +108,10 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
 
     if (mainField.current) {
       lineHeight =
-                parseInt(
-                  window.getComputedStyle(mainField.current, null).lineHeight,
-                  10
-                ) || 1;
+        parseInt(
+          window.getComputedStyle(mainField.current, null).lineHeight,
+          10
+        ) || 1;
     }
 
     if (window.Worker) textAnalyzingWorker = new AnalyzeWorker();
