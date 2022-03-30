@@ -23,8 +23,6 @@ jobs:
           npm run build
 
       - uses: actions/download-artifact@v3
-        with:
-          name: dist
 
       - name: Display structure of downloaded files
         run: ls -R
