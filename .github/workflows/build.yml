@@ -22,12 +22,12 @@ jobs:
           npm install
           npm run build
 
-      - name: 💾 Downloadable files
-        uses: actions/download-artifact@v3
+      - name: 💾 Upload files
+        uses: actions/upload-artifact@v3
         with:
           name: poetic-praxis-artifacts
-          path: dist/
+          path: dist
 
       - name: 📄 Display structure of downloaded files
         run: ls -R
-        working-directory: dist/
+        working-directory: dist
