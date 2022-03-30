@@ -4,8 +4,8 @@ import common from './common';
 import reset from './reset';
 
 const styles: FlattenSimpleInterpolation = css`
-    ${reset}
-    ${common}
+  ${reset}
+  ${common}
 `;
 
 export default styles;

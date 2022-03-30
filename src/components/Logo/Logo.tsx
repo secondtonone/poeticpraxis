@@ -7,8 +7,8 @@ import LogoBlack from '@public/img/Logo.svg';
 import LogoWhite from '@public/img/Logo-white.svg';
 
 interface LogoProps {
-    height?: number
-    width?: number
+  height?: number
+  width?: number
 }
 
 const Logo:FunctionalComponent<LogoProps> = ({ height = 24, width = 62 }) => {

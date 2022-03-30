@@ -14,11 +14,11 @@ import Cancel from '@icons/Cancel';
 import CheckCircle from '@icons/CheckCircle';
 
 interface MatchListProps {
-    compact?: boolean
-    changeItem?: (index: number, value: string) => void
-    type: string
-    list: Array<Array<string | undefined> | string>
-    handler: React.MouseEventHandler<HTMLButtonElement>
+  compact?: boolean
+  changeItem?: (index: number, value: string) => void
+  type: string
+  list: Array<Array<string | undefined> | string>
+  handler: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const MatchList: FunctionalComponent<MatchListProps> = ({

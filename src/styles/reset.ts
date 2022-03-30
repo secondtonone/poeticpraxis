@@ -1,11 +1,12 @@
-const reset = `html {
-    box-sizing: border-box;
+const reset = `
+html {
+  box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body,
@@ -32,28 +33,28 @@ p,
 blockquote,
 th,
 td {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 a {
-    text-decoration: none;
-    color: #181311;
+  text-decoration: none;
+  color: #181311;
 }
 
 fieldset,
 img {
-    border: 0;
+  border: 0;
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 
 ul, ol {
-    list-style: none;
+  list-style: none;
 }
 
 address,
@@ -65,13 +66,13 @@ em,
 strong,
 th,
 var {
-    font-weight: normal;
-    font-style: normal;
+  font-weight: normal;
+  font-style: normal;
 }
 
 caption,
 th {
-    text-align: left;
+  text-align: left;
 }
 
 h1,
@@ -80,22 +81,22 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: normal;
-    font-size: 100%;
+  font-weight: normal;
+  font-size: 100%;
 }
 
 q:before,
 q:after {
-    content: '';
+  content: '';
 }
 
 abbr,
 acronym {
-    border: 0;
+  border: 0;
 }
 
 button:focus {
-    outline: none;
+  outline: none;
 }`;
 
 export default reset;

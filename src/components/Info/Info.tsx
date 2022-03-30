@@ -11,10 +11,10 @@ import Flex from '@components/Flex';
 import Langs from '@typings/Langs';
 
 interface InfoProps {
-    lang?: Langs
-    foldedContent: React.ReactNode
-    unfoldedContent: React.ReactNode
-    onClose?: () => void;
+  lang?: Langs
+  foldedContent: React.ReactNode
+  unfoldedContent: React.ReactNode
+  onClose?: () => void;
 }
 
 const Info: FunctionalComponent<InfoProps> = ({ lang = 'ru', foldedContent, unfoldedContent, onClose }) => {
@@ -69,22 +69,22 @@ const Info: FunctionalComponent<InfoProps> = ({ lang = 'ru', foldedContent, unfo
 };
 
 const StyledBox = styled(Flex)`
-    padding: 16px 24px 8px;
-    position: relative;
-    text-align: left;
-    color: ${(props) => props.theme.secondColor};
-    background-color: ${(props) => props.theme.lightGray};
-    font-size: 14px;
-    margin: 0 auto 32px;
-    font-weight: 300;
-    line-height: 28px;
-    max-width: 666px;
+  padding: 16px 24px 8px;
+  position: relative;
+  text-align: left;
+  color: ${(props) => props.theme.secondColor};
+  background-color: ${(props) => props.theme.lightGray};
+  font-size: 14px;
+  margin: 0 auto 32px;
+  font-weight: 300;
+  line-height: 28px;
+  max-width: 666px;
 
-    @media (max-width: 600px) {
-        margin: 0 0 32px;
-        line-height: 1.6;
-        flex-direction: column;
-    }
+  @media (max-width: 600px) {
+    margin: 0 0 32px;
+    line-height: 1.6;
+    flex-direction: column;
+  }
 `;
 
 export default Info;

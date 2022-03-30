@@ -9,8 +9,8 @@ import DoneIcon from '@icons/DoneIcon';
 import EditIcon from '@icons/EditIcon';
 
 interface InlineInputProps {
-    value: string
-    onChange: (value: string) => void
+  value: string
+  onChange: (value: string) => void
 }
 
 const InlineInput: FunctionalComponent<InlineInputProps> = ({ onChange, value }) => {
