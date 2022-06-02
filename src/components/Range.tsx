@@ -48,7 +48,7 @@ const Range = styled.input<RangeProps>`
         border: 0;
         background: ${(props) => props.theme.secondColor};
         cursor: pointer;
-        margin-top: -7.5px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+        margin-top: -6.5px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
         box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14),
             0 2px 2px 0 rgba(0, 0, 0, 0.098),
             0 1px 5px 0 rgba(0, 0, 0, 0.084)

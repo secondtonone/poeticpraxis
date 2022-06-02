@@ -20,6 +20,7 @@ import {
   Footer
 } from '@styles/components';
 import Loader from '@components/Loader';
+import DynamicOnScrollProps from '@components/DynamicOnScroll';
 
 const AboutRhythmic = lazy(() =>
   import(/* webpackChunkName: "AboutRhythmic" */ './AboutRhythmic')
@@ -61,23 +62,27 @@ const About: FunctionalComponent = () => {
         mediaQuery={mediaQuery}
       />
 
-      <Suspense fallback={<Loader height={'100%'} />}>
-        <AboutRhythmic
-          lang={lang}
-          mediaQuery={mediaQuery}
-        />
-      </Suspense>
+      <DynamicOnScrollProps>
+        <Suspense fallback={<Loader height={'100%'} />}>
+          <AboutRhythmic
+            lang={lang}
+            mediaQuery={mediaQuery}
+          />
+        </Suspense>
+      </DynamicOnScrollProps>
 
-      <Suspense fallback={<Loader height={'100%'} />}>
-        <AboutProject
-          lang={lang}
-          mediaQuery={mediaQuery}
-          boundHeight={innerHeight}
-        />
-      </Suspense>
+      <DynamicOnScrollProps>
+        <Suspense fallback={<Loader height={'100%'} />}>
+          <AboutProject
+            lang={lang}
+            mediaQuery={mediaQuery}
+            boundHeight={innerHeight}
+          />
+        </Suspense>
+      </DynamicOnScrollProps>
 
       <Footer>
-                &copy; POETIC PRAXIS {daysFromNow}
+        &copy; POETIC PRAXIS {daysFromNow}
         {isRusLang ? '-й день' : `${engDateSuffix} day`}
       </Footer>
     </section>

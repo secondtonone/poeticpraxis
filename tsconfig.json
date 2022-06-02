@@ -1,100 +1,105 @@
 {
-    "compilerOptions": {
-        "module": "esnext",
-        "target": "ES6",
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "strictNullChecks": true,
-        "removeComments": false,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "resolveJsonModule": true,
-        "moduleResolution": "node",
-        "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        "downlevelIteration": true,
-        "lib": [
-            "DOM",
-            "ES2020",
-            "ES6",
-            "ES2015.Generator",
-            "ES7",
-            "ESNext",
-            "WebWorker",
-            "DOM.Iterable",
-            "ScriptHost"
-        ],
-        "baseUrl": "./",
-        "jsx": "react-jsx",
-        "jsxImportSource": "preact",
-        "types": ["preact", "node"],
-        "plugins": [
-            {
-                "name": "typescript-styled-plugin",
-                "tags": [
-                    "styled",
-                    "css",
-                    "sty"
-                ]
-            }
-        ],
-        "paths": {
-            "@components/*": [
-                "src/components/*"
-            ],
-            "@containers/*": [
-                "src/containers/*"
-            ],
-            "@utils/*": [
-                "src/utils/*"
-            ],
-            "@styles/*": [
-                "src/styles/*"
-            ],
-            "@styles": [
-                "src/styles"
-            ],
-            "@store/*": [
-                "src/store/*"
-            ],
-            "@modules/*": [
-                "src/modules/*"
-            ],
-            "@hooks/*": [
-                "src/hooks/*"
-            ],
-            "@typings/*": [
-                "src/typings/*"
-            ],
-            "@contexts/*": [
-                "src/contexts/*"
-            ],
-            "@routes/*": [
-                "src/routes/*"
-            ],
-            "@routes": [
-                "src/routes"
-            ],
-            "@public/*": [
-                "public/*"
-            ],
-            "@icons/*": [
-                "src/components/IconSVG/*"
-            ],
-            "@translations/*": [
-                "src/translations/*"
-            ],
-            "@translations": [
-                "src/translations"
-            ]
-        }
-    },
-    "include": [
-        "src/**/*"
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "ES6",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "removeComments": false,
+    "noUnusedLocals": true,
+    "importHelpers": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "lib": [
+      "DOM",
+      "ES2020",
+      "ES6",
+      "ES2015.Generator",
+      "ES7",
+      "ESNext",
+      "WebWorker",
+      "DOM.Iterable",
+      "ScriptHost"
     ],
-    "exclude": [
-        "node_modules",
-        "dist",
-        ".vscode"
-    ]
+    "baseUrl": "./",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "types": [
+      "preact",
+      "node"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": [
+          "styled",
+          "css",
+          "sty"
+        ]
+      }
+    ],
+    "paths": {
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@containers/*": [
+        "src/containers/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@styles": [
+        "src/styles"
+      ],
+      "@store/*": [
+        "src/store/*"
+      ],
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@typings/*": [
+        "src/typings/*"
+      ],
+      "@contexts/*": [
+        "src/contexts/*"
+      ],
+      "@routes/*": [
+        "src/routes/*"
+      ],
+      "@routes": [
+        "src/routes"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@icons/*": [
+        "src/components/IconSVG/*"
+      ],
+      "@translations/*": [
+        "src/translations/*"
+      ],
+      "@translations": [
+        "src/translations"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".vscode",
+    "public"
+  ]
 }

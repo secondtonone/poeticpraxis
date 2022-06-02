@@ -5,7 +5,7 @@ interface MenuItemsProps<T> {
     render?: (item: T) => React.ReactNode;
 }
 
-const MenuItems = <T extends object | React.ReactNode>({ items, render }: MenuItemsProps<T>) => (
+const MenuItems = <T extends Record<string, unknown> | React.ReactNode>({ items, render }: MenuItemsProps<T>) => (
   <>
     {items.map((item, index) => (
       <NavMenuItem key={`menu-${index}`}>

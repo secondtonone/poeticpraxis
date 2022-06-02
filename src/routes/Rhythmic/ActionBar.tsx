@@ -56,7 +56,7 @@ const ActionButtonBar: FunctionalComponent<ActionButtonBarProps> = ({
         disabled={!text}
         onClick={shareWithLink}
         title={translations[lang].rhythmic['SHARE']}>
-        <ShareIcon _big />
+        <ShareIcon _middle />
       </Button>
 
       <Button
@@ -69,7 +69,7 @@ const ActionButtonBar: FunctionalComponent<ActionButtonBarProps> = ({
             ? translations[lang].rhythmic['ZOOMOUT']
             : translations[lang].rhythmic['ZOOMIN']
         }>
-        {zoomIn ? <ZoomOut _big /> : <ZoomInIcon _big />}
+        {zoomIn ? <ZoomOut _middle /> : <ZoomInIcon _middle />}
       </Button>
 
       <Button
@@ -83,7 +83,7 @@ const ActionButtonBar: FunctionalComponent<ActionButtonBarProps> = ({
             ? translations[lang].rhythmic['BLOCK']
             : translations[lang].rhythmic['UNBLOCK']
         }>
-        {isEditable ? <Lock _big /> : <LockOpen _big />}
+        {isEditable ? <Lock _middle /> : <LockOpen _middle />}
       </Button>
     </ActionBar>
   );

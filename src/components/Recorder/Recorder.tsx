@@ -44,7 +44,7 @@ const Recorder: FunctionComponent<RecorderProps> = ({ lang = 'ru', text, transmi
     if (isSupportRecognition()) {
       recognition = new Recognition();
     }
-  }, []);
+  });
 
   useEffect(() => {
     return () => recognition && isRecording && recognition.stop();
@@ -55,7 +55,7 @@ const Recorder: FunctionComponent<RecorderProps> = ({ lang = 'ru', text, transmi
       recognition.setOnResultHandler(onTranslate);
       recognition.setOnMessageHandler(onError);
     }
-  }, [onTranslate]);
+  }, [onError, onTranslate]);
 
   const toggle = () => {
     recognition.toggle();

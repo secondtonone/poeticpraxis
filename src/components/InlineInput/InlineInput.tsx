@@ -21,6 +21,14 @@ const InlineInput: FunctionalComponent<InlineInputProps> = ({ onChange, value })
   const [ text, setText ] = useState<string>(value);
   const [ isHover, setHover ] = useState<boolean>(false);
 
+  const toggleEdit = useCallback(() => {
+    if (isEdit) {
+      onChange(text);
+    }
+    setEdit(!isEdit);
+    setHover(false);
+  }, [isEdit, onChange, text]);
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -37,15 +45,7 @@ const InlineInput: FunctionalComponent<InlineInputProps> = ({ onChange, value })
 
     return () =>
       document.removeEventListener('mousedown', handleClickOutside);
-  }, [isEdit]);
-
-  const toggleEdit = useCallback(() => {
-    if (isEdit) {
-      onChange(text);
-    }
-    setEdit(!isEdit);
-    setHover(false);
-  }, [isEdit, text]);
+  }, [isEdit, toggleEdit]);
 
   const onChangeInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -34,7 +34,7 @@ const Layout: FunctionalComponent = ({ children }) => {
     return () => {
       window.matchMedia(selector).removeEventListener('change', handler);
     };
-  }, []);
+  });
 
   useLayoutEffect(() => {
     let isLangEn = false;
@@ -71,7 +71,7 @@ const Layout: FunctionalComponent = ({ children }) => {
         </MainContent>
       </Page>
     </ThemeProvider>
-  ), [variant, lang]);
+  ), [variant, lang, children]);
 };
 
 export default Layout;

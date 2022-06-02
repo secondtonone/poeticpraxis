@@ -4,8 +4,8 @@ export const CHANGE_THEME = 'CHANGE_THEME';
 export const CHANGE_LANG = 'CHANGE_LANG';
 
 export interface ChangeTheme {
-    type: typeof CHANGE_THEME;
-    payload: ILayoutModel['variant'];
+  type: typeof CHANGE_THEME;
+  payload: ILayoutModel['variant'];
 }
 
 export function changeTheme(payload: ILayoutModel['variant']): ChangeTheme {

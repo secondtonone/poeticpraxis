@@ -22,13 +22,14 @@ import {
 
 import { AccentRelative } from './styled';
 
-const helpState = () => {
+const useHelpState = () => {
   const {valueSessionStorage, setValueSessionStorage} = useSessionStorage(
     'isHideRhythmicHelp'
   );
 
   return [valueSessionStorage, () => setValueSessionStorage('true')] as const;
 };
+
 export default function Help() {
   const {
     Layout: { lang }
@@ -37,7 +38,7 @@ export default function Help() {
   const containerWidth = maxMedia600 ? '100%' : '33%';
   const isLangRU = lang === 'ru';
 
-  const [isHidden, hideHelp] = helpState();
+  const [isHidden, hideHelp] = useHelpState();
 
   if (isHidden) {
     return null;

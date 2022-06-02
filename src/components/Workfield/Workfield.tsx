@@ -12,10 +12,10 @@ import { FakeField, WorkField, PaintField } from './styled';
 
 /* парсить по словам, сравнивать с предыдущим деревом */
 export interface WorkfieldProps extends Omit<TextareaProps, 'onError' | 'onClick' | 'onDoubleClick'>, Partial<MarksProps>, Partial<StubMarksProps>, Partial<HiddenMarksProps>, Partial<InfoMarksProps> {
-    lang: Langs
-    fakeFieldRef?: React.Ref<HTMLDivElement>
-    onClick?: React.MouseEventHandler<HTMLDivElement>
-    onDoubleClick?: React.MouseEventHandler<HTMLDivElement>
+  lang: Langs
+  fakeFieldRef?: React.Ref<HTMLDivElement>
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+  onDoubleClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
 const Workfield: FunctionalComponent<WorkfieldProps> = ({

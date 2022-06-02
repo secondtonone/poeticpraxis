@@ -5,12 +5,16 @@ import DispatchContext from '@contexts/dispatchContext';
 const useImagesEngineActions = () => {
   const dispatch = useContext(DispatchContext);
 
-  const actionMaker = <T extends ImagesEngineActions>(action: T) => (payload: Parameters<ImagesEngineActions>[0]) => dispatch(action(payload)); 
+  
 
-  const actions = useMemo(() => ({
-    setEngineState: actionMaker(setEngineState),
-    sharingText: actionMaker(sharingText)
-  }), [dispatch]);
+  const actions = useMemo(() => {
+    const actionMaker = <T extends ImagesEngineActions>(action: T) => (payload: Parameters<ImagesEngineActions>[0]) => dispatch(action(payload)); 
+
+    return {
+      setEngineState: actionMaker(setEngineState),
+      sharingText: actionMaker(sharingText)
+    };
+  }, [dispatch]);
 
   return actions;
 }; 

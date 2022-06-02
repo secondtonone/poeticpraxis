@@ -43,18 +43,18 @@ let textAnalyzingWorker: Worker | null = null;
 type State = IStructure & { stage: 'lint' | 'children' };
 
 interface WorkfieldContainerProps extends WorkfieldProps {
-    text: string;
-    isNotStandAlone?: boolean;
-    viewOnly?: boolean;
-    readOnly?: boolean;
-    onFocusing?: (isFocus: boolean) => void;
-    setMakeCaesuraHandler?: (handler: () => void) => void;
-    setCopyToClipboardHandler?: (handler: () => void) => void;
-    onTextLintingStart?: () => void;
-    onTextLintingEnd?: () => void;
-    onError?: (message: string) => void;
-    wordsDictionary?: IDictionary;
-    stringsDictionary?: IDictionary;
+  text: string;
+  isNotStandAlone?: boolean;
+  viewOnly?: boolean;
+  readOnly?: boolean;
+  onFocusing?: (isFocus: boolean) => void;
+  setMakeCaesuraHandler?: (handler: () => void) => void;
+  setCopyToClipboardHandler?: (handler: () => void) => void;
+  onTextLintingStart?: () => void;
+  onTextLintingEnd?: () => void;
+  onError?: (message: string) => void;
+  wordsDictionary?: IDictionary;
+  stringsDictionary?: IDictionary;
 }
 
 /* парсить по словам, сравнивать с предыдущим деревом */
@@ -116,7 +116,7 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
 
     if (window.Worker) textAnalyzingWorker = new AnalyzeWorker();
 
-    if (Array.isArray(text)) text = text.join('\n');
+    // if (Array.isArray(text)) text = text.join('\n');
 
     if (text) fontReady(textLintingHandler);
 
@@ -195,10 +195,10 @@ const WorkfieldContainer: FunctionalComponent<WorkfieldContainerProps> = ({
   };
 
   const handleTextInput: React.FormEventHandler<HTMLTextAreaElement> =
-        useCallback((e) => {
-          const text = (e.target as HTMLTextAreaElement).value;
-          isNotStandAlone && setRhythmicState({ text });
-        }, []);
+    useCallback((e) => {
+      const text = (e.target as HTMLTextAreaElement).value;
+      isNotStandAlone && setRhythmicState({ text });
+    }, []);
 
   const textLinting = useCallback(
     async (text: string) => {

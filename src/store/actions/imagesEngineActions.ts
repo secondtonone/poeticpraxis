@@ -4,8 +4,8 @@ export const SET_ENGINE_STATE = 'SET_ENGINE_STATE';
 export const SHARING_TEXT = 'SHARING_TEXT';
 
 export interface SetEngineState {
-    type: typeof SET_ENGINE_STATE;
-    payload: Partial<IImagesEngineModel['currentEngineState']>;
+  type: typeof SET_ENGINE_STATE;
+  payload: Partial<IImagesEngineModel['currentEngineState']>;
 }
 
 export function setEngineState(payload: Partial<IImagesEngineModel['currentEngineState']>): SetEngineState {

@@ -93,7 +93,7 @@ const ImagesEngine: FunctionalComponent = () => {
     } catch (error) {
       showMessage('Слова не хотят подбираться, попробуйте снова.');
     }
-  }, [text, setEngineState]);
+  }, [text, setEngineState, showMessage]);
 
   const handleTextInput = useCallback(
     (e: React.FormEvent<HTMLTextAreaElement>) =>
@@ -127,7 +127,7 @@ const ImagesEngine: FunctionalComponent = () => {
     setEngineState({
       result,
     });
-  }, [text, wordsNumber, lang, setEngineState]);
+  }, [text, words, wordsNumber, showMessage, lang, changeView, setEngineState]);
 
   const menuHandler = useCallback(
     (nextView: typeof currentView) => {
@@ -159,7 +159,7 @@ const ImagesEngine: FunctionalComponent = () => {
         text: '',
       });
     }
-  }, [setEngineState, lang]);
+  }, [showMessage, lang, setEngineState]);
 
   const pushToHistory = useCallback(
     (location: string) => history.push(location),

@@ -5,8 +5,8 @@ export const SET_RHYTHMIC_STATE = 'SET_RHYTHMIC_STATE';
 export const SET_WORDS_DICTIONARY = 'SET_WORDS_DICTIONARY';
 
 export interface SetRhythmicState {
-    type: typeof SET_RHYTHMIC_STATE;
-    payload: Partial<ICurrentRhythmicState>;
+  type: typeof SET_RHYTHMIC_STATE;
+  payload: Partial<ICurrentRhythmicState>;
 }
 
 export function setRhythmicState(
@@ -19,8 +19,8 @@ export function setRhythmicState(
 }
 
 export interface SetWordsDictionary {
-    type: typeof SET_WORDS_DICTIONARY;
-    payload: IDictionary;
+  type: typeof SET_WORDS_DICTIONARY;
+  payload: IDictionary;
 }
 
 export function setWordsDictionary(payload: IDictionary): SetWordsDictionary {

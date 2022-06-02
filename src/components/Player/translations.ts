@@ -2,14 +2,18 @@ const ru = {
   TEMPO: 'Темп',
   PLAY: 'Играть',
   STOP: 'Пауза',
-  REPEAT: 'Повтор'
+  REPEAT: 'Повтор',
+  RECORD: 'Запись',
+  RETURN: 'В начало'
 };
 
 const en = {
   TEMPO: 'Tempo',
   PLAY: 'Play',
   STOP: 'Pause',
-  REPEAT: 'Repeat'
+  REPEAT: 'Repeat',
+  RECORD: 'Record',
+  RETURN: 'Return'
 };
 
 const translations = {

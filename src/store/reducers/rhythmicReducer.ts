@@ -9,8 +9,8 @@ import {
 } from '@store/actions/rhythmicActions';
 
 type Handler = (
-    state: IRhythmicModel,
-    action: RhythmicActionTypes
+  state: IRhythmicModel,
+  action: RhythmicActionTypes
 ) => IRhythmicModel;
 
 const ACTION_HANDLERS: {
@@ -33,8 +33,8 @@ const ACTION_HANDLERS: {
 };
 
 export type RhythmicReducer = (
-    state: IRhythmicModel,
-    action: RhythmicActionTypes
+  state: IRhythmicModel,
+  action: RhythmicActionTypes
 ) => IRhythmicModel;
 
 const rhythmicReducer: RhythmicReducer = (

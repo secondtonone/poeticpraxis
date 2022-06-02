@@ -54,7 +54,7 @@ const Dropdown: FunctionalComponent<DropdownProps> = ({
   const itemHandler: React.MouseEventHandler<HTMLLIElement> = useCallback((e) => {
     onChange(e);
     closeList();
-  }, []);
+  }, [closeList, onChange]);
 
   return (
     <Container>
@@ -98,9 +98,9 @@ const DropdownList = styled.ul<React.HTMLAttributes<HTMLUListElement> & Pick<Dro
   max-height: 200px;
   outline: none;
   ${(props) =>
-  props.theme.name === 'dark'
-    ? `background: ${props.theme.grayDarkColor};`
-    : ''}
+    props.theme.name === 'dark'
+      ? `background: ${props.theme.grayDarkColor};`
+      : ''}
   &:focus {
     outline: none;
   }
@@ -113,7 +113,7 @@ const ListItem = styled.li<{active: boolean} & React.HTMLAttributes<HTMLLIElemen
   justify-content: center;
   align-items: center;
   color: ${(props) =>
-  props.active ? props.theme.accentColor : props.theme.secondColor};
+    props.active ? props.theme.accentColor : props.theme.secondColor};
 `;
 
 export default Dropdown;

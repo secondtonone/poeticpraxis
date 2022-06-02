@@ -1,41 +1,54 @@
-export let recorder: InstanceType<typeof MediaRecorder> | null = null;
-
-const chunks: Blob[] = [];
+import { ToneLib, Recorder } from '@typings/ToneTypes';
 
 export const setUpRecorder = ({
-  context,
+  tone,
   onStart,
   onStop,
   connect,
 }: {
-    context: AudioContext;
+    tone: ToneLib;
     onStart: () => void;
     onStop: (url: string) => void;
-    connect: (dest: MediaStreamAudioDestinationNode) => void;
+    connect: (dest: Recorder) => void;
 }) => {
-  try {
-    const actx: AudioContext = context;
+  const recorder = new tone.Recorder();
+  connect(recorder);
 
-    const dest = actx.createMediaStreamDestination();
-    recorder = new MediaRecorder(dest.stream);
+  return {
+    onStart: () => {
+      recorder.start();
+      if (typeof onStart === 'function') onStart();
+    },
+    onStop: async () => {
+      const recording = await recorder.stop();
+      const url = URL.createObjectURL(recording);
 
-    recorder.ondataavailable = (e) => chunks.push(e.data);
-    recorder.onstop = () => {
-      const blob = new Blob(chunks, {
-        type: 'audio/wav',
-      });
-
-      if (onStop) {
-        onStop(URL.createObjectURL(blob));
-      }
-    };
-
-    recorder.onstart = () => {
-      if (onStart) {
-        onStart();
-      }
-    };
-
-    connect(dest);
-  } catch (e) {}
+      if (typeof onStop === 'function') onStop(url);
+    }
+  };
 };
+
+export class MediaRecorder {
+  recorder: Recorder;
+  onStopHandler: (url: string) => void;
+
+  connect (Tone: ToneLib, adapter: (dest: Recorder) => void) {
+    this.recorder = new Tone.Recorder();
+    adapter(this.recorder);
+  }
+
+  onStart(onStopHandler: (url: string) => void, timeout: number) {
+    this.recorder.start();
+
+    setTimeout(() => {
+      this._onStop(onStopHandler);
+    }, timeout);
+  }
+
+  async _onStop(onStopHandler: (url: string) => void) {
+    const recording = await this.recorder.stop();
+    const url = URL.createObjectURL(recording);
+
+    if (typeof onStopHandler === 'function') onStopHandler(url);
+  }
+}

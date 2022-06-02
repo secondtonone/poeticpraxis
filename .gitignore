@@ -2,6 +2,8 @@
 *.sublime-project
 *.code-workspace
 .vscode
+.pnpm
 /bower_components
 /node_modules
+/pnpm
 /dist

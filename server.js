@@ -11,14 +11,14 @@ app.use(compress());
 app.use(express.static('dist'));
 
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 app.listen(port, host, (err) => {
-    if (err) {
-        console.log(err);
-        return;
-    }
+  if (err) {
+    console.log(err);
+    return;
+  }
 
-    console.log('Start at http://localhost:9090');
+  console.log('Start at http://localhost:9090');
 });

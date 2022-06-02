@@ -9,7 +9,7 @@ import Container from '@components/Container';
 
 import isSupportRecognition from '@utils/isSupportRecognition';
 
-const helpState = () => {
+const useHelpState = () => {
   const { valueSessionStorage, setValueSessionStorage } = useSessionStorage(
     'isHideImagesEngineHelp'
   );
@@ -23,7 +23,7 @@ const helpState = () => {
 const Help: FunctionalComponent<{ lang: Langs }> = ({ lang = 'ru' }) => {
   const recognitionSupport = isSupportRecognition();
   const isLangRU = lang === 'ru';
-  const { isHidden, hideHelp } = helpState();
+  const { isHidden, hideHelp } = useHelpState();
 
   if (isHidden) {
     return null;

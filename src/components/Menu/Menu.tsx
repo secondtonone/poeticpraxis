@@ -71,7 +71,7 @@ const Menu: FunctionalComponent<MenuProps> = ({ items, lang = 'ru' }) => {
         toggleMenu();
       }
     },
-    [isMenuHidden]
+    [isMenuHidden, toggleMenu]
   );
 
   const onTouchMove: React.TouchEventHandler<HTMLUListElement> = useCallback(
@@ -91,7 +91,7 @@ const Menu: FunctionalComponent<MenuProps> = ({ items, lang = 'ru' }) => {
         }
       }
     },
-    [isMenuHidden]
+    [isMenuHidden, toggleMenu]
   );
 
   return (

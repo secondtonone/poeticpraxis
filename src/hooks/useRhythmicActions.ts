@@ -5,12 +5,14 @@ import DispatchContext from '@contexts/dispatchContext';
 const useRhythmicActions = () => {
   const dispatch = useContext(DispatchContext);
 
-  const actionMaker = <T extends RhythmicActions>(action: T) => (payload: Parameters<RhythmicActions>[0]) => dispatch(action(payload)); 
+  const actions = useMemo(() => {
+    const actionMaker = <T extends RhythmicActions>(action: T) => (payload: Parameters<RhythmicActions>[0]) => dispatch(action(payload)); 
 
-  const actions = useMemo(() => ({
-    setWordsDictionary: actionMaker(setWordsDictionary),
-    setRhythmicState: actionMaker(setRhythmicState)
-  }), [dispatch]);
+    return {
+      setWordsDictionary: actionMaker(setWordsDictionary),
+      setRhythmicState: actionMaker(setRhythmicState)
+    };
+  }, [dispatch]);
 
   return actions;
 }; 

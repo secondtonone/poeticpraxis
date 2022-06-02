@@ -9,19 +9,24 @@ import Range from '@components/Range';
 import PlayIcon from '@icons/PlayIcon';
 import ReplayIcon from '@icons/ReplayIcon';
 import PauseIcon from '@icons/PauseIcon';
+import Return from '@icons/Return';
 
 import Container from '@components/Container';
 import Flex from '@components/Flex';
 import Langs from '@typings/Langs';
 
 interface PlayerProps {
-    lang: Langs
-    bpm: number
-    progress: number
-    setBPM: React.FormEventHandler<HTMLInputElement>
-    stop: () => void
-    play: () => void
-    pause: () => void
+  lang: Langs
+  bpm: number
+  progress: number
+  setBPM: React.FormEventHandler<HTMLInputElement>
+  isBlocked?: boolean
+  withRecording?: boolean
+  stop?: () => void
+  play?: () => void
+  pause?: () => void
+  record?: () => void
+  returning?: () => void
 }
 
 const Player: FunctionalComponent<PlayerProps> = ({
@@ -31,7 +36,11 @@ const Player: FunctionalComponent<PlayerProps> = ({
   setBPM,
   stop,
   play,
-  pause
+  record,
+  isBlocked,
+  returning,
+  pause,
+  withRecording
 }) => {
   const [isPlaying, setPlayerState] = useState<boolean>(false);
 
@@ -39,7 +48,7 @@ const Player: FunctionalComponent<PlayerProps> = ({
     return () => {
       _stop();
     };
-  }, []);
+  });
 
   const _play = useCallback(() => {
     setPlayerState(true);
@@ -47,6 +56,13 @@ const Player: FunctionalComponent<PlayerProps> = ({
       play();
     }
   }, [play]);
+
+  const _record = useCallback(() => {
+    setPlayerState(true);
+    if (typeof record === 'function') {
+      record();
+    }
+  }, [record]);
 
   const _stop = useCallback(() => {
     setPlayerState(false);
@@ -62,10 +78,17 @@ const Player: FunctionalComponent<PlayerProps> = ({
     }
   }, [pause]);
 
-  const repeat = useCallback(() => {
+  const _repeat = useCallback(() => {
     _stop();
     _play();
   }, [_play, _stop]);
+
+  const _returning = useCallback(() => {
+    if (typeof returning === 'function') {
+      setPlayerState(false);
+      returning();
+    }
+  }, [returning]);
 
   return (
     <Container>
@@ -75,6 +98,7 @@ const Player: FunctionalComponent<PlayerProps> = ({
             <Button
               _rounded
               _transparent
+              disabled={isBlocked}
               type="button"
               onClick={_play}
               title={translations[lang].PLAY}>
@@ -85,6 +109,7 @@ const Player: FunctionalComponent<PlayerProps> = ({
             <Button
               _rounded
               _transparent
+              disabled={isBlocked}
               type="button"
               onClick={_pause}
               title={translations[lang].STOP}>
@@ -95,10 +120,29 @@ const Player: FunctionalComponent<PlayerProps> = ({
             _rounded
             _transparent
             type="button"
-            onClick={repeat}
+            disabled={isBlocked}
+            onClick={_repeat}
             title={translations[lang].REPEAT}>
+            <Return _big />
+          </Button>
+          <Button
+            _rounded
+            _transparent
+            type="button"
+            disabled={isBlocked}
+            onClick={_returning}
+            title={translations[lang].RETURN}>
             <ReplayIcon _big />
           </Button>
+          {withRecording && <Button
+            _rounded
+            _transparent
+            type="button"
+            disabled={isBlocked}
+            onClick={_record}
+            title={translations[lang].RECORD}>
+            <Container top="-10px" height="0px">REC</Container>
+          </Button>}
         </div>
         <div>
           {translations[lang].TEMPO}
