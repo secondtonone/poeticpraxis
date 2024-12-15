@@ -1,7 +1,7 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useState, useCallback } from 'preact/hooks';
 
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 
 import Button from '@components/Button';
 import Flex from '@components/Flex';

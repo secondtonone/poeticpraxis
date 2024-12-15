@@ -1,4 +1,4 @@
-import ILayoutModel from '@typings/LayoutModel';
+import type ILayoutModel from '@typings/LayoutModel';
 
 export const CHANGE_THEME = 'CHANGE_THEME';
 export const CHANGE_LANG = 'CHANGE_LANG';

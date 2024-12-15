@@ -1,5 +1,5 @@
-import { IDictionary } from './dictionary';
-import { TextAnalyzerResult } from './textAnalyzer';
+import type { IDictionary } from './dictionary';
+import type { TextAnalyzerResult } from './textAnalyzer';
 
 interface WorkerProps { 
     worker: Worker, 

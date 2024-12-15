@@ -1,6 +1,6 @@
 import theme from './theme';
 import { loaded, whited } from './animations';
-import { css, FlattenSimpleInterpolation } from 'styled-components';
+import { css, type FlattenSimpleInterpolation } from 'styled-components';
 
 const common: FlattenSimpleInterpolation = css`
 body {
@@ -33,6 +33,7 @@ body {
 }
 
 .first-paint {
+  will-change: background, color;
   background: ${theme.primaryBlack};
   position: fixed;
   top: 0;
@@ -82,6 +83,7 @@ body {
   font-size: 0;
 }
 .block {
+  will-change: transform;
   width: 25%;
   min-height: 100px;
   display: inline-block;

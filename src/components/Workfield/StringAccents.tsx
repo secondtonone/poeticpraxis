@@ -6,12 +6,15 @@ import {
   TriangleElement,
   CircleElement,
   SyllableAccent,
-  SyllableAccentType
+  SyllableAccentType,
 } from './styled';
 
-import { IRhythmPreset } from '@modules/workfield/rhythmPresets';
+import type { IRhythmPreset } from '@modules/workfield/rhythmPresets';
 
-const makeAccentSizeIndicator = (size: IRhythmPreset['size'], accent: IRhythmPreset['accent']) => {
+const makeAccentSizeIndicator = (
+  size: IRhythmPreset['size'],
+  accent: IRhythmPreset['accent']
+) => {
   const scheme: React.ReactNode[] = [];
 
   for (let i = 1; i <= size; i++) {
@@ -26,49 +29,49 @@ const makeAccentSizeIndicator = (size: IRhythmPreset['size'], accent: IRhythmPre
 };
 
 export interface StringAccentsProps {
-    id: string
-    title: string
-    delta: number
-    top: number
-    vowelAccentCount: number
-    soundGrammaLength: number
-    size: IRhythmPreset['size']
-    accent: IRhythmPreset['accent']
+  id: string;
+  title: string;
+  delta: number;
+  top: number;
+  vowelAccentCount: number;
+  soundGrammaLength: number;
+  size: IRhythmPreset['size'];
+  accent: IRhythmPreset['accent'];
 }
 
-const StringAccents = memo<StringAccentsProps>(({
-  id,
-  title,
-  delta,
-  top,
-  vowelAccentCount,
-  soundGrammaLength,
-  size,
-  accent
-}) => {
+const StringAccents = memo<StringAccentsProps>(
+  ({
+    id,
+    title,
+    delta,
+    top,
+    vowelAccentCount,
+    soundGrammaLength,
+    size,
+    accent,
+  }) => {
+    const dataTypeAQ = 'a/q';
 
-  const dataTypeAQ = 'a/q';
+    const accentSizeGenerator = useMemo(
+      () => makeAccentSizeIndicator(size, accent),
+      [size, accent]
+    );
 
-  const accentSizeGenerator = useMemo(() => makeAccentSizeIndicator(size, accent), [size, accent]);
-
-  return (
-    <Syllable
-      id={id}
-      data-type={dataTypeAQ}
-      title={title}
-      key={`s-${top}`}
-      style={{ top: top + delta }}>
-      {vowelAccentCount ? (
-        <SyllableAccent>
-          {vowelAccentCount}
-        </SyllableAccent>
-      ) : null}
-      {soundGrammaLength}
-      <SyllableAccentType>
-        {accentSizeGenerator}
-      </SyllableAccentType>
-    </Syllable>
-  );
-});
+    return (
+      <Syllable
+        id={id}
+        data-type={dataTypeAQ}
+        title={title}
+        key={`s-${top}`}
+        style={{ top: top + delta }}>
+        {vowelAccentCount ? (
+          <SyllableAccent>{vowelAccentCount}</SyllableAccent>
+        ) : null}
+        {soundGrammaLength}
+        <SyllableAccentType>{accentSizeGenerator}</SyllableAccentType>
+      </Syllable>
+    );
+  }
+);
 
 export default StringAccents;

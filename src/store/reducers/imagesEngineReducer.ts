@@ -1,9 +1,10 @@
+import { produce } from 'immer';
 import imagesEngineModel from '@store/models/imagesEngineModel';
-import IImagesEngineModel from '@typings/ImagesEngineModel';
+import type IImagesEngineModel from '@typings/ImagesEngineModel';
 import {
   SET_ENGINE_STATE,
-  SetEngineState,
-  ImagesEngineActionTypes,
+  type SetEngineState,
+  type ImagesEngineActionTypes,
 } from '@store/actions/imagesEngineActions';
 
 type Handler = (
@@ -15,11 +16,12 @@ const ACTION_HANDLERS: {
     [key: string]: Handler;
 } = {
   [SET_ENGINE_STATE]: (state: IImagesEngineModel, action: SetEngineState) =>
-    Object.assign({}, state, {
-      currentEngineState: {
+    produce(state, (draft) => {
+      Object.assign( draft.currentEngineState, action.payload);
+      /* draft.currentEngineState = {
         ...state.currentEngineState,
         ...action.payload,
-      },
+      }; */
     }),
 };
 

@@ -1,4 +1,4 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useContext, useLayoutEffect } from 'preact/hooks';
 import { lazy, Suspense } from 'preact/compat';
 
@@ -23,11 +23,11 @@ import Loader from '@components/Loader';
 import DynamicOnScrollProps from '@components/DynamicOnScroll';
 
 const AboutRhythmic = lazy(() =>
-  import(/* webpackChunkName: "AboutRhythmic" */ './AboutRhythmic')
+  import(/* webpackChunkName: "AboutRhythmic" */'./AboutRhythmic')
 );
 
 const AboutProject = lazy(() =>
-  import(/* webpackChunkName: "AboutProject" */ './AboutProject')
+  import(/* webpackChunkName: "AboutProject" */'./AboutProject')
 );
 
 const daysFromNow = getDaysFromNow(new Date(2016, 4, 25));

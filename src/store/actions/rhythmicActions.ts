@@ -1,5 +1,5 @@
-import { ICurrentRhythmicState } from '@typings/RhythmicModel';
-import { IDictionary } from '@modules/workfield/dictionary';
+import type { ICurrentRhythmicState } from '@typings/RhythmicModel';
+import type { IDictionary } from '@modules/workfield/dictionary';
 
 export const SET_RHYTHMIC_STATE = 'SET_RHYTHMIC_STATE';
 export const SET_WORDS_DICTIONARY = 'SET_WORDS_DICTIONARY';

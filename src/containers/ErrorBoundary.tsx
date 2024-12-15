@@ -1,7 +1,8 @@
 import { Component } from 'preact';
 
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 import MessageBox from '@components/MessageBox';
+import { messages } from '@translations';
 
 interface ErrorBoundaryProps { lang: Langs }
 
@@ -15,9 +16,10 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, { hasEr
     console.warn(error);
     return { hasError: true };
   }
+
   render() {
     if (this.state.hasError) {
-      return <MessageBox text={this.props.lang === 'ru' ?'Что-то пошло не так.' : 'Something went wrong.'} bottom={120} />;
+      return <MessageBox text={messages[this.props.lang].SOMETHING_WRONG} bottom={120} />;
     }
 
     return this.props.children;

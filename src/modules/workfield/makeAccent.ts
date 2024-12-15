@@ -5,9 +5,10 @@ import updateStringsDictionary from './updateStringsDictionary';
 import makeSoundGramma from './makeSoundGramma';
 import stringOnSteps from './stringOnSteps';
 import rhythmDetection from './rhythmDetection';
-import { IStructure, IVLetterElement, IWordElement } from './structure';
-import { IDictionary } from './dictionary';
-import { AccentTypes } from './accents';
+
+import type { IStructure, IVLetterElement, IWordElement } from './structure';
+import type { IDictionary } from './dictionary';
+import type { AccentTypes } from './accents';
 
 interface MakeAccentProps extends Pick<IStructure, 'elements' | 'strings' | 'stringLinks'> {
     wordsDictionary: IDictionary
@@ -26,10 +27,10 @@ export default function makeAccent({
   stringsDictionary,
   accent
 }: MakeAccentProps) {
-  let clonedElements = Object.assign({}, elements);
-  const clonedStrings = Object.assign({}, strings);
-  let clonedWordsDictionary = Object.assign({}, wordsDictionary);
-  let clonedStringsDictionary = Object.assign({}, stringsDictionary);
+  let clonedElements = structuredClone(elements);
+  const clonedStrings = structuredClone(strings);
+  let clonedWordsDictionary = structuredClone(wordsDictionary);
+  let clonedStringsDictionary = structuredClone(stringsDictionary);
 
   const element = clonedElements[signId] as IVLetterElement;
 
@@ -53,13 +54,12 @@ export default function makeAccent({
     //const element = clonedElements[idWord].accents[0];
 
     //clonedElements[element].accent = 0;
-
-    (clonedElements[idWord] as IWordElement).accents = [];
+    (clonedElements[idWord] as IWordElement)['accents'] = [];
   }
 
   /* Работа с ударением */
 
-  clonedElements[signId].accent = accent && Number.isInteger(accent)
+  clonedElements[signId].accent = accent !== undefined && Number.isInteger(accent)
     ? accent
     : wordAccent(elementAccent);
 
@@ -89,10 +89,12 @@ export default function makeAccent({
 
   /* Работа с количеством ударений */
 
-  clonedStrings[idString].totalStringAccents = clonedStrings[idString].soundGramma.filter(
-    (idElement) =>
-      clonedElements[idElement].accent === 1 || clonedElements[idElement].accent === 2
-  );
+  clonedStrings[idString].totalStringAccents = clonedStrings[idString]
+    .soundGramma
+    .filter(
+      (idElement: string) =>
+        clonedElements[idElement].accent === 1 || clonedElements[idElement].accent === 2
+    );
 
   /* баги*/
 
@@ -123,19 +125,19 @@ export default function makeAccent({
   /* clonedStrings[idString].mainMeter = meterDetect(clonedStrings[idString].rhythmPreset); */
 
   /* if(!stringLinksTriggered && wordLinks[wordLowerCased]) {
-            wordLinks[wordLowerCased].forEach( idWord => {
+      wordLinks[wordLowerCased].forEach( idWord => {
 
-                if(clonedElements[idWord]) {
+        if(clonedElements[idWord]) {
 
-                    let idElement = clonedElements[idWord].orderToken[element.index];
+          let idElement = clonedElements[idWord].orderToken[element.index];
 
-                    if(element.id != idElement) {
-                        clonedElements[idElement].accent = clonedElements[element.id].accent;
-                    }
+          if(element.id != idElement) {
+            clonedElements[idElement].accent = clonedElements[element.id].accent;
+          }
 
-                }
-            });
-        }*/
+        }
+      });
+    }*/
 
   return {
     elements: clonedElements,

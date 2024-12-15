@@ -1,19 +1,25 @@
 {
   "compilerOptions": {
+    "verbatimModuleSyntax": true,
     "module": "esnext",
-    "target": "ES6",
+    "target": "ES2017",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
+    "esModuleInterop": true,
     "strictNullChecks": true,
     "removeComments": false,
     "noUnusedLocals": true,
     "importHelpers": true,
     "noUnusedParameters": true,
+    "incremental": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
+    "typeRoots": ["./node_modules/@types"],
     "lib": [
       "DOM",
       "ES2020",
@@ -34,7 +40,7 @@
     ],
     "plugins": [
       {
-        "name": "typescript-styled-plugin",
+        "name": "@styled/typescript-styled-plugin",
         "tags": [
           "styled",
           "css",
@@ -72,6 +78,9 @@
       ],
       "@contexts/*": [
         "src/contexts/*"
+      ],
+      "@constants/*": [
+        "src/constants/*"
       ],
       "@routes/*": [
         "src/routes/*"

@@ -1,4 +1,4 @@
-import IImagesEngineModel from '@typings/ImagesEngineModel';
+import type IImagesEngineModel from '@typings/ImagesEngineModel';
 
 export const SET_ENGINE_STATE = 'SET_ENGINE_STATE';
 export const SHARING_TEXT = 'SHARING_TEXT';

@@ -1,6 +1,6 @@
 import theme from '@styles/theme';
-import ThemeVariants from '@typings/ThemeVariants';
-import { Music, Note } from '@typings/LetterGramma';
+import type { ThemeVariants } from '@typings/ThemeVariants';
+import type { Music, Note } from '@typings/LetterGramma';
 
 const FONT_B = '20px Montserrat';
 const FONT_M = '18px Montserrat';

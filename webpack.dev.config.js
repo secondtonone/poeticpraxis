@@ -1,11 +1,11 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-const baseConfig = require('./webpack.config');
+const baseConfig = require('./webpack.config.js')();
 
 const PORT = 9000;
 
@@ -15,8 +15,8 @@ module.exports = {
   devtool: 'eval-cheap-module-source-map',
   output: {
     ...baseConfig.output,
-    sourceMapFilename: '[name].[hash:8].map',
-    chunkFilename: '[id].[hash:8].js',
+    sourceMapFilename: '[name].[contenthash:8].map',
+    chunkFilename: '[id].[contenthash:8].js',
   },
   module: {
     rules: [
@@ -40,7 +40,25 @@ module.exports = {
         NODE_ENV: JSON.stringify('development'),
       },
     }),
-    new ForkTsCheckerWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      async: true,
+      typescript: {
+        diagnosticOptions: {
+          syntactic: true,
+        },
+        mode: 'write-references'
+      },
+      issue: {
+        exclude: [
+          {
+            file: 'node_modules/**/*.tsx'
+          },
+          {
+            file: 'node_modules/**/*.ts'
+          }
+        ],
+      },
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
       inject: 'head',
@@ -52,9 +70,6 @@ module.exports = {
       env: {
         Prod: false,
       },
-    }),
-    new ScriptExtHtmlWebpackPlugin({
-      defer: /\.js$/,
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -76,13 +91,25 @@ module.exports = {
   devServer: {
     static: path.resolve(__dirname, 'dist'),
     port: PORT,
+    compress: true,
     historyApiFallback: true,
+    server: {
+      type: 'https',
+      options: {
+        key: fs.readFileSync(path.join(__dirname, 'localhost-key.pem')),
+        cert: fs.readFileSync(path.join(__dirname, 'localhost.pem')),
+      },
+    },
     devMiddleware: {
       publicPath: '/',
     },
+    client: {
+      logging: 'info',
+    }
   },
   watchOptions: {
     aggregateTimeout: 1000,
     poll: 1000,
+    ignored: /node_modules/
   },
 };

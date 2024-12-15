@@ -1,8 +1,8 @@
-import { useLayoutEffect } from 'preact/hooks';
 import changeHreflang from '@utils/changeHreflang';
+import useLayoutEffectOnce from './useLayoutEffectOnce';
 
 const useChangeHreflang = (page?: string): void => {
-  useLayoutEffect(() => {
+  useLayoutEffectOnce(() => {
     changeHreflang(page);
   });
 };

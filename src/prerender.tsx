@@ -20,7 +20,7 @@ const prerender = () => {
   const sheet = new ServerStyleSheet();
   // @ts-ignore
   const html = render(sheet.collectStyles(<App />));
-
+  
   const styles = sheet.getStyleTags();
 
   return {

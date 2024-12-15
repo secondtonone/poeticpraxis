@@ -1,7 +1,7 @@
 import { memo } from 'preact/compat';
 import { translations } from './translations';
-import { IStrings, OrderStrings, IElements } from '@modules/workfield/structure';
-import Langs from '@typings/Langs';
+import type { IStrings, OrderStrings, IElements } from '@modules/workfield/structure';
+import type { Langs } from '@typings/Langs';
 
 import {
   StringNumber

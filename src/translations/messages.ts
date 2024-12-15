@@ -10,6 +10,7 @@ const ru = {
   PAIRS_READY: 'Словосочетания составлены.',
   PAIRS_COPIED: 'Пары скопированы',
   CLICK_MORE: 'Нажмите еще раз для удаления',
+  SOMETHING_WRONG: 'Что-то пошло не так.',
 } as const;
 
 const en = {
@@ -24,6 +25,7 @@ const en = {
   PAIRS_READY: 'Pairs are ready.',
   PAIRS_COPIED: 'Pairs copied',
   CLICK_MORE: 'Click one more time for deleting',
+  SOMETHING_WRONG: 'Something went wrong.',
 } as const;
 
 const messages = {

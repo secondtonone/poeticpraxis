@@ -1,4 +1,4 @@
-import { IVLetterElement, ICLetterElement } from '@modules/workfield/structure';
+import type { IVLetterElement, ICLetterElement } from '@modules/workfield/structure';
 import isConsonantAlwaysSolid from '@modules/workfield/isConsonantAlwaysSolid';
 
 type FormantAccented = {

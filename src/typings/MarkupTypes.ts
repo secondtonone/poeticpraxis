@@ -1,5 +1,5 @@
-import AccentColors from './AccentColors';
+import type { AccentColors } from './AccentColors';
 
 type MarkupTypes = AccentColors | 'string-pause';
 
-export default MarkupTypes;
+export type { MarkupTypes };

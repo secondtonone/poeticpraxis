@@ -1,4 +1,4 @@
-import ILayoutModel from '@typings/LayoutModel';
+import type ILayoutModel from '@typings/LayoutModel';
 
 const layoutModel: ILayoutModel = {
   variant: 'light',

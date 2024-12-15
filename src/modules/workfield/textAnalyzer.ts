@@ -1,8 +1,24 @@
 import randomize from '@utils/randomize';
 import hashFunction from '@utils/hashFunction';
 
-import { IDictionary } from '@modules/workfield/dictionary';
-import { IStrings, IElements, IHashTable, IWordLinks, IStringLinks, OrderStrings, MainMeter, IString, IWordElement, ICLetterElement, ILetterElement, Type, IPauseElement, ISymbolElement } from '@modules/workfield/structure';
+import type { IDictionary } from '@modules/workfield/dictionary';
+import type {
+  IStrings,
+  IElements,
+  IHashTable,
+  IWordLinks,
+  IStringLinks,
+  OrderStrings,
+  MainMeter,
+  IString,
+  IWordElement,
+  ICLetterElement,
+  ILetterElement,
+  Type,
+  IPauseElement,
+  ISymbolElement,
+} from '@modules/workfield/structure';
+import type { AccentTypes } from './accents';
 
 import meterDetection from './meterDetection';
 import isLetter from './isLetter';
@@ -20,11 +36,14 @@ import isConsonantSolid from './isConsonantSolid';
 import isLetterSign from './isLetterSign';
 import isConsonantVoiced from './isConsonantVoiced';
 import isConsonantNoisy from './isConsonantNoisy';
-import { AccentTypes } from './accents';
 
-export default function textAnalyzer(text: string, stringsDictionary: IDictionary, wordsDictionary: IDictionary) {
+export default function textAnalyzer(
+  text: string,
+  stringsDictionary: IDictionary,
+  wordsDictionary: IDictionary
+) {
   const fieldStrings = text.split('\n');
-    
+
   const strings: IStrings = {};
 
   const elements: IElements = {};
@@ -150,22 +169,18 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
 
             if (
               isInDictionary(string, stringsDictionary) ||
-                            isInDictionary(token, wordsDictionary)
+              isInDictionary(token, wordsDictionary)
             ) {
               accent = isInDictionary(string, stringsDictionary)
-                ? isAccented(
-                  string,
-                  stringIndex,
-                  stringsDictionary
-                )
+                ? isAccented(string, stringIndex, stringsDictionary)
                 : isAccented(token, index, wordsDictionary);
             } else {
               accent =
-                                accentedIndex === -1
-                                  ? isAccentedByPosition(token, ++vowelCounter)
-                                  : accentedIndex === index
-                                    ? 1
-                                    : 0;
+                accentedIndex === -1
+                  ? isAccentedByPosition(token, ++vowelCounter)
+                  : accentedIndex === index
+                    ? 1
+                    : 0;
               /*isAccentedByRegExp('[ёЁ]', char) ||
                                 isAccentedByPosition(token, vowelCounter); */
             }
@@ -188,27 +203,28 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
 
             if (
               prev &&
-                            elements[prev] &&
-                            elements[prev].type === 'c' &&
-                            !(elements[prev] as ICLetterElement).isSolid
+              elements[prev] &&
+              elements[prev].type === 'c' &&
+              !(elements[prev] as ICLetterElement).isSolid
             ) {
-              (elements[prev] as ICLetterElement).isSolid = isConsonantSolid(char, (elements[prev] as ICLetterElement).char);
+              (elements[prev] as ICLetterElement).isSolid = isConsonantSolid(
+                char,
+                (elements[prev] as ICLetterElement).char
+              );
             }
           } else {
             idSymbol = `c${index}${randomize(() =>
               hashFunction(char, ++iterator)
             )}`;
 
-            isSolid = isConsonantSolid('',char);
+            isSolid = isConsonantSolid('', char);
             isVoiced = isConsonantVoiced(char);
             isNoisy = isConsonantNoisy(char);
-                        
-            if (
-              prev &&
-                            elements[prev] &&
-                            elements[prev].type === 'c'
-            ) {
-              (elements[prev] as ICLetterElement).isSolid = isLetterSign(char) ? false : true;
+
+            if (prev && elements[prev] && elements[prev].type === 'c') {
+              (elements[prev] as ICLetterElement).isSolid = isLetterSign(char)
+                ? false
+                : true;
             }
           }
 
@@ -230,11 +246,11 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
             idString,
             idToken,
             stringIndex,
-            hashTokenId
+            hashTokenId,
           };
 
-          if(type === 'c') {
-            (elements[idSymbol]  as ICLetterElement).isSolid = isSolid;
+          if (type === 'c') {
+            (elements[idSymbol] as ICLetterElement).isSolid = isSolid;
             (elements[idSymbol] as ICLetterElement).isNoisy = isNoisy;
             (elements[idSymbol] as ICLetterElement).isVoiced = isVoiced;
           }
@@ -242,7 +258,7 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
           prev = idSymbol;
 
           hashTable[hashTokenId] = {
-            id: idSymbol
+            id: idSymbol,
           };
 
           order.push(idSymbol);
@@ -265,7 +281,7 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
           accents,
           orderToken,
           id: idToken,
-          idString
+          idString,
         };
 
         ++wordsCount;
@@ -298,11 +314,11 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
           id: idToken,
           idString,
           hashTokenId,
-          accent
+          accent,
         };
 
         hashTable[hashTokenId] = {
-          id: idToken
+          id: idToken,
         };
 
         order.push(idToken);
@@ -315,8 +331,7 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
 
     totalStringAccents = soundGramma.filter(
       (idElement) =>
-        elements[idElement].accent === 1 ||
-                elements[idElement].accent === 2
+        elements[idElement].accent === 1 || elements[idElement].accent === 2
     );
 
     steps = stringOnSteps(soundGramma, totalStringAccents.length, elements);
@@ -334,7 +349,7 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
       soundGramma,
       steps,
       rhythmPreset,
-      id: idString
+      id: idString,
     };
 
     orderStrings.push(idString);
@@ -348,7 +363,7 @@ export default function textAnalyzer(text: string, stringsDictionary: IDictionar
     wordLinks,
     stringLinks,
     wordsCount,
-    mainMeter
+    mainMeter,
   };
 }
 

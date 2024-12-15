@@ -1,9 +1,7 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useContext, useLayoutEffect, useMemo } from 'preact/hooks';
-import { ThemeProvider } from 'styled-components';
 
 import { MainContent, Page } from './styled';
-import theme from '@styles/theme';
 
 import StateContext from '@contexts/stateContext';
 import useLayoutActions from '@hooks/useLayoutActions';
@@ -15,26 +13,13 @@ import Header from '@components/Header';
 import LangChanger from '@containers/LangChanger';
 import ThemeTumbler from '@containers/ThemeTumbler';
 import ErrorBoundary from '@containers/ErrorBoundary';
+import ThemeContextContainer from '@containers/ThemeContextContainer';
 
-const menuItems = [<ThemeTumbler />, <LangChanger />];
+const menuItems = [<ThemeTumbler key="theme" />, <LangChanger key="lang"/>];
 
 const Layout: FunctionalComponent = ({ children }) => {
   const { Layout: { variant, lang }} = useContext(StateContext);
-  const { changeTheme, changeLang } = useLayoutActions();
-
-  useLayoutEffect(() => {
-    const selector = '(prefers-color-scheme: dark)';
-    const handler = (e: MediaQueryListEvent) => {
-      const newColorScheme = e.matches ? 'dark' : 'light';
-      changeTheme(newColorScheme);
-    };
-        
-    window.matchMedia(selector).addEventListener('change', handler);
-
-    return () => {
-      window.matchMedia(selector).removeEventListener('change', handler);
-    };
-  });
+  const { changeLang } = useLayoutActions();
 
   useLayoutEffect(() => {
     let isLangEn = false;
@@ -53,7 +38,7 @@ const Layout: FunctionalComponent = ({ children }) => {
   }, [changeLang]);
 
   return useMemo(()  => (
-    <ThemeProvider theme={theme[variant]}>
+    <ThemeContextContainer>
       <Page>
         <Header
           lang={lang}
@@ -70,7 +55,7 @@ const Layout: FunctionalComponent = ({ children }) => {
           </ErrorBoundary>
         </MainContent>
       </Page>
-    </ThemeProvider>
+    </ThemeContextContainer>
   ), [variant, lang, children]);
 };
 

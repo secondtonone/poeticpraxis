@@ -7,7 +7,7 @@ import blackTriangleSVG from './assets/black_triangle.svg';
 
 import redTrianglePNG from './assets/red_triangle.png';
 import redTriangleSVG from './assets/red_triangle.svg';
-import AccentColors from '@typings/AccentColors';
+import type { AccentColors } from '@typings/AccentColors';
 
 interface ZoomProps {
     zoomIn?: boolean

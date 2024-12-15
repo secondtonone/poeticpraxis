@@ -1,12 +1,10 @@
 import { textAnalyzer } from '@modules/workfield';
-import WorkerData from '@typings/WorkerData';
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const ctx: Worker = self as any;
+import type WorkerData from '@typings/WorkerData';
 
-ctx.addEventListener('message', (e: MessageEvent<WorkerData>) => {
+self.onmessage = (e: MessageEvent<WorkerData>) => {
   const { text, stringsDictionary, wordsDictionary } = e.data;
   const analyzedText = textAnalyzer(text, stringsDictionary, wordsDictionary);
-  ctx.postMessage(analyzedText);
-});
+  self.postMessage(analyzedText);
+};
 
-export default {} as typeof Worker & (new () => Worker);
+export {};

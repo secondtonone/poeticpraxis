@@ -1,7 +1,7 @@
 import { copying } from './copying';
 import isTouchDevice from '@utils/isTouchDevice';
-import { IDictionary } from '@modules/workfield/dictionary';
-import { AccentTypes } from '@modules/workfield/accents';
+import type { IDictionary } from '@modules/workfield/dictionary';
+import type { AccentTypes } from '@modules/workfield/accents';
 
 export function getLongLink(string: string) {
   return encodeURI(

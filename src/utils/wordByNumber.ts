@@ -1,5 +1,5 @@
 import { enginePage as translations } from '@translations';
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 
 type WordsRU = typeof translations.ru.engine.WORDS_AMOUNT;
 type WordsEN = typeof translations.en.engine.WORDS_AMOUNT;

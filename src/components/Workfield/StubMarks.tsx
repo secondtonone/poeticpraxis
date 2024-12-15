@@ -1,13 +1,13 @@
-import { IStructure } from '@modules/workfield/structure';
+import type { IStructure } from '@modules/workfield/structure';
 
 import { SyllableStub, MarkStub } from './styled';
 
 export interface StubMarksProps {
-    orderStrings?: IStructure['orderStrings']
-    strings?: IStructure['strings']
+  orderStrings?: IStructure['orderStrings'];
+  strings?: IStructure['strings'];
 }
 
-const StubMarks = ({ strings = {}, orderStrings = []}: StubMarksProps) => {
+const StubMarks = ({ strings = {}, orderStrings = [] }: StubMarksProps) => {
   const stubTags: React.ReactNode[] = [];
   const lineHeight = 52;
   const widthSymbol = 10;

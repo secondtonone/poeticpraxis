@@ -1,3 +1,3 @@
 type RhythmicViews = 'rhythmic' | 'melody';
 
-export default RhythmicViews;
+export type { RhythmicViews };

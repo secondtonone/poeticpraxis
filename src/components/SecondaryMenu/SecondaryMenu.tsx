@@ -7,7 +7,7 @@ import {
   LogoContainer,
 } from './styled';
 
-import MenuItem from '@typings/MenuItem';
+import type MenuItem from '@typings/MenuItem';
 
 import Logo from '@components/Logo';
 

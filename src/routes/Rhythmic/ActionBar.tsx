@@ -1,8 +1,8 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 
 import { rhythmicPage as translations } from '@translations';
 
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 
 import Button from '@components/Button';
 

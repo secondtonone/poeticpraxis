@@ -1,4 +1,4 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useContext, useRef, useCallback } from 'preact/hooks';
 
 import StateContext from '@contexts/stateContext';
@@ -69,11 +69,11 @@ const Main: FunctionalComponent<MainProps> = ({
       const buttonHeight = 19;
 
       const position =
-                `${e.pageY < sectionGap
-                  ? 0
-                  : Math.ceil(
-                    e.pageY - sectionGap - beginButtonGap - buttonHeight
-                  )}px`;
+        `${e.pageY < sectionGap
+          ? 0
+          : Math.ceil(
+            e.pageY - sectionGap - beginButtonGap - buttonHeight
+          )}px`;
 
       const transform = `translateY(${position})`;
 

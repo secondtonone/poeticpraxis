@@ -1,5 +1,5 @@
 import { useContext, useMemo } from 'preact/hooks';
-import { setWordsDictionary, setRhythmicState, RhythmicActions } from '@store/actions/rhythmicActions';
+import { setWordsDictionary, setRhythmicState, type RhythmicActions } from '@store/actions/rhythmicActions';
 import DispatchContext from '@contexts/dispatchContext';
 
 const useRhythmicActions = () => {

@@ -1,4 +1,4 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 
 import { stringToWords } from '@modules/imaged';
 
@@ -8,7 +8,7 @@ import isTouchDevice from '@utils/isTouchDevice';
 
 import { enginePage as translations } from '@translations';
 
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 
 import Button from '@components/Button';
 import Flex from '@components/Flex';

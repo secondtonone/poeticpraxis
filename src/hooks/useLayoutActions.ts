@@ -1,5 +1,5 @@
 import { useContext, useMemo } from 'preact/hooks';
-import { changeTheme, changeLang, LayoutActions } from '@store/actions/layoutActions';
+import { changeTheme, changeLang, type LayoutActions } from '@store/actions/layoutActions';
 import DispatchContext from '@contexts/dispatchContext';
 
 const useLayoutActions = () => {

@@ -1,24 +1,48 @@
 const path = require('path');
-const express = require('express');
-const compress = require('compression');
+const fs = require('fs');
 
-const app = express();
-const port = 9090;
-const host = '0.0.0.0';
+const fastify = require('fastify');
+const compress = require('@fastify/compress');
+const statics = require('@fastify/static');
 
-app.use(compress());
+const port = process.env.PORT || '9090';
+const host = process.env.HOST || 'localhost';
 
-app.use(express.static('dist'));
-
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
-
-app.listen(port, host, (err) => {
-  if (err) {
-    console.log(err);
-    return;
+const app = fastify({
+  logger: true,
+  https: {
+    allowHTTP1: true, // fallback support for HTTP1
+    key: fs.readFileSync(path.join(__dirname, 'localhost-key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'localhost.pem'))
   }
-
-  console.log('Start at http://localhost:9090');
 });
+
+app.register(compress);
+
+app.register(statics, {
+  root: path.join(__dirname, 'dist')
+});
+
+app.all('/', (req, reply) => {
+  reply.sendFile('index.html');
+});
+
+app.all('/images-engine', (req, reply) => {
+  reply.sendFile('index.html');
+});
+
+app.all('/rhythmic', (req, reply) => {
+  reply.sendFile('index.html');
+});
+
+const start = async () => {
+  try {
+    await app.listen({ port, host });
+    console.log(`Start at http://${host}:${port}`);
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();

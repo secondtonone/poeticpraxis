@@ -1,4 +1,4 @@
-import { Theme, Light, Dark } from 'styled-components';
+import type { Theme, Light, Dark } from 'styled-components';
 
 const light: Light = {
   name: 'light',

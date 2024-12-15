@@ -1,4 +1,4 @@
-import { FunctionalComponent, JSX } from 'preact';
+import type { FunctionalComponent, JSX } from 'preact';
 import { useCallback } from 'preact/compat';
 
 type ZoomEvent = JSX.TargetedPointerEvent<HTMLDivElement>;

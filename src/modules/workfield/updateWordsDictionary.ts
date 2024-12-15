@@ -1,6 +1,6 @@
-import { AccentTypes } from './accents';
-import { IDictionary } from './dictionary';
-import { IElements, IWordElement } from './structure';
+import type { AccentTypes } from './accents';
+import type { IDictionary } from './dictionary';
+import type { IElements, IWordElement } from './structure';
 
 export default function updateWordsDictionary(idWord: string, wordsDictionary: IDictionary, elements: IElements) {
   const word = elements[idWord] as IWordElement;

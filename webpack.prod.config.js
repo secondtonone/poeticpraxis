@@ -2,19 +2,17 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const HtmlWebpackSkipAssetsPlugin = require('html-webpack-skip-assets-plugin').HtmlWebpackSkipAssetsPlugin;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const PreloadWebpackPlugin = require('preload-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const WorkboxPlugin = require('workbox-webpack-plugin');
+const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
+
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-const baseConfig = require('./webpack.config');
+const baseConfig = require('./webpack.config.js')(true);
 
 const config = {
   ...baseConfig,
   mode: 'production',
+  target: ['browserslist'],
   devtool: false,
   output: {
     ...baseConfig.output,
@@ -42,33 +40,53 @@ const config = {
   optimization: {
     ...baseConfig.optimization,
     concatenateModules: true,
+    minimize: true,
     minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: false,
-        terserOptions: {
+      (compiler) => {
+        const TerserPlugin = require('terser-webpack-plugin');
+
+        new TerserPlugin({
           parallel: true,
-          output: {
-            comments: false,
+          extractComments: false,
+          terserOptions: {
+            output: {
+              comments: false,
+            },
+            mangle: true,
+            compress: {
+              keep_fargs: false,
+              hoist_funs: true,
+            },
           },
-          mangle: true,
-          compress: {
-            keep_fargs: false,
-            hoist_funs: true,
-          },
-        },
-      }),
+        }).apply(compiler);
+      },
     ],
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    new ForkTsCheckerWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+      typescript: {
+        diagnosticOptions: {
+          syntactic: true,
+        },
+        mode: 'write-references'
+      },
+      issue: {
+        exclude: [
+          {
+            file: 'node_modules/**/*.tsx'
+          },
+          {
+            file: 'node_modules/**/*.ts'
+          }
+        ],
+      },
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
       inject: 'head',
@@ -85,9 +103,6 @@ const config = {
     //new HtmlWebpackSkipAssetsPlugin({
     //    excludeAssets: [/tone.*/i]
     //}),
-    new ScriptExtHtmlWebpackPlugin({
-      defer: /\.js$/,
-    }),
     new PreloadWebpackPlugin({
       rel: 'preload',
       /* as(entry) {
@@ -110,62 +125,48 @@ const config = {
         {
           from: 'public/robots.txt',
           globOptions: {
-            ignore: ['.DS_Store']
-          }
+            ignore: ['.DS_Store'],
+          },
         },
         {
           from: 'public/sitemap.xml',
           globOptions: {
-            ignore: ['.DS_Store']
-          }
+            ignore: ['.DS_Store'],
+          },
         },
         {
           from: 'public/.htaccess',
           globOptions: {
-            ignore: ['.DS_Store']
-          }
+            ignore: ['.DS_Store'],
+          },
         },
         {
           from: 'public/img/Sign.svg',
           globOptions: {
-            ignore: ['.DS_Store']
-          }
+            ignore: ['.DS_Store'],
+          },
         },
         {
           from: 'public/audio',
           globOptions: {
-            ignore: ['.DS_Store']
-          }
+            ignore: ['.DS_Store'],
+          },
         },
         {
           from: 'public/dictionary',
           globOptions: {
-            ignore: ['.DS_Store']
-          }
+            ignore: ['.DS_Store'],
+          },
         },
-      ]
+      ],
     }),
-    new OfflinePlugin({
-      appShell: '/',
-      responseStrategy: 'network-first',
-      safeToUseOptionalCaches: true,
-      excludes: ['robots.txt', 'sitemap.xml', '.htaccess'],
-      caches: 'all',
-      externals: ['/', 'https://mc.yandex.ru/metrika/tag.js'],
-      ServiceWorker: {
-        events: true,
-        output: 'sworker.js',
-      },
-      AppCache: {
-        events: true,
-      },
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
     }),
   ],
 };
-
-if (process.env.ANALIZE) {
-  config.plugins.push(new BundleAnalyzerPlugin());
-  config.devtool = 'cheap-module-source-map';
-}
 
 module.exports = config;

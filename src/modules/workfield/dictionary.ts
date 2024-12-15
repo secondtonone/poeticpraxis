@@ -1,4 +1,4 @@
-import { AccentTypes } from './accents';
+import type { AccentTypes } from './accents';
 
 export type DictionaryAccents = {
   accents: Array<{

@@ -1,7 +1,7 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { lazy, Suspense } from 'preact/compat';
 import { useContext, useEffect, useState, useCallback } from 'preact/hooks';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import StateContext from '@contexts/stateContext';
 import useImagineEngineActions from '@hooks/useImagineEngineActions';
@@ -64,7 +64,7 @@ const ImagesEngine: FunctionalComponent = () => {
     },
   } = useContext(StateContext);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { setEngineState } = useImagineEngineActions();
 
@@ -162,8 +162,8 @@ const ImagesEngine: FunctionalComponent = () => {
   }, [showMessage, lang, setEngineState]);
 
   const pushToHistory = useCallback(
-    (location: string) => history.push(location),
-    [history]
+    (location: string) => navigate(location),
+    [navigate]
   );
 
   const toTheTop = () => {

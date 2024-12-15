@@ -1,4 +1,4 @@
-import { SpeechRecognition, SpeechEvent } from '@typings/SpeechRecognition';
+import type { SpeechRecognition, SpeechEvent } from '@typings/SpeechRecognition';
 
 export default class Recognition {
   recognition: InstanceType<SpeechRecognition>;

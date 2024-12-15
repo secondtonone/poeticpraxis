@@ -1,4 +1,4 @@
-import { IElements, ISoundGramma } from "./structure";
+import type { IElements, ISoundGramma } from './structure';
 
 export default function stringOnSteps(
   string: ISoundGramma = [],

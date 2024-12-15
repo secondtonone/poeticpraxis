@@ -1,7 +1,7 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 
 import useSessionStorage from '@hooks/useSessionStorage';
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 
 import Info from '@components/Info';
 

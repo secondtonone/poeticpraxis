@@ -1,4 +1,4 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useState, useEffect, useRef, useCallback } from 'preact/compat';
 import styled from 'styled-components';
 

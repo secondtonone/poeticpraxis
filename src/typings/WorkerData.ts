@@ -1,4 +1,4 @@
-import { IDictionary } from '@modules/workfield/dictionary';
+import type { IDictionary } from '@modules/workfield/dictionary';
 
 export default interface WorkerData {
   text: string;

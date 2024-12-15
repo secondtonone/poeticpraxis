@@ -1,4 +1,4 @@
-import Icon, { IconProps } from '@components/Icon';
+import Icon, { type IconProps } from '@components/Icon';
 
 function Melody(props: IconProps) {
   return (

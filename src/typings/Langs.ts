@@ -1,3 +1,3 @@
 type Langs = 'ru' | 'en';
 
-export default Langs;
+export type { Langs };

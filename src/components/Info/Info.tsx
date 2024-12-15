@@ -1,4 +1,4 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useState, useCallback } from 'preact/compat';
 import styled from 'styled-components';
 
@@ -8,7 +8,7 @@ import { translations } from './translations';
 
 import Container from '@components/Container';
 import Flex from '@components/Flex';
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 
 interface InfoProps {
   lang?: Langs

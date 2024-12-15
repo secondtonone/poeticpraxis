@@ -1,5 +1,5 @@
-import { AccentTypes } from './accents';
-import { IRhythmPreset } from './rhythmPresets';
+import type { AccentTypes } from './accents';
+import type { IRhythmPreset } from './rhythmPresets';
 
 export type IdString = string; //has format 's02874'
 export type IdWord = string; //has format 's02874w09528'

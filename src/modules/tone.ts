@@ -1,4 +1,4 @@
-import { ToneLib, Sampler, PolySynth } from '@typings/ToneTypes';
+import type { ToneLib, Sampler, PolySynth } from '@typings/ToneTypes';
 
 export default class MelodyMaker {
   static Tone: ToneLib;

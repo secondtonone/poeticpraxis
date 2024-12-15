@@ -1,8 +1,8 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import styled from 'styled-components';
 
 import { TextAccent } from '@styles/components';
-import Button, { ButtonProps } from '@components/Button';
+import Button, { type ButtonProps } from '@components/Button';
 import Container from '@components/Container';
 import BigTriangle from '@icons/BigTriangle';
 

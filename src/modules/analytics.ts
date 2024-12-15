@@ -1,5 +1,7 @@
 // @ts-nocheck
 /* eslint-disable */
+import { YANDEX_ID, GOOGLE_ID } from '@constants/analytics';
+
 const loading = (i: Window, s: Document, o: string, g: string, r: string, a?: HTMLScriptElement, m?: HTMLScriptElement) => {
   i['GoogleAnalyticsObject'] = r;
   (i[r] =
@@ -28,7 +30,7 @@ const yandexInit = () => {
     (k.src = r),
     a.parentNode.insertBefore(k, a);
   })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
-  ym(48473147, 'init', {
+  ym(YANDEX_ID, 'init', {
     clickmap: true,
     trackLinks: true,
     accurateTrackBounce: true,
@@ -72,7 +74,7 @@ const googleInit = () => {
     'https://www.google-analytics.com/analytics.js',
     'ga'
   );
-  ga('create', 'UA-77286868-1', 'auto');
+  ga('create', GOOGLE_ID, 'auto');
   ga('send', 'pageview');
 };
 

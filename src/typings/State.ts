@@ -1,6 +1,6 @@
-import ImagesEngineModel from './ImagesEngineModel';
-import RhythmicModel from './RhythmicModel';
-import LayoutModel from './LayoutModel';
+import type ImagesEngineModel from './ImagesEngineModel';
+import type RhythmicModel from './RhythmicModel';
+import type LayoutModel from './LayoutModel';
 
 export default interface State {
   ImagesEngine: ImagesEngineModel

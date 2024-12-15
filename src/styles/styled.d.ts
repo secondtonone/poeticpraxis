@@ -1,5 +1,5 @@
 import 'styled-components';
-import ThemeVariants from '@typings/ThemeVariants';
+import type { ThemeVariants } from '@typings/ThemeVariants';
 
 declare module 'styled-components' {
   export interface ThemeSettings {

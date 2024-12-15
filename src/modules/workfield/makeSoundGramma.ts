@@ -1,6 +1,10 @@
-import { ICoreElement, ISoundGramma, IString } from "./structure";
+import type { ICoreElement, ISoundGramma, IString } from './structure';
 
-export default function makeSoundGramma(signId: string, string: IString, accent: ICoreElement['accent']): ISoundGramma {
+export default function makeSoundGramma(
+  signId: string,
+  string: IString,
+  accent: ICoreElement['accent']
+): ISoundGramma {
   const soundGramma = string.soundGramma;
 
   const indexSoundGramma = string.soundGramma.indexOf(signId);

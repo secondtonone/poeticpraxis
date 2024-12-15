@@ -2,11 +2,11 @@ import { memo } from 'preact/compat';
 import styled from 'styled-components';
 
 interface RangeProps extends React.HTMLAttributes<HTMLInputElement> {
-    hideThumb?: boolean
-    value: number
-    min: string
-    max: string
-    disabled?: boolean
+  hideThumb?: boolean
+  value: number
+  min: string
+  max: string
+  disabled?: boolean
 }
 
 export default memo<RangeProps>((props) => <Range type="range" {...props} />);

@@ -1,4 +1,4 @@
-import { keyframes, Keyframes } from 'styled-components';
+import { keyframes, type Keyframes } from 'styled-components';
 import theme from './theme';
 
 const upAlt: Keyframes = keyframes`

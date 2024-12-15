@@ -1,8 +1,8 @@
-//@ts-nocheck 
-import { useState, useContext, useCallback, useEffect, useRef } from 'preact/hooks';
+import { useState, useContext, useCallback, useEffect, useRef, useLayoutEffect, useMemo } from 'preact/hooks';
 import { memo } from 'preact/compat';
 
-import LetterGramma, { Note } from '@typings/LetterGramma';
+import type LetterGramma from '@typings/LetterGramma';
+import type { Note } from '@typings/LetterGramma';
 import { translations } from './translations';
 import { messages } from '@translations';
 
@@ -32,6 +32,19 @@ const verticalOffset = 100;
 let notePlayed = 0;
 let sliderTimer = 0;
 
+const factoryCallbacks = (indexChord?: number) => (cb?:(index: number) => void ) => (time: number, { vowelNotes, sound, chord, index }: Note) => {
+
+  if (sound !== undefined) MelodyMaker.Instrument.volume.value = Math.floor(sound);
+  if (typeof cb === 'function') cb(index);
+  vowelNotes.forEach((note) => {
+    MelodyMaker.Instrument.triggerAttackRelease(
+      (typeof indexChord === 'number') ? chord[indexChord] : note.note ,
+      note.duration,
+      time.toFixed(2)
+    );
+  });
+};
+
 interface MelodyProps {
   showMessage: (message: string) => void
 }
@@ -55,7 +68,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
 
   useScrollToTop();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async () => {
       const setUpPlayer = () => {
         MelodyMaker.Tone.Transport.loopEnd = 1;
@@ -74,23 +87,16 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
         }
       };
 
-      const partCallback = (time: number, { vowelNotes, sound, index }: Note) => {
-
-        if (sound !== undefined) MelodyMaker.Instrument.volume.value = Math.floor(sound);
-
+      const partCallback = factoryCallbacks()((index) => {
         drawing.drawIndicator(index);
         followForIndicator(index);
 
         notePlayed = index;
+      });
 
-        vowelNotes.forEach((note) => {
-          MelodyMaker.Instrument.triggerAttackRelease(
-            note.note,
-            note.duration,
-            time.toFixed(2)
-          );
-        });
-      };
+      const partCallbackSecond = factoryCallbacks(1)();
+
+      const partCallbackThird = factoryCallbacks( 2)();
 
       try {
         await getToneModule(() => import(/* webpackChunkName: "Tone" */'tone'));
@@ -126,13 +132,15 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
         MelodyMaker.Tone.Transport.loopEnd = Math.round(time + 1);
 
         new MelodyMaker.Tone.Part(partCallback, music).start('+0.1');
+        new MelodyMaker.Tone.Part(partCallbackSecond, music).start('+0.1');
+        new MelodyMaker.Tone.Part(partCallbackThird, music).start('+0.1');
       } catch (e) {
         showMessage(messages[lang].SOMETHING);
       }
     })();
 
     return () => stop();
-  });
+  }, []);
 
   useEffect(() => {
     if (drawing.canvas && drawing.getVariant() !== variant) {
@@ -151,6 +159,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
 
   const play = useCallback(() => {
     MelodyMaker.Tone.Transport.start();
+    console.log(MelodyMaker.Tone.Transport);
     sliderTimer = requestAnimationFrame(calculateProgress);
   }, [calculateProgress]);
 
@@ -168,7 +177,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
   }, [calculateProgress, stop]);
 
   const record = useCallback(() => {
-    const time = MelodyMaker.Tone?.Transport?.loopEnd || 1;
+    const time = (MelodyMaker.Tone?.Transport?.loopEnd as number) || 1;
     setRecording(true);
     play();
     console.log(Math.ceil(time * 1000));
@@ -222,8 +231,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
     if (downloadableMelody) e.currentTarget.href = downloadableMelody;
   }, [downloadableMelody]);
 
-  // @ts-ignore
-  const getRef = useCallback((ref: HTMLCanvasElement) => canvas.current = ref, []);
+  const canvasHeight = useMemo(() => getHeightCanvas(canvas.current?.offsetWidth), [getHeightCanvas, canvas]);
 
   return (
     <div>
@@ -243,11 +251,10 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
               setBPM={setBPM}
               withRecording={DEV}
             />
-            {DEV && <DownloadLink
+            {DEV && downloadableMelody && <DownloadLink
               download="melody.mp3"
               href="#"
               onClick={downloadMelody}
-              disabled={!downloadableMelody}
             >
               <Button
                 _rounded
@@ -280,7 +287,7 @@ const Melody = memo<MelodyProps>(({ showMessage }) => {
         </Flex>
       </div>
 
-      <Canvas getRef={getRef} height={getHeightCanvas(canvas.current?.offsetWidth)} />
+      <Canvas ref={canvas} height={canvasHeight} />
     </div>
   );
 });

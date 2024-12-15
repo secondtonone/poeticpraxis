@@ -1,12 +1,12 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 
-import Langs from '@typings/Langs';
-import Textarea, { TextareaProps } from '@components/Textarea';
+import type { Langs } from '@typings/Langs';
+import Textarea, { type TextareaProps } from '@components/Textarea';
 
-import Marks, { MarksProps } from './Marks';
-import HiddenMarks, { HiddenMarksProps } from './HiddenMarks';
-import InfoMarks, { InfoMarksProps } from './InfoMarks';
-import StubMarks, { StubMarksProps } from './StubMarks';
+import Marks, { type MarksProps } from './Marks';
+import HiddenMarks, { type HiddenMarksProps } from './HiddenMarks';
+import InfoMarks, { type InfoMarksProps } from './InfoMarks';
+import StubMarks, { type StubMarksProps } from './StubMarks';
 
 import { FakeField, WorkField, PaintField } from './styled';
 
@@ -39,51 +39,46 @@ const Workfield: FunctionalComponent<WorkfieldProps> = ({
   onBlur,
   fakeFieldRef,
   getRef
-}) => {
-  return (
-    <WorkField>
-      <FakeField
-        data-id-comp="fakeField"
-        zoomIn={zoomIn}
-        ref={fakeFieldRef}>
-        <HiddenMarks
-          strings={strings}
-          orderStrings={orderStrings}
-          elements={elements}
-        />
-      </FakeField>
+}) => (
+  <WorkField>
+    <FakeField
+      data-id-comp="fakeField"
+      zoomIn={zoomIn}
+      ref={fakeFieldRef}>
+      <HiddenMarks
+        strings={strings}
+        orderStrings={orderStrings}
+        elements={elements} />
+    </FakeField>
 
-      <PaintField
-        data-id-comp="paintField"
-        zoomIn={zoomIn}
-        onClick={onClick}
-        onDoubleClick={onDoubleClick}
-      >
-        {value && <StubMarks strings={strings} orderStrings={orderStrings} />}
-        <Marks tags={tags} lang={lang} />
-        <InfoMarks
-          lang={lang}
-          strings={strings}
-          orderStrings={orderStrings}
-          lineHeight={lineHeight}
-          elements={elements}
-          syllableOff={syllableOff}
-          stringNumberOff={stringNumberOff}
-        />
-      </PaintField>
-      <Textarea
-        onInput={onInput}
-        value={value}
-        readOnly={readOnly}
-        zoomIn={zoomIn}
-        onMouseMove={onMouseMove}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        placeHolder={placeHolder}
-        getRef={getRef}
-      />
-    </WorkField>
-  );
-};
+    <PaintField
+      data-id-comp="paintField"
+      zoomIn={zoomIn}
+      onClick={onClick}
+      onDoubleClick={onDoubleClick}
+    >
+      {value && <StubMarks strings={strings} orderStrings={orderStrings} />}
+      <Marks tags={tags} lang={lang} />
+      <InfoMarks
+        lang={lang}
+        strings={strings}
+        orderStrings={orderStrings}
+        lineHeight={lineHeight}
+        elements={elements}
+        syllableOff={syllableOff}
+        stringNumberOff={stringNumberOff} />
+    </PaintField>
+    <Textarea
+      onInput={onInput}
+      value={value}
+      readOnly={readOnly}
+      zoomIn={zoomIn}
+      onMouseMove={onMouseMove}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      placeHolder={placeHolder}
+      getRef={getRef} />
+  </WorkField>
+);
 
 export default Workfield;

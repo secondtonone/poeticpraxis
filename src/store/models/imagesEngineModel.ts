@@ -1,4 +1,4 @@
-import IImagesEngineModel from '@typings/ImagesEngineModel';
+import type IImagesEngineModel from '@typings/ImagesEngineModel';
 
 const imagesEngineModel: IImagesEngineModel = {
   currentEngineState: {

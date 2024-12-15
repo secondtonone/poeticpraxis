@@ -1,4 +1,4 @@
-import IRhythmicModel from '@typings/RhythmicModel';
+import type IRhythmicModel from '@typings/RhythmicModel';
 
 const rhythmicModel: Readonly<IRhythmicModel> = {
   currentRhythmicState: {

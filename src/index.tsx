@@ -4,13 +4,14 @@ if (DEV) {
   require('preact/debug');
 }
 
-import { FunctionalComponent, hydrate } from 'preact';
+import { type FunctionalComponent, hydrate } from 'preact';
 
 import theme from '@styles/theme';
 import App from '@containers/App';
 import Routes from '@routes';
 
 import analyticsInit from '@modules/analytics';
+import enableRUM from '@modules/web-vitals';
 
 const run = (Component: FunctionalComponent) => {
   const rootElement = DEV
@@ -28,22 +29,15 @@ const run = (Component: FunctionalComponent) => {
 };
 
 if (!DEV) {
-  (async () => {
-    const runtime = await import('offline-plugin/runtime');
-
-    runtime.install({
-      // When an update is ready, tell ServiceWorker to take control immediately:
-      onUpdateReady() {
-        console.log('update ready');
-        runtime.applyUpdate();
-      },
-      // Reload to get the new version:
-      onUpdated() {
-        console.log('updated');
-        location.reload();
-      },
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js').then(registration => {
+        console.log('SW registered: ', registration);
+      }).catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
     });
-  })();
+  }
 }
 
 run(App);
@@ -66,5 +60,8 @@ if (!DEV) {
     letter-spacing: -0.099em;
     text-transform: uppercase;
     background: ${theme.primaryWhite};`);
-  window.addEventListener('load', () => setTimeout(analyticsInit, 3000, 'yandex'));
+
+  window.addEventListener('load', () => requestIdleCallback(() => analyticsInit( 'yandex')));
+
+  enableRUM();
 }

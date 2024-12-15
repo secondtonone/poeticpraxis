@@ -1,5 +1,5 @@
-import { ImagesEngineActionTypes } from './imagesEngineActions';
-import { LayoutActionTypes } from './layoutActions';
-import { RhythmicActionTypes } from './rhythmicActions';
+import type { ImagesEngineActionTypes } from './imagesEngineActions';
+import type { LayoutActionTypes } from './layoutActions';
+import type { RhythmicActionTypes } from './rhythmicActions';
 
 export type ActionTypes = ImagesEngineActionTypes | LayoutActionTypes | RhythmicActionTypes;

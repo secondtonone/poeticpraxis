@@ -1,11 +1,12 @@
+import { produce } from 'immer';
 import rhythmicModel from '@store/models/rhythmicModel';
-import IRhythmicModel from '@typings/RhythmicModel';
+import type IRhythmicModel from '@typings/RhythmicModel';
 import {
   SET_RHYTHMIC_STATE,
   SET_WORDS_DICTIONARY,
-  RhythmicActionTypes,
-  SetRhythmicState,
-  SetWordsDictionary,
+  type RhythmicActionTypes,
+  type SetRhythmicState,
+  type SetWordsDictionary,
 } from '@store/actions/rhythmicActions';
 
 type Handler = (
@@ -17,18 +18,19 @@ const ACTION_HANDLERS: {
     [key: string]: Handler;
 } = {
   [SET_RHYTHMIC_STATE]: (state: IRhythmicModel, action: SetRhythmicState) =>
-    Object.assign({}, state, {
-      currentRhythmicState: {
+    produce(state, (draft) => {
+      /* draft.currentRhythmicState = {
         ...state.currentRhythmicState,
         ...action.payload,
-      },
+      }; */
+      Object.assign( draft.currentRhythmicState, action.payload);
     }),
   [SET_WORDS_DICTIONARY]: (
     state: IRhythmicModel,
     action: SetWordsDictionary
   ) =>
-    Object.assign({}, state, {
-      wordsDictionary: action.payload,
+    produce(state, (draft) => {
+      draft.wordsDictionary = action.payload;
     }),
 };
 

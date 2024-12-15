@@ -1,6 +1,6 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 
-import { IStrings, OrderStrings, IElements, SymbolicElement } from '@modules/workfield/structure';
+import type { IStrings, OrderStrings, IElements, SymbolicElement } from '@modules/workfield/structure';
 import { Accent, StringPause, StringField } from './styled';
 
 import { accents } from '@modules/workfield';

@@ -1,8 +1,8 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useCallback } from 'preact/hooks';
 
-import Langs from '@typings/Langs';
-import ThemeVariants from '@typings/ThemeVariants';
+import type { Langs } from '@typings/Langs';
+import type { ThemeVariants } from '@typings/ThemeVariants';
 
 import TriangleButton from '@components/TriangleButton';
 import Logo from '@components/Logo';

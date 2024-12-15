@@ -1,5 +1,5 @@
-import { IStructure } from '@modules/workfield/structure';
-import { IDictionary } from '@modules/workfield/dictionary';
+import type { IStructure } from '@modules/workfield/structure';
+import type { IDictionary } from '@modules/workfield/dictionary';
 
 export interface ICurrentRhythmicState
   extends Pick<

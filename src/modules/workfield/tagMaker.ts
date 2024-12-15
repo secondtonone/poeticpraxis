@@ -1,6 +1,6 @@
-import MarkupTypes from "@typings/MarkupTypes";
-import { IStrings, IElements, Tags } from "./structure";
-import { TextAnalyzerResult } from "./textAnalyzer";
+import type { MarkupTypes } from '@typings/MarkupTypes';
+import type { IStrings, IElements, Tags } from './structure';
+import type { TextAnalyzerResult } from './textAnalyzer';
 
 interface TagMakerResult {
     elements: IElements
@@ -15,9 +15,9 @@ export default function tagMaker(node: HTMLCollection, textAnalyzed: TextAnalyze
 
   let symbols: Element[] = [];
 
-  const strings = Object.assign({}, textAnalyzed.strings);
+  const strings = structuredClone(textAnalyzed.strings);
 
-  const elements = Object.assign({}, textAnalyzed.elements);
+  const elements = structuredClone(textAnalyzed.elements);
 
   const symbolsSet: Element[][] = [];
 
@@ -55,10 +55,10 @@ export default function tagMaker(node: HTMLCollection, textAnalyzed: TextAnalyze
       const type = symbol.dataset.type as MarkupTypes;
       if (
         type === 'black' ||
-                type === 'red' ||
-                type === 'red_secondary' ||
-                type === 'gray' ||
-                type === 'string-pause'
+        type === 'red' ||
+        type === 'red_secondary' ||
+        type === 'gray' ||
+        type === 'string-pause'
       ) {
         const parent = symbol.parentNode as HTMLDivElement;
         const offsetLeft = parent.offsetLeft;

@@ -1,5 +1,5 @@
 import { useContext, useMemo } from 'preact/hooks';
-import { setEngineState, sharingText, ImagesEngineActions } from '@store/actions/imagesEngineActions';
+import { setEngineState, sharingText, type ImagesEngineActions } from '@store/actions/imagesEngineActions';
 import DispatchContext from '@contexts/dispatchContext';
 
 const useImagesEngineActions = () => {

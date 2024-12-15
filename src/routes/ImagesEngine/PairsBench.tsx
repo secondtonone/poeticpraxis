@@ -1,4 +1,4 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useCallback } from 'preact/hooks';
 
 import { copying } from '@modules/copying';
@@ -7,8 +7,8 @@ import isTouchDevice from '@utils/isTouchDevice';
 
 import { messages, enginePage as translations } from '@translations';
 
-import Langs from '@typings/Langs';
-import { Result } from '@typings/ImagesEngineModel';
+import type { Langs } from '@typings/Langs';
+import type { Result } from '@typings/ImagesEngineModel';
 
 import useImagineEngineActions from '@hooks/useImagineEngineActions';
 import useRhythmicActions from '@hooks/useRhythmicActions';

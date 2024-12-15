@@ -1,4 +1,4 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useState, useCallback, useRef } from 'preact/hooks';
 
 import { NavBar, NavMenu, NavMenuBar, MobileNavMenu, NavMenuTitle, NavMenuItem } from './styled';
@@ -17,7 +17,7 @@ import Flex from '@components/Flex';
 import Container from '@components/Container';
 
 import { Backdrop } from '@styles/components';
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 
 const menu: {
     url: string,
@@ -110,8 +110,8 @@ const Menu: FunctionalComponent<MenuProps> = ({ items, lang = 'ru' }) => {
                 onTouchEnd={onTouchToggle}>
                 <NavMenuItem>
                   <RouteLink
-                    to={'/'}
-                    exact
+                    to="/"
+                    end
                     onClick={toggleMenu}>
                     <NavMenuTitle>
                       {

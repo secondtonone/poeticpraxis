@@ -1,8 +1,8 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { Suspense, lazy } from 'preact/compat';
 import { useContext, useEffect, useState, useCallback } from 'preact/hooks';
 
-import RhythmicViews from '@typings/RhythmicViews';
+import type { RhythmicViews } from '@typings/RhythmicViews';
 
 import StateContext from '@contexts/stateContext';
 

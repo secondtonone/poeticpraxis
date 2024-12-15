@@ -1,6 +1,6 @@
 import isInDictionary from './isInDictionary';
-import { IDictionary } from './dictionary';
-import { AccentTypes } from './accents';
+import type { IDictionary } from './dictionary';
+import type { AccentTypes } from './accents';
 
 export default function isAccented(
   token: string,

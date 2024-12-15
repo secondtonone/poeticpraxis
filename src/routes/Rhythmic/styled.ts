@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import AccentColors from '@typings/AccentColors';
+import type { AccentColors } from '@typings/AccentColors';
 import theme from '@styles/theme';
 
 import { AnimationShow, AnimationUp, AnimationDown } from '@styles/components';

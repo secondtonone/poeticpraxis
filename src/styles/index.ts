@@ -1,4 +1,4 @@
-import { css, FlattenSimpleInterpolation } from 'styled-components';
+import { css, type FlattenSimpleInterpolation } from 'styled-components';
 
 import common from './common';
 import reset from './reset';

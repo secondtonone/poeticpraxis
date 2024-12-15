@@ -1,4 +1,4 @@
-import { FC } from 'preact/compat';
+import type { FC } from 'preact/compat';
 import styled, { keyframes } from 'styled-components';
 
 const stretch = keyframes`

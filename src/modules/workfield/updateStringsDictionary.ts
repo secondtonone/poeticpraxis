@@ -1,6 +1,6 @@
-import { IString, IElements } from './structure';
-import { IDictionary } from './dictionary';
-import { AccentTypes } from './accents';
+import type { IString, IElements } from './structure';
+import type { IDictionary } from './dictionary';
+import type { AccentTypes } from './accents';
 
 export default function updateStringsDictionary(string: IString, stringsDictionary: IDictionary, elements: IElements) {
   const stringLowerCased = string.string.toLowerCase();

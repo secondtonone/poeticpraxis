@@ -1,4 +1,4 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useLayoutEffect, useState } from 'preact/compat';
 
 import { PageHeader, ContentField, Logo, Block } from './styled';
@@ -16,8 +16,8 @@ import Flex from '@components/Flex';
 
 import LogoPic from '@public/img/Logo.svg';
 import LogoPicWhite from '@public/img/Logo-white.svg';
-import Langs from '@typings/Langs';
-import ThemeVariants from '@typings/ThemeVariants';
+import type { Langs } from '@typings/Langs';
+import type { ThemeVariants } from '@typings/ThemeVariants';
 
 interface HeaderProps {
     lang?: Langs
@@ -37,7 +37,7 @@ const Header: FunctionalComponent<HeaderProps> = ({ children, lang = 'ru', varia
     <PageHeader boundHeight={boundHeight}>
       <HoveredElement>
         <Block>
-          <RouteLink to="/" exact>
+          <RouteLink to="/" end>
             <HideOnHover>
               <BetaSign>
                 <Logo

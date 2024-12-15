@@ -1,9 +1,9 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { lazy, Suspense } from 'preact/compat';
 
 import { NavLink } from 'react-router-dom';
 
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 
 import examples from './examples';
 import maxMatchMedia from '@utils/maxMatchMedia';

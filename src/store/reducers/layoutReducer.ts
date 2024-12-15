@@ -1,11 +1,12 @@
+import { produce } from 'immer';
 import layoutModel from '@store/models/layoutModel';
-import ILayoutModel from '@typings/LayoutModel';
+import type ILayoutModel from '@typings/LayoutModel';
 import {
   CHANGE_THEME,
   CHANGE_LANG,
-  LayoutActionTypes,
-  ChangeLang,
-  ChangeTheme,
+  type LayoutActionTypes,
+  type ChangeLang,
+  type ChangeTheme,
 } from '@store/actions/layoutActions';
 
 type Handler = (state: ILayoutModel, action: LayoutActionTypes) => ILayoutModel;
@@ -14,12 +15,12 @@ const ACTION_HANDLERS: {
     [key: string]: Handler;
 } = {
   [CHANGE_THEME]: (state: ILayoutModel, action: ChangeTheme) => 
-    Object.assign({}, state, {
-      variant: action.payload
+    produce(state, (draft) => {
+      draft.variant = action.payload;
     }),
   [CHANGE_LANG]: (state: ILayoutModel, action: ChangeLang) =>
-    Object.assign({}, state, {
-      lang: action.payload,
+    produce(state, (draft) => {
+      draft.lang = action.payload;
     }),
 };
 

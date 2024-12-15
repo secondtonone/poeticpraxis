@@ -3,8 +3,8 @@ import {
   AccentRelative
 } from './styled';
 
-import { Tags } from '@modules/workfield/structure';
-import Langs from '@typings/Langs';
+import type { Tags } from '@modules/workfield/structure';
+import type { Langs } from '@typings/Langs';
 
 import { translations } from './translations';
 

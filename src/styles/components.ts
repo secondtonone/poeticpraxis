@@ -1,4 +1,5 @@
-import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
+import styled, { css } from 'styled-components';
+import type { FlattenSimpleInterpolation } from 'styled-components';
 
 import theme from './theme';
 import { show, upAlt, downAlt } from './animations';
@@ -67,7 +68,7 @@ const DesktopHiddenContainer = styled.div`
   }
 `;
 
-const Link = styled.a`
+const Link = styled.a<React.HTMLAttributes<HTMLAnchorElement>>`
   color: ${(props) => props.theme.accentColor};
   fill: ${(props) => props.theme.accentColor};
 `;

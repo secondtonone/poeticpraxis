@@ -1,10 +1,10 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 
 import { rhythmicPage as translations } from '@translations';
 
-import Langs from '@typings/Langs';
-import MenuItem from '@typings/MenuItem';
-import RhythmicViews from '@typings/RhythmicViews';
+import type { Langs } from '@typings/Langs';
+import type MenuItem from '@typings/MenuItem';
+import type { RhythmicViews } from '@typings/RhythmicViews';
 
 import SecondaryMenu from '@components/SecondaryMenu';
 import MelodyIcon from '@icons/Melody';

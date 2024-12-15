@@ -1,4 +1,4 @@
-import {
+import type {
   IElements,
   IStrings,
   IStructure,
@@ -6,10 +6,16 @@ import {
   ICLetterElement,
 } from '@modules/workfield/structure';
 import { getGroup, calculateFormant } from '@modules/formants';
-import LetterGramma, { Music } from '@typings/LetterGramma';
+import type LetterGramma from '@typings/LetterGramma';
+import type { Music } from '@typings/LetterGramma';
+import getNoteFromByCount from '@utils/getNoteFromByCount';
 
 const DURATION = 0.38; // 0.17;
 const ACCENTED_DURATION: number = DURATION * 1.5;
+const CHORDS = [
+  [0,3,7],
+  [0,4,7]
+];
 /*  длительность двух строк - 3.5
  *  в строках 15 гласных на одну 0.23с = 230мс
  *  120 бпм 1/4 ноты в минуту
@@ -63,12 +69,18 @@ const getNote = (
   return notes;
 };
 
+const getChord = (note: number, type: number) => {
+  const chord = CHORDS[type];
+
+  return chord.map( multiply => getNoteFromByCount(note, multiply));
+};
+
 const makeLetterGramma = ({
   notesCount,
   strings,
   elements,
   orderStrings,
-  frequencyToNote,
+  frequencyToNote
 }: {
     notesCount: number;
     strings: IStrings;
@@ -84,21 +96,21 @@ const makeLetterGramma = ({
 
   orderStrings.forEach((stringId: string) => {
     let soundGramma: { tokenId: string; sound?: 0 | 2 }[] = [];
-
+    const chordByString = strings[stringId].rhythmPreset % 2;
+    console.log(strings[stringId]);
     strings[stringId].steps.forEach((step) => {
       const modded = stepSoundMultiply(step, elements);
       soundGramma = [...soundGramma, ...modded];
     });
-
     soundGramma = soundGramma.concat([{ tokenId: 'p' }, { tokenId: 'p' }]);
 
     soundGramma.forEach(({ tokenId, sound }) => {
       let duration: number = DURATION;
       const vowelNotes: {
-                note: number;
-                duration: number;
-                notation: string;
-            }[] = [];
+        note: number;
+        duration: number;
+        notation: string;
+      }[] = [];
 
       if (tokenId === 'p' || elements[tokenId].type === 'p') {
         time += duration;
@@ -107,17 +119,17 @@ const makeLetterGramma = ({
         const isAccented: boolean = vowel.accent === 1;
         const char: string = vowel.char.toLowerCase();
         const prev: null | ICLetterElement | IVLetterElement =
-                    vowel.prev
-                      ? (elements[vowel.prev] as
-                            | ICLetterElement
-                            | IVLetterElement)
-                      : null;
+          vowel.prev
+            ? (elements[vowel.prev] as
+              | ICLetterElement
+              | IVLetterElement)
+            : null;
         const next: null | ICLetterElement | IVLetterElement =
-                    vowel.next
-                      ? (elements[vowel.next] as
-                            | ICLetterElement
-                            | IVLetterElement)
-                      : null;
+          vowel.next
+            ? (elements[vowel.next] as
+              | ICLetterElement
+              | IVLetterElement)
+            : null;
 
         const notes: number[] = getNote(vowel, prev, next, elements);
 
@@ -140,6 +152,7 @@ const makeLetterGramma = ({
           time: +time.toFixed(2),
           sound,
           vowelNotes,
+          chord: getChord(notes[0], chordByString),
           index,
         });
 

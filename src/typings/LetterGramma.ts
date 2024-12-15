@@ -1,4 +1,4 @@
-import { IdString } from '@modules/workfield/structure';
+import type { IdString } from '@modules/workfield/structure';
 
 export default interface LetterGramma {
   music: {
@@ -12,6 +12,7 @@ export default interface LetterGramma {
       duration: number
       notation: string
     }[]
+    chord: number[]
     index: number
   }[]
   time: number

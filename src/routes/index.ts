@@ -1,3 +1,3 @@
-import Routes from '@containers/Routes';
+import Routes from './Router';
 
 export default Routes;

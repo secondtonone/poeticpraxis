@@ -1,23 +1,23 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useEffect, useReducer, useMemo, useCallback } from 'preact/hooks';
 import { rhythmicModel, imagesEngineModel, layoutModel } from '@store/models';
-import { Slices } from '@typings/State';
+import type { Slices } from '@typings/State';
 import {
   imagesEngineReducer,
   rhythmicReducer,
   layoutReducer,
 } from '@store/reducers';
-import { ActionTypes } from '@store/actions';
+import type { ActionTypes } from '@store/actions';
 
 import DispatchContext from '@contexts/dispatchContext';
 import StateContext from '@contexts/stateContext';
-
-const LOCAL_STORAGE_NAME = '___PoeticPraxisApp___';
+import LOCAL_STORAGE_NAME from '@constants/localStorageName';
+import { IMAGES_ENGINE, LAYOUT, RHYTHMIC } from '@constants/storages';
 
 const STORAGES = {
-  IMAGES_ENGINE: 'ImagesEngine',
-  RHYTHMIC: 'Rhythmic',
-  LAYOUT: 'Layout'
+  IMAGES_ENGINE,
+  RHYTHMIC,
+  LAYOUT
 } as const;
 
 const persistedFromLocal = (slice: Slices) => <T,>(initial: T) =>
@@ -52,6 +52,8 @@ const AppContextContainer: FunctionalComponent = ({ children }) => {
     () => ({ ImagesEngine, Rhythmic, Layout }),
     [ImagesEngine, Rhythmic, Layout]
   );
+
+  console.log(Rhythmic.currentRhythmicState.elements);
 
   useEffect(() => {
     if (typeof window !== 'undefined') window.localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(combinedState));

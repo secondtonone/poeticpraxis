@@ -1,10 +1,10 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 
 import { enginePage } from '@translations';
 
-import Langs from '@typings/Langs';
-import { Views } from '@typings/ImagesEngineModel';
-import MenuItem from '@typings/MenuItem';
+import type { Langs } from '@typings/Langs';
+import type { Views } from '@typings/ImagesEngineModel';
+import type MenuItem from '@typings/MenuItem';
 
 import SecondaryMenu from '@components/SecondaryMenu';
 import Subject from '@icons/Subject';

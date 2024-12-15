@@ -1,4 +1,4 @@
-import { ToneLib, Recorder } from '@typings/ToneTypes';
+import type { ToneLib, Recorder } from '@typings/ToneTypes';
 
 export const setUpRecorder = ({
   tone,

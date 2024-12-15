@@ -1,12 +1,12 @@
-import { FunctionComponent } from 'preact';
+import type { FunctionComponent } from 'preact';
 import { useState, useEffect, useCallback } from 'preact/hooks';
 
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 import isSupportRecognition from '@utils/isSupportRecognition';
 import Recognition from '@modules/recognition';
 import { translations } from './translations';
 
-import Button, { ButtonProps } from '@components/Button';
+import Button, { type ButtonProps } from '@components/Button';
 import MicIcon from '@icons/Mic';
 
 let recognition: InstanceType<typeof Recognition>;

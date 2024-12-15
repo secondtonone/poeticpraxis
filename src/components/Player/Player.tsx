@@ -1,4 +1,4 @@
-import { FunctionalComponent } from 'preact';
+import type { FunctionalComponent } from 'preact';
 import { useState, useCallback, useEffect } from 'preact/compat';
 
 import { translations } from './translations';
@@ -13,7 +13,7 @@ import Return from '@icons/Return';
 
 import Container from '@components/Container';
 import Flex from '@components/Flex';
-import Langs from '@typings/Langs';
+import type { Langs } from '@typings/Langs';
 
 interface PlayerProps {
   lang: Langs
@@ -48,34 +48,26 @@ const Player: FunctionalComponent<PlayerProps> = ({
     return () => {
       _stop();
     };
-  });
+  }, []);
 
   const _play = useCallback(() => {
     setPlayerState(true);
-    if (typeof play === 'function') {
-      play();
-    }
+    if (typeof play === 'function') play();
   }, [play]);
 
   const _record = useCallback(() => {
     setPlayerState(true);
-    if (typeof record === 'function') {
-      record();
-    }
+    if (typeof record === 'function') record();
   }, [record]);
 
   const _stop = useCallback(() => {
     setPlayerState(false);
-    if (typeof stop === 'function') {
-      stop();
-    }
+    if (typeof stop === 'function') stop();
   }, [stop]);
 
   const _pause = useCallback(() => {
     setPlayerState(false);
-    if (typeof pause === 'function') {
-      pause();
-    }
+    if (typeof pause === 'function') pause();
   }, [pause]);
 
   const _repeat = useCallback(() => {
