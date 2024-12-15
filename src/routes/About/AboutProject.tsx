@@ -1,38 +1,30 @@
 import type { FunctionalComponent } from 'preact';
-import { useState, useCallback } from 'preact/hooks';
 
 import type { Langs } from '@typings/Langs';
 
-import Button from '@components/Button';
-import Flex from '@components/Flex';
 import Container from '@components/Container';
+import Flex from '@components/Flex';
 import Text from '@components/Text';
 
 import { Link, TextAccent, TextConstructor } from '@styles/components';
 
-import Telegram from '@icons/Telegram';
-import Insta from '@icons/Insta';
-import Reddit from '@icons/Reddit';
-import Vk from '@icons/Vk';
 import Email from '@icons/Convert';
+import Telegram from '@icons/Telegram';
+import Vk from '@icons/Vk';
+
+import QrCode from '@public/img/TKxwSXPsJ2M5aw7ouBASsZNCJJRmW61sPt.png';
+import EtherQrCode from '@public/img/ether.png';
 
 interface AboutProjectProps {
-    mediaQuery: boolean;
-    lang: Langs;
-    boundHeight: number;
+  mediaQuery: boolean;
+  lang: Langs;
+  boundHeight: number;
 }
 
 const AboutProject: FunctionalComponent<AboutProjectProps> = ({
   lang = 'ru',
   mediaQuery,
-  boundHeight,
 }) => {
-  const [isHiddenPayment, setPaymentVisibility] = useState(false);
-
-  const togglePayment = useCallback(() => {
-    setPaymentVisibility(!isHiddenPayment);
-  }, [isHiddenPayment]);
-
   const isRusLang = lang === 'ru';
 
   return (
@@ -40,7 +32,7 @@ const AboutProject: FunctionalComponent<AboutProjectProps> = ({
       direction="column"
       margin="150px 0 50px"
       justify="flex-start"
-      height={isHiddenPayment ? 'auto' : `${boundHeight - 80}px`}>
+    >
       <Container padding="9px 0 25px" height="auto">
         <Text
           size={mediaQuery ? 64 : 128}
@@ -53,16 +45,16 @@ const AboutProject: FunctionalComponent<AboutProjectProps> = ({
             <TextConstructor letter="-16">XIS</TextConstructor>
           </TextAccent>
         </Text>
-        <Text isHidden={!isRusLang} size={14} align="center">
-                    проект, созданный чтобы узнать, что скрыто за словами -
+        <Text isHidden={!isRusLang} align="center">
+          проект, созданный чтобы узнать, что скрыто за словами -
           <br />
-                    для поэтической практики.
+          для поэтической практики.
         </Text>
-        <Text isHidden={isRusLang} size={14} align="center">
-                    the project created to find out what is hidden behind words
-                    -
+        <Text isHidden={isRusLang} align="center">
+          the project created to find out what is hidden behind words
+          -
           <br />
-                    for poetic practice.
+          for poetic practice.
         </Text>
       </Container>
       <Flex justify="space-between" direction="column" height="100px">
@@ -79,20 +71,8 @@ const AboutProject: FunctionalComponent<AboutProjectProps> = ({
             href="https://vk.com/poeticpraxis">
             <Vk _big />
           </Link>
-          <Link
-            target="_blank"
-            rel="noreferrer noopener"
-            href="https://instagram.com/poeticpraxis">
-            <Insta _big />
-          </Link>
-          <Link
-            target="_blank"
-            rel="noreferrer noopener"
-            href="https://www.reddit.com/r/poeticpraxis/">
-            <Reddit _big />
-          </Link>
         </Flex>
-
+        <br />
         <Flex
           direction={mediaQuery ? 'column' : 'row'}
           justify="space-evenly"
@@ -100,36 +80,33 @@ const AboutProject: FunctionalComponent<AboutProjectProps> = ({
           <Link href="mailto:thearchitect@poeticpraxis.ru">
             <Flex align="flex-start">
               <Email _small padding="0 8px 0 0" />{' '}
-                            thearchitect@poeticpraxis.ru
+              thearchitect@poeticpraxis.ru
             </Flex>
           </Link>
         </Flex>
       </Flex>
-      {isRusLang && (
-        <Button
-          _action--outlined
-          width="300px"
-          size={16}
-          type="button"
-          borderWidth="5"
-          margin="42px 0 24px"
-          onClick={togglePayment}>
-          {!isHiddenPayment
-            ? 'поддержать проект'
-            : 'В следующий раз 😅'}
-        </Button>
-      )}
+
       <br />
-      {isHiddenPayment ? (
-        <iframe
-          src="https://yoomoney.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B0%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0&targets-hint=&default-sum=100&button-text=12&payment-type-choice=on&hint=&successURL=https%3A%2F%2Fwww.poeticpraxis.ru&quickpay=shop&account=410014951905022"
-          width="300"
-          height="222"
-          frameBorder="0"
-          allowTransparency={true}
-          scrolling="no"
-        />
-      ) : null}
+      <Flex
+        direction="column"
+        justify="space-between"
+        width="300px">
+        <Text isHidden={isRusLang} align="center">Support the project by TRON USDT (TRC20/TRX)</Text>
+        <Text isHidden={!isRusLang} align="center">Поддержать проект в TRON USDT (TRC20/TRX)</Text>
+        <img src={QrCode} width="300" height="300" />
+      </Flex>
+      <br />
+      <br />
+      <Flex
+        direction="column"
+        justify="space-between"
+        width="300px">
+        <Text isHidden={isRusLang} align="center">Support the project by Ethereum</Text>
+        <Text isHidden={!isRusLang} align="center">Поддержать проект в Ethereum</Text>
+
+        <img src={EtherQrCode} width="300" height="300" />
+      </Flex>
+
     </Flex>
   );
 };
