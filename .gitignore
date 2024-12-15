@@ -7,3 +7,7 @@
 /node_modules
 /pnpm
 /dist
+localhost-key.pem
+localhost.pem
+.DS_Store
+tsconfig.tsbuildinfo

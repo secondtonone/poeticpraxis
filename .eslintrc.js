@@ -32,6 +32,7 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'no-empty': ['error', { 'allowEmptyCatch': true }],
     '@typescript-eslint/no-empty-function': ['error', { 'allow': ['arrowFunctions'] }],
-    '@typescript-eslint/no-extra-semi': 'off'
+    '@typescript-eslint/no-extra-semi': 'off',
+    '@typescript-eslint/no-var-requires': 'off'
   },
 };
