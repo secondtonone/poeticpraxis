@@ -176,8 +176,12 @@ const Rhythmic: FunctionalComponent = () => {
   }, []);
 
   const onTextLintingEnd = useCallback(() => {
-    setAnalyzeStatus(true);
-  }, []);
+    if (text && text.length > 0) {
+      setAnalyzeStatus(true);
+    } else {
+      setAnalyzeStatus(false);
+    }
+  }, [text]);
 
   return (
     <section>

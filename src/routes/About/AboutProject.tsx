@@ -62,7 +62,7 @@ const AboutProject: FunctionalComponent<AboutProjectProps> = ({
           <Link
             target="_blank"
             rel="noreferrer noopener"
-            href="tg://resolve?domain=poeticpraxis">
+            href="https://t.me/poeticpraxis">
             <Telegram _big />
           </Link>
           <Link
@@ -88,23 +88,30 @@ const AboutProject: FunctionalComponent<AboutProjectProps> = ({
 
       <br />
       <Flex
-        direction="column"
+        direction={mediaQuery ? 'column' : 'row'}
         justify="space-between"
-        width="300px">
-        <Text isHidden={isRusLang} align="center">Support the project by TRON USDT (TRC20/TRX)</Text>
-        <Text isHidden={!isRusLang} align="center">Поддержать проект в TRON USDT (TRC20/TRX)</Text>
-        <img src={QrCode} width="300" height="300" />
-      </Flex>
-      <br />
-      <br />
-      <Flex
-        direction="column"
-        justify="space-between"
-        width="300px">
-        <Text isHidden={isRusLang} align="center">Support the project by Ethereum</Text>
-        <Text isHidden={!isRusLang} align="center">Поддержать проект в Ethereum</Text>
+        width="100%"
+        maxWidth="700px"
+      >
+        <Flex
+          direction="column"
+          justify="space-between"
+          width="300px">
+          <Text isHidden={isRusLang} align="center">Support the project by TRON USDT (TRC20/TRX)</Text>
+          <Text isHidden={!isRusLang} align="center">Поддержать проект в TRON USDT (TRC20/TRX)</Text>
+          <img src={QrCode} width="300" height="300" />
+        </Flex>
+        <br />
+        <br />
+        <Flex
+          direction="column"
+          justify="space-between"
+          width="300px">
+          <Text isHidden={isRusLang} align="center">Support the project by Ethereum</Text>
+          <Text isHidden={!isRusLang} align="center">Поддержать проект в Ethereum</Text>
 
-        <img src={EtherQrCode} width="300" height="300" />
+          <img src={EtherQrCode} width="300" height="300" />
+        </Flex>
       </Flex>
 
     </Flex>
