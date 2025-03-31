@@ -85,8 +85,8 @@ const AboutProject: FunctionalComponent<AboutProjectProps> = ({
           </Link>
         </Flex>
       </Flex>
-
       <br />
+
       <Flex
         direction={mediaQuery ? 'column' : 'row'}
         justify="space-between"
