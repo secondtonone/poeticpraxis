@@ -1,22 +1,22 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const HtmlWebpackSkipAssetsPlugin = require('html-webpack-skip-assets-plugin').HtmlWebpackSkipAssetsPlugin;
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const WorkboxPlugin = require("workbox-webpack-plugin");
+const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin");
 
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
-const baseConfig = require('./webpack.config.js')(true);
+const baseConfig = require("./webpack.config.js")(true);
 
 const config = {
   ...baseConfig,
-  mode: 'production',
-  target: ['browserslist'],
+  mode: "production",
+  target: ["browserslist"],
   devtool: false,
   output: {
     ...baseConfig.output,
-    filename: '[name].[chunkhash:8].js',
+    filename: "[name].[chunkhash:8].js",
   },
   module: {
     rules: [
@@ -25,10 +25,10 @@ const config = {
         test: /\.css$/,
         use: [
           {
-            loader: 'style-loader',
+            loader: "style-loader",
           },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               minimize: true,
             },
@@ -43,7 +43,7 @@ const config = {
     minimize: true,
     minimizer: [
       (compiler) => {
-        const TerserPlugin = require('terser-webpack-plugin');
+        const TerserPlugin = require("terser-webpack-plugin");
 
         new TerserPlugin({
           parallel: true,
@@ -64,8 +64,8 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
+      "process.env": {
+        NODE_ENV: JSON.stringify("production"),
       },
     }),
     new ForkTsCheckerWebpackPlugin({
@@ -74,22 +74,22 @@ const config = {
         diagnosticOptions: {
           syntactic: true,
         },
-        mode: 'write-references'
+        mode: "write-references",
       },
       issue: {
         exclude: [
           {
-            file: 'node_modules/**/*.tsx'
+            file: "node_modules/**/*.tsx",
           },
           {
-            file: 'node_modules/**/*.ts'
-          }
+            file: "node_modules/**/*.ts",
+          },
         ],
       },
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
-      inject: 'head',
+      template: "./public/index.html",
+      inject: "head",
       minify: {
         minifyCSS: true,
         minifyJS: true,
@@ -104,7 +104,7 @@ const config = {
     //    excludeAssets: [/tone.*/i]
     //}),
     new PreloadWebpackPlugin({
-      rel: 'preload',
+      rel: "preload",
       /* as(entry) {
           if (/\.woff2$/.test(entry)) return 'font';
           if (/\.css$/.test(entry)) return 'style';
@@ -118,44 +118,38 @@ const config = {
           /serviceworker/,
           /\.webmanifest/
       ], */
-      include: /* 'asyncChunks' */ 'initial',
+      include: /* 'asyncChunks' */ "initial",
     }),
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: 'public/robots.txt',
+          from: "public/robots.txt",
           globOptions: {
-            ignore: ['.DS_Store'],
+            ignore: [".DS_Store"],
           },
         },
         {
-          from: 'public/sitemap.xml',
+          from: "public/sitemap.xml",
           globOptions: {
-            ignore: ['.DS_Store'],
+            ignore: [".DS_Store"],
           },
         },
         {
-          from: 'public/.htaccess',
+          from: "public/img/Sign.svg",
           globOptions: {
-            ignore: ['.DS_Store'],
+            ignore: [".DS_Store"],
           },
         },
         {
-          from: 'public/img/Sign.svg',
+          from: "public/audio",
           globOptions: {
-            ignore: ['.DS_Store'],
+            ignore: [".DS_Store"],
           },
         },
         {
-          from: 'public/audio',
+          from: "public/dictionary",
           globOptions: {
-            ignore: ['.DS_Store'],
-          },
-        },
-        {
-          from: 'public/dictionary',
-          globOptions: {
-            ignore: ['.DS_Store'],
+            ignore: [".DS_Store"],
           },
         },
       ],
